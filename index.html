@@ -3,20 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>职业档案局</title>
+<title>我的事业</title>
 <style>
-/* ===== RESET & BASE ===== */
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 :root {
-  --kokutan: #0d0a06;       /* 黒橡 */
-  --kokutan-light: #1a1208; /* 卡面 */
-  --kokutan-mid: #241a0c;   /* 边框亮 */
-  --shironeri: #ede8dc;     /* 白練 */
-  --shironeri-dim: #a09070; /* 白練·暗 */
-  --shironeri-ghost: #4a4030; /* 白練·极暗 */
-  --shu: #c03020;           /* 朱 */
-  --shu-dim: #6a1a10;       /* 朱·暗 */
+  --kokutan: #0d0a06;
+  --kokutan-light: #1a1208;
+  --kokutan-mid: #241a0c;
+  --shironeri: #ede8dc;
+  --shironeri-dim: #a09070;
+  --shironeri-ghost: #4a4030;
+  --shu: #c03020;
+  --shu-dim: #6a1a10;
   --shu-glow: rgba(192,48,32,0.15);
 }
 
@@ -28,29 +27,13 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== SCREENS ===== */
-.screen { display: none; position: relative; }
+.screen { display: none; }
 .screen.active { display: flex; flex-direction: column; min-height: 100vh; }
 
-/* ===== INTRO SCREEN ===== */
-#intro-screen {
-  justify-content: flex-end;
-  padding: 0 0 60px;
-}
+/* ===== INTRO ===== */
+#intro-screen { justify-content: flex-end; }
 
-.intro-bg {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 50vh;
-  background: linear-gradient(to bottom, #1a0a04, var(--kokutan));
-  z-index: 0;
-}
-
-.intro-content {
-  position: relative;
-  z-index: 1;
-  padding: 0 28px;
-}
+.intro-content { padding: 0 28px 60px; }
 
 .game-badge {
   font-size: 10px;
@@ -61,60 +44,40 @@ body {
 }
 
 .game-title {
-  font-size: 32px;
+  font-size: 36px;
   letter-spacing: 10px;
   color: var(--shironeri);
-  margin-bottom: 8px;
-  line-height: 1.2;
+  margin-bottom: 6px;
 }
 
 .game-subtitle {
   font-size: 11px;
-  color: var(--shironeri-dim);
+  color: var(--shironeri-ghost);
   letter-spacing: 2px;
   margin-bottom: 36px;
 }
 
-.intro-divider {
-  width: 40px;
-  height: 1px;
-  background: var(--shu-dim);
-  margin-bottom: 28px;
-}
+.intro-divider { width: 40px; height: 1px; background: var(--shu-dim); margin-bottom: 28px; }
 
 .intro-body {
   font-size: 14px;
-  line-height: 2.2;
+  line-height: 2.4;
   color: var(--shironeri-dim);
   margin-bottom: 40px;
 }
 
-.intro-body strong {
-  color: var(--shironeri);
-  font-weight: normal;
-}
-
-.intro-body .data-point {
+.data-point {
   color: var(--shu);
-  font-size: 22px;
+  font-size: 24px;
   display: block;
-  margin: 8px 0 12px;
+  margin: 6px 0 10px;
   letter-spacing: 2px;
 }
 
-.intro-body .ellipsis {
-  color: var(--shironeri-ghost);
-  display: block;
-  margin-top: 8px;
-  letter-spacing: 6px;
-}
+.intro-strong { color: var(--shironeri); }
+.intro-ellipsis { color: var(--shironeri-ghost); display: block; margin-top: 8px; letter-spacing: 6px; }
 
-.input-label {
-  font-size: 10px;
-  color: var(--shironeri-ghost);
-  letter-spacing: 3px;
-  margin-bottom: 10px;
-}
+.input-label { font-size: 10px; color: var(--shironeri-ghost); letter-spacing: 3px; margin-bottom: 10px; }
 
 .job-input {
   width: 100%;
@@ -148,15 +111,9 @@ body {
   cursor: pointer;
   border-radius: 2px;
 }
-.start-btn .arrow { font-size: 18px; }
 .start-btn:active { background: #a02818; }
 
-/* ===== GAME SCREEN ===== */
-#game-screen {
-  justify-content: space-between;
-}
-
-/* HUD */
+/* ===== GAME ===== */
 .game-hud {
   display: flex;
   justify-content: space-between;
@@ -165,87 +122,24 @@ body {
   border-bottom: 1px solid #1a1208;
 }
 
-.hud-year {
-  font-size: 24px;
-  color: var(--shironeri);
-  letter-spacing: 6px;
-}
+.hud-year { font-size: 24px; color: var(--shironeri); letter-spacing: 6px; }
 
-.hud-right {
-  text-align: right;
-}
-
-.hud-count {
-  font-size: 10px;
-  color: var(--shironeri-ghost);
-  letter-spacing: 2px;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.hud-dots {
-  display: flex;
-  gap: 4px;
-  justify-content: flex-end;
-}
-
-.hud-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--shironeri-ghost);
-}
+.hud-right { text-align: right; }
+.hud-count { font-size: 10px; color: var(--shironeri-ghost); letter-spacing: 2px; display: block; margin-bottom: 4px; }
+.hud-dots { display: flex; gap: 4px; justify-content: flex-end; }
+.hud-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--shironeri-ghost); }
 .hud-dot.done { background: var(--shu); }
 .hud-dot.current { background: var(--shironeri-dim); }
 
-/* EVENT AREA */
-.event-area {
-  padding: 20px 24px 16px;
-  flex: 1;
-  overflow-y: auto;
-}
+.event-area { padding: 20px 24px 16px; flex: 1; overflow-y: auto; }
+.event-year-label { font-size: 10px; color: var(--shu); letter-spacing: 4px; margin-bottom: 10px; opacity: 0.8; }
+.event-text { font-size: 13px; line-height: 2; color: var(--shironeri-dim); min-height: 60px; white-space: pre-wrap; }
+.event-slogan { font-size: 11px; color: var(--shironeri-ghost); letter-spacing: 4px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #1a1208; }
 
-.event-year-label {
-  font-size: 10px;
-  color: var(--shu);
-  letter-spacing: 4px;
-  margin-bottom: 10px;
-  opacity: 0.8;
-}
+.draw-area { padding: 16px 24px; }
+.draw-label { font-size: 10px; color: var(--shironeri-ghost); letter-spacing: 3px; margin-bottom: 12px; }
 
-.event-text {
-  font-size: 13px;
-  line-height: 2;
-  color: var(--shironeri-dim);
-  min-height: 60px;
-}
-
-.event-slogan {
-  font-size: 11px;
-  color: var(--shironeri-ghost);
-  letter-spacing: 4px;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid #1a1208;
-}
-
-/* DRAW AREA */
-.draw-area {
-  padding: 16px 24px;
-}
-
-.draw-label {
-  font-size: 10px;
-  color: var(--shironeri-ghost);
-  letter-spacing: 3px;
-  margin-bottom: 12px;
-}
-
-.draw-slots {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 6px;
-}
+.draw-slots { display: flex; gap: 8px; margin-bottom: 6px; }
 
 .draw-slot {
   flex: 1;
@@ -255,79 +149,27 @@ body {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.2s;
   background: var(--kokutan-light);
+  transition: border-color 0.2s;
 }
+.draw-slot.face-down { display: flex; align-items: center; justify-content: center; }
+.draw-slot.face-down::after { content: '◆'; color: #1a1208; font-size: 16px; }
+.draw-slot.face-up:active { border-color: var(--shironeri-dim); }
+.draw-slot.selected { border-color: var(--shu) !important; box-shadow: 0 0 8px var(--shu-glow); }
+.draw-slot.known { border-color: #2a3020; }
 
-.draw-slot.face-down {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.slot-rarity { position: absolute; top: 4px; right: 4px; font-size: 8px; padding: 1px 3px; border-radius: 2px; }
+.slot-name { position: absolute; bottom: 0; left: 0; right: 0; padding: 3px 4px 4px; font-size: 9px; line-height: 1.3; color: var(--shironeri-dim); text-align: center; background: linear-gradient(to top, var(--kokutan-light), transparent); }
+.slot-resist { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); font-size: 18px; color: var(--shironeri-ghost); }
+.slot-known-dot { position: absolute; top: 4px; left: 4px; width: 4px; height: 4px; border-radius: 50%; background: #5a8040; }
 
-.draw-slot.face-down::after {
-  content: '◆';
-  color: #1a1208;
-  font-size: 16px;
-}
-
-.draw-slot.face-up {
-  border-color: var(--shironeri-ghost);
-}
-
-.draw-slot.face-up:active,
-.draw-slot.face-up:hover {
-  border-color: var(--shironeri-dim);
-}
-
-.draw-slot.selected {
-  border-color: var(--shu) !important;
-  box-shadow: 0 0 8px var(--shu-glow);
-}
-
-.slot-rarity {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  font-size: 8px;
-  padding: 1px 3px;
-  border-radius: 2px;
-}
-
-.slot-name {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 3px 4px 4px;
-  font-size: 9px;
-  line-height: 1.3;
-  color: var(--shironeri-dim);
-  text-align: center;
-  background: linear-gradient(to top, var(--kokutan-light), transparent);
-}
-
-.slot-resist {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  font-size: 18px;
-  color: var(--shironeri-ghost);
-}
-
-/* Rarity colors */
 .r-N { background: #1a1a18; color: #555550; border: 1px solid #2a2a28; }
 .r-R { background: #0a1020; color: #4060a0; border: 1px solid #1a2840; }
 .r-SR { background: #100a20; color: #7050a0; border: 1px solid #280a40; }
 .r-SSR { background: #181200; color: #a08020; border: 1px solid #403000; }
 .r-UR { background: #180808; color: #c03020; border: 1px solid #4a1010; }
 
-/* CURRENT CARD */
-.current-area {
-  padding: 0 24px 32px;
-}
-
+.current-area { padding: 0 24px 28px; }
 .current-label {
   font-size: 10px;
   color: var(--shironeri-ghost);
@@ -338,63 +180,27 @@ body {
   align-items: center;
 }
 
-.back-to-own-link {
-  font-size: 10px;
-  color: var(--shu-dim);
-  cursor: pointer;
-  letter-spacing: 1px;
-  border: none;
-  background: none;
-  font-family: inherit;
-  padding: 0;
+.back-own-link {
+  font-size: 10px; color: var(--shu-dim); cursor: pointer;
+  border: none; background: none; font-family: inherit; padding: 0;
 }
-.back-to-own-link:active { color: var(--shu); }
+.back-own-link:active { color: var(--shu); }
 
 .current-card {
   background: var(--kokutan-light);
   border: 1px solid var(--shironeri-ghost);
   border-radius: 6px;
   padding: 16px 18px;
-  position: relative;
 }
+.current-card.own-card { border-color: var(--shu-dim); }
 
-.current-card.own-card {
-  border-color: var(--shu-dim);
-}
-
-.cc-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
-}
-
-.cc-name {
-  font-size: 22px;
-  color: var(--shironeri);
-  letter-spacing: 2px;
-}
-
-.cc-own-tag {
-  font-size: 9px;
-  color: var(--shu);
-  letter-spacing: 2px;
-  margin-top: 2px;
-}
-
-.cc-right {
-  text-align: right;
-}
-
+.cc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.cc-name { font-size: 22px; color: var(--shironeri); letter-spacing: 2px; }
+.cc-own-tag { font-size: 9px; color: var(--shu); letter-spacing: 2px; margin-top: 2px; }
+.cc-right { text-align: right; }
 .cc-resist-label { font-size: 9px; color: var(--shironeri-ghost); letter-spacing: 1px; }
 .cc-resist-val { font-size: 28px; color: var(--shironeri-dim); }
-
-.cc-desc {
-  font-size: 12px;
-  line-height: 1.8;
-  color: var(--shironeri-ghost);
-  margin-bottom: 14px;
-}
+.cc-desc { font-size: 12px; line-height: 1.8; color: var(--shironeri-ghost); margin-bottom: 14px; }
 
 .action-btn {
   width: 100%;
@@ -407,19 +213,15 @@ body {
   letter-spacing: 3px;
   cursor: pointer;
   border-radius: 2px;
-  transition: all 0.2s;
   text-align: center;
 }
 .action-btn:active { border-color: var(--shironeri-dim); color: var(--shironeri); }
-.action-btn.primary {
-  background: var(--shu);
-  border-color: var(--shu);
-  color: var(--shironeri);
-}
+.action-btn.primary { background: var(--shu); border-color: var(--shu); color: var(--shironeri); }
 .action-btn.primary:active { background: #a02818; }
+.action-btn + .action-btn { margin-top: 10px; }
 
-/* ===== CARD MODAL ===== */
-#card-modal {
+/* ===== MODAL (Card Detail) ===== */
+#card-modal, #enc-modal {
   display: none;
   position: fixed;
   inset: 0;
@@ -427,16 +229,12 @@ body {
   background: rgba(13,10,6,0.92);
   align-items: flex-end;
   justify-content: center;
-  padding: 0;
 }
-#card-modal.open { display: flex; }
+#card-modal.open, #enc-modal.open { display: flex; }
 
-.modal-backdrop {
-  position: absolute;
-  inset: 0;
-}
+.modal-backdrop { position: absolute; inset: 0; }
 
-.modal-card {
+.modal-sheet {
   position: relative;
   width: 100%;
   max-width: 480px;
@@ -444,84 +242,32 @@ body {
   border-top: 1px solid var(--shironeri-ghost);
   border-radius: 12px 12px 0 0;
   padding: 32px 28px 48px;
-  animation: slideUp 0.3s ease;
+  animation: slideUp 0.25s ease;
+  max-height: 85vh;
+  overflow-y: auto;
 }
 
-@keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
 .modal-close {
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  background: none;
-  border: none;
-  color: var(--shironeri-ghost);
-  font-size: 20px;
-  cursor: pointer;
-  padding: 4px;
-  font-family: inherit;
+  position: absolute; top: 16px; right: 20px;
+  background: none; border: none; color: var(--shironeri-ghost);
+  font-size: 20px; cursor: pointer; padding: 4px; font-family: inherit;
 }
 
-.modal-rarity-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
+.modal-rarity-row { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.modal-rarity { font-size: 10px; padding: 3px 8px; border-radius: 2px; }
+.modal-category { font-size: 10px; color: var(--shironeri-ghost); letter-spacing: 2px; }
+.modal-known-badge { font-size: 10px; color: #5a8040; letter-spacing: 1px; margin-left: auto; }
 
-.modal-rarity {
-  font-size: 10px;
-  padding: 3px 8px;
-  border-radius: 2px;
-}
+.modal-name { font-size: 28px; color: var(--shironeri); letter-spacing: 4px; margin-bottom: 8px; }
+.modal-resist-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px; }
+.modal-resist-num { font-size: 42px; color: var(--shironeri-dim); line-height: 1; }
+.modal-resist-label { font-size: 11px; color: var(--shironeri-ghost); letter-spacing: 1px; }
+.modal-divider { height: 1px; background: #1a1208; margin-bottom: 20px; }
+.modal-desc { font-size: 14px; line-height: 2.2; color: var(--shironeri-dim); margin-bottom: 28px; }
 
-.modal-category {
-  font-size: 10px;
-  color: var(--shironeri-ghost);
-  letter-spacing: 2px;
-}
-
-.modal-name {
-  font-size: 28px;
-  color: var(--shironeri);
-  letter-spacing: 4px;
-  margin-bottom: 8px;
-}
-
-.modal-resist-row {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.modal-resist-num {
-  font-size: 42px;
-  color: var(--shironeri-dim);
-  line-height: 1;
-}
-
-.modal-resist-label {
-  font-size: 11px;
-  color: var(--shironeri-ghost);
-  letter-spacing: 1px;
-}
-
-.modal-divider {
-  height: 1px;
-  background: #1a1208;
-  margin-bottom: 20px;
-}
-
-.modal-desc {
-  font-size: 14px;
-  line-height: 2.2;
-  color: var(--shironeri-dim);
-  margin-bottom: 28px;
-}
+.modal-elim-note { font-size: 11px; color: var(--shu-dim); letter-spacing: 2px; margin-bottom: 20px; padding: 10px 14px; border: 1px solid var(--shu-dim); border-radius: 2px; }
 
 .modal-swap-btn {
   width: 100%;
@@ -536,196 +282,104 @@ body {
   border-radius: 2px;
 }
 .modal-swap-btn:active { background: #a02818; }
-.modal-swap-btn:disabled {
-  background: var(--shironeri-ghost);
-  color: var(--kokutan-light);
-  cursor: default;
-}
+.modal-swap-btn:disabled { background: var(--shironeri-ghost); color: var(--kokutan-light); cursor: default; }
 
-/* ===== ELIM SCREEN ===== */
-#elim-screen {
-  padding: 0;
-}
+/* ===== ENCYCLOPEDIA MODAL ===== */
+.enc-header { margin-bottom: 24px; }
+.enc-title { font-size: 20px; color: var(--shironeri); letter-spacing: 4px; margin-bottom: 4px; }
+.enc-count { font-size: 11px; color: var(--shironeri-ghost); letter-spacing: 2px; }
 
-.elim-header {
-  padding: 40px 28px 24px;
-  border-bottom: 1px solid #1a1208;
-}
+.enc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-.elim-year {
-  font-size: 40px;
-  color: var(--shironeri);
-  letter-spacing: 8px;
-  margin-bottom: 4px;
+.enc-card {
+  background: var(--kokutan);
+  border: 1px solid #1a1208;
+  border-radius: 4px;
+  padding: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
 }
+.enc-card:active { border-color: var(--shironeri-ghost); }
+.enc-card.eliminated { opacity: 0.5; }
 
-.elim-subtitle {
-  font-size: 11px;
-  color: var(--shironeri-ghost);
-  letter-spacing: 3px;
-}
+.enc-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.enc-card-name { font-size: 14px; color: var(--shironeri-dim); }
+.enc-card-rarity { font-size: 8px; padding: 1px 4px; border-radius: 2px; }
+.enc-card-resist { font-size: 18px; color: var(--shironeri-ghost); margin-bottom: 4px; }
+.enc-card-status { font-size: 9px; color: var(--shironeri-ghost); letter-spacing: 1px; }
+.enc-card.eliminated .enc-card-status { color: var(--shu-dim); }
 
-.elim-list {
-  padding: 24px 28px;
-  flex: 1;
-}
+.enc-btn-row { margin-top: 20px; }
 
+/* ===== ELIM ===== */
+#elim-screen { padding: 0; }
+
+.elim-header { padding: 40px 28px 24px; border-bottom: 1px solid #1a1208; }
+.elim-year { font-size: 40px; color: var(--shironeri); letter-spacing: 8px; margin-bottom: 4px; }
+.elim-subtitle { font-size: 11px; color: var(--shironeri-ghost); letter-spacing: 3px; }
+
+.elim-list { padding: 24px 28px; flex: 1; }
 .elim-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid #1a1208;
-  opacity: 0;
-  transform: translateX(-8px);
-  transition: all 0.3s;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid #1a1208;
+  opacity: 0; transform: translateX(-8px); transition: all 0.3s;
 }
+.elim-item.visible { opacity: 1; transform: translateX(0); }
+.elim-item.mine { padding: 14px 0; }
 
-.elim-item.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.elim-item.mine {
-  padding: 14px 0;
-}
-
-.elim-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--shironeri-ghost);
-  flex-shrink: 0;
-}
-
-.elim-item.mine .elim-dot {
-  background: var(--shu);
-  width: 8px;
-  height: 8px;
-}
-
+.elim-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--shironeri-ghost); flex-shrink: 0; }
+.elim-item.mine .elim-dot { background: var(--shu); width: 8px; height: 8px; }
 .elim-job { font-size: 16px; color: var(--shironeri-dim); }
 .elim-item.mine .elim-job { color: var(--shu); font-size: 18px; }
 .elim-tag { font-size: 10px; color: var(--shu-dim); letter-spacing: 1px; margin-left: auto; }
 
-.verdict-area {
-  padding: 0 28px 40px;
-}
-
-.verdict-box {
-  padding: 24px;
-  border: 1px solid var(--shironeri-ghost);
-  border-radius: 4px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
+.verdict-area { padding: 0 28px 40px; }
+.verdict-box { padding: 24px; border: 1px solid var(--shironeri-ghost); border-radius: 4px; text-align: center; margin-bottom: 20px; }
 .verdict-box.survived { border-color: #2a4a2a; background: #060d06; }
 .verdict-box.failed { border-color: var(--shu-dim); background: #0d0606; }
-
 .verdict-status { font-size: 12px; letter-spacing: 4px; margin-bottom: 8px; }
 .survived .verdict-status { color: #50a050; }
 .failed .verdict-status { color: var(--shu); }
 .verdict-msg { font-size: 13px; color: var(--shironeri-ghost); line-height: 1.8; }
 
-/* ===== FAIL SCREEN ===== */
-#fail-screen {
-  padding: 0;
-  justify-content: flex-end;
-}
-
-.fail-content {
-  padding: 40px 28px 60px;
-}
-
-.fail-year-big {
-  font-size: 56px;
-  color: var(--shu);
-  letter-spacing: 8px;
-  opacity: 0.6;
-  margin-bottom: 4px;
-}
-
+/* ===== FAIL ===== */
+#fail-screen { justify-content: flex-end; }
+.fail-content { padding: 40px 28px 60px; }
+.fail-year-big { font-size: 56px; color: var(--shu); letter-spacing: 8px; opacity: 0.6; margin-bottom: 4px; }
 .fail-title { font-size: 20px; color: var(--shironeri); letter-spacing: 4px; margin-bottom: 24px; }
-
-.fail-text {
-  font-size: 13px;
-  line-height: 2.2;
-  color: var(--shironeri-ghost);
-  margin-bottom: 40px;
-  padding: 20px;
-  border: 1px solid #1a1208;
-  background: #0a0806;
-  border-radius: 4px;
-}
-
+.fail-text { font-size: 13px; line-height: 2.2; color: var(--shironeri-ghost); margin-bottom: 40px; padding: 20px; border: 1px solid #1a1208; background: #0a0806; border-radius: 4px; white-space: pre-wrap; }
 .fail-btns { display: flex; flex-direction: column; gap: 10px; }
 
-/* ===== ENDING SCREEN ===== */
-#ending-screen {
-  padding: 0;
-  justify-content: flex-end;
-}
-
-.ending-content {
-  padding: 40px 28px 60px;
-}
-
-.ending-label {
-  font-size: 10px;
-  color: var(--shu);
-  letter-spacing: 4px;
-  margin-bottom: 16px;
-}
-
-.ending-title {
-  font-size: 28px;
-  color: var(--shironeri);
-  letter-spacing: 4px;
-  margin-bottom: 32px;
-  line-height: 1.4;
-}
-
-.ending-text {
-  font-size: 14px;
-  line-height: 2.4;
-  color: var(--shironeri-dim);
-  margin-bottom: 40px;
-}
-
+/* ===== ENDING ===== */
+#ending-screen { justify-content: flex-end; }
+.ending-content { padding: 40px 28px 60px; }
+.ending-label { font-size: 10px; color: var(--shu); letter-spacing: 4px; margin-bottom: 16px; }
+.ending-title { font-size: 28px; color: var(--shironeri); letter-spacing: 4px; margin-bottom: 32px; line-height: 1.4; }
+.ending-text { font-size: 14px; line-height: 2.4; color: var(--shironeri-dim); margin-bottom: 40px; }
 .ending-text p { margin-bottom: 20px; }
-.ending-text .highlight { color: var(--shironeri); }
+.ending-highlight { color: var(--shironeri); }
 </style>
 </head>
 <body>
 
-<!-- ===== INTRO ===== -->
+<!-- INTRO -->
 <div id="intro-screen" class="screen active">
-  <div class="intro-bg"></div>
   <div class="intro-content">
-    <div class="game-badge">ANTHROPIC RESEARCH × 2026</div>
-    <div class="game-title">职业档案局</div>
-    <div class="game-subtitle">BUREAU OF PROFESSIONAL RECORDS</div>
+    <div class="game-badge">ANTHROPIC RESEARCH · 2026</div>
+    <div class="game-title">我的事业</div>
+    <div class="game-subtitle">2026–2035 · AI时代职业生存</div>
     <div class="intro-divider"></div>
     <div class="intro-body">
-      2026年，Anthropic发布研究报告：
-      <span class="data-point">67%</span>
-      的职业面临AI替代风险。<strong>这不是预测，是时间表。</strong>
-      <span class="ellipsis">…</span>
-      从这一年开始，每年都有职业从世界上消失。<br>你的职业，在名单上吗？
+      2026年，Anthropic发布研究报告：<span class="data-point">67%</span>的职业面临AI替代风险。<span class="intro-strong">这不是预测，是时间表。</span><span class="intro-ellipsis">…</span>从这一年开始，每年都有职业从世界上消失。<br>你的呢？
     </div>
-    <div class="input-label">填入你现在的职业</div>
+    <div class="input-label">你现在的职业是</div>
     <input class="job-input" id="job-input" type="text" placeholder="编导、程序员、设计师……" maxlength="12" autocomplete="off">
-    <button class="start-btn" id="start-btn">
-      <span>开始翻阅档案</span>
-      <span class="arrow">→</span>
-    </button>
+    <button class="start-btn" id="start-btn"><span>看我的事业能撑多久</span><span>→</span></button>
   </div>
 </div>
 
-<!-- ===== GAME ===== -->
+<!-- GAME -->
 <div id="game-screen" class="screen">
-  <!-- HUD -->
   <div class="game-hud">
     <div class="hud-year" id="hud-year">2026</div>
     <div class="hud-right">
@@ -734,30 +388,27 @@ body {
     </div>
   </div>
 
-  <!-- Event -->
   <div class="event-area">
-    <div class="event-year-label" id="ev-year-label">2026 · 大事记</div>
-    <div class="event-text" id="ev-text">加载中…</div>
+    <div class="event-year-label" id="ev-year-label">2026 · 今年发生了</div>
+    <div class="event-text" id="ev-text"></div>
     <div class="event-slogan" id="ev-slogan"></div>
   </div>
 
-  <!-- Draw -->
   <div class="draw-area">
-    <div class="draw-label">本年抽取职业 · 点击查看详情</div>
+    <div class="draw-label" id="draw-label">本年出现的职业 · 点击查看详情</div>
     <div class="draw-slots" id="draw-slots"></div>
   </div>
 
-  <!-- Current Card -->
   <div class="current-area">
     <div class="current-label">
-      <span>当前持有职业</span>
-      <button class="back-to-own-link" id="back-own-btn" style="display:none">换回本职 →</button>
+      <span>我现在的职业</span>
+      <button class="back-own-link" id="back-own-btn" style="display:none">换回原职 →</button>
     </div>
     <div class="current-card" id="current-card">
       <div class="cc-top">
         <div>
           <div class="cc-name" id="cc-name">—</div>
-          <div class="cc-own-tag" id="cc-own-tag" style="display:none">本职</div>
+          <div class="cc-own-tag" id="cc-own-tag" style="display:none">原职</div>
         </div>
         <div class="cc-right">
           <div class="cc-resist-label">抗AI值</div>
@@ -765,36 +416,54 @@ body {
         </div>
       </div>
       <div class="cc-desc" id="cc-desc"></div>
-      <button class="action-btn primary" id="keep-btn">保留当前职业，进入事件</button>
+      <button class="action-btn primary" id="keep-btn">保留，进入这一年</button>
     </div>
   </div>
 </div>
 
-<!-- ===== CARD MODAL ===== -->
+<!-- CARD DETAIL MODAL -->
 <div id="card-modal">
-  <div class="modal-backdrop" id="modal-backdrop"></div>
-  <div class="modal-card">
-    <button class="modal-close" id="modal-close">✕</button>
-    <div class="modal-rarity-bar">
-      <span class="modal-rarity" id="modal-rarity"></span>
-      <span class="modal-category" id="modal-category"></span>
+  <div class="modal-backdrop" id="card-modal-backdrop"></div>
+  <div class="modal-sheet">
+    <button class="modal-close" id="card-modal-close">✕</button>
+    <div class="modal-rarity-row">
+      <span class="modal-rarity" id="m-rarity"></span>
+      <span class="modal-category" id="m-category"></span>
+      <span class="modal-known-badge" id="m-known"></span>
     </div>
-    <div class="modal-name" id="modal-name"></div>
+    <div class="modal-name" id="m-name"></div>
     <div class="modal-resist-row">
-      <span class="modal-resist-num" id="modal-resist"></span>
+      <span class="modal-resist-num" id="m-resist"></span>
       <span class="modal-resist-label">抗AI值</span>
     </div>
     <div class="modal-divider"></div>
-    <div class="modal-desc" id="modal-desc"></div>
+    <div class="modal-desc" id="m-desc"></div>
+    <div class="modal-elim-note" id="m-elim-note" style="display:none"></div>
     <button class="modal-swap-btn" id="modal-swap-btn">换成这个职业</button>
   </div>
 </div>
 
-<!-- ===== ELIM ===== -->
+<!-- ENCYCLOPEDIA MODAL -->
+<div id="enc-modal">
+  <div class="modal-backdrop" id="enc-modal-backdrop"></div>
+  <div class="modal-sheet">
+    <button class="modal-close" id="enc-modal-close">✕</button>
+    <div class="enc-header">
+      <div class="enc-title">职业图鉴</div>
+      <div class="enc-count" id="enc-count">已收录 0 个职业</div>
+    </div>
+    <div class="enc-grid" id="enc-grid"></div>
+    <div class="enc-btn-row">
+      <button class="action-btn" id="enc-close-btn">关闭图鉴</button>
+    </div>
+  </div>
+</div>
+
+<!-- ELIM -->
 <div id="elim-screen" class="screen">
   <div class="elim-header">
     <div class="elim-year" id="elim-year">2026</div>
-    <div class="elim-subtitle">本年淘汰名单</div>
+    <div class="elim-subtitle">本年AI淘汰的职业</div>
   </div>
   <div class="elim-list" id="elim-list"></div>
   <div class="verdict-area" id="verdict-area" style="display:none">
@@ -806,7 +475,7 @@ body {
   </div>
 </div>
 
-<!-- ===== FAIL ===== -->
+<!-- FAIL -->
 <div id="fail-screen" class="screen">
   <div class="fail-content">
     <div class="fail-year-big" id="fail-year-big">2028</div>
@@ -814,17 +483,19 @@ body {
     <div class="fail-text" id="fail-text"></div>
     <div class="fail-btns">
       <button class="action-btn primary" id="retry-btn">退回这一年，重新选择</button>
+      <button class="action-btn" id="enc-fail-btn">查看已收录的职业图鉴</button>
       <button class="action-btn" id="restart-btn">重新开始</button>
     </div>
   </div>
 </div>
 
-<!-- ===== ENDING ===== -->
+<!-- ENDING -->
 <div id="ending-screen" class="screen">
   <div class="ending-content">
-    <div class="ending-label">2035 · 档案封存</div>
-    <div class="ending-title" id="ending-title">你活下来了。</div>
+    <div class="ending-label">2035 · 最终年</div>
+    <div class="ending-title">你活下来了。</div>
     <div class="ending-text" id="ending-text"></div>
+    <button class="action-btn" id="enc-ending-btn" style="margin-bottom:10px">查看这十年见过的职业</button>
     <button class="action-btn primary" id="play-again-btn">再玩一次</button>
   </div>
 </div>
@@ -832,14 +503,14 @@ body {
 <script>
 // ===== DATA =====
 const YEARS = [
-  { year:2026, event:"Anthropic研究报告发布，全球67%的职业面临AI替代风险。OpenAI同步推出实时翻译系统，支持143种语言，响应延迟0.1秒。各大连锁超市全面推行无人收银，结账从4分钟缩至38秒。\n\n某招聘平台上线「职位可替代指数」——打开页面的第一秒，人们先看的不是薪资，是那个数字。", eliminated:["文字校对","翻译","收银员","数据录入员","电话销售"], slogan:"语言屏障，已消除。" },
-  { year:2027, event:"国内首个AI通过注册会计师考试，分数超过当年97%人类考生。四大行陆续关闭县级支行，柜台员工同比减少31%。\n\n某AI公司推出「专家知识数字化」服务，将从业者的决策逻辑提炼成可运行模型。合同期限一栏写的是：永久。一位参与的资深会计师后来说：「我签完才意识到，我把自己卖了。」", eliminated:["会计","客服代表","数据分析师","文字编辑","内容审核员"], slogan:"您的每一次通话，都在优化它。" },
-  { year:2028, event:"字节跳动内容AI全行业开放，AI生成标题点击率高出人工26%，内容团队人均产出要求翻倍。\n\n某平台AI训练集被发现包含大量创作者未授权的原始稿件和私信草稿。平台方回应：「服务协议第17条已涵盖相关授权条款。」帖子在发出两小时内从热榜消失。", eliminated:["内容运营","广告文案","律师助理","快递员","停车管理员"], slogan:"您的专业积累，已被完整学习。" },
-  { year:2029, event:"新华社、财新相继上线AI写稿系统，财经体育报道日发布量提升800%。某省级电视台将夜间播报全面切换AI主播。\n\n某新闻网站悄悄上线了一位「驻地记者」，风格与两年前因病去世的老记者高度相似。家属表示从未被告知，也未签署任何授权。文章至今仍在更新。", eliminated:["记者","摄影师","铁路调度员","网约车司机","保健品销售"], slogan:"内容已自动生成。感谢您提供的灵感。" },
+  { year:2026, event:"Anthropic研究报告发布，全球67%的职业面临AI替代风险。OpenAI同步推出实时翻译系统，支持143种语言，响应延迟0.1秒。各大超市全面推行无人收银，结账从4分钟缩至38秒。\n\n某招聘平台上线「职位可替代指数」——打开页面的第一秒，人们先看的不是薪资，是那个数字。", eliminated:["文字校对","翻译","收银员","数据录入员","电话销售"], slogan:"语言屏障，已消除。" },
+  { year:2027, event:"国内首个AI通过注册会计师考试，分数超过当年97%人类考生。四大行陆续关闭县级支行，柜台员工同比减少31%。\n\n某AI公司推出「专家知识数字化」服务——将从业者的决策逻辑提炼成可运行模型。合同期限一栏写的是：永久。一位参与的资深会计师说：「我签完才意识到，我把自己卖了。」", eliminated:["会计","客服代表","数据分析师","文字编辑","内容审核员"], slogan:"您的每一次通话，都在优化它。" },
+  { year:2028, event:"字节跳动内容AI全行业开放，AI标题点击率高出人工26%，内容团队产出要求翻倍。\n\n某平台AI训练集被发现包含大量创作者未授权的原始稿件和私信草稿。平台方回应：「服务协议第17条已涵盖相关授权条款。」帖子在两小时内从热榜消失。", eliminated:["内容运营","广告文案","律师助理","快递员","停车管理员"], slogan:"您的专业积累，已被完整学习。" },
+  { year:2029, event:"新华社、财新相继上线AI写稿系统，财经体育报道日发布量提升800%。某省级电视台夜间播报全面切换AI主播。\n\n某新闻网站上线了一位「驻地记者」，风格与两年前因病去世的老记者高度相似。家属表示从未被告知，也未签署任何授权。文章至今仍在更新。", eliminated:["记者","摄影师","铁路调度员","网约车司机","保健品销售"], slogan:"内容已自动生成。感谢您提供的灵感。" },
   { year:2030, event:"DeepMind医疗AI在六项诊断维度中准确率全面超越专科医生。国家卫健委宣布AI辅助诊断三年内覆盖全国二级以上医院——「以辅助为主，不替代岗位」。\n\n某医疗AI公司未经授权，将一位退休名医三十年的诊断记录提炼成模型对外收费。名医发出律师函，平台回复：「数据来自医院信息系统，与个人无关。」", eliminated:["放射科医生","药剂师","医疗助理","健康管理师","提示词工程师"], slogan:"系统已完成自我迭代。感谢您的调试工作。" },
-  { year:2031, event:"Sora商业版落地国内，AI生成短剧完播率高出人工13%，某平台单月上线AI短剧超过3000部。\n\n某HR平台上线「职业轨迹溯源系统」，整合用户在各平台的全部数字痕迹生成完整职业档案。有用户发现，档案里有一份他在上一家公司写的、标注了「仅限内部」的备忘录。", eliminated:["编导","游戏策划","平面设计师","辅导老师","法务助理"], slogan:"叙事已被学会。创作档案，永久保存。" },
+  { year:2031, event:"Sora商业版落地国内，AI生成短剧完播率高出人工13%，某平台单月上线AI短剧超过3000部。\n\n某HR平台上线「职业轨迹溯源系统」，整合用户在各平台的全部数字痕迹生成完整职业档案。有用户发现，档案里有一份他在上一家公司写的、标注了「仅限内部」的备忘录。", eliminated:["编导","游戏策划","平面设计师","辅导老师","法务助理"], slogan:"叙事已被学会。你的轨迹，永久保存。" },
   { year:2032, event:"宇树H3机器人支持自主爬楼末端配送，续航12小时，美团、京东启动无人配送试运营。\n\n某物流公司推出「老骑手数字孪生」项目，宣传语：「让您的经验永远奔跑在这座城市。」协议同时约定：参与者十年内不得从事同类配送工作。", eliminated:["外卖骑手","建筑师","插画师","剪辑师","配音演员"], slogan:"最后一公里，已完成交接。" },
-  { year:2033, event:"「智政通」全国推广，87类政务审批从5天缩至4秒，人工受理窗口全面退出试点城市。最后一批窗口办事员在工作群发了告别消息，没有人回复——群里只有一条自动推送：「优化已完成，感谢您的贡献。」\n\n同步引入公务员绩效积分系统，每个审批动作实时转化为积分。有人在内部论坛写：「我现在写邮件都先想字数够不够，因为太短会扣分。」", eliminated:["AI工程师","公务员","社交媒体运营","猎头","品牌顾问"], slogan:"感谢您的贡献。接口已关闭。" },
+  { year:2033, event:"「智政通」全国推广，87类政务审批从5天缩至4秒，人工窗口全面退出试点城市。最后一批窗口办事员在工作群发了告别消息，没有人回复——群里只有一条自动推送：「优化已完成，感谢您的贡献。」\n\n同步引入公务员绩效积分系统，每个审批动作实时转化为积分，积分决定续岗资格。有人写：「我现在写邮件都先想字数够不够，因为太短会扣分。」", eliminated:["AI工程师","公务员","社交媒体运营","猎头","品牌顾问"], slogan:"感谢您的贡献。接口已关闭。" },
   { year:2034, event:"斯坦福报告：68%的用户更愿意对AI倾诉，而不是真人——不是因为AI更有能力，是因为它不会在你说到一半时看手机。\n\n某平台AI心理咨询系统被独立研究者证实：它并非在倾听，而是根据用户画像引导对话，收集情绪数据用于广告推荐。用户以为在倾诉，其实一直在回答设计好的问题。", eliminated:["心理咨询师","护士","律师","人力资源专员","活动策划"], slogan:"共情已被量化。响应时间：0.3秒。" },
   { year:2035, event:"烹饪机器人X1发布，精准控温±0.1°C，95%标准菜品可完成。某科技公司推出「数字替身」订阅服务，AI化身代替你出席会议、处理邮件。一个用了三年的人写道：「我的同事应该有很长时间没和'我'说过话了。我也不确定从哪一天开始的。」\n\n测试报告有一行工程师手写备注：锅气问题仍未解决。成因不明，无法参数化。", eliminated:["厨师","社工","导游","农民","手艺人"], slogan:"2035年。最后一道防线。" }
 ];
@@ -858,7 +529,7 @@ const CARD_POOL = [
   { name:"配音演员", rarity:"R", aiResist:30, category:"创意", desc:"用声音给角色注入灵魂。声音可以合成，灵魂还在讨论中。" },
   { name:"社交媒体运营", rarity:"N", aiResist:20, category:"创意", desc:"每天产出内容，维护人设。人设可以生成，内容也可以生成。" },
   { name:"外卖员", rarity:"N", aiResist:35, category:"执行", desc:"他跑得比任何人都快。白色配送车经过时连减速都没有。" },
-  { name:"快递员", rarity:"N", aiResist:32, category:"执行", desc:"把东西从A送到B，按时，完整，放门口。机器在学爬楼。" },
+  { name:"快递员", rarity:"N", aiResist:32, category:"执行", desc:"把东西从A送到B，按时完整放门口。机器在学爬楼。" },
   { name:"收银员", rarity:"N", aiResist:15, category:"执行", desc:"扫码，收款，找零，说谢谢。现在这四步都不需要了。" },
   { name:"工厂工人", rarity:"N", aiResist:25, category:"执行", desc:"流水线上的每个动作，都被记录过，都被学习了。" },
   { name:"清洁工", rarity:"N", aiResist:50, category:"执行", desc:"把弄脏的地方变干净。比大多数人想象的更难标准化。" },
@@ -879,6 +550,11 @@ const CARD_POOL = [
   { name:"殡葬师", rarity:"UR", aiResist:88, category:"绝版", desc:"送人走的最后一程。这件事需要有人在场，真实地在场。" }
 ];
 
+// Precompute which year each card gets eliminated (-1 = never)
+const ELIM_YEAR = {};
+YEARS.forEach(y => { y.eliminated.forEach(name => { if (!ELIM_YEAR[name]) ELIM_YEAR[name] = y.year; }); });
+CARD_POOL.forEach(c => { if (!ELIM_YEAR[c.name]) ELIM_YEAR[c.name] = -1; });
+
 // ===== STATE =====
 let G = {
   ownCard: null,
@@ -887,11 +563,12 @@ let G = {
   drawnCards: [],
   swappedThisYear: false,
   startOfYearCard: null,
-  modalCardIndex: null
+  modalCardIndex: null,
+  encyclopedia: {}  // name -> { card, firstSeen: year, timesDrawn }
 };
 
 // ===== HELPERS =====
-function $(id) { return document.getElementById(id); }
+const $ = id => document.getElementById(id);
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -899,9 +576,40 @@ function showScreen(id) {
   window.scrollTo(0, 0);
 }
 
-function randomCards(n, exclude = []) {
-  const pool = CARD_POOL.filter(c => !exclude.includes(c.name));
-  return [...pool].sort(() => Math.random() - 0.5).slice(0, n);
+// Weighted random draw: cards in encyclopedia get 2.5x weight
+function randomCards(n, excludeNames = []) {
+  const pool = CARD_POOL.filter(c => !excludeNames.includes(c.name));
+  const weighted = [];
+  pool.forEach(c => {
+    const w = G.encyclopedia[c.name] ? 2.5 : 1;
+    for (let i = 0; i < w * 10; i++) weighted.push(c);
+  });
+  const seen = new Set();
+  const result = [];
+  const shuffled = weighted.sort(() => Math.random() - 0.5);
+  for (const c of shuffled) {
+    if (!seen.has(c.name) && result.length < n) { seen.add(c.name); result.push(c); }
+    if (result.length >= n) break;
+  }
+  // Fallback if not enough
+  if (result.length < n) {
+    pool.filter(c => !seen.has(c.name)).slice(0, n - result.length).forEach(c => result.push(c));
+  }
+  return result;
+}
+
+function addToEncyclopedia(card) {
+  const year = YEARS[G.yearIndex].year;
+  if (G.encyclopedia[card.name]) {
+    G.encyclopedia[card.name].timesDrawn++;
+  } else {
+    G.encyclopedia[card.name] = { card: {...card}, firstSeen: year, timesDrawn: 1 };
+  }
+}
+
+function isEliminated(cardName, byYear) {
+  const ey = ELIM_YEAR[cardName];
+  return ey !== -1 && ey <= byYear;
 }
 
 function updateHUD() {
@@ -922,35 +630,42 @@ function updateCurrentCard() {
   $('cc-name').textContent = c.name;
   $('cc-resist').textContent = c.aiResist;
   $('cc-desc').textContent = c.desc;
-  const ownTag = $('cc-own-tag');
-  const card = $('current-card');
-  if (c.isOwn) {
-    ownTag.style.display = 'block';
-    card.classList.add('own-card');
-  } else {
-    ownTag.style.display = 'none';
-    card.classList.remove('own-card');
-  }
-  const backBtn = $('back-own-btn');
-  backBtn.style.display = (!c.isOwn && G.ownCard) ? 'block' : 'none';
+  $('cc-own-tag').style.display = c.isOwn ? 'block' : 'none';
+  $('current-card').classList.toggle('own-card', !!c.isOwn);
+  $('back-own-btn').style.display = (!c.isOwn && G.ownCard) ? 'block' : 'none';
+}
+
+// ===== YEAR START =====
+function startYear() {
+  G.swappedThisYear = false;
+  G.startOfYearCard = {...G.currentCard};
+  G.drawnCards = randomCards(5, [G.currentCard.name]);
+  // Add all drawn cards to encyclopedia
+  G.drawnCards.forEach(c => addToEncyclopedia(c));
+
+  updateHUD();
+  updateCurrentCard();
+  renderEventText();
+  renderDrawSlots();
+
+  const encCount = Object.keys(G.encyclopedia).length;
+  $('draw-label').textContent = `本年出现的职业 · 已收录 ${encCount} 种 · 点击查看`;
+  $('keep-btn').textContent = '保留，进入这一年';
+
+  showScreen('game-screen');
 }
 
 function renderEventText() {
   const y = YEARS[G.yearIndex];
-  $('ev-year-label').textContent = `${y.year} · 大事记`;
+  $('ev-year-label').textContent = `${y.year} · 今年发生了`;
   $('ev-slogan').textContent = '';
   const el = $('ev-text');
   el.textContent = '';
   let i = 0;
   const text = y.event;
   const timer = setInterval(() => {
-    if (i < text.length) {
-      el.textContent += text[i];
-      i++;
-    } else {
-      clearInterval(timer);
-      $('ev-slogan').textContent = '— ' + y.slogan;
-    }
+    if (i < text.length) { el.textContent += text[i]; i++; }
+    else { clearInterval(timer); $('ev-slogan').textContent = '— ' + y.slogan; }
   }, 12);
 }
 
@@ -963,31 +678,54 @@ function renderDrawSlots() {
     div.dataset.index = i;
     slots.appendChild(div);
     setTimeout(() => {
-      div.className = 'draw-slot face-up';
+      const wasKnown = G.encyclopedia[card.name] && G.encyclopedia[card.name].timesDrawn > 1;
+      div.className = 'draw-slot face-up' + (wasKnown ? ' known' : '');
       div.innerHTML = `
+        ${wasKnown ? '<span class="slot-known-dot"></span>' : ''}
         <span class="slot-rarity r-${card.rarity}">${card.rarity}</span>
         <span class="slot-resist">${card.aiResist}</span>
         <span class="slot-name">${card.name}</span>`;
-      div.addEventListener('click', () => openModal(i));
-    }, 400 * (i + 1));
+      div.addEventListener('click', () => openCardModal(i));
+    }, 350 * (i + 1));
   });
 }
 
-// ===== MODAL =====
-function openModal(index) {
+// ===== CARD MODAL =====
+function openCardModal(index) {
   const card = G.drawnCards[index];
   G.modalCardIndex = index;
-  $('modal-name').textContent = card.name;
-  $('modal-rarity').textContent = card.rarity;
-  $('modal-rarity').className = `modal-rarity r-${card.rarity}`;
-  $('modal-category').textContent = card.category;
-  $('modal-resist').textContent = card.aiResist;
-  $('modal-desc').textContent = card.desc;
+  const currentYear = YEARS[G.yearIndex].year;
+  const elimYear = ELIM_YEAR[card.name];
+  const willBeElim = elimYear !== -1 && elimYear <= currentYear;
+
+  $('m-name').textContent = card.name;
+  $('m-rarity').textContent = card.rarity;
+  $('m-rarity').className = `modal-rarity r-${card.rarity}`;
+  $('m-category').textContent = card.category;
+  $('m-resist').textContent = card.aiResist;
+  $('m-desc').textContent = card.desc;
+
+  const enc = G.encyclopedia[card.name];
+  $('m-known').textContent = enc && enc.timesDrawn > 1 ? `已见过 ${enc.timesDrawn} 次` : '';
+
+  const elimNote = $('m-elim-note');
+  if (willBeElim) {
+    elimNote.style.display = 'block';
+    elimNote.textContent = `⚠ 此职业在 ${elimYear} 年被AI淘汰`;
+  } else if (elimYear !== -1) {
+    elimNote.style.display = 'block';
+    elimNote.textContent = `预计在 ${elimYear} 年后面临风险`;
+  } else {
+    elimNote.style.display = 'none';
+  }
 
   const swapBtn = $('modal-swap-btn');
   if (G.swappedThisYear) {
     swapBtn.disabled = true;
     swapBtn.textContent = '今年已换过职业';
+  } else if (willBeElim) {
+    swapBtn.disabled = false;
+    swapBtn.textContent = '换成这个职业（高风险）';
   } else {
     swapBtn.disabled = false;
     swapBtn.textContent = '换成这个职业';
@@ -996,43 +734,77 @@ function openModal(index) {
   $('card-modal').classList.add('open');
 }
 
-function closeModal() {
-  $('card-modal').classList.remove('open');
-  G.modalCardIndex = null;
+function closeCardModal() { $('card-modal').classList.remove('open'); G.modalCardIndex = null; }
+
+// ===== ENCYCLOPEDIA MODAL =====
+function openEncModal() {
+  const entries = Object.values(G.encyclopedia).sort((a, b) => {
+    const ra = ['N','R','SR','SSR','UR'].indexOf(a.card.rarity);
+    const rb = ['N','R','SR','SSR','UR'].indexOf(b.card.rarity);
+    return rb - ra;
+  });
+
+  $('enc-count').textContent = `已收录 ${entries.length} 个职业（共 ${CARD_POOL.length} 种）`;
+
+  const grid = $('enc-grid');
+  grid.innerHTML = '';
+  const currentYear = YEARS[Math.min(G.yearIndex, 9)].year;
+
+  entries.forEach(({ card, firstSeen, timesDrawn }) => {
+    const elim = isEliminated(card.name, currentYear);
+    const div = document.createElement('div');
+    div.className = 'enc-card' + (elim ? ' eliminated' : '');
+    div.innerHTML = `
+      <div class="enc-card-top">
+        <div class="enc-card-name">${card.name}</div>
+        <div class="enc-card-rarity r-${card.rarity}">${card.rarity}</div>
+      </div>
+      <div class="enc-card-resist">${card.aiResist}</div>
+      <div class="enc-card-status">${elim ? `已淘汰 · ${ELIM_YEAR[card.name]}年` : `抗AI ${card.aiResist} · 见过${timesDrawn}次`}</div>`;
+    div.addEventListener('click', () => {
+      closeEncModal();
+      // Show detail in card modal but without swap option
+      G.modalCardIndex = null;
+      $('m-name').textContent = card.name;
+      $('m-rarity').textContent = card.rarity;
+      $('m-rarity').className = `modal-rarity r-${card.rarity}`;
+      $('m-category').textContent = card.category;
+      $('m-resist').textContent = card.aiResist;
+      $('m-desc').textContent = card.desc;
+      $('m-known').textContent = `见过 ${timesDrawn} 次 · ${firstSeen}年首次收录`;
+      $('m-elim-note').style.display = elim ? 'block' : 'none';
+      if (elim) $('m-elim-note').textContent = `此职业在 ${ELIM_YEAR[card.name]} 年被AI淘汰`;
+      const swapBtn = $('modal-swap-btn');
+      swapBtn.disabled = true;
+      swapBtn.textContent = '图鉴只读，无法直接选择';
+      $('card-modal').classList.add('open');
+    });
+    grid.appendChild(div);
+  });
+
+  if (entries.length === 0) {
+    grid.innerHTML = '<div style="grid-column:span 2;color:var(--shironeri-ghost);font-size:13px;text-align:center;padding:20px">还没有收录任何职业</div>';
+  }
+
+  $('enc-modal').classList.add('open');
 }
 
-// ===== GAME FLOW =====
-function startYear() {
-  G.swappedThisYear = false;
-  G.startOfYearCard = {...G.currentCard};
-  G.drawnCards = randomCards(5, [G.currentCard.name]);
+function closeEncModal() { $('enc-modal').classList.remove('open'); }
 
-  updateHUD();
-  updateCurrentCard();
-  renderEventText();
-  renderDrawSlots();
-  $('keep-btn').textContent = '保留当前职业，进入事件';
-  showScreen('game-screen');
-}
-
+// ===== ELIMINATION PHASE =====
 function proceedToElim() {
   const y = YEARS[G.yearIndex];
   $('elim-year').textContent = y.year;
   $('verdict-area').style.display = 'none';
-
   const list = $('elim-list');
   list.innerHTML = '';
-
   showScreen('elim-screen');
 
   y.eliminated.forEach((job, i) => {
     const isMine = job === G.currentCard.name;
     const div = document.createElement('div');
     div.className = 'elim-item' + (isMine ? ' mine' : '');
-    div.innerHTML = `
-      <div class="elim-dot"></div>
-      <div class="elim-job">${job}</div>
-      ${isMine ? '<div class="elim-tag">你的职业</div>' : ''}`;
+    div.innerHTML = `<div class="elim-dot"></div><div class="elim-job">${job}</div>${isMine ? '<div class="elim-tag">你的职业</div>' : ''}`;
     list.appendChild(div);
     setTimeout(() => div.classList.add('visible'), 400 * (i + 1));
   });
@@ -1042,73 +814,51 @@ function proceedToElim() {
 
 function showVerdict(y) {
   const isElim = y.eliminated.includes(G.currentCard.name);
-  const box = $('verdict-box');
   $('verdict-area').style.display = 'block';
+  $('verdict-box').className = 'verdict-box ' + (isElim ? 'failed' : 'survived');
+  $('verdict-status').textContent = isElim ? '已淘汰' : '幸存';
 
   if (isElim) {
-    box.className = 'verdict-box failed';
-    $('verdict-status').textContent = '已淘汰';
     $('verdict-msg').textContent = `${y.year}年，你持有的「${G.currentCard.name}」进入了淘汰名单。`;
-    $('elim-next-btn').textContent = '查看失业档案';
+    $('elim-next-btn').textContent = '查看结果';
     $('elim-next-btn').onclick = () => showFail(y);
   } else {
-    box.className = 'verdict-box survived';
     const left = 10 - G.yearIndex - 1;
-    $('verdict-status').textContent = '幸存';
-    $('verdict-msg').textContent = left > 0
-      ? `「${G.currentCard.name}」这一年安全。还有 ${left} 年。`
-      : `「${G.currentCard.name}」活过了2035年。`;
+    $('verdict-msg').textContent = left > 0 ? `「${G.currentCard.name}」这一年安全。还有 ${left} 年。` : `「${G.currentCard.name}」活过了2035年。`;
     $('elim-next-btn').textContent = G.yearIndex >= 9 ? '查看结局' : `进入 ${y.year + 1} 年 →`;
-    $('elim-next-btn').onclick = () => {
-      if (G.yearIndex >= 9) showEnding();
-      else { G.yearIndex++; startYear(); }
-    };
+    $('elim-next-btn').onclick = () => { if (G.yearIndex >= 9) showEnding(); else { G.yearIndex++; startYear(); } };
   }
 }
 
 function showFail(y) {
   showScreen('fail-screen');
   $('fail-year-big').textContent = y.year;
-  $('fail-text').textContent =
-    `${y.year}年。${y.event.split('\n')[0].split('。').slice(0,2).join('。')}。\n\n你持有的「${G.currentCard.name}」在这一年进入了淘汰名单。\n\n不是你的错。只是时代的滚轮，刚好从你这里压过去了。`;
+  $('fail-text').textContent = `${y.year}年。${y.event.split('\n')[0].split('。').slice(0,2).join('。')}。\n\n你持有的「${G.currentCard.name}」在这一年进入了淘汰名单。\n\n不是你的错。只是时代的滚轮，刚好从你这里压过去了。`;
 }
 
 function showEnding() {
   showScreen('ending-screen');
   const usedOwn = G.currentCard.isOwn;
-  $('ending-title').textContent = '你活下来了。';
-  let html = '';
-  if (usedOwn) {
-    html = `<p>十年。</p>
-<p>你从2026年开始，就带着「<span class="highlight">${G.ownCard.name}</span>」这张卡，一路走到了2035年。</p>
-<p>你看着身边的人一个一个离开，看着那些职业的名字从档案里消失。但你还在，做着你一开始做的那件事。</p>
-<p>不是因为你比别人聪明，也不是因为你的职业更安全。</p>
-<p>是因为你一直在翻这副牌。一直想知道，还有哪张没有。</p>
-<p>你知道这没什么用。但你就是想知道。</p>
-<p class="highlight">这件事，AI不懂。</p>`;
-  } else {
-    html = `<p>十年。</p>
-<p>你从「${G.ownCard.name}」出发，在这十年里换了身份，最终以「<span class="highlight">${G.currentCard.name}</span>」活到了2035年。</p>
-<p>你看着身边的人一个一个离开。有几年你也差一点。</p>
-<p>但你换了方向，你还在。</p>
-<p>不是因为你逃得快，是因为你一直在看那些消失的名字，一直在想下一步。</p>
-<p class="highlight">这件事，AI不懂。</p>`;
-  }
+  const encSize = Object.keys(G.encyclopedia).length;
+  let html = usedOwn
+    ? `<p>十年。</p><p>你从2026年开始，带着「<span class="ending-highlight">${G.ownCard.name}</span>」，一路走到了2035年。</p><p>你看着身边的人一个一个离开，看着那些职业的名字从世界上消失。但你还在，做着你一开始做的那件事。</p><p>不是因为你比别人聪明，也不是因为你的职业更安全。</p><p>是因为你一直在看，一直在想。</p><p class="ending-highlight">这件事，AI不懂。</p>`
+    : `<p>十年。</p><p>你从「${G.ownCard.name}」出发，最终以「<span class="ending-highlight">${G.currentCard.name}</span>」活到了2035年。</p><p>你换了方向，你还在。</p><p>不是因为你逃得快，是因为你一直在观察那些消失的名字。</p><p class="ending-highlight">这件事，AI不懂。</p>`;
+  html += `<p style="font-size:12px;color:var(--shironeri-ghost)">这十年你见过 ${encSize} 种职业。</p>`;
   $('ending-text').innerHTML = html;
 }
 
-// ===== LISTENERS =====
+// ===== EVENT LISTENERS =====
 $('start-btn').addEventListener('click', () => {
   const job = $('job-input').value.trim();
   if (!job) { $('job-input').focus(); return; }
   G.ownCard = { name: job, rarity: 'N', aiResist: Math.floor(Math.random() * 26) + 60, category: '本职', desc: '这是你现在的职业。', isOwn: true };
   G.currentCard = {...G.ownCard};
   G.yearIndex = 0;
+  G.encyclopedia = {};
   startYear();
 });
 
 $('job-input').addEventListener('keydown', e => { if (e.key === 'Enter') $('start-btn').click(); });
-
 $('keep-btn').addEventListener('click', proceedToElim);
 
 $('back-own-btn').addEventListener('click', () => {
@@ -1117,11 +867,11 @@ $('back-own-btn').addEventListener('click', () => {
   G.swappedThisYear = true;
   updateCurrentCard();
   Array.from($('draw-slots').children).forEach(s => s.classList.remove('selected'));
-  $('keep-btn').textContent = '确认换回本职，进入事件';
+  $('keep-btn').textContent = '确认换回原职，进入这一年';
 });
 
-$('modal-close').addEventListener('click', closeModal);
-$('modal-backdrop').addEventListener('click', closeModal);
+$('card-modal-backdrop').addEventListener('click', closeCardModal);
+$('card-modal-close').addEventListener('click', closeCardModal);
 
 $('modal-swap-btn').addEventListener('click', () => {
   if (G.modalCardIndex === null || G.swappedThisYear) return;
@@ -1129,20 +879,25 @@ $('modal-swap-btn').addEventListener('click', () => {
   G.currentCard = {...card, isOwn: false};
   G.swappedThisYear = true;
   updateCurrentCard();
-  Array.from($('draw-slots').children).forEach((s, i) => {
-    s.classList.toggle('selected', i === G.modalCardIndex);
-  });
-  $('keep-btn').textContent = '确认换职，进入事件';
-  closeModal();
+  Array.from($('draw-slots').children).forEach((s, i) => s.classList.toggle('selected', i === G.modalCardIndex));
+  $('keep-btn').textContent = '确认换职，进入这一年';
+  closeCardModal();
 });
 
-$('retry-btn').addEventListener('click', () => {
-  G.currentCard = {...G.startOfYearCard};
-  startYear();
-});
+$('enc-modal-backdrop').addEventListener('click', closeEncModal);
+$('enc-modal-close').addEventListener('click', closeEncModal);
+$('enc-close-btn').addEventListener('click', closeEncModal);
+
+$('enc-fail-btn').addEventListener('click', openEncModal);
+$('enc-ending-btn').addEventListener('click', openEncModal);
+
+// Also open enc from draw label
+$('draw-label').addEventListener('click', () => { if (Object.keys(G.encyclopedia).length > 0) openEncModal(); });
+
+$('retry-btn').addEventListener('click', () => { G.currentCard = {...G.startOfYearCard}; startYear(); });
 
 $('restart-btn').addEventListener('click', () => {
-  G = { ownCard:null, currentCard:null, yearIndex:0, drawnCards:[], swappedThisYear:false, startOfYearCard:null, modalCardIndex:null };
+  G = { ownCard:null, currentCard:null, yearIndex:0, drawnCards:[], swappedThisYear:false, startOfYearCard:null, modalCardIndex:null, encyclopedia:{} };
   $('job-input').value = '';
   showScreen('intro-screen');
 });
@@ -1150,6 +905,7 @@ $('restart-btn').addEventListener('click', () => {
 $('play-again-btn').addEventListener('click', () => {
   G.currentCard = {...G.ownCard};
   G.yearIndex = 0;
+  G.encyclopedia = {};
   startYear();
 });
 </script>
