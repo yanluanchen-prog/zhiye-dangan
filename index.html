@@ -20,6 +20,15 @@ body{
   padding-bottom:calc(28px + env(safe-area-inset-bottom));
 }
 #job-input::placeholder{color:#3a3028;font-size:14px;letter-spacing:1px;}
+/* 光标闪烁动画 */
+@keyframes cursor-blink{0%,100%{border-bottom-color:#c8a878;}50%{border-bottom-color:transparent;}}
+#job-input{cursor:text;}
+#job-input:not(:focus){animation:cursor-blink 1.2s infinite;}
+#job-input:focus{animation:none;border-bottom-color:#c8a878;}
+/* 输入错误提示 */
+.input-error{animation:shake 0.4s ease;}
+@keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
+.error-msg{color:#c44;font-size:11px;margin-top:6px;letter-spacing:1px;opacity:0;transition:opacity 0.3s;}
 
 /* ── SCREENS ─────────────────────────────── */
 .screen{display:none !important;}
@@ -320,6 +329,7 @@ body{
       <div style="font-size:20px;color:#c8a878;letter-spacing:2px;margin-bottom:16px;">输入你的职业</div>
       <input id="job-input" type="text" placeholder="编导、程序员、设计师……" maxlength="12" autocomplete="off"
         style="width:100%;background:transparent;border:none;border-bottom:1px solid #3a3028;color:#e8e2d8;font-family:'Courier New',monospace;font-size:18px;letter-spacing:2px;padding:10px 0 14px;outline:none;text-align:left;border-radius:0;-webkit-appearance:none;">
+      <div id="input-error-msg" class="error-msg">请输入正确的职业（如：编导、程序员、设计师等）</div>
     </div>
     <button id="start-btn" style="display:block;width:100%;background:#8b1a2b;color:#f0ebe0;border:none;padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;">看看我的职业发展之路</button>
     <div style="margin-top:16px;text-align:center;font-size:9px;color:#5a4a38;font-family:'Courier New',monospace;letter-spacing:1px;">数据来源 · Anthropic经济指数报告</div>
@@ -870,16 +880,39 @@ function showEnding(){
 /* ── listeners ── */
 $('start-btn').addEventListener('click',()=>{
   const job=$('job-input').value.trim();
+  const errorMsg=$('input-error-msg');
   if(!job){
-    $('job-input').style.borderBottom='1px solid #8b1a2b';
-    $('job-input').focus();
-    setTimeout(()=>$('job-input').style.borderBottom='1px solid #3a3028',1500);
+    showInputError('请输入职业名称');
     return;
   }
-  G.ownCard={name:job,rarity:'SSR',aiResist:Math.floor(Math.random()*26)+60,salary:55,demand:70,category:'本职',emoji:'💼',tagline:'我的职业',desc:'这是你现在的职业。',fileNum:'OWN',isOwn:true};
+  // 检查输入是否在POOL中
+  const validJob=POOL.find(p=>p.name===job);
+  if(!validJob){
+    showInputError('请输入正确的职业（如：编导、程序员、设计师等）');
+    return;
+  }
+  // 清除错误提示
+  errorMsg.style.opacity='0';
+  G.ownCard={...validJob,isOwn:true,tagline:'我的职业',desc:'这是你现在的职业。',fileNum:'OWN'};
   G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};
   startYear();
 });
+
+// 显示输入错误
+function showInputError(msg){
+  const input=$('job-input');
+  const errorMsg=$('input-error-msg');
+  errorMsg.textContent=msg;
+  errorMsg.style.opacity='1';
+  input.classList.add('input-error');
+  input.style.borderBottom='1px solid #c44';
+  input.focus();
+  setTimeout(()=>{
+    input.classList.remove('input-error');
+    input.style.borderBottom='1px solid #3a3028';
+  },800);
+  setTimeout(()=>{errorMsg.style.opacity='0';},2500);
+}
 $('job-input').addEventListener('keydown',e=>{if(e.key==='Enter')$('start-btn').click();});
 $('draw-btn').addEventListener('click',doDrawCards);
 $('nav-prev').addEventListener('click',()=>{if(G.activeIdx>0){G.activeIdx--;renderDeck(G.activeIdx);}});
