@@ -45,6 +45,8 @@ body{
 .screen.active{display:block !important;min-height:100vh;background:var(--paper);}
 /* 首页强制深色背景，覆盖.screen.active的浅色背景 */
 #intro-screen.screen.active{background:#0a0a0a !important;}
+/* 首页激活时body背景也设为深色，防止padding区域露白 */
+body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* 游戏屏安全区域适配 */
 #game-screen.active{
   padding-top:env(safe-area-inset-top);
