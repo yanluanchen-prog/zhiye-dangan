@@ -6,22 +6,12 @@
 <title>我的事业 · 职业生存图鉴</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-/* ── VARIABLES (原版 career-gacha 配色) ─────────────────── */
-:root {
-  --paper:    #F5F0E8;
-  --paper-dk: #E8E0D0;
-  --paper-lt: #FAF6EE;
-  --ink:      #1E1C18;
-  --ink-lt:   #5A5248;
-  --ink-faint:#A09888;
-  --red:      #C23B22;
-  --green:    #1A6B3A;
-  --border:   #B8A878;
-  --N:        #888070;
-  --R:        #1A3A6B;
-  --SR:       #B85A00;
-  --SSR:      #C23B22;
-  --UR:       #1E1C18;
+/* ── 原版 career-gacha 配色 ────────────────────────────── */
+:root{
+  --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
+  --ink:#1E1C18; --ink-lt:#5A5248; --ink-faint:#A09888;
+  --red:#C23B22; --green:#1A6B3A; --border:#B8A878;
+  --N:#888070; --R:#1A3A6B; --SR:#B85A00; --SSR:#C23B22; --UR:#1E1C18;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;}
@@ -29,276 +19,200 @@ body{
   background:var(--paper);color:var(--ink);
   font-family:'Noto Serif SC','Songti SC',Georgia,serif;
   min-height:100vh;max-width:480px;margin:0 auto;
-  padding-bottom:calc(24px + env(safe-area-inset-bottom));
+  padding-bottom:calc(28px + env(safe-area-inset-bottom));
 }
 
-/* ── SCREENS ─────────────────────────────────────────────── */
 .screen{display:none !important;}
-.screen.active{display:block !important;min-height:100vh;}
+.screen.active{display:block !important;min-height:100vh;background:var(--paper);}
 #intro-screen.active{
   display:flex !important;flex-direction:column;
   align-items:center;justify-content:center;
-  background:#0a0a0a;min-height:100vh;padding:32px 24px;
+  background:#0a0a0a;min-height:100vh;overflow-y:auto;
 }
 
-/* ── HEADER (原版风格) ──────────────────────────────────── */
-.gh{
+/* ── HEADER (原版 career-gacha 精确复刻) ─────────────── */
+.header{
   background:var(--ink);color:var(--paper);
-  padding:13px 18px 10px;
-  padding-top:calc(13px + env(safe-area-inset-top));
+  padding:14px 18px 11px;
+  padding-top:calc(14px + env(safe-area-inset-top));
   display:flex;justify-content:space-between;align-items:center;
   border-bottom:4px solid var(--red);
+  position:relative;
 }
-.gh-left .gh-classify{font-size:9px;letter-spacing:4px;color:var(--red);font-family:monospace;margin-bottom:4px;}
-.gh-left h1{font-size:18px;font-weight:900;letter-spacing:3px;}
-.gh-right{text-align:right;}
-.gh-year{font-size:26px;font-weight:900;color:var(--red);font-family:monospace;letter-spacing:4px;line-height:1;}
-.gh-year-sub{font-size:9px;color:var(--ink-faint);letter-spacing:2px;margin-top:2px;font-family:monospace;}
+.header-left .header-classify{font-size:9px;letter-spacing:4px;color:var(--red);font-family:monospace;margin-bottom:4px;}
+.header-left h1{font-size:20px;font-weight:900;letter-spacing:3px;line-height:1.1;}
+.header-left p{font-size:10px;color:#A09878;margin-top:3px;letter-spacing:2px;}
+.header-year{font-size:26px;font-weight:900;color:var(--red);font-family:monospace;letter-spacing:4px;text-align:right;}
+.header-year-sub{font-size:9px;color:var(--ink-faint);letter-spacing:2px;margin-top:2px;font-family:monospace;text-align:right;}
 
-/* ── YEAR DOTS ──────────────────────────────────────────── */
-.ydots-bar{
-  display:flex;gap:3px;padding:7px 16px;
-  background:var(--paper-dk);border-bottom:1px solid var(--border);
-}
+/* ── YEAR DOTS ──────────────────────────────────────── */
+.ydots-bar{display:flex;gap:3px;padding:6px 16px;background:var(--paper-dk);border-bottom:1px solid var(--border);}
 .ydot{flex:1;height:4px;border-radius:2px;background:rgba(0,0,0,0.1);}
 .ydot.done{background:var(--red);opacity:0.5;}
 .ydot.cur{background:var(--red);}
 
-/* ── CONTAINER & SECTION (原版风格) ─────────────────────── */
-.container{padding:10px 14px;}
+/* ── SECTION (原版精确复刻) ─────────────────────────── */
+.container{max-width:680px;margin:0 auto;padding:12px 14px;}
 .section{
   background:var(--paper-lt);border:1px solid var(--border);
-  padding:12px;margin-bottom:10px;position:relative;
+  padding:14px;margin-bottom:12px;position:relative;
 }
 .section::before{
   content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;
-  border:1px solid var(--border);pointer-events:none;opacity:0.4;
+  border:1px solid var(--border);pointer-events:none;opacity:0.5;
 }
 .section-title{
-  font-size:9px;letter-spacing:4px;color:var(--ink-lt);
+  font-size:10px;letter-spacing:4px;color:var(--ink-lt);
   border-bottom:1px solid var(--border);
-  padding-bottom:7px;margin-bottom:10px;font-family:monospace;
+  padding-bottom:8px;margin-bottom:12px;font-family:monospace;
   display:flex;justify-content:space-between;align-items:center;
 }
-.section-title-btn{
-  font-size:9px;color:var(--red);letter-spacing:2px;
-  font-family:monospace;background:none;border:none;cursor:pointer;padding:0;
-}
+.stitle-btn{font-size:9px;color:var(--red);letter-spacing:2px;font-family:monospace;background:none;border:none;cursor:pointer;padding:0;}
 
-/* ── CARD (原版完整卡片结构) ─────────────────────────────── */
+/* ── CARD (原版精确复刻 — 唯一改动是尺寸缩小一点以适应手机) ── */
 .card{
+  width:100%;
   background:var(--paper-lt);border:3px solid var(--border);
   border-radius:8px;overflow:hidden;
   box-shadow:4px 6px 20px rgba(0,0,0,0.18);
+  margin:0 auto;
 }
 .card.N  {border-color:var(--N);}
 .card.R  {border-color:var(--R);box-shadow:4px 6px 24px rgba(26,58,107,0.25);}
 .card.SR {border-color:var(--SR);box-shadow:4px 6px 28px rgba(184,90,0,0.3);}
 .card.SSR{border-color:var(--SSR);box-shadow:4px 6px 32px rgba(194,59,34,0.35);}
 .card.UR {border-color:var(--UR);box-shadow:4px 6px 36px rgba(28,26,20,0.5);}
-
-.card-header{padding:9px 13px 7px;display:flex;justify-content:space-between;align-items:center;}
+/* header band */
+.card-header{padding:10px 14px 8px;display:flex;justify-content:space-between;align-items:center;}
 .N  .card-header{background:var(--N);}
 .R  .card-header{background:var(--R);}
 .SR .card-header{background:var(--SR);}
 .SSR .card-header{background:var(--SSR);}
 .UR .card-header{background:var(--UR);}
-.card-file-no{font-size:8px;color:rgba(255,255,255,0.75);font-family:monospace;letter-spacing:2px;}
-.card-rarity-stamp{font-size:8px;font-weight:700;letter-spacing:2px;padding:2px 7px;border:1.5px solid rgba(255,255,255,0.6);font-family:monospace;color:#fff;}
-
-.card-art{padding:14px 12px 10px;text-align:center;background:var(--paper);border-bottom:1px solid var(--border);}
-.card-art-icon{font-size:48px;line-height:1;display:block;margin-bottom:8px;}
-.card-name{font-size:22px;font-weight:900;line-height:1;letter-spacing:1px;color:var(--ink);}
-.card-tag{font-size:9px;color:var(--ink-faint);letter-spacing:3px;margin-top:3px;font-family:monospace;}
-
-.card-body{padding:10px 12px 8px;}
-.card-type-badge{display:inline-block;font-size:9px;padding:2px 8px;border:1px solid var(--border);color:var(--ink-lt);font-family:monospace;letter-spacing:1px;margin-bottom:8px;background:var(--paper-dk);}
-.card-desc{font-size:11px;color:var(--ink-lt);line-height:1.65;margin-bottom:10px;font-style:italic;}
-.card-elim-note{font-size:10px;color:var(--red);border-left:3px solid var(--red);padding:5px 8px;margin-bottom:8px;background:rgba(194,59,34,0.05);}
-.stats{display:flex;flex-direction:column;gap:6px;}
+.card-file-no{font-size:9px;color:rgba(255,255,255,0.75);font-family:monospace;letter-spacing:2px;}
+.card-rarity-stamp{font-size:9px;font-weight:700;letter-spacing:2px;padding:2px 8px;border:1.5px solid rgba(255,255,255,0.6);font-family:monospace;color:#fff;}
+/* art zone — 原版尺寸 */
+.card-art{padding:20px 14px 14px;text-align:center;background:var(--paper);border-bottom:1px solid var(--border);}
+.card-art-icon{font-size:64px;line-height:1;display:block;margin-bottom:10px;}
+.card-name{font-size:28px;font-weight:900;line-height:1;letter-spacing:1px;color:var(--ink);}
+.card-tag{font-size:10px;color:var(--ink-faint);letter-spacing:3px;margin-top:4px;font-family:monospace;}
+/* body */
+.card-body{padding:12px 14px 10px;}
+.card-type-badge{display:inline-block;font-size:9px;padding:2px 8px;border:1px solid var(--border);color:var(--ink-lt);font-family:monospace;letter-spacing:1px;margin-bottom:10px;background:var(--paper-dk);}
+.card-desc{font-size:11px;color:var(--ink-lt);line-height:1.7;margin-bottom:12px;font-style:italic;}
+.card-elim-note{font-size:10px;color:var(--red);border-left:3px solid var(--red);padding:5px 8px;margin-bottom:10px;background:rgba(194,59,34,0.05);letter-spacing:0.5px;}
+.stats{display:flex;flex-direction:column;gap:7px;}
 .stat-row{display:flex;align-items:center;gap:8px;}
-.stat-label{font-size:9px;color:var(--ink-faint);width:58px;flex-shrink:0;font-family:monospace;white-space:nowrap;}
+.stat-label{font-size:9px;color:var(--ink-faint);width:62px;flex-shrink:0;font-family:monospace;white-space:nowrap;}
 .stat-track{flex:1;height:4px;background:var(--paper-dk);border-radius:2px;}
-.stat-fill{height:100%;border-radius:2px;transition:width 0.3s;}
-.stat-atk .stat-fill{background:#C23B22;}
-.stat-def .stat-fill{background:#1A3A6B;}
-.stat-hp  .stat-fill{background:#1A6B3A;}
-.stat-val{font-size:10px;font-weight:700;width:22px;text-align:right;font-family:monospace;}
-.stat-atk .stat-val{color:#C23B22;}
-.stat-def .stat-val{color:#1A3A6B;}
-.stat-hp  .stat-val{color:#1A6B3A;}
-.card-footer{display:flex;justify-content:space-between;padding:7px 12px;border-top:1px solid var(--border);font-size:8px;color:var(--ink-faint);font-family:monospace;background:var(--paper-dk);}
+.stat-fill{height:100%;border-radius:2px;transition:width 0.4s;}
+.stat-atk .stat-fill{background:#C23B22;}.stat-def .stat-fill{background:#1A3A6B;}.stat-hp .stat-fill{background:#1A6B3A;}
+.stat-val{font-size:10px;font-weight:700;width:24px;text-align:right;font-family:monospace;}
+.stat-atk .stat-val{color:#C23B22;}.stat-def .stat-val{color:#1A3A6B;}.stat-hp .stat-val{color:#1A6B3A;}
+/* footer */
+.card-footer{display:flex;justify-content:space-between;padding:8px 14px;border-top:1px solid var(--border);font-size:8px;color:var(--ink-faint);font-family:monospace;background:var(--paper-dk);}
 
-/* ── MINI CARD (collection style) ───────────────────────── */
+/* ── CARD-BACK PLACEHOLDER (原版) ───────────────────── */
+.card-back-placeholder{
+  width:100%;height:140px;
+  border:2px dashed var(--border);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;color:var(--ink-faint);font-family:monospace;
+  background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,0.02) 10px,rgba(0,0,0,0.02) 20px);
+}
+.card-back-placeholder .bp-icon{font-size:36px;opacity:0.35;}
+.card-back-placeholder .bp-hint{font-size:10px;letter-spacing:2px;opacity:0.6;}
+
+/* ── DECK STACK VIEWER ──────────────────────────────── */
+.deck-viewer{
+  position:relative;
+  max-width:280px;
+  margin:0 auto;
+  padding-right:28px; /* room for shadow cards to peek out */
+  padding-bottom:10px;
+}
+/* shadow cards — same size as active card, shifted right+down */
+.deck-shadow{
+  position:absolute;
+  top:0;left:0;
+  right:28px; /* same width as active card */
+  bottom:10px;
+  border:2px solid var(--border);border-radius:8px;
+  background:var(--paper-lt);
+  background-image:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,0.02) 10px,rgba(0,0,0,0.02) 20px);
+  pointer-events:none;
+}
+.deck-shadow.s1{transform:translate(9px,3px);z-index:3;opacity:0.75;}
+.deck-shadow.s2{transform:translate(18px,6px);z-index:2;opacity:0.5;}
+.deck-shadow.s3{transform:translate(27px,9px);z-index:1;opacity:0.3;}
+/* active card slot */
+.deck-active{
+  position:relative;z-index:10;
+  margin-right:28px; /* matches padding-right of viewer */
+}
+/* nav */
+.deck-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:12px;}
+.deck-nav-btn{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--paper-dk);border:1px solid var(--border);
+  font-size:16px;color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.deck-nav-btn:active{background:var(--ink);color:var(--paper);}
+.deck-nav-btn:disabled{opacity:0.25;cursor:default;}
+.deck-counter{font-size:11px;font-family:monospace;color:var(--ink-faint);letter-spacing:2px;min-width:36px;text-align:center;}
+
+/* ── SWAP STRIP ─────────────────────────────────────── */
+.swap-strip{
+  margin-top:10px;padding:8px 10px;
+  background:rgba(194,59,34,0.05);
+  border:1px solid rgba(194,59,34,0.25);
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.swap-strip.hidden{display:none;}
+.swap-strip-txt{font-size:11px;color:var(--red);font-family:monospace;letter-spacing:1px;flex:1;}
+
+/* ── MINI CARD (for "my card" section — 原版 mini-card) ── */
 .mini-card{
-  border:2px solid;border-radius:6px;overflow:hidden;cursor:pointer;
-  background:var(--paper-lt);display:flex;flex-direction:column;
-  box-sizing:border-box;
+  border:2px solid var(--border);border-radius:6px;overflow:hidden;
+  background:var(--paper-lt);
+  box-shadow:2px 3px 10px rgba(0,0,0,0.14);
+  display:flex;flex-direction:column;
+  width:80px;flex-shrink:0;
 }
 .mini-card.N  {border-color:var(--N);}
-.mini-card.R  {border-color:var(--R);box-shadow:0 2px 8px rgba(26,58,107,0.15);}
-.mini-card.SR {border-color:var(--SR);box-shadow:0 2px 10px rgba(184,90,0,0.18);}
-.mini-card.SSR{border-color:var(--SSR);box-shadow:0 2px 12px rgba(194,59,34,0.22);}
-.mini-card.UR {border-color:var(--UR);box-shadow:0 2px 14px rgba(28,26,20,0.3);}
+.mini-card.R  {border-color:var(--R);}.mini-card.SR {border-color:var(--SR);}
+.mini-card.SSR{border-color:var(--SSR);}.mini-card.UR {border-color:var(--UR);}
+.mini-card.own{border-color:var(--red);}
 .mini-header{padding:4px 6px;display:flex;justify-content:space-between;align-items:center;}
 .mini-card.N   .mini-header{background:var(--N);}
 .mini-card.R   .mini-header{background:var(--R);}
 .mini-card.SR  .mini-header{background:var(--SR);}
 .mini-card.SSR .mini-header{background:var(--SSR);}
 .mini-card.UR  .mini-header{background:var(--UR);}
-.mini-rarity{font-size:7px;font-family:monospace;letter-spacing:1px;color:#fff;font-weight:700;}
-.mini-art{padding:8px 4px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;}
-.mini-icon{font-size:22px;line-height:1;margin-bottom:3px;}
+.mini-card.own .mini-header{background:var(--red);}
+.mini-rarity{font-size:7px;font-family:monospace;color:#fff;font-weight:700;letter-spacing:1px;}
+.mini-art{padding:8px 4px 6px;text-align:center;}
+.mini-icon{font-size:24px;line-height:1;display:block;margin-bottom:3px;}
 .mini-name{font-size:10px;font-weight:900;line-height:1.2;color:var(--ink);}
 
-/* ── PRE-DRAW ZONE ──────────────────────────────────────── */
-#draw-zone{text-align:center;padding:10px 0;}
-.deck-visual{position:relative;width:88px;height:120px;margin:0 auto 14px;}
-.deck-ghost{
-  position:absolute;inset:0;border-radius:8px;
-  background:var(--paper-dk);border:2px solid var(--border);
-}
-.deck-ghost:nth-child(1){transform:translateX(-12px) rotate(-6deg);opacity:0.4;}
-.deck-ghost:nth-child(2){transform:translateX(-6px) rotate(-3deg);opacity:0.7;}
-.deck-ghost:nth-child(3){
-  transform:translateX(0) rotate(0);
-  background:var(--paper-lt);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
-}
-.deck-icon{font-size:26px;opacity:0.3;}
-.deck-label{font-size:9px;color:var(--ink-faint);letter-spacing:2px;font-family:monospace;}
-
-/* ── FAN HAND (扇形手牌) ─────────────────────────────────── */
-#hand-zone{display:none;position:relative;}
-
-.hand-area{
-  position:relative;
-  height:200px;
-  display:flex;align-items:flex-end;justify-content:center;
-  margin-bottom:6px;
-  overflow:visible;
-}
-
-/* Each card slot in the fan */
-.hand-slot{
-  position:absolute;
-  width:96px;
-  cursor:pointer;
-  transform-origin:50% 140%;
-  transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  bottom:0;
-}
-.hand-slot.active{z-index:20;}
-.hand-slot:not(.active){z-index:10;}
-
-/* The mini card inside a hand slot */
-.hand-card{
-  width:100%;
-  border:2px solid var(--border);border-radius:8px;
-  overflow:hidden;background:var(--paper-lt);
-  box-shadow:3px 5px 16px rgba(0,0,0,0.2);
-  transition:transform 0.2s;
-}
-.hand-slot.active .hand-card{
-  transform:translateY(-20px) scale(1.05);
-  box-shadow:6px 10px 24px rgba(0,0,0,0.28);
-}
-.hand-card.N  {border-color:var(--N);}
-.hand-card.R  {border-color:var(--R);}
-.hand-card.SR {border-color:var(--SR);}
-.hand-card.SSR{border-color:var(--SSR);}
-.hand-card.UR {border-color:var(--UR);}
-
-.hand-card-hdr{padding:5px 7px 4px;display:flex;justify-content:space-between;align-items:center;}
-.hand-card.N   .hand-card-hdr{background:var(--N);}
-.hand-card.R   .hand-card-hdr{background:var(--R);}
-.hand-card.SR  .hand-card-hdr{background:var(--SR);}
-.hand-card.SSR .hand-card-hdr{background:var(--SSR);}
-.hand-card.UR  .hand-card-hdr{background:var(--UR);}
-.hand-card-r{font-size:8px;font-family:monospace;color:#fff;font-weight:700;letter-spacing:1px;}
-.hand-card-file{font-size:7px;color:rgba(255,255,255,0.55);font-family:monospace;}
-
-.hand-card-art{
-  padding:10px 6px 8px;text-align:center;
-  background:var(--paper);border-bottom:1px solid var(--border);
-}
-.hand-card-emoji{font-size:28px;line-height:1;display:block;margin-bottom:4px;}
-.hand-card-name{font-size:11px;font-weight:900;color:var(--ink);line-height:1.1;}
-.hand-card-tag{font-size:7px;color:var(--ink-faint);letter-spacing:2px;margin-top:2px;font-family:monospace;}
-
-.hand-card-stats{display:flex;background:var(--paper-dk);}
-.hand-card-stat{flex:1;padding:4px 2px;text-align:center;border-right:1px solid var(--border);}
-.hand-card-stat:last-child{border-right:none;}
-.hand-card-stat-l{font-size:7px;font-family:monospace;letter-spacing:0.5px;margin-bottom:1px;}
-.hand-card-stat-v{font-size:11px;font-weight:900;font-family:monospace;}
-.hand-card-stat.a .hand-card-stat-l{color:#C23B22;}.hand-card-stat.a .hand-card-stat-v{color:#C23B22;}
-.hand-card-stat.d .hand-card-stat-l{color:#1A3A6B;}.hand-card-stat.d .hand-card-stat-v{color:#1A3A6B;}
-.hand-card-stat.h .hand-card-stat-l{color:#1A6B3A;}.hand-card-stat.h .hand-card-stat-v{color:#1A6B3A;}
-
-/* Navigation arrows for hand */
-.hand-nav{display:flex;align-items:center;justify-content:center;gap:16px;padding:2px 0 8px;}
-.hand-nav-btn{
-  width:32px;height:32px;border-radius:50%;
-  background:var(--paper-dk);border:1px solid var(--border);
-  font-size:15px;color:var(--ink);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-}
-.hand-nav-btn:active{background:var(--ink);color:var(--paper);}
-.hand-nav-btn:disabled{opacity:0.25;cursor:default;}
-.hand-counter{font-size:11px;font-family:monospace;color:var(--ink-faint);letter-spacing:2px;min-width:36px;text-align:center;}
-
-/* ── MY CARD (当前职业牌，mini card style) ───────────────── */
-.my-card-wrap{display:flex;align-items:center;gap:10px;}
-.my-card-mini{
-  width:76px;flex-shrink:0;
-  border:2px solid var(--border);border-radius:6px;
-  overflow:hidden;background:var(--paper-lt);
-  box-shadow:3px 4px 12px rgba(0,0,0,0.15);
-}
-.my-card-mini.own{border-color:var(--red);box-shadow:3px 4px 12px rgba(194,59,34,0.25);}
-.mc-hdr{padding:4px 6px;font-size:8px;font-family:monospace;color:#fff;background:var(--ink-lt);}
-.my-card-mini.own .mc-hdr{background:var(--red);}
-.mc-art{padding:8px 4px 6px;text-align:center;background:var(--paper);}
-.mc-emoji{font-size:22px;line-height:1;display:block;margin-bottom:3px;}
-.mc-name{font-size:10px;font-weight:900;color:var(--ink);line-height:1.2;}
-.mc-stats{display:flex;background:var(--paper-dk);border-top:1px solid var(--border);}
-.mc-stat{flex:1;padding:3px 2px;text-align:center;border-right:1px solid var(--border);}
-.mc-stat:last-child{border-right:none;}
-.mc-stat-l{font-size:7px;font-family:monospace;margin-bottom:1px;color:var(--ink-faint);}
-.mc-stat-v{font-size:10px;font-weight:900;font-family:monospace;color:var(--ink);}
-
+/* ── MY CARD ROW ─────────────────────────────────────── */
+.my-card-row{display:flex;align-items:center;gap:12px;}
 .my-card-info{flex:1;}
 .my-card-label{font-size:9px;letter-spacing:3px;color:var(--ink-faint);font-family:monospace;margin-bottom:4px;}
-.my-card-name-big{font-size:18px;font-weight:900;color:var(--ink);letter-spacing:1px;}
-.my-card-own-tag{font-size:9px;color:var(--red);letter-spacing:2px;font-family:monospace;margin-top:2px;display:none;}
-.my-card-resist{text-align:right;}
-.my-resist-val{font-size:24px;font-weight:900;color:var(--red);font-family:monospace;}
+.my-card-name{font-size:20px;font-weight:900;color:var(--ink);letter-spacing:1px;}
+.my-own-tag{font-size:9px;color:var(--red);letter-spacing:2px;font-family:monospace;margin-top:2px;display:none;}
+.my-resist{text-align:right;}
+.my-resist-val{font-size:22px;font-weight:900;color:var(--red);font-family:monospace;}
 .my-resist-lbl{font-size:8px;color:var(--ink-faint);letter-spacing:1px;font-family:monospace;}
 
-/* ── SWAP CONFIRM STRIP ──────────────────────────────────── */
-.swap-strip{
-  display:none;
-  background:rgba(194,59,34,0.06);
-  border:1px solid var(--red);
-  padding:8px 10px;
-  margin-top:8px;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:8px;
-}
-.swap-strip.hidden{display:none;}
-.swap-strip-text{font-size:11px;color:var(--red);font-family:monospace;letter-spacing:1px;}
+/* ── EVENT ───────────────────────────────────────────── */
+.event-text{font-size:11px;line-height:2;color:var(--ink-lt);white-space:pre-wrap;}
+.event-slogan{font-size:9px;color:var(--red);letter-spacing:3px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);text-align:right;font-family:monospace;display:none;}
 
-/* ── EVENT ───────────────────────────────────────────────── */
-.event-text{font-size:11px;line-height:1.9;color:var(--ink-lt);white-space:pre-wrap;}
-.event-slogan{
-  font-size:9px;color:var(--red);letter-spacing:3px;
-  margin-top:8px;padding-top:8px;border-top:1px solid var(--border);
-  text-align:right;font-family:monospace;display:none;
-}
-
-/* ── BUTTONS ─────────────────────────────────────────────── */
+/* ── BUTTONS (原版) ──────────────────────────────────── */
 .btn{
-  padding:12px 20px;border:2px solid var(--ink);
+  padding:13px 20px;border:2px solid var(--ink);
   background:var(--ink);color:var(--paper);
   font-size:12px;font-weight:700;letter-spacing:3px;
   cursor:pointer;font-family:monospace;width:100%;
@@ -308,56 +222,40 @@ body{
 .btn.outline{background:transparent;color:var(--ink);border-color:var(--border);}
 .btn.outline:active{background:var(--ink);color:var(--paper);}
 .btn:disabled{opacity:0.3;cursor:not-allowed;}
-.btn-row{display:flex;flex-direction:column;gap:7px;margin-top:8px;}
-.btn-small{padding:7px 14px;font-size:10px;letter-spacing:2px;width:auto;}
+.btn-sm{padding:8px 14px;font-size:10px;letter-spacing:2px;width:auto;flex-shrink:0;}
+.btn-row{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
 
-/* ── CARD DETAIL MODAL ───────────────────────────────────── */
-#card-modal{
-  display:none;position:fixed;inset:0;z-index:100;
-  background:rgba(28,26,20,0.78);
-  align-items:flex-end;justify-content:center;
-}
+/* ── CARD DETAIL MODAL ───────────────────────────────── */
+#card-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(28,26,20,0.78);align-items:flex-end;justify-content:center;}
 #card-modal.open{display:flex;}
 .cm-sheet{
   position:relative;width:100%;max-width:480px;
   background:var(--paper);border-top:4px solid var(--red);
   padding:18px 18px calc(36px + env(safe-area-inset-bottom));
-  max-height:92vh;overflow-y:auto;
-  animation:slideUp 0.22s ease;
+  max-height:92vh;overflow-y:auto;animation:slideUp 0.22s ease;
 }
 @keyframes slideUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
 .cm-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:18px;color:var(--ink-faint);cursor:pointer;}
-.cm-card-inner{max-width:300px;margin:0 auto 12px;}
-.cm-swap{padding:12px;border-color:var(--red);background:var(--red);color:var(--paper);font-size:12px;font-weight:700;letter-spacing:3px;cursor:pointer;font-family:monospace;width:100%;border:none;margin-bottom:7px;}
+.cm-card-wrap{max-width:300px;margin:0 auto 12px;}
+.cm-swap{width:100%;padding:12px;background:var(--red);color:var(--paper);border:none;font-family:monospace;font-size:12px;font-weight:700;letter-spacing:3px;cursor:pointer;margin-bottom:7px;}
 .cm-swap:disabled{background:var(--paper-dk);color:var(--ink-faint);cursor:not-allowed;}
-.cm-cancel{padding:10px;background:transparent;color:var(--ink-lt);border:1px solid var(--border);font-size:11px;font-family:monospace;letter-spacing:2px;cursor:pointer;width:100%;}
+.cm-cancel{width:100%;padding:10px;background:transparent;color:var(--ink-lt);border:1px solid var(--border);font-size:11px;font-family:monospace;letter-spacing:2px;cursor:pointer;}
 
-/* ── ENC MODAL ───────────────────────────────────────────── */
-#enc-modal{
-  display:none;position:fixed;inset:0;z-index:100;
-  background:rgba(28,26,20,0.78);
-  align-items:flex-end;justify-content:center;
-}
+/* ── ENC MODAL ───────────────────────────────────────── */
+#enc-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(28,26,20,0.78);align-items:flex-end;justify-content:center;}
 #enc-modal.open{display:flex;}
-.enc-sheet{
-  position:relative;width:100%;max-width:480px;
-  background:var(--paper);border-top:4px solid var(--red);
-  padding:18px 14px calc(40px + env(safe-area-inset-bottom));
-  max-height:85vh;overflow-y:auto;animation:slideUp 0.22s ease;
-}
+.enc-sheet{position:relative;width:100%;max-width:480px;background:var(--paper);border-top:4px solid var(--red);padding:18px 14px calc(40px + env(safe-area-inset-bottom));max-height:85vh;overflow-y:auto;animation:slideUp 0.22s ease;}
 .enc-ttl{font-size:16px;font-weight:900;letter-spacing:4px;color:var(--ink);margin-bottom:3px;}
 .enc-sub{font-size:10px;color:var(--ink-faint);font-family:monospace;margin-bottom:14px;}
 .enc-x{position:absolute;top:12px;right:16px;background:none;border:none;font-size:18px;color:var(--ink-faint);cursor:pointer;}
-.enc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.enc-item{cursor:pointer;}
-.enc-item.elim{opacity:0.4;}
+.enc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px;}
 .enc-item .mini-art{padding:10px 4px 7px;}
+.enc-item.elim{opacity:0.4;}
 .enc-info{font-size:9px;color:var(--ink-faint);font-family:monospace;text-align:center;padding:3px 4px 5px;background:var(--paper-dk);}
 
-/* ── ELIM SCREEN ─────────────────────────────────────────── */
-#elim-screen.active{background:var(--paper);}
+/* ── ELIM SCREEN ─────────────────────────────────────── */
 .elim-yr-big{font-size:44px;font-weight:900;color:var(--ink);letter-spacing:8px;text-align:center;padding:22px 0 4px;font-family:monospace;}
-.elim-sub{font-size:9px;color:var(--ink-faint);text-align:center;letter-spacing:4px;margin-bottom:12px;font-family:monospace;}
+.elim-sub-lbl{font-size:9px;color:var(--ink-faint);text-align:center;letter-spacing:4px;margin-bottom:12px;font-family:monospace;}
 .elim-item{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border);opacity:0;transform:translateX(-6px);transition:all 0.3s;}
 .elim-item.vis{opacity:1;transform:translateX(0);}
 .elim-item.mine{background:rgba(194,59,34,0.06);border-left:3px solid var(--red);}
@@ -367,144 +265,148 @@ body{
 .elim-item.mine .elim-job{color:var(--red);font-size:16px;font-weight:700;}
 .elim-yours{font-size:9px;color:var(--red);letter-spacing:1px;margin-left:auto;font-family:monospace;}
 .vwrap{padding:12px 14px;}
-.vbox{border:1px solid var(--border);padding:16px;text-align:center;margin-bottom:10px;background:var(--paper-lt);}
+.vbox{border:1px solid var(--border);padding:16px;text-align:center;margin-bottom:10px;background:var(--paper-lt);position:relative;}
+.vbox::before{content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:1px solid var(--border);pointer-events:none;opacity:0.4;}
 .vbox.surv{border-color:var(--green);}
+.vbox.surv::before{border-color:var(--green);}
 .vbox.fail{border-color:var(--red);}
+.vbox.fail::before{border-color:var(--red);}
 .vstatus{font-size:10px;letter-spacing:4px;font-family:monospace;font-weight:700;margin-bottom:6px;}
-.surv .vstatus{color:var(--green);}
-.fail .vstatus{color:var(--red);}
+.surv .vstatus{color:var(--green);}.fail .vstatus{color:var(--red);}
 .vmsg{font-size:12px;color:var(--ink-lt);line-height:1.9;}
 </style>
 </head>
 <body>
 
-<!-- ===== INTRO ===== -->
-<div id="intro-screen" class="screen active">
-  <div style="max-width:360px;width:100%;overflow-y:auto;">
-    <div style="text-align:center;margin-bottom:32px;">
-      <div style="font-size:10px;letter-spacing:5px;color:#3a4a5a;font-family:monospace;margin-bottom:14px;">〔职业生存图鉴〕</div>
-      <div style="font-size:38px;color:#d4cfc6;letter-spacing:12px;line-height:1.1;margin-bottom:14px;">我的事业</div>
-      <div style="width:36px;height:2px;background:#8b1a2b;margin:0 auto 28px;"></div>
+<!-- ======================================================= -->
+<!-- INTRO (确认版本 — 暗色 #0a0a0a，不要改动)              -->
+<!-- ======================================================= -->
+<div id="intro-screen" class="screen active" style="background:#0a0a0a;padding:32px 24px;box-sizing:border-box;">
+  <div style="max-width:380px;width:100%;">
+    <div style="text-align:center;margin-bottom:36px;">
+      <div style="font-size:11px;letter-spacing:5px;color:#3a4a5a;font-family:'Courier New',monospace;text-transform:uppercase;margin-bottom:16px;">〔职业生存图鉴〕</div>
+      <div style="font-family:'Noto Serif SC','Songti SC',Georgia,serif;font-size:40px;color:#d4cfc6;letter-spacing:12px;line-height:1.1;margin-bottom:16px;">我的事业</div>
+      <div style="width:40px;height:2px;background:#8b1a2b;margin:0 auto 32px;"></div>
     </div>
-    <div style="color:#d4cfc6;line-height:2.2;font-size:14px;margin-bottom:36px;">
-      <p style="margin:0 0 12px;">2026年，67% 的职业面临AI替代风险。</p>
-      <p style="margin:0 0 12px;color:#6a5a40;">从这一年起，每年都有职业消失。</p>
-      <p style="margin:0;color:#9a8a6a;">你的职业，还能撑多久？</p>
+    <div style="font-family:'Noto Serif SC','Songti SC',Georgia,serif;color:#d4cfc6;line-height:2;font-size:15px;margin-bottom:40px;">
+      <p style="margin:0 0 14px;">2026年，67% 的职业面临AI替代风险。</p>
+      <p style="margin:0 0 14px;">从这一年起，每年都有职业消失。</p>
+      <p style="margin:0;">你的职业，还能撑多久？</p>
     </div>
-    <div style="margin-bottom:20px;">
-      <div style="font-size:18px;color:#c8a878;letter-spacing:2px;margin-bottom:14px;">输入你的职业</div>
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'Noto Serif SC','Songti SC',Georgia,serif;font-size:20px;color:#c8a878;letter-spacing:2px;margin-bottom:16px;">输入你的职业</div>
       <input id="job-input" type="text" placeholder="编导、程序员、设计师……" maxlength="12" autocomplete="off"
-        style="width:100%;background:transparent;border:none;border-bottom:1px solid #2a2420;color:#e8e2d8;font-family:inherit;font-size:20px;letter-spacing:3px;padding:8px 0 12px;outline:none;border-radius:0;-webkit-appearance:none;">
+        style="width:100%;background:transparent;border:none;border-bottom:1px solid #3a3028;color:#e8e2d8;font-family:'Noto Serif SC','Songti SC',Georgia,serif;font-size:22px;letter-spacing:3px;padding:10px 0 14px;outline:none;text-align:left;border-radius:0;-webkit-appearance:none;">
     </div>
-    <button id="start-btn" style="display:block;width:100%;background:#8b1a2b;color:#f0ebe0;border:none;padding:14px;font-size:12px;font-family:monospace;letter-spacing:4px;cursor:pointer;">看看我的职业发展之路</button>
-    <div style="margin-top:14px;text-align:center;font-size:9px;color:#2a2420;font-family:monospace;">数据来源 · Anthropic经济指数报告</div>
+    <button id="start-btn" style="display:block;width:100%;background:#8b1a2b;color:#f0ebe0;border:none;padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;">看看我的职业发展之路</button>
+    <div style="margin-top:16px;text-align:center;font-size:9px;color:#5a4a38;font-family:'Courier New',monospace;letter-spacing:1px;">数据来源 · Anthropic经济指数报告</div>
   </div>
 </div>
 
-<!-- ===== GAME ===== -->
+<!-- ======================================================= -->
+<!-- GAME                                                      -->
+<!-- ======================================================= -->
 <div id="game-screen" class="screen">
-  <div class="gh">
-    <div class="gh-left">
-      <div class="gh-classify">〔职业生存图鉴〕</div>
+  <div class="header">
+    <div class="header-left">
+      <div class="header-classify">〔职业生存图鉴〕</div>
       <h1>我的事业</h1>
     </div>
-    <div class="gh-right">
-      <div class="gh-year" id="gh-year">2026</div>
-      <div class="gh-year-sub" id="gh-year-sub">第1年 / 共10年</div>
+    <div>
+      <div class="header-year" id="gh-year">2026</div>
+      <div class="header-year-sub" id="gh-year-sub">第1年 / 共10年</div>
     </div>
   </div>
   <div class="ydots-bar" id="year-dots"></div>
 
   <div class="container">
 
-    <!-- MY CURRENT CARD + PRE-DRAW or POST-DRAW -->
+    <!-- ① 抽到的职业档案（TOP） -->
     <div class="section">
       <div class="section-title">
-        <span>我现在的职业</span>
-        <button class="section-title-btn" id="back-own-btn" style="display:none">← 换回原职</button>
-      </div>
-      <div class="my-card-wrap">
-        <div class="my-card-mini" id="my-card-mini">
-          <div class="mc-hdr" id="mc-hdr">我的职业</div>
-          <div class="mc-art">
-            <span class="mc-emoji" id="mc-emoji">💼</span>
-            <span class="mc-name" id="mc-name">—</span>
-          </div>
-          <div class="mc-stats">
-            <div class="mc-stat"><div class="mc-stat-l">薪资</div><div class="mc-stat-v" id="mc-sal">—</div></div>
-            <div class="mc-stat"><div class="mc-stat-l">抗AI</div><div class="mc-stat-v" id="mc-ai">—</div></div>
-            <div class="mc-stat"><div class="mc-stat-l">需求</div><div class="mc-stat-v" id="mc-dem">—</div></div>
-          </div>
-        </div>
-        <div class="my-card-info">
-          <div class="my-card-label">当前职业</div>
-          <div class="my-card-name-big" id="ccs-name">—</div>
-          <div class="my-card-own-tag" id="ccs-own-tag">原职业</div>
-          <div class="my-card-resist">
-            <div class="my-resist-val" id="ccs-resist">—</div>
-            <div class="my-resist-lbl">抗AI值</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DRAW / HAND ZONE -->
-    <div class="section">
-      <div class="section-title">
-        <span id="hand-section-title">今年出现的职业档案</span>
-        <button class="section-title-btn" id="enc-btn" onclick="openEncModal()">图鉴·<span id="enc-cnt">0</span>种</button>
+        <span id="draw-section-title">今年出现的职业档案</span>
+        <button class="stitle-btn" id="enc-btn" onclick="openEncModal()">图鉴·<span id="enc-cnt">0</span>种</button>
       </div>
 
       <!-- Pre-draw -->
-      <div id="draw-zone">
-        <div class="deck-visual">
-          <div class="deck-ghost"></div>
-          <div class="deck-ghost"></div>
-          <div class="deck-ghost">
-            <span class="deck-icon">📁</span>
-            <span class="deck-label">5张档案</span>
-          </div>
+      <div id="draw-zone" style="text-align:center;">
+        <div class="card-back-placeholder" style="margin-bottom:12px;">
+          <span class="bp-icon">📁</span>
+          <span class="bp-hint">档案封存中…</span>
         </div>
-        <button class="btn red" id="draw-btn">抽取职业档案</button>
+        <button class="btn red" id="draw-btn">翻开职业档案</button>
       </div>
 
-      <!-- Post-draw: fan hand -->
-      <div id="hand-zone">
-        <div class="hand-area" id="hand-area"></div>
-        <div class="hand-nav">
-          <button class="hand-nav-btn" id="nav-prev">‹</button>
-          <span class="hand-counter" id="hand-counter">1 / 5</span>
-          <button class="hand-nav-btn" id="nav-next">›</button>
+      <!-- Post-draw: deck stack viewer -->
+      <div id="hand-zone" style="display:none;">
+        <div class="deck-viewer" id="deck-viewer">
+          <!-- 3 shadow cards peeking out to the right -->
+          <div class="deck-shadow s3"></div>
+          <div class="deck-shadow s2"></div>
+          <div class="deck-shadow s1"></div>
+          <!-- active card -->
+          <div class="deck-active" id="deck-active"></div>
         </div>
-        <!-- Swap action strip -->
+        <div class="deck-nav">
+          <button class="deck-nav-btn" id="nav-prev">‹</button>
+          <span class="deck-counter" id="deck-counter">1 / 5</span>
+          <button class="deck-nav-btn" id="nav-next">›</button>
+        </div>
+        <!-- swap strip -->
         <div class="swap-strip hidden" id="swap-strip">
-          <span class="swap-strip-text" id="swap-strip-text">点击卡牌查看详情</span>
-          <button class="btn red btn-small" id="swap-quick-btn" onclick="quickSwap()">换成这个</button>
+          <span class="swap-strip-txt" id="swap-strip-txt"></span>
+          <button class="btn red btn-sm" id="swap-quick-btn">换成这个</button>
         </div>
       </div>
     </div>
 
-    <!-- EVENT -->
-    <div class="section" id="event-section" style="display:none">
+    <!-- ② 今年发生了（事件） -->
+    <div class="section" id="event-section" style="display:none;">
       <div class="section-title" id="event-label">2026 · 今年发生了</div>
       <div class="event-text" id="event-body"></div>
       <div class="event-slogan" id="event-slogan"></div>
     </div>
 
-    <!-- CONFIRM -->
-    <div class="btn-row" id="action-row" style="display:none">
-      <button class="btn red" id="keep-btn">保留，进入这一年 →</button>
+    <!-- ③ 我现在的职业（BOTTOM）+ 确认按钮 -->
+    <div class="section">
+      <div class="section-title">
+        <span>我现在的职业</span>
+        <button class="stitle-btn" id="back-own-btn" style="display:none;">← 换回原职</button>
+      </div>
+      <div class="my-card-row">
+        <div class="mini-card own" id="my-mini-card">
+          <div class="mini-header" id="my-mini-hdr"><span class="mini-rarity" id="my-mini-r">我的</span></div>
+          <div class="mini-art">
+            <span class="mini-icon" id="my-mini-emoji">💼</span>
+            <span class="mini-name" id="my-mini-name">—</span>
+          </div>
+        </div>
+        <div class="my-card-info">
+          <div class="my-card-label">当前职业</div>
+          <div class="my-card-name" id="ccs-name">—</div>
+          <div class="my-own-tag" id="ccs-own-tag">原职业</div>
+        </div>
+        <div class="my-resist">
+          <div class="my-resist-val" id="ccs-resist">—</div>
+          <div class="my-resist-lbl">抗AI值</div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn red" id="keep-btn" disabled>保留，进入这一年 →</button>
+      </div>
     </div>
 
   </div>
 </div>
 
-<!-- ===== CARD DETAIL MODAL ===== -->
+<!-- ======================================================= -->
+<!-- CARD DETAIL MODAL                                         -->
+<!-- ======================================================= -->
 <div id="card-modal">
   <div style="position:absolute;inset:0;" id="cm-bg"></div>
   <div class="cm-sheet">
     <button class="cm-close" id="cm-x">✕</button>
-    <div class="cm-card-inner">
+    <div class="cm-card-wrap">
       <div class="card" id="cm-card">
         <div class="card-header">
           <span class="card-file-no" id="cm-file">FILE-N-001</span>
@@ -518,7 +420,7 @@ body{
         <div class="card-body">
           <span class="card-type-badge" id="cm-cat">[ 分类 ]</span>
           <div class="card-desc" id="cm-desc"></div>
-          <div class="card-elim-note" id="cm-elim" style="display:none"></div>
+          <div class="card-elim-note" id="cm-elim" style="display:none;"></div>
           <div class="stats">
             <div class="stat-row stat-atk"><span class="stat-label">薪资力</span><div class="stat-track"><div class="stat-fill" id="sf-sal"></div></div><span class="stat-val" id="sv-sal"></span></div>
             <div class="stat-row stat-def"><span class="stat-label">抗AI值</span><div class="stat-track"><div class="stat-fill" id="sf-ai"></div></div><span class="stat-val" id="sv-ai"></span></div>
@@ -536,7 +438,9 @@ body{
   </div>
 </div>
 
-<!-- ===== ENC MODAL ===== -->
+<!-- ======================================================= -->
+<!-- ENC MODAL                                                 -->
+<!-- ======================================================= -->
 <div id="enc-modal">
   <div style="position:absolute;inset:0;" id="enc-bg"></div>
   <div class="enc-sheet">
@@ -547,14 +451,16 @@ body{
   </div>
 </div>
 
-<!-- ===== ELIM ===== -->
+<!-- ======================================================= -->
+<!-- ELIM                                                      -->
+<!-- ======================================================= -->
 <div id="elim-screen" class="screen">
-  <div class="gh">
-    <div class="gh-left"><div class="gh-classify">〔职业生存图鉴〕</div><h1>我的事业</h1></div>
-    <div class="gh-right"><div class="gh-year" id="e-yr">2026</div><div class="gh-year-sub">AI淘汰名单</div></div>
+  <div class="header">
+    <div class="header-left"><div class="header-classify">〔职业生存图鉴〕</div><h1>我的事业</h1></div>
+    <div><div class="header-year" id="e-yr">2026</div><div class="header-year-sub">AI淘汰名单</div></div>
   </div>
   <div class="elim-yr-big" id="e-yr-big">2026</div>
-  <div class="elim-sub">本年AI淘汰名单</div>
+  <div class="elim-sub-lbl">本年AI淘汰名单</div>
   <div id="elim-list"></div>
   <div class="vwrap" id="vwrap" style="display:none">
     <div class="vbox" id="vbox"><div class="vstatus" id="vstatus"></div><div class="vmsg" id="vmsg"></div></div>
@@ -562,20 +468,20 @@ body{
   </div>
 </div>
 
-<!-- ===== FAIL ===== -->
-<div id="fail-screen" class="screen" style="background:var(--paper);">
-  <div class="gh">
-    <div class="gh-left"><div class="gh-classify">〔职业生存图鉴〕</div><h1>我的事业</h1></div>
-    <div class="gh-right"><div class="gh-year" id="f-yr" style="font-size:18px;">2028</div><div class="gh-year-sub">职业生涯结束</div></div>
+<!-- ======================================================= -->
+<!-- FAIL                                                      -->
+<!-- ======================================================= -->
+<div id="fail-screen" class="screen">
+  <div class="header">
+    <div class="header-left"><div class="header-classify">〔职业生存图鉴〕</div><h1>我的事业</h1></div>
+    <div><div class="header-year" id="f-yr" style="font-size:18px;">2028</div><div class="header-year-sub">职业生涯结束</div></div>
   </div>
   <div style="text-align:center;padding:28px 0 12px;">
-    <div style="font-size:44px;font-weight:900;color:var(--red);opacity:0.25;font-family:monospace;letter-spacing:8px;" id="f-yr-big">2028</div>
+    <div style="font-size:44px;font-weight:900;color:var(--red);opacity:0.22;font-family:monospace;letter-spacing:8px;" id="f-yr-big">2028</div>
     <div style="font-size:20px;font-weight:900;color:var(--ink);letter-spacing:4px;margin-top:8px;">你失业了。</div>
   </div>
   <div class="container">
-    <div class="section">
-      <div style="font-size:12px;line-height:2.2;color:var(--ink-lt);white-space:pre-wrap;" id="f-text"></div>
-    </div>
+    <div class="section"><div class="event-text" id="f-text"></div></div>
     <div class="btn-row">
       <button class="btn red" id="retry-btn">退回这一年，重新选择</button>
       <button class="btn outline" id="f-enc-btn" onclick="openEncModal()">查看已收录的职业图鉴</button>
@@ -584,18 +490,20 @@ body{
   </div>
 </div>
 
-<!-- ===== ENDING ===== -->
-<div id="ending-screen" class="screen" style="background:var(--paper);">
-  <div class="gh">
-    <div class="gh-left"><div class="gh-classify">〔职业生存图鉴〕</div><h1>我的事业</h1></div>
-    <div class="gh-right"><div class="gh-year">2035</div><div class="gh-year-sub">最终年</div></div>
+<!-- ======================================================= -->
+<!-- ENDING                                                    -->
+<!-- ======================================================= -->
+<div id="ending-screen" class="screen">
+  <div class="header">
+    <div class="header-left"><div class="header-classify">〔职业生存图鉴〕</div><h1>我的事业</h1></div>
+    <div><div class="header-year">2035</div><div class="header-year-sub">最终年</div></div>
   </div>
   <div style="text-align:center;padding:24px 0 12px;">
     <div style="font-size:9px;color:var(--red);letter-spacing:4px;font-family:monospace;margin-bottom:6px;">档案封存完毕</div>
-    <div style="font-size:24px;font-weight:900;color:var(--ink);letter-spacing:4px;">你活下来了。</div>
+    <div style="font-size:22px;font-weight:900;color:var(--ink);letter-spacing:4px;">你活下来了。</div>
   </div>
   <div class="container">
-    <div class="section" style="font-size:13px;line-height:2.4;color:var(--ink-lt);" id="end-text"></div>
+    <div class="section" id="end-text" style="font-size:13px;line-height:2.4;color:var(--ink-lt);"></div>
     <div class="btn-row">
       <button class="btn outline" id="end-enc-btn" onclick="openEncModal()">查看这十年见过的职业</button>
       <button class="btn red" id="play-again-btn">再玩一次</button>
@@ -654,13 +562,7 @@ const POOL=[
 const ELIM_YEAR={};
 YEARS.forEach(y=>y.eliminated.forEach(n=>{if(!ELIM_YEAR[n])ELIM_YEAR[n]=y.year;}));
 
-let G={
-  ownCard:null,currentCard:null,
-  yearIndex:0,drawnCards:[],
-  swappedThisYear:false,startOfYearCard:null,
-  encyclopedia:{},activeHandIdx:0
-};
-
+let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],swappedThisYear:false,startOfYearCard:null,encyclopedia:{},activeIdx:0};
 const $=id=>document.getElementById(id);
 
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);}
@@ -675,111 +577,87 @@ function randomCards(n,excl=[]){
   pool.filter(c=>!seen.has(c.name)).forEach(c=>{if(r.length<n)r.push(c);});
   return r;
 }
-
-function addToEnc(card){
-  if(G.encyclopedia[card.name])G.encyclopedia[card.name].timesDrawn++;
-  else G.encyclopedia[card.name]={card:{...card},firstSeen:YEARS[G.yearIndex].year,timesDrawn:1};
+function addToEnc(c){
+  if(G.encyclopedia[c.name])G.encyclopedia[c.name].timesDrawn++;
+  else G.encyclopedia[c.name]={card:{...c},firstSeen:YEARS[G.yearIndex].year,timesDrawn:1};
 }
-
 function updateHUD(){
   const y=YEARS[G.yearIndex];
-  $('gh-year').textContent=y.year;
-  $('gh-year-sub').textContent=`第${G.yearIndex+1}年 / 共10年`;
-  const dots=$('year-dots'); dots.innerHTML='';
+  $('gh-year').textContent=y.year;$('gh-year-sub').textContent=`第${G.yearIndex+1}年 / 共10年`;
+  const dots=$('year-dots');dots.innerHTML='';
   for(let i=0;i<10;i++){const d=document.createElement('div');d.className='ydot'+(i<G.yearIndex?' done':i===G.yearIndex?' cur':'');dots.appendChild(d);}
 }
-
 function updateMyCard(){
   const c=G.currentCard;
-  $('mc-emoji').textContent=c.emoji||'💼';
-  $('mc-name').textContent=c.name;
-  $('mc-sal').textContent=c.salary||'—';
-  $('mc-ai').textContent=c.aiResist||'—';
-  $('mc-dem').textContent=c.demand||'—';
-  $('mc-hdr').textContent=c.isOwn?'我的职业':c.rarity;
-  $('my-card-mini').className='my-card-mini'+(c.isOwn?' own':'');
+  $('my-mini-emoji').textContent=c.emoji||'💼';
+  $('my-mini-name').textContent=c.name;
+  $('my-mini-r').textContent=c.isOwn?'原职业':c.rarity||'N';
+  $('my-mini-card').className='mini-card'+(c.isOwn?' own':(c.rarity?' '+c.rarity:''));
+  $('my-mini-hdr').style.background=c.isOwn?'var(--red)':(c.rarity?`var(--${c.rarity})`:'var(--ink-lt)');
   $('ccs-name').textContent=c.name;
   $('ccs-resist').textContent=c.aiResist;
   $('ccs-own-tag').style.display=c.isOwn?'block':'none';
   $('back-own-btn').style.display=(!c.isOwn&&G.ownCard)?'block':'none';
 }
-
 function updateEncBtn(){$('enc-cnt').textContent=Object.keys(G.encyclopedia).length;}
 
-/* ── FAN HAND ─────────────────────────────────────────────── */
-// Fan angles: 5 cards spread across -24° to +24°
-const FAN_ANGLES=[-24,-12,0,12,24];
-// Vertical offsets: cards at edges are lower
-const FAN_Y=[14,6,0,6,14];
-
-function buildHandCard(card){
+/* ── deck viewer ─── */
+function buildActiveCard(card){
   const div=document.createElement('div');
-  div.className=`hand-card ${card.rarity}`;
+  div.className='card '+card.rarity;
   div.innerHTML=`
-    <div class="hand-card-hdr">
-      <span class="hand-card-r">${card.rarity}</span>
-      <span class="hand-card-file">${card.fileNum}</span>
+    <div class="card-header">
+      <span class="card-file-no">${card.fileNum}</span>
+      <span class="card-rarity-stamp">${RARITY_LABEL[card.rarity]||card.rarity}</span>
     </div>
-    <div class="hand-card-art">
-      <span class="hand-card-emoji">${card.emoji}</span>
-      <span class="hand-card-name">${card.name}</span>
-      <span class="hand-card-tag">${card.tagline}</span>
+    <div class="card-art">
+      <span class="card-art-icon">${card.emoji}</span>
+      <div class="card-name">${card.name}</div>
+      <div class="card-tag">${card.tagline}</div>
     </div>
-    <div class="hand-card-stats">
-      <div class="hand-card-stat a"><div class="hand-card-stat-l">薪资</div><div class="hand-card-stat-v">${card.salary}</div></div>
-      <div class="hand-card-stat d"><div class="hand-card-stat-l">抗AI</div><div class="hand-card-stat-v">${card.aiResist}</div></div>
-      <div class="hand-card-stat h"><div class="hand-card-stat-l">需求</div><div class="hand-card-stat-v">${card.demand}</div></div>
+    <div class="card-body">
+      <span class="card-type-badge">[ ${card.category}类 ]</span>
+      <div class="card-desc">${card.desc}</div>
+      <div class="stats">
+        <div class="stat-row stat-atk"><span class="stat-label">薪资力</span><div class="stat-track"><div class="stat-fill" style="width:${card.salary}%"></div></div><span class="stat-val">${card.salary}</span></div>
+        <div class="stat-row stat-def"><span class="stat-label">抗AI值</span><div class="stat-track"><div class="stat-fill" style="width:${card.aiResist}%"></div></div><span class="stat-val">${card.aiResist}</span></div>
+        <div class="stat-row stat-hp"><span class="stat-label">需求度</span><div class="stat-track"><div class="stat-fill" style="width:${card.demand}%"></div></div><span class="stat-val">${card.demand}</span></div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span>职业生存图鉴 · ${YEARS[G.yearIndex].year}</span>
+      <span>${G.encyclopedia[card.name]&&G.encyclopedia[card.name].timesDrawn>1?'已见'+G.encyclopedia[card.name].timesDrawn+'次':''}</span>
     </div>`;
+  div.addEventListener('click',()=>openCardDetail(card));
   return div;
 }
 
-function renderHand(activeIdx){
-  const area=$('hand-area'); area.innerHTML='';
-  G.drawnCards.forEach((card,i)=>{
-    const slot=document.createElement('div');
-    slot.className='hand-slot'+(i===activeIdx?' active':'');
-    slot.dataset.idx=i;
-    slot.style.transform=`rotate(${FAN_ANGLES[i]}deg) translateY(${FAN_Y[i]}px)`;
-    slot.appendChild(buildHandCard(card));
-    // tap to open detail modal
-    slot.addEventListener('click',()=>{
-      if(i===activeIdx){
-        openCardDetail(card);
-      } else {
-        setActiveHand(i);
-      }
-    });
-    area.appendChild(slot);
-  });
-  $('hand-counter').textContent=`${activeIdx+1} / 5`;
-  $('nav-prev').disabled=activeIdx===0;
-  $('nav-next').disabled=activeIdx===4;
+function renderDeck(idx){
+  const card=G.drawnCards[idx];
+  $('deck-active').innerHTML='';
+  $('deck-active').appendChild(buildActiveCard(card));
+  $('deck-counter').textContent=`${idx+1} / 5`;
+  $('nav-prev').disabled=idx===0;
+  $('nav-next').disabled=idx===4;
   // update swap strip
   const strip=$('swap-strip');
-  const card=G.drawnCards[activeIdx];
+  strip.classList.remove('hidden');
   if(G.swappedThisYear){
-    strip.classList.remove('hidden');
-    $('swap-strip-text').textContent='今年已换过职业';
+    $('swap-strip-txt').textContent='今年已换过职业';
     $('swap-quick-btn').disabled=true;
     $('swap-quick-btn').textContent='已换过';
   } else {
-    strip.classList.remove('hidden');
-    $('swap-strip-text').textContent=`「${card.name}」抗AI值 ${card.aiResist}`;
+    $('swap-strip-txt').textContent=`「${card.name}」· 抗AI值 ${card.aiResist}`;
     $('swap-quick-btn').disabled=false;
     $('swap-quick-btn').textContent='换成这个';
   }
-}
-
-function setActiveHand(idx){
-  G.activeHandIdx=idx;
-  renderHand(idx);
 }
 
 let twTimer=null;
 function typeEvent(){
   const y=YEARS[G.yearIndex];
   $('event-slogan').style.display='none';
-  const el=$('event-body'); el.textContent='';
+  const el=$('event-body');el.textContent='';
   if(twTimer)clearInterval(twTimer);
   let i=0;
   twTimer=setInterval(()=>{
@@ -791,53 +669,42 @@ function typeEvent(){
 function doDrawCards(){
   G.drawnCards=randomCards(5,[G.currentCard.name]);
   G.drawnCards.forEach(c=>addToEnc(c));
-  G.activeHandIdx=0;
-  updateEncBtn();
-
-  // animate out
+  G.activeIdx=0;updateEncBtn();
+  // transition
   $('draw-zone').style.transition='opacity 0.2s';
   $('draw-zone').style.opacity='0';
   setTimeout(()=>{
     $('draw-zone').style.display='none';
     $('hand-zone').style.display='block';
     $('event-section').style.display='block';
-    $('action-row').style.display='block';
     $('event-label').textContent=`${YEARS[G.yearIndex].year} · 今年发生了`;
-    renderHand(0);
+    renderDeck(0);
     typeEvent();
+    $('keep-btn').disabled=false;
   },220);
 }
 
 function quickSwap(){
   if(G.swappedThisYear)return;
-  const card=G.drawnCards[G.activeHandIdx];
-  G.currentCard={...card,isOwn:false};
-  G.swappedThisYear=true;
-  updateMyCard();
-  $('keep-btn').textContent='确认换职，进入这一年 →';
-  renderHand(G.activeHandIdx);
+  const card=G.drawnCards[G.activeIdx];
+  G.currentCard={...card,isOwn:false};G.swappedThisYear=true;
+  updateMyCard();$('keep-btn').textContent='确认换职，进入这一年 →';
+  renderDeck(G.activeIdx);
 }
 
 function startYear(){
-  G.swappedThisYear=false;
-  G.startOfYearCard={...G.currentCard};
-  G.activeHandIdx=0;
-  updateHUD();
-  updateMyCard();
-  updateEncBtn();
-  // reset
-  $('draw-zone').style.display='block';
-  $('draw-zone').style.opacity='1';
+  G.swappedThisYear=false;G.startOfYearCard={...G.currentCard};G.activeIdx=0;
+  updateHUD();updateMyCard();updateEncBtn();
+  $('draw-zone').style.display='block';$('draw-zone').style.opacity='1';
   $('hand-zone').style.display='none';
   $('event-section').style.display='none';
-  $('action-row').style.display='none';
-  $('keep-btn').textContent='保留，进入这一年 →';
+  $('keep-btn').disabled=true;$('keep-btn').textContent='保留，进入这一年 →';
   $('swap-strip').classList.add('hidden');
-  $('hand-area').innerHTML='';
+  $('deck-active').innerHTML='';
   showScreen('game-screen');
 }
 
-/* ── CARD DETAIL MODAL ───────────────────────────────────── */
+/* ── card detail modal ── */
 function openCardDetail(card){
   $('cm-card').className='card '+card.rarity;
   $('cm-file').textContent=card.fileNum;
@@ -847,14 +714,12 @@ function openCardDetail(card){
   $('cm-tag').textContent=card.tagline;
   $('cm-cat').textContent=`[ ${card.category}类 ]`;
   $('cm-desc').textContent=card.desc;
-  $('sf-sal').style.width=card.salary+'%'; $('sv-sal').textContent=card.salary;
-  $('sf-ai').style.width=card.aiResist+'%'; $('sv-ai').textContent=card.aiResist;
-  $('sf-dem').style.width=card.demand+'%'; $('sv-dem').textContent=card.demand;
+  $('sf-sal').style.width=card.salary+'%';$('sv-sal').textContent=card.salary;
+  $('sf-ai').style.width=card.aiResist+'%';$('sv-ai').textContent=card.aiResist;
+  $('sf-dem').style.width=card.demand+'%';$('sv-dem').textContent=card.demand;
   const enc=G.encyclopedia[card.name];
   $('cm-known').textContent=enc&&enc.timesDrawn>1?`已见 ${enc.timesDrawn}次`:'';
-  const curYear=YEARS[G.yearIndex].year;
-  const elimY=ELIM_YEAR[card.name];
-  const elEl=$('cm-elim');
+  const curYear=YEARS[G.yearIndex].year,elimY=ELIM_YEAR[card.name],elEl=$('cm-elim');
   if(elimY&&elimY<=curYear){elEl.style.display='block';elEl.textContent=`⚠ 此职业在 ${elimY} 年被AI淘汰，持有风险极高`;}
   else if(elimY){elEl.style.display='block';elEl.textContent=`预计 ${elimY} 年后面临淘汰风险`;}
   else elEl.style.display='none';
@@ -864,34 +729,30 @@ function openCardDetail(card){
   $('card-modal').classList.add('open');
 }
 
-/* ── ENC MODAL ───────────────────────────────────────────── */
+/* ── enc modal ── */
 function openEncModal(){
   const entries=Object.values(G.encyclopedia).sort((a,b)=>['N','R','SR','SSR','UR'].indexOf(b.card.rarity)-['N','R','SR','SSR','UR'].indexOf(a.card.rarity));
   const curYear=YEARS[Math.min(G.yearIndex,9)].year;
   $('enc-sub-txt').textContent=`已收录 ${entries.length} 种职业（共 ${POOL.length} 种）`;
-  const grid=$('enc-grid'); grid.innerHTML='';
+  const grid=$('enc-grid');grid.innerHTML='';
   entries.forEach(({card,timesDrawn})=>{
     const elim=ELIM_YEAR[card.name]&&ELIM_YEAR[card.name]<=curYear;
     const div=document.createElement('div');
     div.className='enc-item mini-card '+card.rarity+(elim?' elim':'');
-    div.innerHTML=`<div class="mini-header"><span class="mini-rarity">${card.rarity}</span></div>
-      <div class="mini-art"><span class="mini-icon">${card.emoji}</span><span class="mini-name">${card.name}</span></div>
-      <div class="enc-info">${elim?ELIM_YEAR[card.name]+'年淘汰':'×'+timesDrawn}</div>`;
+    div.innerHTML=`<div class="mini-header"><span class="mini-rarity">${card.rarity}</span></div><div class="mini-art"><span class="mini-icon">${card.emoji}</span><span class="mini-name">${card.name}</span></div><div class="enc-info">${elim?ELIM_YEAR[card.name]+'年淘汰':'×'+timesDrawn}</div>`;
     div.addEventListener('click',()=>{closeEncModal();openCardDetail(card);});
     grid.appendChild(div);
   });
-  if(!entries.length) grid.innerHTML='<div style="grid-column:span 3;text-align:center;color:var(--ink-faint);padding:20px;font-size:11px;font-family:monospace;">还没有收录任何职业</div>';
+  if(!entries.length)grid.innerHTML='<div style="grid-column:span 3;text-align:center;color:var(--ink-faint);padding:20px;font-size:11px;font-family:monospace;">还没有收录任何职业</div>';
   $('enc-modal').classList.add('open');
 }
 function closeEncModal(){$('enc-modal').classList.remove('open');}
 
-/* ── ELIM ────────────────────────────────────────────────── */
+/* ── elim ── */
 function proceedToElim(){
   const y=YEARS[G.yearIndex];
-  $('e-yr').textContent=y.year;
-  $('e-yr-big').textContent=y.year;
-  $('vwrap').style.display='none';
-  $('elim-list').innerHTML='';
+  $('e-yr').textContent=y.year;$('e-yr-big').textContent=y.year;
+  $('vwrap').style.display='none';$('elim-list').innerHTML='';
   showScreen('elim-screen');
   y.eliminated.forEach((job,i)=>{
     const mine=job===G.currentCard.name;
@@ -903,7 +764,6 @@ function proceedToElim(){
   });
   setTimeout(()=>showVerdict(y),400*(y.eliminated.length+1)+500);
 }
-
 function showVerdict(y){
   const isElim=y.eliminated.includes(G.currentCard.name);
   $('vwrap').style.display='block';
@@ -915,43 +775,39 @@ function showVerdict(y){
   if(isElim){btn.textContent='查看结果';btn.onclick=()=>showFail(y);}
   else{btn.textContent=G.yearIndex>=9?'查看结局 →':`进入 ${y.year+1} 年 →`;btn.onclick=()=>{if(G.yearIndex>=9)showEnding();else{G.yearIndex++;startYear();}};}
 }
-
 function showFail(y){
   $('f-yr').textContent=y.year;$('f-yr-big').textContent=y.year;
   $('f-text').textContent=`${y.year}年。你持有的「${G.currentCard.name}」在这一年进入了淘汰名单。\n\n不是你的错。只是时代的滚轮，刚好从你这里压过去了。`;
   showScreen('fail-screen');
 }
-
 function showEnding(){
-  const usedOwn=G.currentCard.isOwn;
-  const encN=Object.keys(G.encyclopedia).length;
+  const usedOwn=G.currentCard.isOwn,encN=Object.keys(G.encyclopedia).length;
   let html=usedOwn?`<p>十年。</p><p>你从2026年开始，带着「<strong>${G.ownCard.name}</strong>」，一路走到了2035年。</p><p><strong>这件事，AI不懂。</strong></p>`:`<p>十年。</p><p>你从「${G.ownCard.name}」出发，最终以「<strong>${G.currentCard.name}</strong>」活到了2035年。</p><p><strong>这件事，AI不懂。</strong></p>`;
   html+=`<p style="font-size:11px;color:var(--ink-faint);margin-top:12px;">这十年你见过 ${encN} 种职业。</p>`;
   $('end-text').innerHTML=html;
   showScreen('ending-screen');
 }
 
-/* ── LISTENERS ───────────────────────────────────────────── */
+/* ── listeners ── */
 $('start-btn').addEventListener('click',()=>{
   const job=$('job-input').value.trim();
   if(!job){$('job-input').focus();return;}
   G.ownCard={name:job,rarity:'SSR',aiResist:Math.floor(Math.random()*26)+60,salary:55,demand:70,category:'本职',emoji:'💼',tagline:'我的职业',desc:'这是你现在的职业。',fileNum:'FILE-OWN',isOwn:true};
-  G.currentCard={...G.ownCard};
-  G.yearIndex=0;G.encyclopedia={};
+  G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};
   startYear();
 });
 $('job-input').addEventListener('keydown',e=>{if(e.key==='Enter')$('start-btn').click();});
 $('draw-btn').addEventListener('click',doDrawCards);
-$('nav-prev').addEventListener('click',()=>{if(G.activeHandIdx>0)setActiveHand(G.activeHandIdx-1);});
-$('nav-next').addEventListener('click',()=>{if(G.activeHandIdx<4)setActiveHand(G.activeHandIdx+1);});
+$('nav-prev').addEventListener('click',()=>{if(G.activeIdx>0){G.activeIdx--;renderDeck(G.activeIdx);}});
+$('nav-next').addEventListener('click',()=>{if(G.activeIdx<4){G.activeIdx++;renderDeck(G.activeIdx);}});
+$('swap-quick-btn').addEventListener('click',quickSwap);
 $('keep-btn').addEventListener('click',proceedToElim);
 $('back-own-btn').addEventListener('click',()=>{
   if(G.swappedThisYear)return;
   G.currentCard={...G.ownCard,isOwn:true};G.swappedThisYear=true;
   updateMyCard();$('keep-btn').textContent='确认换回原职，进入这一年 →';
-  if(G.drawnCards.length)renderHand(G.activeHandIdx);
+  if(G.drawnCards.length)renderDeck(G.activeIdx);
 });
-
 $('cm-bg').addEventListener('click',()=>$('card-modal').classList.remove('open'));
 $('cm-x').addEventListener('click',()=>$('card-modal').classList.remove('open'));
 $('cm-cancel').addEventListener('click',()=>$('card-modal').classList.remove('open'));
@@ -960,15 +816,12 @@ $('cm-swap').addEventListener('click',function(){
   G.currentCard={...this._card,isOwn:false};G.swappedThisYear=true;
   updateMyCard();$('keep-btn').textContent='确认换职，进入这一年 →';
   $('card-modal').classList.remove('open');
-  renderHand(G.activeHandIdx);
+  renderDeck(G.activeIdx);
 });
-
-$('enc-bg').addEventListener('click',closeEncModal);
-$('enc-x').addEventListener('click',closeEncModal);
-
+$('enc-bg').addEventListener('click',closeEncModal);$('enc-x').addEventListener('click',closeEncModal);
 $('retry-btn').addEventListener('click',()=>{G.currentCard={...G.startOfYearCard};startYear();});
 $('restart-btn').addEventListener('click',()=>{
-  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],swappedThisYear:false,startOfYearCard:null,encyclopedia:{},activeHandIdx:0};
+  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],swappedThisYear:false,startOfYearCard:null,encyclopedia:{},activeIdx:0};
   $('job-input').value='';showScreen('intro-screen');
 });
 $('play-again-btn').addEventListener('click',()=>{G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};startYear();});
