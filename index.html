@@ -38,32 +38,43 @@ body{
   display:flex;justify-content:space-between;align-items:center;
   border-bottom:4px solid var(--red);
 }
-/* 左上角工牌 */
+/* 左上角工牌 - 放大版 */
 .id-badge{
-  display:flex;align-items:center;gap:8px;
+  display:flex;align-items:stretch;gap:10px;
 }
 .id-badge-card{
-  width:42px;height:56px;
-  border:2px solid var(--border);border-radius:5px;
+  width:60px;height:80px;
+  border:3px solid var(--border);border-radius:6px;
   background:var(--paper-lt);overflow:hidden;
   display:flex;flex-direction:column;
-  box-shadow:2px 3px 8px rgba(0,0,0,0.25);
+  box-shadow:2px 3px 10px rgba(0,0,0,0.3);
   flex-shrink:0;
 }
 .id-badge-card.own{border-color:var(--red);}
+.id-badge-card.N{border-color:var(--N);}
+.id-badge-card.R{border-color:var(--R);}
+.id-badge-card.SR{border-color:var(--SR);}
+.id-badge-card.SSR{border-color:var(--SSR);}
+.id-badge-card.UR{border-color:var(--UR);}
 .id-badge-hdr{
-  padding:2px 3px;font-size:6px;font-family:monospace;
+  padding:3px 4px;font-size:8px;font-family:monospace;
   color:#fff;letter-spacing:1px;font-weight:700;
   flex-shrink:0;
 }
 .id-badge-card.own .id-badge-hdr{background:var(--red);}
+.id-badge-card.N .id-badge-hdr{background:var(--N);}
+.id-badge-card.R .id-badge-hdr{background:var(--R);}
+.id-badge-card.SR .id-badge-hdr{background:var(--SR);}
+.id-badge-card.SSR .id-badge-hdr{background:var(--SSR);}
+.id-badge-card.UR .id-badge-hdr{background:var(--UR);}
 .id-badge-art{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper);}
-.id-badge-emoji{font-size:16px;line-height:1;}
-.id-badge-name{font-size:7px;font-weight:900;color:var(--ink);margin-top:2px;text-align:center;line-height:1.2;padding:0 2px;}
-.id-badge-info{color:var(--paper);}
-.id-badge-job{font-size:14px;font-weight:900;letter-spacing:1px;line-height:1;}
-.id-badge-sub{font-size:8px;color:var(--ink-faint);letter-spacing:2px;margin-top:2px;}
-.id-badge-resist{font-size:11px;font-weight:900;color:var(--red);font-family:monospace;margin-top:1px;}
+.id-badge-emoji{font-size:24px;line-height:1;}
+.id-badge-name{font-size:9px;font-weight:900;color:var(--ink);margin-top:3px;text-align:center;line-height:1.2;padding:0 3px;}
+.id-badge-info{color:var(--paper);display:flex;flex-direction:column;justify-content:center;min-width:90px;}
+.id-badge-job{font-size:15px;font-weight:900;letter-spacing:1px;line-height:1.1;margin-bottom:3px;}
+.id-badge-sub{font-size:9px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:4px;}
+.id-badge-resist{font-size:11px;font-weight:900;color:var(--red);font-family:monospace;margin-bottom:4px;}
+.id-badge-desc{font-size:9px;color:var(--ink-faint);line-height:1.4;max-width:120px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 
 .header-right{text-align:right;}
 .header-classify{font-size:8px;letter-spacing:3px;color:var(--red);font-family:monospace;margin-bottom:2px;}
@@ -162,13 +173,20 @@ body{
 
 /* ── PRE-DRAW placeholder ─────────────────── */
 .draw-placeholder{
-  width:100%;height:120px;
-  border:2px dashed var(--border);
+  width:100%;aspect-ratio:3/4;max-height:380px;
+  border:2px dashed var(--border);border-radius:8px;
   display:flex;align-items:center;justify-content:center;
   background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,0.02) 10px,rgba(0,0,0,0.02) 20px);
   color:var(--ink-faint);font-size:11px;letter-spacing:3px;
   margin-bottom:12px;
 }
+/* 卡牌飞入动画 */
+@keyframes cardFlyIn{
+  0%{transform:translateX(100px) rotate(15deg);opacity:0;}
+  60%{transform:translateX(-10px) rotate(-3deg);opacity:1;}
+  100%{transform:translateX(0) rotate(0);opacity:1;}
+}
+.card-fly-in{animation:cardFlyIn 0.5s ease-out forwards;}
 
 /* ── EVENT MODAL ──────────────────────────── */
 #event-modal{
@@ -181,12 +199,12 @@ body{
   position:relative;width:100%;max-width:480px;
   background:var(--paper);border-top:4px solid var(--red);
   padding:22px 20px calc(40px + env(safe-area-inset-bottom));
-  max-height:88vh;overflow-y:auto;
+  height:420px;overflow-y:auto;
   animation:slideUp 0.25s ease;
 }
 @keyframes slideUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
 .ev-year{font-size:9px;letter-spacing:4px;color:var(--red);font-family:monospace;margin-bottom:12px;}
-.ev-body{font-size:12px;line-height:2;color:var(--ink-lt);white-space:pre-wrap;margin-bottom:14px;}
+.ev-body{font-size:12px;line-height:2;color:var(--ink-lt);white-space:pre-wrap;margin-bottom:14px;height:220px;overflow-y:auto;}
 .ev-slogan{font-size:10px;color:var(--red);letter-spacing:3px;font-family:monospace;text-align:right;padding-top:10px;border-top:1px solid var(--border);margin-bottom:16px;display:none;}
 
 /* ── CARD DETAIL MODAL ────────────────────── */
@@ -219,8 +237,51 @@ body{
 .enc-item.elim{opacity:0.4;}
 
 /* ── RESULT SCREEN ────────────────────────── */
-.rv-wrap{padding:32px 20px 20px;text-align:center;}
-.rv-year{font-size:9px;color:var(--ink-faint);letter-spacing:4px;font-family:monospace;margin-bottom:16px;}
+.rv-wrap{padding:20px 16px 20px;text-align:center;}
+.rv-year{font-size:9px;color:var(--ink-faint);letter-spacing:4px;font-family:monospace;margin-bottom:12px;}
+/* 信纸风格结果卡片 */
+.rv-letter{
+  background:#fff;
+  border:1px solid #d0c8b8;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  padding:24px 20px;
+  margin-bottom:16px;
+  position:relative;
+  background-image:repeating-linear-gradient(
+    transparent,transparent 23px,#e8e0d0 23px,#e8e0d0 24px
+  );
+  line-height:24px;
+}
+.rv-letter::before{
+  content:'裁员通知';
+  position:absolute;top:12px;right:16px;
+  font-size:10px;color:var(--red);letter-spacing:2px;
+  font-family:monospace;
+}
+.rv-letter.surv::before{content:'年度评估';color:var(--green);}
+.rv-letter-stamp{
+  position:absolute;top:50px;right:20px;
+  width:60px;height:60px;border:2px solid var(--red);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  transform:rotate(-15deg);opacity:0.6;
+  font-size:11px;font-weight:900;color:var(--red);letter-spacing:2px;
+}
+.rv-letter.surv .rv-letter-stamp{border-color:var(--green);color:var(--green);}
+.rv-letter-title{
+  font-size:18px;font-weight:900;letter-spacing:2px;margin-bottom:16px;
+  padding-bottom:8px;border-bottom:1px solid #e8e0d0;
+}
+.rv-letter.surv .rv-letter-title{color:var(--green);}
+.rv-letter.fail .rv-letter-title{color:var(--red);}
+.rv-letter-body{
+  font-size:12px;color:var(--ink-lt);line-height:24px;
+  text-align:left;min-height:120px;
+}
+.rv-letter-sign{
+  text-align:right;font-size:10px;color:var(--ink-faint);
+  margin-top:16px;font-family:monospace;
+}
+/* 兼容旧样式 */
 .rv-box{
   border:2px solid var(--border);padding:28px 20px;
   background:var(--paper-lt);position:relative;margin-bottom:16px;
@@ -276,8 +337,9 @@ body{
       </div>
       <div class="id-badge-info">
         <div class="id-badge-job" id="id-job">—</div>
-        <div class="id-badge-sub">当前职业</div>
+        <div class="id-badge-sub" id="id-tagline">当前职业</div>
         <div class="id-badge-resist">抗AI <span id="id-resist">—</span></div>
+        <div class="id-badge-desc" id="id-desc"></div>
       </div>
     </div>
     <div class="header-right">
@@ -291,9 +353,9 @@ body{
 
   <div class="container">
 
-    <!-- 职业图鉴 section -->
+    <!-- 职业选择 section -->
     <div class="section">
-      <div class="section-title">职业图鉴</div>
+      <div class="section-title">职业选择</div>
 
       <!-- Pre-draw -->
       <div id="draw-zone">
@@ -325,13 +387,31 @@ body{
   </div>
 </div>
 
+<!-- ═══════════════════ CHOICE CONFIRM MODAL ═══════════════════════ -->
+<div id="choice-modal" style="display:none;position:fixed;inset:0;z-index:110;background:rgba(28,26,20,0.9);align-items:center;justify-content:center;">
+  <div style="text-align:center;padding:20px;max-width:320px;">
+    <div id="choice-anim" style="margin-bottom:20px;">
+      <div class="id-badge-card" id="choice-card-from" style="width:80px;height:100px;margin:0 auto 10px;transform:translateX(-40px);transition:all 0.5s ease;">
+        <div class="id-badge-hdr" style="font-size:9px;">原职业</div>
+        <div class="id-badge-art"><span class="id-badge-emoji" style="font-size:28px;">💼</span></div>
+      </div>
+      <div style="font-size:24px;color:var(--red);margin:10px 0;opacity:0;transition:opacity 0.3s;" id="choice-arrow">→</div>
+      <div class="id-badge-card" id="choice-card-to" style="width:80px;height:100px;margin:0 auto;transform:translateX(40px);opacity:0.3;transition:all 0.5s ease;">
+        <div class="id-badge-hdr" style="font-size:9px;">新职业</div>
+        <div class="id-badge-art"><span class="id-badge-emoji" style="font-size:28px;">🎯</span></div>
+      </div>
+    </div>
+    <div id="choice-text" style="color:var(--paper);font-size:14px;letter-spacing:1px;line-height:1.6;opacity:0;transition:opacity 0.3s;"></div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════ EVENT MODAL ══════════════════════════════ -->
 <div id="event-modal">
   <div class="ev-sheet">
     <div class="ev-year" id="ev-year">2026 · 今年发生了</div>
     <div class="ev-body" id="ev-body"></div>
     <div class="ev-slogan" id="ev-slogan"></div>
-    <button class="btn red" id="ev-confirm">今年你的职业是否安全</button>
+    <button class="btn red" id="ev-confirm">你的职业还安全吗？</button>
   </div>
 </div>
 
@@ -376,7 +456,7 @@ body{
 <div id="enc-modal">
   <div style="position:absolute;inset:0;" id="enc-bg"></div>
   <div class="enc-sheet">
-    <div class="enc-ttl">职业图鉴</div>
+    <div class="enc-ttl">职业选择</div>
     <div class="enc-sub" id="enc-sub-txt">已收录 0 种</div>
     <button class="enc-x" id="enc-x">✕</button>
     <div class="enc-grid" id="enc-grid"></div>
@@ -401,11 +481,11 @@ body{
   </div>
   <div class="rv-wrap">
     <div class="rv-year" id="rv-year">2026</div>
-    <div class="rv-box" id="rv-box">
-      <div class="rv-label" id="rv-label">本年幸存</div>
-      <div class="rv-title" id="rv-title">今年你的职业没有被淘汰</div>
-      <div class="rv-body" id="rv-body"></div>
-      <div class="rv-years-left" id="rv-left"></div>
+    <div class="rv-letter" id="rv-box">
+      <div class="rv-letter-stamp" id="rv-stamp">已审核</div>
+      <div class="rv-letter-title" id="rv-title">年度职业安全评估报告</div>
+      <div class="rv-letter-body" id="rv-body"></div>
+      <div class="rv-letter-sign" id="rv-sign">AI职业替代评估系统 · 自动生成</div>
     </div>
   </div>
   <div style="padding:0 20px 20px;">
@@ -509,6 +589,55 @@ YEARS.forEach(y=>y.eliminated.forEach(n=>{if(!ELIM_YEAR[n])ELIM_YEAR[n]=y.year;}
 let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0};
 const $=id=>document.getElementById(id);
 
+/* ── 选择动画 ── */
+function showChoiceAnimation(fromCard,toCard,isSwap,onComplete){
+  const modal=$('choice-modal');
+  const fromEl=$('choice-card-from');
+  const toEl=$('choice-card-to');
+  const arrow=$('choice-arrow');
+  const text=$('choice-text');
+  
+  // 设置卡片内容
+  fromEl.querySelector('.id-badge-emoji').textContent=fromCard.emoji||'💼';
+  fromEl.querySelector('.id-badge-hdr').textContent=fromCard.name;
+  fromEl.className='id-badge-card '+(fromCard.rarity||'own');
+  fromEl.querySelector('.id-badge-hdr').style.background=fromCard.isOwn?'var(--red)':(fromCard.rarity?`var(--${fromCard.rarity})`:'var(--ink-lt)');
+  
+  toEl.querySelector('.id-badge-emoji').textContent=toCard.emoji||'💼';
+  toEl.querySelector('.id-badge-hdr').textContent=toCard.name;
+  toEl.className='id-badge-card '+(toCard.rarity||'own');
+  toEl.querySelector('.id-badge-hdr').style.background=toCard.isOwn?'var(--red)':(toCard.rarity?`var(--${toCard.rarity})`:'var(--ink-lt)');
+  
+  // 重置动画状态
+  fromEl.style.transform='translateX(-40px)';
+  fromEl.style.opacity='1';
+  toEl.style.transform='translateX(40px)';
+  toEl.style.opacity='0.3';
+  arrow.style.opacity='0';
+  text.style.opacity='0';
+  text.textContent=isSwap?`你选择了转行成为${toCard.name}`:`你决定继续从事${fromCard.name}`;
+  
+  modal.style.display='flex';
+  
+  // 执行动画
+  setTimeout(()=>{
+    fromEl.style.transform='translateX(0)';
+    fromEl.style.opacity=isSwap?'0.4':'1';
+    toEl.style.transform='translateX(0)';
+    toEl.style.opacity='1';
+    arrow.style.opacity='1';
+  },50);
+  
+  setTimeout(()=>{
+    text.style.opacity='1';
+  },400);
+  
+  setTimeout(()=>{
+    modal.style.display='none';
+    onComplete();
+  },1500);
+}
+
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);}
 
 function randomCards(n,excl=[]){
@@ -531,8 +660,10 @@ function updateBadge(){
   $('id-name').textContent=c.name;
   $('id-job').textContent=c.name;
   $('id-resist').textContent=c.aiResist;
+  $('id-tagline').textContent=c.tagline||'当前职业';
+  $('id-desc').textContent=c.desc||'';
   const hdr=$('id-hdr');
-  hdr.textContent=c.isOwn?'我的职业':c.rarity||'N';
+  hdr.textContent=c.isOwn?'我的职业':(c.rarity||'N');
   hdr.parentElement.className='id-badge-card'+(c.isOwn?' own':(c.rarity?' '+c.rarity:''));
   hdr.style.background=c.isOwn?'var(--red)':(c.rarity?`var(--${c.rarity})`:'var(--ink-lt)');
 }
@@ -577,7 +708,9 @@ function buildActiveCard(card){
 function renderDeck(idx){
   const card=G.drawnCards[idx];
   $('deck-active').innerHTML='';
-  $('deck-active').appendChild(buildActiveCard(card));
+  const cardEl=buildActiveCard(card);
+  cardEl.classList.add('card-fly-in');
+  $('deck-active').appendChild(cardEl);
   $('deck-counter').textContent=`${idx+1} / 5`;
   $('nav-prev').disabled=idx===0;
   $('nav-next').disabled=idx===4;
@@ -612,6 +745,9 @@ function doDrawCards(){
     $('draw-zone').style.display='none';
     $('hand-zone').style.display='block';
     renderDeck(0);
+    // 添加飞入动画
+    const activeCard=$('deck-active').firstElementChild;
+    if(activeCard)activeCard.classList.add('card-fly-in');
   },220);
 }
 
@@ -680,24 +816,24 @@ function revealResult(){
   $('r-id-hdr').textContent=c.isOwn?'我的职业':c.rarity||'N';
   $('r-id-hdr').style.background=c.isOwn?'var(--red)':(c.rarity?`var(--${c.rarity})`:'var(--ink-lt)');
   $('r-yr').textContent=y.year;
-  $('rv-year').textContent=`${y.year} · 年度结果`;
+  $('rv-year').textContent=`${y.year} · 年度评估`;
   if(isElim){
-    $('rv-box').className='rv-box fail';
-    $('rv-label').textContent='职业已淘汰';
-    $('rv-title').textContent='很抱歉，你失业了……';
-    $('rv-body').textContent=`${y.year}年，AI的浪潮冲到了「${c.name}」这个岗位。\n\n${y.event.split('\n\n')[0]}`;
-    $('rv-left').textContent='';
+    $('rv-box').className='rv-letter fail';
+    $('rv-stamp').textContent='已淘汰';
+    $('rv-title').textContent='裁员通知';
+    $('rv-title').style.color='var(--red)';
+    $('rv-body').innerHTML=`尊敬的员工：<br><br>经系统评估，您所从事的「<strong>${c.name}</strong>」岗位已于${y.year}年被AI技术替代。<br><br>${y.event.split('\n\n')[0]}<br><br>您的职业档案已被归档。感谢您为人类就业史做出的贡献。`;
     $('result-next').style.display='none';
     $('result-fail-btns').style.display='flex';
     $('r-yr-sub').textContent='职业已淘汰';
   } else {
-    $('rv-box').className='rv-box surv';
-    $('rv-label').textContent='本年幸存';
-    $('rv-title').textContent='恭喜你，今年你的职业没有被淘汰';
-    $('rv-body').textContent=left>0?
-      `「${c.name}」这一年安全地撑了过来。\n\n时代的浪潮还没有冲到这里——但它从未停下脚步。`:
-      `「${c.name}」活过了2035年。十年里你见证了一个时代的变迁，而你还在。`;
-    $('rv-left').textContent=left>0?`· 还有 ${left} 年 ·`:'· 十年存活 ·';
+    $('rv-box').className='rv-letter surv';
+    $('rv-stamp').textContent='安全';
+    $('rv-title').textContent='年度职业安全评估报告';
+    $('rv-title').style.color='var(--green)';
+    $('rv-body').innerHTML=left>0?
+      `评估对象：${c.name}<br><br>评估结果：<strong style="color:var(--green)">本年度安全</strong><br><br>您的职业「${c.name}」在${y.year}年成功抵御了AI替代浪潮。系统的替代指数显示，该岗位仍需要人类特有的判断力与感知力。<br><br>但请保持警惕。技术迭代从未停止，明年的评估将更加严峻。`:
+      `评估对象：${c.name}<br><br>评估结果：<strong style="color:var(--green)">十年存活</strong><br><br>恭喜。您持有的「${c.name}」成功跨越了2026-2035的完整周期。在67%的职业被AI替代的大潮中，您不仅幸存，更见证了整个时代的变迁。<br><br>这是一项值得被记录的成就。`;
     $('result-next').style.display='block';
     $('result-fail-btns').style.display='none';
     $('r-yr-sub').textContent=left>0?`还有 ${left} 年`:'十年存活';
@@ -743,20 +879,25 @@ $('draw-btn').addEventListener('click',doDrawCards);
 $('nav-prev').addEventListener('click',()=>{if(G.activeIdx>0){G.activeIdx--;renderDeck(G.activeIdx);}});
 $('nav-next').addEventListener('click',()=>{if(G.activeIdx<4){G.activeIdx++;renderDeck(G.activeIdx);}});
 
-// 换成这个 → 记录pending，然后弹事件modal
+// 换成这个 → 显示头像变化动画 → 弹事件modal
 $('swap-btn').addEventListener('click',()=>{
-  G.pendingSwap={...G.drawnCards[G.activeIdx],isOwn:false};
-  openEventModal(()=>{
-    G.currentCard=G.pendingSwap;
+  const newCard={...G.drawnCards[G.activeIdx],isOwn:false};
+  showChoiceAnimation(G.currentCard,newCard,true,()=>{
+    G.pendingSwap=newCard;
+    G.currentCard=newCard;
     updateBadge();
-    proceedToElim();
+    openEventModal(()=>{
+      proceedToElim();
+    });
   });
 });
-// 保留原职 → 直接弹事件modal
+// 保留原职 → 显示确认动画 → 弹事件modal
 $('keep-btn').addEventListener('click',()=>{
-  G.pendingSwap=null;
-  openEventModal(()=>{
-    proceedToElim();
+  showChoiceAnimation(G.currentCard,G.currentCard,false,()=>{
+    G.pendingSwap=null;
+    openEventModal(()=>{
+      proceedToElim();
+    });
   });
 });
 
@@ -766,9 +907,16 @@ $('cm-x').addEventListener('click',()=>$('card-modal').classList.remove('open'))
 $('cm-cancel').addEventListener('click',()=>$('card-modal').classList.remove('open'));
 $('cm-swap').addEventListener('click',function(){
   if(!this._card)return;
-  G.pendingSwap={...this._card,isOwn:false};
+  const newCard={...this._card,isOwn:false};
   $('card-modal').classList.remove('open');
-  openEventModal(()=>{G.currentCard=G.pendingSwap;updateBadge();proceedToElim();});
+  showChoiceAnimation(G.currentCard,newCard,true,()=>{
+    G.pendingSwap=newCard;
+    G.currentCard=newCard;
+    updateBadge();
+    openEventModal(()=>{
+      proceedToElim();
+    });
+  });
 });
 
 $('enc-bg').addEventListener('click',closeEncModal);$('enc-x').addEventListener('click',closeEncModal);
