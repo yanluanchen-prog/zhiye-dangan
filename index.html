@@ -668,8 +668,6 @@ function updateBadge(){
   $('id-salary').textContent=c.salary||'—';
   $('id-resist').textContent=c.aiResist||'—';
   $('id-demand').textContent=c.demand||'—';
-  $('id-tagline').textContent=c.tagline||'当前职业';
-  $('id-desc').textContent=c.desc||'';
   const hdr=$('id-hdr');
   hdr.textContent=c.isOwn?'我的职业':(c.rarity||'N');
   hdr.parentElement.className='id-badge-card'+(c.isOwn?' own':(c.rarity?' '+c.rarity:''));
