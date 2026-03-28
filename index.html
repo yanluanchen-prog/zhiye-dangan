@@ -218,25 +218,22 @@ body{
 .enc-info{font-size:9px;color:var(--ink-faint);font-family:monospace;text-align:center;padding:3px 4px 5px;background:var(--paper-dk);}
 .enc-item.elim{opacity:0.4;}
 
-/* ── ELIM ─────────────────────────────────── */
-.elim-yr-big{font-size:44px;font-weight:900;color:var(--ink);letter-spacing:8px;text-align:center;padding:22px 0 4px;font-family:monospace;}
-.elim-sub-lbl{font-size:9px;color:var(--ink-faint);text-align:center;letter-spacing:4px;margin-bottom:12px;font-family:monospace;}
-.elim-item{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border);opacity:0;transform:translateX(-6px);transition:all 0.3s;}
-.elim-item.vis{opacity:1;transform:translateX(0);}
-.elim-item.mine{background:rgba(194,59,34,0.06);border-left:3px solid var(--red);}
-.elim-dot{width:5px;height:5px;border-radius:50%;background:var(--border);flex-shrink:0;}
-.elim-item.mine .elim-dot{background:var(--red);}
-.elim-job{font-size:14px;color:var(--ink-lt);}
-.elim-item.mine .elim-job{color:var(--red);font-size:16px;font-weight:700;}
-.elim-yours{font-size:9px;color:var(--red);letter-spacing:1px;margin-left:auto;font-family:monospace;}
-.vwrap{padding:12px 14px;}
-.vbox{border:1px solid var(--border);padding:16px;text-align:center;margin-bottom:10px;background:var(--paper-lt);position:relative;}
-.vbox::before{content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:1px solid var(--border);pointer-events:none;opacity:0.4;}
-.vbox.surv{border-color:var(--green);}.vbox.surv::before{border-color:var(--green);}
-.vbox.fail{border-color:var(--red);}.vbox.fail::before{border-color:var(--red);}
-.vstatus{font-size:10px;letter-spacing:4px;font-family:monospace;font-weight:700;margin-bottom:6px;}
-.surv .vstatus{color:var(--green);}.fail .vstatus{color:var(--red);}
-.vmsg{font-size:12px;color:var(--ink-lt);line-height:1.9;}
+/* ── RESULT SCREEN ────────────────────────── */
+.rv-wrap{padding:32px 20px 20px;text-align:center;}
+.rv-year{font-size:9px;color:var(--ink-faint);letter-spacing:4px;font-family:monospace;margin-bottom:16px;}
+.rv-box{
+  border:2px solid var(--border);padding:28px 20px;
+  background:var(--paper-lt);position:relative;margin-bottom:16px;
+}
+.rv-box::before{content:'';position:absolute;top:5px;left:5px;right:5px;bottom:5px;border:1px solid var(--border);pointer-events:none;opacity:0.4;}
+.rv-box.surv{border-color:var(--green);}.rv-box.surv::before{border-color:var(--green);}
+.rv-box.fail{border-color:var(--red);}.rv-box.fail::before{border-color:var(--red);}
+.rv-label{font-size:9px;letter-spacing:5px;font-family:monospace;font-weight:700;margin-bottom:10px;}
+.rv-box.surv .rv-label{color:var(--green);}
+.rv-box.fail .rv-label{color:var(--red);}
+.rv-title{font-size:20px;font-weight:900;letter-spacing:2px;margin-bottom:14px;}
+.rv-body{font-size:12px;color:var(--ink-lt);line-height:2;text-align:left;}
+.rv-years-left{font-size:10px;color:var(--ink-faint);font-family:monospace;letter-spacing:2px;margin-top:12px;}
 </style>
 </head>
 <body>
@@ -334,7 +331,7 @@ body{
     <div class="ev-year" id="ev-year">2026 · 今年发生了</div>
     <div class="ev-body" id="ev-body"></div>
     <div class="ev-slogan" id="ev-slogan"></div>
-    <button class="btn red" id="ev-confirm">揭晓结果 →</button>
+    <button class="btn red" id="ev-confirm">今年你的职业是否安全</button>
   </div>
 </div>
 
@@ -386,28 +383,37 @@ body{
   </div>
 </div>
 
-<!-- ═══════════════════════════ ELIM ═════════════════════════════════════ -->
-<div id="elim-screen" class="screen">
+<!-- ═══════════════════════════ RESULT ═══════════════════════════════════ -->
+<div id="result-screen" class="screen">
   <div class="header">
     <div class="id-badge">
-      <div class="id-badge-card own" id="e-id-card">
-        <div class="id-badge-hdr" style="background:var(--red)">我的职业</div>
-        <div class="id-badge-art"><span class="id-badge-emoji" id="e-id-emoji">💼</span><span class="id-badge-name" id="e-id-name">—</span></div>
+      <div class="id-badge-card own" id="r-id-card">
+        <div class="id-badge-hdr" id="r-id-hdr" style="background:var(--red)">我的职业</div>
+        <div class="id-badge-art"><span class="id-badge-emoji" id="r-id-emoji">💼</span><span class="id-badge-name" id="r-id-name">—</span></div>
       </div>
-      <div class="id-badge-info"><div class="id-badge-job" id="e-id-job">—</div><div class="id-badge-sub">当前职业</div></div>
+      <div class="id-badge-info"><div class="id-badge-job" id="r-id-job">—</div><div class="id-badge-sub">当前职业</div></div>
     </div>
     <div class="header-right">
       <div class="header-classify">〔职业生存图鉴〕</div>
-      <div class="header-year" id="e-yr">2026</div>
-      <div class="header-year-sub">AI淘汰名单</div>
+      <div class="header-year" id="r-yr">2026</div>
+      <div class="header-year-sub" id="r-yr-sub">年度结果</div>
     </div>
   </div>
-  <div class="elim-yr-big" id="e-yr-big">2026</div>
-  <div class="elim-sub-lbl">本年AI淘汰名单</div>
-  <div id="elim-list"></div>
-  <div class="vwrap" id="vwrap" style="display:none">
-    <div class="vbox" id="vbox"><div class="vstatus" id="vstatus"></div><div class="vmsg" id="vmsg"></div></div>
-    <button class="btn red" id="elim-next" style="margin:0 14px;width:calc(100% - 28px);">继续</button>
+  <div class="rv-wrap">
+    <div class="rv-year" id="rv-year">2026</div>
+    <div class="rv-box" id="rv-box">
+      <div class="rv-label" id="rv-label">本年幸存</div>
+      <div class="rv-title" id="rv-title">今年你的职业没有被淘汰</div>
+      <div class="rv-body" id="rv-body"></div>
+      <div class="rv-years-left" id="rv-left"></div>
+    </div>
+  </div>
+  <div style="padding:0 20px 20px;">
+    <button class="btn red" id="result-next">继续 →</button>
+    <div style="margin-top:8px;display:flex;gap:8px;" id="result-fail-btns" style="display:none;">
+      <button class="btn outline" id="result-retry" style="flex:1;">重新选择这一年</button>
+      <button class="btn outline" id="result-restart" style="flex:1;">重新开始</button>
+    </div>
   </div>
 </div>
 
@@ -660,38 +666,45 @@ function openEncModal(){
 }
 function closeEncModal(){$('enc-modal').classList.remove('open');}
 
-/* ── elim ── */
-function proceedToElim(){
+/* ── result ── */
+function proceedToElim(){revealResult();}
+function revealResult(){
   const y=YEARS[G.yearIndex];
-  // update elim screen badge
   const c=G.currentCard;
-  $('e-id-emoji').textContent=c.emoji||'💼';
-  $('e-id-name').textContent=c.name;
-  $('e-id-job').textContent=c.name;
-  $('e-yr').textContent=y.year;$('e-yr-big').textContent=y.year;
-  $('vwrap').style.display='none';$('elim-list').innerHTML='';
-  showScreen('elim-screen');
-  y.eliminated.forEach((job,i)=>{
-    const mine=job===G.currentCard.name;
-    const div=document.createElement('div');
-    div.className='elim-item'+(mine?' mine':'');
-    div.innerHTML=`<div class="elim-dot"></div><div class="elim-job">${job}</div>${mine?'<div class="elim-yours">你的职业</div>':''}`;
-    $('elim-list').appendChild(div);
-    setTimeout(()=>div.classList.add('vis'),400*(i+1));
-  });
-  setTimeout(()=>showVerdict(y),400*(y.eliminated.length+1)+500);
-}
-
-function showVerdict(y){
-  const isElim=y.eliminated.includes(G.currentCard.name);
-  $('vwrap').style.display='block';
-  $('vbox').className='vbox '+(isElim?'fail':'surv');
-  $('vstatus').textContent=isElim?'职业已淘汰':'本年幸存';
+  const isElim=y.eliminated.includes(c.name);
   const left=10-G.yearIndex-1;
-  $('vmsg').textContent=isElim?`${y.year}年，你持有的「${G.currentCard.name}」进入了淘汰名单。`:(left>0?`「${G.currentCard.name}」这一年安全。还有 ${left} 年。`:`「${G.currentCard.name}」活过了2035年。`);
-  const btn=$('elim-next');
-  if(isElim){btn.textContent='查看结果';btn.onclick=()=>showFail(y);}
-  else{btn.textContent=G.yearIndex>=9?'查看结局 →':`进入 ${y.year+1} 年 →`;btn.onclick=()=>{if(G.yearIndex>=9)showEnding();else{G.yearIndex++;startYear();}};}
+  // 更新 badge
+  $('r-id-emoji').textContent=c.emoji||'💼';
+  $('r-id-name').textContent=c.name;
+  $('r-id-job').textContent=c.name;
+  $('r-id-hdr').textContent=c.isOwn?'我的职业':c.rarity||'N';
+  $('r-id-hdr').style.background=c.isOwn?'var(--red)':(c.rarity?`var(--${c.rarity})`:'var(--ink-lt)');
+  $('r-yr').textContent=y.year;
+  $('rv-year').textContent=`${y.year} · 年度结果`;
+  if(isElim){
+    $('rv-box').className='rv-box fail';
+    $('rv-label').textContent='职业已淘汰';
+    $('rv-title').textContent='很抱歉，你失业了……';
+    $('rv-body').textContent=`${y.year}年，AI的浪潮冲到了「${c.name}」这个岗位。\n\n${y.event.split('\n\n')[0]}`;
+    $('rv-left').textContent='';
+    $('result-next').style.display='none';
+    $('result-fail-btns').style.display='flex';
+    $('r-yr-sub').textContent='职业已淘汰';
+  } else {
+    $('rv-box').className='rv-box surv';
+    $('rv-label').textContent='本年幸存';
+    $('rv-title').textContent='恭喜你，今年你的职业没有被淘汰';
+    $('rv-body').textContent=left>0?
+      `「${c.name}」这一年安全地撑了过来。\n\n时代的浪潮还没有冲到这里——但它从未停下脚步。`:
+      `「${c.name}」活过了2035年。十年里你见证了一个时代的变迁，而你还在。`;
+    $('rv-left').textContent=left>0?`· 还有 ${left} 年 ·`:'· 十年存活 ·';
+    $('result-next').style.display='block';
+    $('result-fail-btns').style.display='none';
+    $('r-yr-sub').textContent=left>0?`还有 ${left} 年`:'十年存活';
+    $('result-next').textContent=G.yearIndex>=9?'查看结局 →':`进入 ${y.year+1} 年 →`;
+    $('result-next').onclick=()=>{if(G.yearIndex>=9)showEnding();else{G.yearIndex++;startYear();}};
+  }
+  showScreen('result-screen');
 }
 
 function showFail(y){
@@ -759,6 +772,11 @@ $('cm-swap').addEventListener('click',function(){
 });
 
 $('enc-bg').addEventListener('click',closeEncModal);$('enc-x').addEventListener('click',closeEncModal);
+$('result-retry').addEventListener('click',()=>{G.currentCard={...G.startOfYearCard};startYear();});
+$('result-restart').addEventListener('click',()=>{
+  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0};
+  $('job-input').value='';showScreen('intro-screen');
+});
 $('retry-btn').addEventListener('click',()=>{G.currentCard={...G.startOfYearCard};startYear();});
 $('restart-btn').addEventListener('click',()=>{
   G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0};
