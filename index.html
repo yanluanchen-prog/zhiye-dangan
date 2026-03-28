@@ -17,9 +17,8 @@ body{
   background:var(--paper);color:var(--ink);
   font-family:'Courier New','Courier',monospace;
   min-height:100vh;max-width:480px;margin:0 auto;
-  /* 安全区域由具体screen处理，避免重复padding */
-  padding-top:0;
-  padding-bottom:env(safe-area-inset-bottom);
+  /* 所有安全区域由具体screen处理 */
+  padding:0;
 }
 #job-input::placeholder{color:#3a3028;font-size:14px;letter-spacing:1px;}
 /* 光标闪烁动画 */
@@ -48,11 +47,11 @@ body{
 #intro-screen.screen.active{background:#0a0a0a !important;}
 /* 首页激活时body背景也设为深色，防止padding区域露白 */
 body:has(#intro-screen.active){background:#0a0a0a !important;}
-/* 游戏屏安全区域适配 */
+/* 游戏屏安全区域适配 - 确保整体内容不会被灵动岛遮挡 */
 #game-screen.active{
-  /* 安全区域由header处理，避免重复padding */
-  padding-top:0;
+  padding-top:env(safe-area-inset-top);
   min-height:100vh;
+  background:var(--paper);
 }
 /* 首页特殊处理 - 覆盖整个视口 */
 #intro-screen{
@@ -74,8 +73,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .header{
   background:var(--ink);color:var(--paper);
   padding:10px 14px 9px;
-  /* 大幅增加安全区域padding，确保完全避开灵动岛（iPhone 14 Pro约44px） */
-  padding-top:calc(20px + env(safe-area-inset-top));
+  /* 安全区域由父容器处理，header只需要基础padding */
+  padding-top:10px;
   display:flex;justify-content:space-between;align-items:center;
   border-bottom:4px solid var(--red);
 }
@@ -112,7 +111,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .id-badge-emoji{font-size:24px;line-height:1;}
 .id-badge-name{font-size:9px;font-weight:900;color:var(--ink);margin-top:3px;text-align:center;line-height:1.2;padding:0 3px;}
 .id-badge-info{color:var(--paper);display:flex;flex-direction:column;justify-content:center;min-width:90px;gap:4px;}
-.id-badge-rarity{font-size:12px;font-weight:900;letter-spacing:2px;font-family:monospace;padding:2px 6px;border:1.5px solid rgba(255,255,255,0.5);display:inline-block;margin-bottom:12px;}
+.id-badge-rarity{font-size:12px;font-weight:900;letter-spacing:2px;font-family:monospace;padding:2px 6px;border:1.5px solid rgba(255,255,255,0.5);display:inline-block;margin-bottom:20px;}
 .id-badge-rarity.N{color:var(--N);border-color:var(--N);}
 .id-badge-rarity.R{color:var(--R);border-color:var(--R);}
 .id-badge-rarity.SR{color:var(--SR);border-color:var(--SR);}
