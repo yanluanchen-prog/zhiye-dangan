@@ -919,7 +919,7 @@ function renderJobSelector(){
   const dropdown=$('job-dropdown');
   // 按拼音首字母分组
   const groups={};
-  const pinyinMap={'保安':'B','殡葬师':'B','编导':'B','配音演员':'P','插画师':'C','剪辑师':'J','清洁工':'Q','数据分析师':'S','数据录入员':'S','翻译':'F','工厂工人':'G','工程师':'G','广告文案':'G','记者':'J','基础程序员':'J','医疗助理':'Y','快递员':'K','律师助理':'L','平面设计师':'P','社工':'S','社交媒体运营':'S','外卖员':'W','心理咨询师':'X','文字编辑':'W','作家':'Z','收银员':'S','导游':'D','非遗传承人':'F','哲学教授':'Z','内容审核员':'N','摄影师':'S','会计':'K'};
+  const pinyinMap={'保安':'B','殡葬师':'B','编导':'B','配音演员':'P','插画师':'C','剪辑师':'J','清洁工':'Q','数据分析师':'S','数据录入员':'S','翻译':'F','工厂工人':'G','工程师':'G','广告文案':'G','记者':'J','基础程序员':'J','医疗助理':'Y','快递员':'K','律师助理':'L','平面设计师':'P','社工':'S','社交媒体运营':'S','外卖员':'W','心理咨询师':'X','文字编辑':'W','作家':'Z','收银员':'S','导游':'D','非遗传承人':'F','哲学教授':'Z','内容审核员':'N','摄影师':'S','会计':'K','客服代表':'K'};
   POOL.forEach(job=>{
     const first=pinyinMap[job.name]||job.name.charAt(0).toUpperCase();
     if(!groups[first])groups[first]=[];
@@ -931,8 +931,8 @@ function renderJobSelector(){
   sortedKeys.forEach(key=>{
     html+=`<div class="job-group"><div class="job-group-title">${key}</div>`;
     groups[key].sort((a,b)=>a.name.localeCompare(b.name,'zh-CN')).forEach(job=>{
-      // 不显示稀有度，保持游戏神秘感
-      html+=`<div class="job-item" data-name="${job.name}"><span class="job-emoji">${job.emoji}</span><span class="job-name">${job.name}</span></div>`;
+      // 不显示emoji和稀有度，保持简洁
+      html+=`<div class="job-item" data-name="${job.name}"><span class="job-name">${job.name}</span></div>`;
     });
     html+=`</div>`;
   });
@@ -948,8 +948,8 @@ function selectJob(jobName){
   selectedJob=jobName;
   const job=POOL.find(p=>p.name===jobName);
   if(!job)return;
-  // 更新显示（只显示emoji+名称，不显示稀有度）
-  $('job-display').value=`${job.emoji} ${jobName}`;
+  // 更新显示（只显示名称，不显示emoji和稀有度）
+  $('job-display').value=jobName;
   // 关闭下拉
   $('job-dropdown').style.display='none';
   // 更新选中状态
