@@ -17,10 +17,12 @@
 html,body{height:100%;}
 body{
   background:var(--paper);color:var(--ink);
-  font-family:'Noto Serif SC','Songti SC',Georgia,serif;
+  font-family:'Courier New','Courier',monospace;
   min-height:100vh;max-width:480px;margin:0 auto;
   padding-bottom:calc(28px + env(safe-area-inset-bottom));
 }
+/* 所有中文字体也走 monospace 栈 */
+h1,p,div,span,button,input,textarea{font-family:'Courier New','Courier',monospace;}
 
 .screen{display:none !important;}
 .screen.active{display:block !important;min-height:100vh;background:var(--paper);}
@@ -296,7 +298,8 @@ body{
     <div style="margin-bottom:24px;">
       <div style="font-family:'Noto Serif SC','Songti SC',Georgia,serif;font-size:20px;color:#c8a878;letter-spacing:2px;margin-bottom:16px;">输入你的职业</div>
       <input id="job-input" type="text" placeholder="编导、程序员、设计师……" maxlength="12" autocomplete="off"
-        style="width:100%;background:transparent;border:none;border-bottom:1px solid #3a3028;color:#e8e2d8;font-family:'Noto Serif SC','Songti SC',Georgia,serif;font-size:22px;letter-spacing:3px;padding:10px 0 14px;outline:none;text-align:left;border-radius:0;-webkit-appearance:none;">
+        style="width:100%;background:transparent;border:none;border-bottom:1px solid #3a3028;color:#e8e2d8;font-family:'Courier New','Courier',monospace;font-size:18px;letter-spacing:2px;padding:10px 0 14px;outline:none;text-align:left;border-radius:0;-webkit-appearance:none;">
+      <style>#job-input::placeholder{color:#3a3028;font-size:14px;letter-spacing:1px;}</style>
     </div>
     <button id="start-btn" style="display:block;width:100%;background:#8b1a2b;color:#f0ebe0;border:none;padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;">看看我的职业发展之路</button>
     <div style="margin-top:16px;text-align:center;font-size:9px;color:#5a4a38;font-family:'Courier New',monospace;letter-spacing:1px;">数据来源 · Anthropic经济指数报告</div>
