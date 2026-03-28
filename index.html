@@ -43,10 +43,15 @@ body{
 /* ── SCREENS ─────────────────────────────── */
 .screen{display:none !important;}
 .screen.active{display:block !important;min-height:100vh;background:var(--paper);}
-/* 首页特殊处理 - 覆盖body的padding和背景色 */
+/* 首页时body背景变为深色 */
+body:has(#intro-screen.active){
+  background:#0a0a0a !important;
+}
+/* 首页特殊处理 - 覆盖整个视口 */
 #intro-screen{
   position:fixed;
   top:0;left:0;right:0;bottom:0;
+  width:100vw;height:100vh;
   background:#0a0a0a !important;
   z-index:1;
 }
@@ -54,8 +59,8 @@ body{
   display:flex !important;flex-direction:column;
   align-items:center;justify-content:center;
   background:#0a0a0a !important;
-  padding-top:env(safe-area-inset-top);
-  padding-bottom:env(safe-area-inset-bottom);
+  padding-top:max(env(safe-area-inset-top), 0px);
+  padding-bottom:max(env(safe-area-inset-bottom), 0px);
 }
 
 /* ── HEADER ──────────────────────────────── */
