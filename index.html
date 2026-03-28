@@ -17,6 +17,7 @@ body{
   background:var(--paper);color:var(--ink);
   font-family:'Courier New','Courier',monospace;
   min-height:100vh;max-width:480px;margin:0 auto;
+  padding-top:env(safe-area-inset-top);
   padding-bottom:calc(28px + env(safe-area-inset-bottom));
 }
 #job-input::placeholder{color:#3a3028;font-size:14px;letter-spacing:1px;}
@@ -199,13 +200,20 @@ body{
   color:var(--ink-faint);font-size:11px;letter-spacing:3px;
   margin-bottom:12px;
 }
-/* 卡牌飞入动画 */
+/* 卡牌飞入动画 - 从右往左 */
 @keyframes cardFlyIn{
   0%{transform:translateX(100px) rotate(15deg);opacity:0;}
   60%{transform:translateX(-10px) rotate(-3deg);opacity:1;}
   100%{transform:translateX(0) rotate(0);opacity:1;}
 }
+/* 卡牌飞入动画 - 从左往右 */
+@keyframes cardFlyInLeft{
+  0%{transform:translateX(-100px) rotate(-15deg);opacity:0;}
+  60%{transform:translateX(10px) rotate(3deg);opacity:1;}
+  100%{transform:translateX(0) rotate(0);opacity:1;}
+}
 .card-fly-in{animation:cardFlyIn 0.5s ease-out forwards;}
+.card-fly-in-left{animation:cardFlyInLeft 0.5s ease-out forwards;}
 
 /* ── EVENT MODAL ──────────────────────────── */
 #event-modal{
@@ -730,11 +738,16 @@ function buildActiveCard(card){
   return div;
 }
 
-function renderDeck(idx){
+function renderDeck(idx,direction='right'){
   const card=G.drawnCards[idx];
   $('deck-active').innerHTML='';
   const cardEl=buildActiveCard(card);
-  cardEl.classList.add('card-fly-in');
+  // 根据方向添加不同的动画类
+  if(direction==='left'){
+    cardEl.classList.add('card-fly-in-left');
+  }else{
+    cardEl.classList.add('card-fly-in');
+  }
   $('deck-active').appendChild(cardEl);
   $('deck-counter').textContent=`${idx+1} / 5`;
   $('nav-prev').disabled=idx===0;
@@ -924,8 +937,8 @@ function showInputError(msg){
 }
 $('job-input').addEventListener('keydown',e=>{if(e.key==='Enter')$('start-btn').click();});
 $('draw-btn').addEventListener('click',doDrawCards);
-$('nav-prev').addEventListener('click',()=>{if(G.activeIdx>0){G.activeIdx--;renderDeck(G.activeIdx);}});
-$('nav-next').addEventListener('click',()=>{if(G.activeIdx<4){G.activeIdx++;renderDeck(G.activeIdx);}});
+$('nav-prev').addEventListener('click',()=>{if(G.activeIdx>0){G.activeIdx--;renderDeck(G.activeIdx,'left');}});
+$('nav-next').addEventListener('click',()=>{if(G.activeIdx<4){G.activeIdx++;renderDeck(G.activeIdx,'right');}});
 
 // 换成这个 → 显示头像变化动画 → 弹事件modal
 $('swap-btn').addEventListener('click',()=>{
