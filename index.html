@@ -50,6 +50,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* 游戏屏安全区域适配 - 确保整体内容不会被灵动岛遮挡 */
 #game-screen.active{
   padding-top:env(safe-area-inset-top);
+  padding-bottom:env(safe-area-inset-bottom);
   min-height:100vh;
   background:var(--paper);
 }
