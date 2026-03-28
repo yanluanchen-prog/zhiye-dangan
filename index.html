@@ -144,6 +144,7 @@ body {
 }
 .job-input::placeholder { color: var(--text-dim); font-size: 13px; letter-spacing: 1px; }
 .job-input:focus { border-color: var(--shu); }
+#job-input::placeholder { color: #2e2820; font-size: 14px; letter-spacing: 1px; }
 
 .shu-btn {
   display: flex;
@@ -552,42 +553,72 @@ body {
 <body>
 
 <!-- ===== INTRO ===== -->
-<div id="intro-screen" class="screen active">
-  <div class="page-header">
-    <div class="page-header-badge">ANTHROPIC ECONOMIC INDEX · 2026</div>
-    <div class="page-title">我的事业</div>
-    <div class="page-sub">AI时代职业生存 · 2026–2035</div>
-    <div class="page-source">数据来源：Anthropic经济指数报告 · 真实数据</div>
-  </div>
-  <div class="header-line"></div>
-  <div class="header-line-thin" style="margin-top:1px"></div>
+<div id="intro-screen" class="screen active" style="
+  position:fixed;inset:0;z-index:1;
+  background:#0a0a0a;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:32px 24px;box-sizing:border-box;overflow-y:auto;
+">
+  <div style="max-width:380px;width:100%;">
 
-  <div class="section">
-    <div class="section-header">Anthropic报告核心数据</div>
-    <div class="section-body">
-      <div class="intro-text-block">
-        2026年，Anthropic发布报告：<span class="intro-data">67%</span>的职业面临AI替代风险。<span class="intro-strong">这不是预测，是时间表。</span>
+    <!-- 主标题 -->
+    <div style="text-align:center;margin-bottom:36px;">
+      <div style="font-size:11px;letter-spacing:5px;color:#3a4a5a;font-family:'Courier New',monospace;text-transform:uppercase;margin-bottom:16px;">
+        〔职业生存〕
       </div>
-      <div style="font-size:13px;color:var(--text-mid);line-height:2;margin-bottom:4px">
-        从这一年开始，每年都有职业从世界上消失。<br>你的职业，能活过这十年吗？
+      <div style="font-family:'Songti SC','Noto Serif SC','STSong',Georgia,serif;font-size:40px;color:#d4cfc6;letter-spacing:12px;line-height:1.1;margin-bottom:16px;">
+        我的事业
       </div>
+      <div style="width:40px;height:2px;background:#8b1a2b;margin:0 auto 32px;"></div>
     </div>
-  </div>
 
-  <div class="section" style="border-color:var(--shu);border-width:2px">
-    <div class="section-header" style="background:var(--shu-light);border-bottom-color:#e8b0a0;color:var(--shu);font-size:12px;letter-spacing:3px">
-      你现在的职业是
+    <!-- 正文 -->
+    <div style="font-family:'Songti SC','Noto Serif SC',Georgia,serif;color:#e8e2d8;line-height:2;font-size:15px;margin-bottom:40px;">
+      <p style="margin:0 0 14px;">
+        2026年，<strong style="font-size:17px;">67%</strong> 的职业面临AI替代风险。
+      </p>
+      <p style="margin:0 0 14px;color:#9a9088;">
+        从这一年起，每年都有职业消失。
+      </p>
+      <p style="margin:0;color:#c8c0b4;">
+        你的职业，还能撑多久？
+      </p>
     </div>
-    <div class="section-body" style="padding:20px 16px 20px">
-      <input class="job-input" id="job-input" type="text" placeholder="编导、程序员、设计师……" maxlength="12" autocomplete="off" style="font-size:24px;letter-spacing:3px;padding:12px 14px;border-color:var(--shu)">
-      <button class="shu-btn" id="start-btn" style="font-size:15px;letter-spacing:5px">
-        <span>开始我的十年</span>
-        <span>→</span>
-      </button>
-    </div>
-  </div>
 
-  <div style="height:24px"></div>
+    <!-- 输入区 -->
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'Songti SC','Noto Serif SC',Georgia,serif;font-size:20px;color:#e8e2d8;letter-spacing:2px;margin-bottom:16px;">
+        输入你的职业
+      </div>
+      <input id="job-input" type="text" placeholder="编导、程序员、设计师……" maxlength="12" autocomplete="off"
+        style="
+          width:100%;background:transparent;
+          border:none;border-bottom:1px solid #3a3028;
+          color:#e8e2d8;
+          font-family:'Songti SC','Noto Serif SC',Georgia,serif;
+          font-size:22px;letter-spacing:3px;
+          padding:10px 0 14px;
+          outline:none;text-align:left;border-radius:0;
+          -webkit-appearance:none;
+        ">
+    </div>
+
+    <!-- 按钮 -->
+    <button id="start-btn" style="
+      display:block;width:100%;
+      background:#8b1a2b;color:#f0ebe0;
+      border:none;padding:16px;
+      font-size:13px;font-family:'Courier New',monospace;
+      letter-spacing:4px;cursor:pointer;
+      text-align:center;margin-top:8px;
+    ">看看我的职业发展之路</button>
+
+    <!-- 底部小字 -->
+    <div style="margin-top:16px;text-align:center;font-size:9px;color:#1e1e1e;font-family:'Courier New',monospace;letter-spacing:1px;">
+      CONFIDENTIAL · AEI-2026 · 职业生存模拟
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== GAME ===== -->
