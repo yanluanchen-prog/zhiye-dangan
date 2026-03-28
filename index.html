@@ -80,10 +80,16 @@ body{
 .id-badge-emoji{font-size:24px;line-height:1;}
 .id-badge-name{font-size:9px;font-weight:900;color:var(--ink);margin-top:3px;text-align:center;line-height:1.2;padding:0 3px;}
 .id-badge-info{color:var(--paper);display:flex;flex-direction:column;justify-content:center;min-width:90px;gap:4px;}
-.id-badge-rarity{font-size:14px;font-weight:900;letter-spacing:2px;font-family:monospace;text-shadow:0 1px 2px rgba(0,0,0,0.3);}
-.id-badge-stats{display:flex;flex-direction:column;gap:2px;font-size:11px;}
-.id-stat{display:flex;justify-content:space-between;gap:8px;opacity:0.9;}
-.id-stat span{font-weight:700;}
+.id-badge-rarity{font-size:12px;font-weight:900;letter-spacing:2px;font-family:monospace;padding:2px 8px;border:1.5px solid rgba(255,255,255,0.5);display:inline-block;margin-bottom:4px;}
+.id-badge-rarity.N{color:var(--N);border-color:var(--N);}
+.id-badge-rarity.R{color:var(--R);border-color:var(--R);}
+.id-badge-rarity.SR{color:var(--SR);border-color:var(--SR);}
+.id-badge-rarity.SSR{color:var(--SSR);border-color:var(--SSR);}
+.id-badge-rarity.UR{color:var(--UR);border-color:var(--UR);}
+.id-badge-stats{display:flex;flex-direction:column;gap:3px;font-size:10px;}
+.id-stat{display:flex;justify-content:space-between;gap:8px;opacity:0.95;}
+.id-stat .stat-label{color:var(--ink-faint);}
+.id-stat .stat-value{font-weight:700;color:#fff;}
 .id-badge-job{font-size:15px;font-weight:900;letter-spacing:1px;line-height:1.1;margin-bottom:3px;}
 .id-badge-sub{font-size:9px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:4px;}
 .id-badge-resist{font-size:11px;font-weight:900;color:var(--red);font-family:monospace;margin-bottom:4px;}
@@ -352,9 +358,9 @@ body{
       <div class="id-badge-info">
         <div class="id-badge-rarity" id="id-rarity">—</div>
         <div class="id-badge-stats">
-          <div class="id-stat">薪<span id="id-salary">—</span></div>
-          <div class="id-stat">抗<span id="id-resist">—</span></div>
-          <div class="id-stat">需<span id="id-demand">—</span></div>
+          <div class="id-stat"><span class="stat-label">薪资力</span><span class="stat-value" id="id-salary">—</span></div>
+          <div class="id-stat"><span class="stat-label">抗AI值</span><span class="stat-value" id="id-resist">—</span></div>
+          <div class="id-stat"><span class="stat-label">需求度</span><span class="stat-value" id="id-demand">—</span></div>
         </div>
       </div>
     </div>
@@ -674,12 +680,15 @@ function updateBadge(){
   const c=G.currentCard;
   $('id-emoji').textContent=c.emoji||'💼';
   $('id-name').textContent=c.name;
-  $('id-rarity').textContent=c.rarity||'N';
+  const rarity=c.rarity||'N';
+  const rarityEl=$('id-rarity');
+  rarityEl.textContent=rarity;
+  rarityEl.className='id-badge-rarity '+rarity;
   $('id-salary').textContent=c.salary||'—';
   $('id-resist').textContent=c.aiResist||'—';
   $('id-demand').textContent=c.demand||'—';
   const hdr=$('id-hdr');
-  hdr.textContent=c.isOwn?'我的职业':(c.rarity||'N');
+  hdr.textContent=c.isOwn?'我的职业':rarity;
   hdr.parentElement.className='id-badge-card'+(c.isOwn?' own':(c.rarity?' '+c.rarity:''));
   hdr.style.background=c.isOwn?'var(--red)':(c.rarity?`var(--${c.rarity})`:'var(--ink-lt)');
 }
