@@ -43,6 +43,8 @@ body{
 /* ── SCREENS ─────────────────────────────── */
 .screen{display:none !important;}
 .screen.active{display:block !important;min-height:100vh;background:var(--paper);}
+/* 首页强制深色背景，覆盖.screen.active的浅色背景 */
+#intro-screen.screen.active{background:#0a0a0a !important;}
 /* 游戏屏安全区域适配 */
 #game-screen.active{
   padding-top:env(safe-area-inset-top);
@@ -413,7 +415,7 @@ body{
 
     <!-- 职业选择 section -->
     <div class="section">
-      <div class="section-title">职业选择</div>
+      <div class="section-title">人力市场</div>
 
       <!-- Pre-draw -->
       <div id="draw-zone">
