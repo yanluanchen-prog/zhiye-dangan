@@ -30,21 +30,15 @@ body{
 .input-error{animation:shake 0.4s ease;}
 @keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
 .error-msg{color:#c44;font-size:11px;margin-top:6px;letter-spacing:1px;opacity:0;transition:opacity 0.3s;}
-/* 职业选择器样式 */
-.job-group{margin:0;padding:8px 0;border-bottom:1px solid rgba(58,48,40,0.3);}
+/* 职业下拉选择器样式 */
+.job-group{margin:0;padding:6px 0;border-bottom:1px solid rgba(58,48,40,0.3);}
 .job-group:last-child{border-bottom:none;}
-.job-group-title{font-size:10px;color:#8b1a2b;letter-spacing:2px;padding:4px 12px;font-weight:700;background:rgba(139,26,43,0.1);}
-.job-item{padding:10px 12px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:8px;border-left:3px solid transparent;}
-.job-item:hover{background:rgba(200,168,120,0.1);border-left-color:#c8a878;}
-.job-item.selected{background:rgba(139,26,43,0.2);border-left-color:#8b1a2b;}
-.job-emoji{font-size:14px;}
-.job-name{font-size:13px;color:#d4cfc6;letter-spacing:1px;}
-.job-rarity{font-size:9px;padding:1px 5px;border-radius:2px;margin-left:auto;font-family:monospace;}
-.job-rarity.N{background:#666;color:#fff;}
-.job-rarity.R{background:#1A3A6B;color:#fff;}
-.job-rarity.SR{background:#B85A00;color:#fff;}
-.job-rarity.SSR{background:#C23B22;color:#fff;}
-.job-rarity.UR{background:#1E1C18;color:#fff;border:1px solid #666;}
+.job-group-title{font-size:9px;color:#8b1a2b;letter-spacing:2px;padding:3px 12px;font-weight:700;background:rgba(139,26,43,0.15);}
+.job-item{padding:8px 12px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:10px;border-left:2px solid transparent;}
+.job-item:hover{background:rgba(200,168,120,0.08);border-left-color:#c8a878;}
+.job-item.selected{background:rgba(139,26,43,0.15);border-left-color:#8b1a2b;}
+.job-emoji{font-size:13px;}
+.job-name{font-size:12px;color:#d4cfc6;letter-spacing:1px;}
 
 /* ── SCREENS ─────────────────────────────── */
 .screen{display:none !important;}
@@ -354,17 +348,17 @@ body{
       <p style="margin:0 0 14px;">从这一年起，每年都有职业消失。</p>
       <p style="margin:0;">你的职业，还能撑多久？</p>
     </div>
-    <div style="margin-bottom:24px;">
+    <div style="margin-bottom:24px;position:relative;">
       <div style="font-size:20px;color:#c8a878;letter-spacing:2px;margin-bottom:16px;">选择你的职业</div>
-      <div id="job-selector" style="max-height:280px;overflow-y:auto;border:1px solid #3a3028;border-radius:4px;background:rgba(255,255,255,0.02);">
-        <!-- 职业选择列表 -->
-      </div>
-      <div id="selected-job-display" style="margin-top:12px;padding:12px;border:1px solid #8b1a2b;border-radius:4px;display:none;background:rgba(139,26,43,0.1);">
-        <div style="font-size:11px;color:#8b9;color:#c8a878;letter-spacing:1px;margin-bottom:4px;">已选择</div>
-        <div id="selected-job-name" style="font-size:16px;color:#e8e2d8;letter-spacing:2px;"></div>
+      <div id="job-input-wrapper" style="position:relative;">
+        <input id="job-display" type="text" placeholder="点击选择职业..." readonly
+          style="width:100%;background:transparent;border:none;border-bottom:1px solid #3a3028;color:#e8e2d8;font-family:'Courier New',monospace;font-size:18px;letter-spacing:2px;padding:10px 0 14px;outline:none;text-align:left;border-radius:0;-webkit-appearance:none;cursor:pointer;">
+        <div id="job-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:280px;overflow-y:auto;border:1px solid #3a3028;border-radius:4px;background:#0a0a0a;z-index:100;margin-top:4px;box-shadow:0 4px 20px rgba(0,0,0,0.5);">
+          <!-- 职业选择列表 -->
+        </div>
       </div>
     </div>
-    <button id="start-btn" disabled style="display:block;width:100%;background:#8b1a2b;color:#f0ebe0;border:none;padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;opacity:0.4;">看看我的职业发展之路</button>
+    <button id="start-btn" style="display:block;width:100%;background:#8b1a2b;color:#f0ebe0;border:none;padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;">看看我的职业发展之路</button>
     <div style="margin-top:16px;text-align:center;font-size:9px;color:#5a4a38;font-family:'Courier New',monospace;letter-spacing:1px;">数据来源 · Anthropic经济指数报告</div>
   </div>
 </div>
@@ -922,7 +916,7 @@ function showEnding(){
 /* ── 职业选择器 ── */
 let selectedJob=null;
 function renderJobSelector(){
-  const container=$('job-selector');
+  const dropdown=$('job-dropdown');
   // 按拼音首字母分组
   const groups={};
   const pinyinMap={'保安':'B','殡葬师':'B','编导':'B','配音演员':'P','插画师':'C','剪辑师':'J','清洁工':'Q','数据分析师':'S','数据录入员':'S','翻译':'F','工厂工人':'G','工程师':'G','广告文案':'G','记者':'J','基础程序员':'J','医疗助理':'Y','快递员':'K','律师助理':'L','平面设计师':'P','社工':'S','社交媒体运营':'S','外卖员':'W','心理咨询师':'X','文字编辑':'W','作家':'Z','收银员':'S','导游':'D','非遗传承人':'F','哲学教授':'Z','内容审核员':'N','摄影师':'S','会计':'K'};
@@ -937,25 +931,39 @@ function renderJobSelector(){
   sortedKeys.forEach(key=>{
     html+=`<div class="job-group"><div class="job-group-title">${key}</div>`;
     groups[key].sort((a,b)=>a.name.localeCompare(b.name,'zh-CN')).forEach(job=>{
-      html+=`<div class="job-item" data-name="${job.name}" onclick="selectJob('${job.name}')"><span class="job-emoji">${job.emoji}</span><span class="job-name">${job.name}</span><span class="job-rarity ${job.rarity}">${job.rarity}</span></div>`;
+      // 不显示稀有度，保持游戏神秘感
+      html+=`<div class="job-item" data-name="${job.name}"><span class="job-emoji">${job.emoji}</span><span class="job-name">${job.name}</span></div>`;
     });
     html+=`</div>`;
   });
-  container.innerHTML=html;
+  dropdown.innerHTML=html;
+  // 绑定点击事件
+  dropdown.querySelectorAll('.job-item').forEach(item=>{
+    item.addEventListener('click',()=>{
+      selectJob(item.dataset.name);
+    });
+  });
 }
 function selectJob(jobName){
   selectedJob=jobName;
-  // 更新UI
+  const job=POOL.find(p=>p.name===jobName);
+  if(!job)return;
+  // 更新显示（只显示emoji+名称，不显示稀有度）
+  $('job-display').value=`${job.emoji} ${jobName}`;
+  // 关闭下拉
+  $('job-dropdown').style.display='none';
+  // 更新选中状态
   document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
   const selected=document.querySelector(`.job-item[data-name="${jobName}"]`);
   if(selected)selected.classList.add('selected');
-  // 显示已选择
-  $('selected-job-name').textContent=jobName;
-  $('selected-job-display').style.display='block';
-  // 启用按钮
-  $('start-btn').disabled=false;
-  $('start-btn').style.opacity='1';
-  $('start-btn').style.cursor='pointer';
+}
+function toggleDropdown(){
+  const dropdown=$('job-dropdown');
+  if(dropdown.style.display==='none'||!dropdown.style.display){
+    dropdown.style.display='block';
+  }else{
+    dropdown.style.display='none';
+  }
 }
 
 /* ── listeners ── */
@@ -967,6 +975,23 @@ $('start-btn').addEventListener('click',()=>{
   G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};
   startYear();
 });
+
+// 点击输入框展开/收起下拉列表
+$('job-display').addEventListener('click',(e)=>{
+  e.stopPropagation();
+  toggleDropdown();
+});
+
+// 点击页面其他地方关闭下拉列表
+document.addEventListener('click',()=>{
+  $('job-dropdown').style.display='none';
+});
+
+// 阻止下拉列表内部的点击事件冒泡
+$('job-dropdown').addEventListener('click',(e)=>{
+  e.stopPropagation();
+});
+
 $('draw-btn').addEventListener('click',doDrawCards);
 $('nav-prev').addEventListener('click',()=>{if(G.activeIdx>0){G.activeIdx--;renderDeck(G.activeIdx,'left');}});
 $('nav-next').addEventListener('click',()=>{if(G.activeIdx<4){G.activeIdx++;renderDeck(G.activeIdx,'right');}});
@@ -1016,20 +1041,16 @@ $('result-retry').addEventListener('click',()=>{G.currentCard={...G.startOfYearC
 $('result-restart').addEventListener('click',()=>{
   G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0};
   selectedJob=null;
+  $('job-display').value='';
   document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
-  $('selected-job-display').style.display='none';
-  $('start-btn').disabled=true;
-  $('start-btn').style.opacity='0.4';
   showScreen('intro-screen');
 });
 $('retry-btn').addEventListener('click',()=>{G.currentCard={...G.startOfYearCard};startYear();});
 $('restart-btn').addEventListener('click',()=>{
   G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0};
   selectedJob=null;
+  $('job-display').value='';
   document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
-  $('selected-job-display').style.display='none';
-  $('start-btn').disabled=true;
-  $('start-btn').style.opacity='0.4';
   showScreen('intro-screen');
 });
 $('play-again-btn').addEventListener('click',()=>{G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};startYear();});
