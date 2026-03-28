@@ -28,16 +28,17 @@
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: #0a0a0a;
+  color: #d4cfc6;
   font-family: 'Songti SC', 'Noto Serif SC', 'STSong', 'SimSun', Georgia, serif;
   min-height: 100vh;
   max-width: 480px;
   margin: 0 auto;
 }
 
-.screen { display: none; }
-.screen.active { display: block; min-height: 100vh; }
+.screen { display: none !important; }
+.screen.active { display: block !important; min-height: 100vh; }
+#intro-screen.active { display: flex !important; flex-direction: column; align-items: center; justify-content: center; }
 
 /* ===== GLOBAL HEADER ===== */
 .page-header {
@@ -553,12 +554,7 @@ body {
 <body>
 
 <!-- ===== INTRO ===== -->
-<div id="intro-screen" class="screen active" style="
-  position:fixed;inset:0;z-index:1;
-  background:#0a0a0a;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:32px 24px;box-sizing:border-box;overflow-y:auto;
-">
+<div id="intro-screen" class="screen active" style="background:#0a0a0a;padding:32px 24px;box-sizing:border-box;overflow-y:auto;">
   <div style="max-width:380px;width:100%;">
 
     <!-- 主标题 -->
