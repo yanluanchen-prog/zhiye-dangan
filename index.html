@@ -111,35 +111,51 @@ body{
 
 .draw-slot{
   flex:1;aspect-ratio:2/3;
-  border:2px dashed var(--border);
   cursor:pointer;position:relative;overflow:hidden;
+  transition:opacity 0.2s;
+}
+.draw-slot.face-down{
+  border:2px dashed var(--border);
   background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(0,0,0,0.015) 8px,rgba(0,0,0,0.015) 16px);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  transition:border-color 0.2s;
+  display:flex;align-items:center;justify-content:center;
 }
-.draw-slot.face-down::after{content:'📁';font-size:18px;opacity:0.3;}
-.draw-slot.face-up{
-  border-style:solid;background:var(--paper-lt);
-  border-width:2px;
-}
-.draw-slot.selected{border-color:var(--red) !important;}
-.draw-slot.face-up:active{border-color:var(--ink);}
+.draw-slot.face-down::after{content:'📁';font-size:22px;opacity:0.25;}
+.draw-slot.face-up{background:transparent;}
+.draw-slot.selected .mini-card{outline:3px solid var(--red);outline-offset:-1px;}
+.draw-slot:active{opacity:0.8;}
 
-.slot-inner{display:flex;flex-direction:column;align-items:center;width:100%;padding:4px 3px;}
-.slot-rarity-band{
-  width:100%;text-align:center;
-  font-size:8px;font-family:monospace;letter-spacing:1px;
-  padding:2px 0;color:#fff;margin-bottom:3px;
+/* Mini card — mirrors full card structure */
+.mini-card{
+  width:100%;height:100%;
+  background:var(--paper-lt);
+  border:2px solid var(--border);
+  overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:2px 3px 8px rgba(0,0,0,0.15);
 }
-.slot-rarity-band.N  {background:var(--N);}
-.slot-rarity-band.R  {background:var(--R);}
-.slot-rarity-band.SR {background:var(--SR);}
-.slot-rarity-band.SSR{background:var(--SSR);}
-.slot-rarity-band.UR {background:var(--UR);}
-.slot-emoji{font-size:18px;line-height:1;margin-bottom:2px;}
-.slot-name{font-size:9px;color:var(--ink);text-align:center;line-height:1.3;font-weight:700;}
-.slot-resist{font-size:8px;color:var(--ink-faint);margin-top:1px;font-family:monospace;}
-.slot-known{font-size:7px;color:var(--green);}
+.mini-card.N  {border-color:var(--N);}
+.mini-card.R  {border-color:var(--R);}
+.mini-card.SR {border-color:var(--SR);}
+.mini-card.SSR{border-color:var(--SSR);}
+.mini-card.UR {border-color:var(--UR);}
+.mini-hdr{
+  padding:3px 5px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:7px;font-family:monospace;color:#fff;flex-shrink:0;
+}
+.mini-card.N   .mini-hdr{background:var(--N);}
+.mini-card.R   .mini-hdr{background:var(--R);}
+.mini-card.SR  .mini-hdr{background:var(--SR);}
+.mini-card.SSR .mini-hdr{background:var(--SSR);}
+.mini-card.UR  .mini-hdr{background:var(--UR);}
+.mini-art{
+  flex:1;background:var(--paper);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:4px 2px;
+}
+.mini-emoji{font-size:22px;line-height:1;margin-bottom:3px;}
+.mini-name{font-size:9px;font-weight:900;color:var(--ink);text-align:center;line-height:1.2;letter-spacing:0.5px;}
+.mini-resist{font-size:8px;color:var(--ink-faint);font-family:monospace;margin-top:2px;}
+.mini-known{font-size:7px;color:var(--green);font-family:monospace;}
 
 /* ── CURRENT CARD (small) ─────────────────────────────────── */
 .cur-card{
@@ -642,12 +658,16 @@ function renderDrawSlots(){
     setTimeout(()=>{
       const known=G.encyclopedia[card.name]&&G.encyclopedia[card.name].timesDrawn>1;
       div.className='draw-slot face-up';
-      div.innerHTML=`<div class="slot-inner">
-        <div class="slot-rarity-band ${card.rarity}">${card.rarity}</div>
-        <span class="slot-emoji">${card.emoji}</span>
-        <span class="slot-name">${card.name}</span>
-        <span class="slot-resist">${card.aiResist}</span>
-        ${known?'<span class="slot-known">已见过</span>':''}
+      div.innerHTML=`<div class="mini-card ${card.rarity}">
+        <div class="mini-hdr">
+          <span>${card.rarity}</span>
+          ${known?'<span style="color:rgba(255,255,255,0.7)">✓</span>':''}
+        </div>
+        <div class="mini-art">
+          <span class="mini-emoji">${card.emoji}</span>
+          <span class="mini-name">${card.name}</span>
+          <span class="mini-resist">🛡${card.aiResist}</span>
+        </div>
       </div>`;
       div.addEventListener('click',()=>openCardModal(i));
     },350*(i+1));
