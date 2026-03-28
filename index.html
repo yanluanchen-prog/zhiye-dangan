@@ -208,21 +208,19 @@ body{
 .cd-stat.hp  .cd-stat-label{color:#1a6b3a;}
 .cd-stat.hp  .cd-stat-val{color:#e8e2d8;}
 
-/* ── CARD ACTION OVERLAY (after flip) ─────────────────── */
-.card-action-overlay{
-  position:absolute;bottom:0;right:0;
-  z-index:20;padding:8px;
+/* ── CARD ACTION BELOW ────────────────────────────────── */
+.card-action-below{
+  margin:8px 14px 0;
 }
 .swap-this-btn{
-  padding:8px 14px;
-  background:rgba(194,59,34,0.9);
+  width:100%;padding:12px;
+  background:var(--red);
   border:none;color:#fff;
-  font-family:monospace;font-size:11px;letter-spacing:2px;
-  border-radius:4px;cursor:pointer;
-  display:none;
+  font-family:monospace;font-size:12px;letter-spacing:3px;
+  cursor:pointer;display:none;
 }
 .swap-this-btn.visible{display:block;}
-.swap-this-btn:disabled{background:rgba(90,80,60,0.7);cursor:default;}
+.swap-this-btn:disabled{background:#3a3028;color:#6a5a40;cursor:default;}
 
 /* ── EVENT SECTION ───────────────────────────────────── */
 .event-section{
@@ -470,12 +468,12 @@ body{
             </div>
           </div>
         </div>
-        <!-- Action overlay on revealed card -->
-        <div class="card-action-overlay">
-          <button class="swap-this-btn" id="swap-this-btn" onclick="swapToCurrentShown()">换成这个 →</button>
-        </div>
       </div>
     </div>
+  </div>
+  <!-- Swap button below card -->
+  <div class="card-action-below">
+    <button class="swap-this-btn" id="swap-this-btn" onclick="swapToCurrentShown()">换成这个 →</button>
   </div>
 
   <!-- EVENT (appears after first card flipped) -->
