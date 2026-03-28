@@ -70,7 +70,11 @@ body{
 .id-badge-art{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper);}
 .id-badge-emoji{font-size:24px;line-height:1;}
 .id-badge-name{font-size:9px;font-weight:900;color:var(--ink);margin-top:3px;text-align:center;line-height:1.2;padding:0 3px;}
-.id-badge-info{color:var(--paper);display:flex;flex-direction:column;justify-content:center;min-width:90px;}
+.id-badge-info{color:var(--paper);display:flex;flex-direction:column;justify-content:center;min-width:90px;gap:4px;}
+.id-badge-rarity{font-size:14px;font-weight:900;letter-spacing:2px;font-family:monospace;text-shadow:0 1px 2px rgba(0,0,0,0.3);}
+.id-badge-stats{display:flex;flex-direction:column;gap:2px;font-size:11px;}
+.id-stat{display:flex;justify-content:space-between;gap:8px;opacity:0.9;}
+.id-stat span{font-weight:700;}
 .id-badge-job{font-size:15px;font-weight:900;letter-spacing:1px;line-height:1.1;margin-bottom:3px;}
 .id-badge-sub{font-size:9px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:4px;}
 .id-badge-resist{font-size:11px;font-weight:900;color:var(--red);font-family:monospace;margin-bottom:4px;}
@@ -336,10 +340,12 @@ body{
         </div>
       </div>
       <div class="id-badge-info">
-        <div class="id-badge-job" id="id-job">—</div>
-        <div class="id-badge-sub" id="id-tagline">当前职业</div>
-        <div class="id-badge-resist">抗AI <span id="id-resist">—</span></div>
-        <div class="id-badge-desc" id="id-desc"></div>
+        <div class="id-badge-rarity" id="id-rarity">—</div>
+        <div class="id-badge-stats">
+          <div class="id-stat">薪<span id="id-salary">—</span></div>
+          <div class="id-stat">抗<span id="id-resist">—</span></div>
+          <div class="id-stat">需<span id="id-demand">—</span></div>
+        </div>
       </div>
     </div>
     <div class="header-right">
@@ -658,8 +664,10 @@ function updateBadge(){
   const c=G.currentCard;
   $('id-emoji').textContent=c.emoji||'💼';
   $('id-name').textContent=c.name;
-  $('id-job').textContent=c.name;
-  $('id-resist').textContent=c.aiResist;
+  $('id-rarity').textContent=c.rarity||'N';
+  $('id-salary').textContent=c.salary||'—';
+  $('id-resist').textContent=c.aiResist||'—';
+  $('id-demand').textContent=c.demand||'—';
   $('id-tagline').textContent=c.tagline||'当前职业';
   $('id-desc').textContent=c.desc||'';
   const hdr=$('id-hdr');
