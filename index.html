@@ -213,9 +213,39 @@ body{
       <p style="margin:0;">你的职业，还能撑多久？</p>
     </div>
     <div style="margin-bottom:24px;">
-      <div style="font-size:20px;color:#c8a878;letter-spacing:2px;margin-bottom:12px;">选择你的职业</div>
-      <div id="job-grid" style="display:flex;flex-wrap:wrap;gap:8px;max-height:220px;overflow-y:auto;padding:4px 0;"></div>
-      <div id="job-selected-hint" style="font-size:11px;color:#5a4a38;font-family:'Courier New',monospace;letter-spacing:1px;margin-top:10px;min-height:16px;"></div>
+      <div style="font-size:20px;color:#c8a878;letter-spacing:2px;margin-bottom:16px;">选择你的职业</div>
+      <div style="position:relative;">
+        <select id="job-select" style="width:100%;background:#1a1410;border:none;border-bottom:2px solid #5a4a38;color:#e8e2d8;font-family:'Courier New',monospace;font-size:16px;letter-spacing:1px;padding:10px 28px 14px 0;outline:none;border-radius:0;-webkit-appearance:none;appearance:none;cursor:pointer;">
+          <option value="">— 选择你目前的职业 —</option>
+          <option value="程序员">程序员</option>
+          <option value="厨师">厨师</option>
+          <option value="翻译">翻译</option>
+          <option value="护士">护士</option>
+          <option value="会计师">会计师</option>
+          <option value="剪辑师">剪辑师</option>
+          <option value="记者">记者</option>
+          <option value="技术支持专员">技术支持专员</option>
+          <option value="教师">教师</option>
+          <option value="金融分析师">金融分析师</option>
+          <option value="救生员">救生员</option>
+          <option value="酒保">酒保</option>
+          <option value="客服代表">客服代表</option>
+          <option value="平面设计师">平面设计师</option>
+          <option value="软件测试员">软件测试员</option>
+          <option value="社工">社工</option>
+          <option value="市场研究分析师">市场研究分析师</option>
+          <option value="数据录入员">数据录入员</option>
+          <option value="销售代表">销售代表</option>
+          <option value="心理咨询师">心理咨询师</option>
+          <option value="信息安全分析师">信息安全分析师</option>
+          <option value="修理工">修理工</option>
+          <option value="演员">演员</option>
+          <option value="医疗记录专员">医疗记录专员</option>
+          <option value="音乐家">音乐家</option>
+          <option value="作家">作家</option>
+        </select>
+        <span style="position:absolute;right:6px;top:50%;transform:translateY(-50%);color:#5a4a38;pointer-events:none;font-size:14px;">▾</span>
+      </div>
     </div>
     <button id="start-btn" style="display:block;width:100%;background:#8b1a2b;color:#f0ebe0;border:none;padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;">看看我的职业发展之路</button>
     <div style="margin-top:16px;text-align:center;font-size:9px;color:#5a4a38;font-family:'Courier New',monospace;letter-spacing:1px;">数据来源 · Anthropic经济指数报告</div>
@@ -729,33 +759,11 @@ function showEnding(){
 }
 
 /* ── 事件监听 ── */
-// 渲染职业选择格子
-(function buildJobGrid(){
-  const grid=$('job-grid');
-  POOL.forEach(card=>{
-    const btn=document.createElement('button');
-    btn.dataset.name=card.name;
-    btn.style.cssText='background:#1a1410;border:1px solid #3a3028;color:#c8b888;font-family:\'Courier New\',monospace;font-size:13px;padding:7px 10px;cursor:pointer;display:flex;align-items:center;gap:5px;border-radius:3px;white-space:nowrap;transition:all 0.15s;';
-    btn.innerHTML=`<span style="font-size:16px;line-height:1;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;">${card.emoji}</span><span>${card.name}</span>`;
-    btn.addEventListener('click',()=>{
-      document.querySelectorAll('#job-grid button').forEach(b=>{
-        b.style.background='#1a1410';b.style.borderColor='#3a3028';b.style.color='#c8b888';
-      });
-      btn.style.background='#8b1a2b';btn.style.borderColor='#c23b22';btn.style.color='#f0ebe0';
-      $('job-grid').dataset.selected=card.name;
-      $('job-selected-hint').textContent=`已选择：${card.emoji} ${card.name}`;
-    });
-    grid.appendChild(btn);
-  });
-})();
-
 $('start-btn').addEventListener('click',()=>{
-  const job=$('job-grid').dataset.selected;
+  const job=$('job-select').value;
   if(!job){
-    $('job-grid').style.outline='1px solid #8b1a2b';
-    $('job-selected-hint').textContent='请先选择一个职业';
-    $('job-selected-hint').style.color='#c23b22';
-    setTimeout(()=>{$('job-grid').style.outline='none';$('job-selected-hint').style.color='#5a4a38';},1500);
+    $('job-select').style.borderBottom='2px solid #c23b22';
+    setTimeout(()=>$('job-select').style.borderBottom='2px solid #5a4a38',1500);
     return;
   }
   const matched=POOL.find(c=>c.name===job);
