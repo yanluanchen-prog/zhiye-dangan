@@ -149,6 +149,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .container{padding:12px 14px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .section{background:var(--paper-lt);border:1px solid var(--border);padding:13px;margin-bottom:11px;position:relative;}
 .section::before{content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:1px solid var(--border);pointer-events:none;opacity:0.5;}
+.section.no-frame{background:transparent;border:none;padding:0;}
+.section.no-frame::before{display:none;}
 .section-title{font-size:10px;letter-spacing:4px;color:var(--ink-lt);border-bottom:1px solid var(--border);padding-bottom:7px;margin-bottom:11px;font-family:monospace;}
 
 /* ── CARD ─────────────────────────────────── */
@@ -233,7 +235,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .draw-placeholder{display:none;} /* replaced by pkg-bag */
 
 /* ── 快递文件袋（仿真实物文件封） ── */
-.pkg-bag{width:100%;margin-bottom:12px;}
+.pkg-bag{width:100%;margin-bottom:12px;display:flex;flex-direction:column;align-items:center;}
 .pkg-bag-body{
   position:relative;
   background:#fbfbfb;
@@ -297,11 +299,12 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .pkg-track-no{font-size:8px;color:#666;font-family:'Courier New',monospace;text-align:center;letter-spacing:1px;}
 /* 签收按钮 */
 .pkg-sign-btn{
-  width:100%;padding:13px;
+  width:auto;padding:12px 18px;
   background:#c0392b;color:#fff;border:none;
-  font-size:13px;font-family:'Courier New',monospace;letter-spacing:3px;
-  border-radius:4px;cursor:pointer;
+  font-size:13px;font-family:'Courier New',monospace;letter-spacing:2px;
+  border-radius:6px;cursor:pointer;
   box-shadow:0 2px 6px rgba(192,57,43,0.4);
+  align-self:center;
 }
 .pkg-sign-btn:active{transform:scale(0.98);opacity:0.9;}
 /* 撕开动画 */
@@ -517,9 +520,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   <div class="container">
 
     <!-- 职业选择 section -->
-    <div class="section">
-      <div class="section-title">人力市场</div>
-
+    <div class="section no-frame">
       <!-- Pre-draw: 快递档案袋 -->
       <div id="draw-zone">
         <div class="pkg-bag" id="pkg-bag">
