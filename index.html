@@ -84,6 +84,11 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   border-bottom:4px solid var(--red);
 }
 /* 左上角工牌 - 放大版 */
+.id-badge-label{font-size:9px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:2px;font-family:monospace;}
+.id-badge-row{display:flex;align-items:center;gap:5px;margin-bottom:4px;}
+.id-badge-row .id-badge-emoji{font-size:18px;line-height:1;}
+.id-badge-row .id-badge-name{font-size:13px;font-weight:900;color:var(--ink);letter-spacing:0.5px;}
+.id-badge-stats-flat{display:flex;flex-direction:column;gap:2px;}
 .id-badge{
   display:flex;align-items:stretch;gap:10px;
 }
@@ -396,20 +401,15 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   <!-- HEADER: 工牌（左）+ 年份（右） -->
   <div class="header">
     <div class="id-badge">
-      <div class="id-badge-card own" id="id-badge-card">
-        <div class="id-badge-hdr" id="id-hdr">我的职业</div>
-        <div class="id-badge-art">
-          <span class="id-badge-emoji" id="id-emoji">💼</span>
-          <span class="id-badge-name" id="id-name">—</span>
-        </div>
+      <div class="id-badge-label">我的职业</div>
+      <div class="id-badge-row">
+        <span class="id-badge-emoji" id="id-emoji">💼</span>
+        <span class="id-badge-name" id="id-name">—</span>
       </div>
-      <div class="id-badge-info">
-        <div class="id-badge-rarity" id="id-rarity">—</div>
-        <div class="id-badge-stats">
-          <div class="id-stat"><span class="stat-label">薪资力</span><span class="stat-value" id="id-salary">—</span></div>
-          <div class="id-stat"><span class="stat-label">抗AI值</span><span class="stat-value" id="id-resist">—</span></div>
-          <div class="id-stat"><span class="stat-label">需求度</span><span class="stat-value" id="id-demand">—</span></div>
-        </div>
+      <div class="id-badge-stats-flat">
+        <div class="stat-row stat-atk"><span class="stat-label">薪资力</span><div class="stat-track"><div class="stat-fill" id="id-sf-sal"></div></div><span class="stat-val" id="id-salary">—</span></div>
+        <div class="stat-row stat-def"><span class="stat-label">抗AI值</span><div class="stat-track"><div class="stat-fill" id="id-sf-ai"></div></div><span class="stat-val" id="id-resist">—</span></div>
+        <div class="stat-row stat-hp"><span class="stat-label">需求度</span><div class="stat-track"><div class="stat-fill" id="id-sf-dem"></div></div><span class="stat-val" id="id-demand">—</span></div>
       </div>
     </div>
     <div class="header-right">
@@ -735,17 +735,12 @@ function updateBadge(){
   const c=G.currentCard;
   $('id-emoji').textContent=c.emoji||'💼';
   $('id-name').textContent=c.name;
-  const rarity=c.rarity||'N';
-  const rarityEl=$('id-rarity');
-  rarityEl.textContent=''; // 不显示稀有度文字，仅保留颜色
-  rarityEl.className='id-badge-rarity '+rarity;
   $('id-salary').textContent=c.salary||'—';
   $('id-resist').textContent=c.aiResist||'—';
   $('id-demand').textContent=c.demand||'—';
-  const hdr=$('id-hdr');
-  hdr.textContent=c.isOwn?'我的职业':rarity;
-  hdr.parentElement.className='id-badge-card'+(c.isOwn?' own':(c.rarity?' '+c.rarity:''));
-  hdr.style.background=c.isOwn?'var(--red)':(c.rarity?`var(--${c.rarity})`:'var(--ink-lt)');
+  $('id-sf-sal').style.width=(c.salary||0)+'%';
+  $('id-sf-ai').style.width=(c.aiResist||0)+'%';
+  $('id-sf-dem').style.width=(c.demand||0)+'%';
 }
 
 function updateHUD(){
@@ -763,8 +758,8 @@ function buildActiveCard(card){
   const seenTxt=enc&&enc.timesDrawn>1?`已见 ${enc.timesDrawn}次`:'';
   div.innerHTML=`
     <div class="card-header">
-      <span class="card-file-no">${card.category} · ${card.fileNum}</span>
-      <span class="card-rarity-stamp">${card.fileNum}</span>
+      <span class="card-file-no">${card.category} · ${card.fileNum.replace(/^[A-Z]+-/,'')}</span>
+      <span class="card-rarity-stamp">${card.fileNum.replace(/^[A-Z]+-/,'')}</span>
     </div>
     <div class="card-art">
       <span class="card-art-icon">${card.emoji}</span>
@@ -848,8 +843,8 @@ function startYear(){
 /* ── card detail modal ── */
 function openCardDetail(card){
   $('cm-card').className='card '+card.rarity;
-  $('cm-file').textContent=`${card.category} · ${card.fileNum}`;
-  $('cm-stamp').textContent=card.fileNum;
+  $('cm-file').textContent=`${card.category} · ${card.fileNum.replace(/^[A-Z]+-/,'')}`;
+  $('cm-stamp').textContent=card.fileNum.replace(/^[A-Z]+-/,'');
   $('cm-emoji').textContent=card.emoji;
   $('cm-name').textContent=card.name;
   $('cm-tag').textContent=card.tagline;
