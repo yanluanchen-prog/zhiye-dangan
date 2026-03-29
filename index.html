@@ -522,10 +522,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   <div style="max-width:360px;width:100%;">
     <div id="story-job-title" style="font-size:11px;color:rgba(139,26,43,0.8);letter-spacing:4px;font-family:monospace;margin-bottom:12px;">「职业」</div>
     <div id="story-text" style="font-size:13px;color:rgba(240,235,224,0.85);line-height:2;white-space:pre-line;"></div>
-    <div style="display:flex;gap:10px;margin-top:28px;">
-      <button id="story-back-btn" style="flex:1;background:transparent;color:rgba(240,235,224,0.45);border:1px solid rgba(240,235,224,0.15);padding:14px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:3px;cursor:pointer;">← 返回</button>
-      <button id="story-enter-btn" style="flex:1;background:transparent;color:rgba(240,235,224,0.6);border:1px solid rgba(240,235,224,0.2);padding:14px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;">进入 2026 年 →</button>
-    </div>
+    <button id="story-enter-btn" style="margin-top:28px;display:block;width:100%;background:transparent;color:rgba(240,235,224,0.6);border:1px solid rgba(240,235,224,0.2);padding:14px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;">进入 2026 年 →</button>
   </div>
 </div>
 
@@ -1513,7 +1510,6 @@ $('restart-btn').addEventListener('click',doRestart);
 $('quit-btn').addEventListener('click',doQuit);
 $('play-again-btn').addEventListener('click',()=>{G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};startYear();});
 $('story-enter-btn').addEventListener('click',()=>{startYear();});
-$('story-back-btn').addEventListener('click',()=>{showScreen('intro-screen');});
 $('farewell-btn').addEventListener('click',()=>{
   $('farewell-overlay').style.display='none';
   if(_farewellCallback)_farewellCallback();
