@@ -1267,7 +1267,7 @@ $('cm-swap').addEventListener('click',function(){
 
 $('enc-bg').addEventListener('click',closeEncModal);$('enc-x').addEventListener('click',closeEncModal);
 $('result-restart').addEventListener('click',doRestart);
-$('result-quit').addEventListener('click',()=>$('quit-btn').click());
+$('result-quit').addEventListener('click',doQuit);
 $('result-restart').addEventListener('click',()=>{
   G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0};
   selectedJob=null;
@@ -1276,6 +1276,14 @@ $('result-restart').addEventListener('click',()=>{
   showScreen('intro-screen');
 });
 function doRestart(){
+  // 保留本命职业，重置游戏进程，从第1年重来
+  const own=G.ownCard;
+  G={ownCard:own,currentCard:{...own},yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0};
+  addToEnc(own);
+  startYear();
+}
+function doQuit(){
+  // 真正退出：回到职业选择页
   G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0};
   selectedJob=null;
   $('enc-count').textContent='0';
@@ -1284,14 +1292,7 @@ function doRestart(){
   showScreen('intro-screen');
 }
 $('restart-btn').addEventListener('click',doRestart);
-$('quit-btn').addEventListener('click',()=>{
-  // web 环境无法真正"退出"，展示一个结束卡片
-  document.body.innerHTML=`<div style="position:fixed;inset:0;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Courier New',monospace;color:rgba(240,235,224,0.5);text-align:center;padding:28px;">
-    <div style="font-size:9px;letter-spacing:4px;margin-bottom:16px;">2026 — 2035</div>
-    <div style="font-size:18px;font-weight:900;color:rgba(240,235,224,0.85);letter-spacing:3px;margin-bottom:24px;">再见。</div>
-    <div style="font-size:12px;line-height:2;max-width:280px;">这十年还在继续。<br>只是今天，你先离开了。</div>
-  </div>`;
-});
+$('quit-btn').addEventListener('click',doQuit);
 $('play-again-btn').addEventListener('click',()=>{G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};startYear();});
 $('story-enter-btn').addEventListener('click',()=>{startYear();});
 $('farewell-btn').addEventListener('click',()=>{
