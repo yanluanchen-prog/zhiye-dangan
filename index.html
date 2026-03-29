@@ -91,7 +91,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* 左上角工牌 - 放大版 */
 .id-badge{display:flex;align-items:flex-start;gap:10px;}
 .id-badge-card{
-  width:66px;height:90px;
+  width:90px;height:90px;
   border:1.5px solid rgba(255,255,255,0.45);border-radius:6px;
   background:var(--paper);overflow:hidden;
   display:flex;flex-direction:column;
@@ -110,23 +110,14 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .id-badge-card.SR .id-badge-hdr{background:var(--SR);}
 .id-badge-card.SSR .id-badge-hdr{background:var(--SSR);}
 .id-badge-card.UR .id-badge-hdr{background:var(--UR);}
-.id-badge-art{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper);}
-.id-badge-emoji{font-size:26px;line-height:1;}
-.id-badge-name{font-size:9px;font-weight:900;color:var(--ink);margin-top:3px;text-align:center;line-height:1.2;padding:0 3px;}
-.id-badge-info{display:flex;flex-direction:column;justify-content:flex-start;padding-top:4px;gap:7px;}
-.bdg-stat{display:flex;align-items:center;gap:5px;}
-.bdg-lbl{font-size:8px;color:rgba(255,255,255,0.55);font-family:monospace;width:36px;flex-shrink:0;}
-.bdg-wrap{flex:1;height:8px;border-radius:4px;}
-.bdg-val{font-size:9px;font-weight:700;font-family:monospace;width:20px;text-align:right;color:#fff;}
-/* 工牌在深色背景上，覆盖卡牌stat颜色 */
-.id-badge-info .stat-label{color:rgba(255,255,255,0.55);}
-.id-badge-info .stat-track{background:rgba(255,255,255,0.12);}
-.id-badge-info .stat-atk .stat-fill{background:rgba(220,80,50,0.9);}
-.id-badge-info .stat-def .stat-fill{background:rgba(100,150,220,0.9);}
-.id-badge-info .stat-hp .stat-fill{background:rgba(60,180,100,0.9);}
-.id-badge-info .stat-atk .stat-val{color:#E0604A;}
-.id-badge-info .stat-def .stat-val{color:#80AAEE;}
-.id-badge-info .stat-hp .stat-val{color:#55CC80;}
+.id-badge-art{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper);padding:4px 5px;}
+.id-badge-emoji{font-size:22px;line-height:1;}
+.id-badge-name{font-size:9px;font-weight:900;color:var(--ink);margin-top:2px;text-align:center;line-height:1.2;}
+.id-badge-sal-row{display:flex;align-items:center;gap:3px;margin-top:5px;width:100%;}
+.id-badge-sal-lbl{font-size:7px;color:var(--ink-faint);font-family:monospace;flex-shrink:0;}
+.id-badge-sal-wrap{flex:1;height:4px;border-radius:2px;}
+.id-badge-sal-val{font-size:8px;font-weight:700;font-family:monospace;color:#C23B22;flex-shrink:0;}
+
 .id-badge-job{font-size:15px;font-weight:900;letter-spacing:1px;line-height:1.1;margin-bottom:3px;}
 .id-badge-sub{font-size:9px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:4px;}
 .id-badge-resist{font-size:11px;font-weight:900;color:var(--red);font-family:monospace;margin-bottom:4px;}
@@ -402,10 +393,12 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
         <div class="id-badge-art">
           <span class="id-badge-emoji" id="id-emoji">💼</span>
           <span class="id-badge-name" id="id-name">—</span>
+          <div class="id-badge-sal-row">
+            <span class="id-badge-sal-lbl">薪资力</span>
+            <div class="id-badge-sal-wrap" id="id-sf-sal"></div>
+            <span class="id-badge-sal-val" id="id-salary">—</span>
+          </div>
         </div>
-      </div>
-      <div class="id-badge-info">
-        <div class="bdg-stat"><span class="bdg-lbl">薪资力</span><div class="bdg-wrap" id="id-sf-sal"></div><span class="bdg-val" id="id-salary">—</span></div>
       </div>
     </div>
     <div class="header-right">
@@ -735,7 +728,7 @@ function updateBadge(){
   // 数值
   $('id-salary').textContent=c.salary||'—';
   const salEl=$('id-sf-sal');
-  if(salEl) salEl.style.background=`linear-gradient(to right,#E05040 ${c.salary||0}%,rgba(255,255,255,0.22) ${c.salary||0}%)`;
+  if(salEl) salEl.style.background=`linear-gradient(to right,#C23B22 ${c.salary||0}%,rgba(0,0,0,0.08) ${c.salary||0}%)`;
 }
 
 function updateHUD(){
