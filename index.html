@@ -230,13 +230,89 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .btn-row{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
 
 /* ── PRE-DRAW placeholder ─────────────────── */
-.draw-placeholder{
-  width:100%;aspect-ratio:3/4;max-height:380px;
-  border:2px dashed var(--border);border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,0.02) 10px,rgba(0,0,0,0.02) 20px);
-  color:var(--ink-faint);font-size:11px;letter-spacing:3px;
-  margin-bottom:12px;
+.draw-placeholder{display:none;} /* replaced by pkg-bag */
+
+/* ── 快递档案袋 ── */
+.pkg-bag{
+  width:100%;margin-bottom:12px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.pkg-bag-body{
+  background:#c8a96e; /* 牛皮纸色 */
+  border-radius:6px;
+  padding:14px;
+  position:relative;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,0.12), 2px 3px 10px rgba(0,0,0,0.2);
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 6px),
+    repeating-linear-gradient(90deg,transparent,transparent 3px,rgba(0,0,0,0.02) 3px,rgba(0,0,0,0.02) 6px);
+}
+.pkg-bag-body::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:6px;
+  background:repeating-linear-gradient(90deg,#a07840 0,#a07840 6px,transparent 6px,transparent 12px);
+  border-radius:6px 6px 0 0;opacity:0.5;
+}
+.pkg-waybill{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:3px;
+  padding:10px 10px 8px;
+  font-family:'Courier New',monospace;
+  box-shadow:0 1px 4px rgba(0,0,0,0.1);
+  position:relative;
+}
+.pkg-wb-header{
+  display:flex;justify-content:space-between;align-items:center;
+  background:#c0392b;
+  margin:-10px -10px 8px;
+  padding:5px 10px;
+  border-radius:2px 2px 0 0;
+}
+.pkg-wb-brand{
+  font-size:13px;font-weight:900;color:#fff;letter-spacing:3px;
+  font-family:'Courier New',monospace;
+}
+.pkg-wb-type{
+  font-size:9px;color:rgba(255,255,255,0.8);letter-spacing:1px;
+}
+.pkg-wb-divider{height:1px;background:repeating-linear-gradient(90deg,#ccc 0,#ccc 4px,transparent 4px,transparent 8px);margin:6px 0;}
+.pkg-wb-row{
+  display:flex;align-items:baseline;gap:6px;margin-bottom:4px;
+}
+.pkg-wb-lbl{
+  font-size:9px;color:#888;width:36px;flex-shrink:0;letter-spacing:1px;
+}
+.pkg-wb-val{
+  font-size:11px;font-weight:700;color:#222;letter-spacing:0.5px;flex:1;
+}
+.pkg-wb-item{color:#c0392b;font-size:13px;letter-spacing:2px;}
+/* 条形码 */
+.pkg-barcode{
+  display:flex;gap:1px;height:28px;align-items:flex-end;margin:2px 0 3px;
+}
+.pkg-barcode-bar{
+  background:#222;
+  flex-shrink:0;
+}
+.pkg-track-no{
+  font-size:8px;color:#666;font-family:'Courier New',monospace;
+  text-align:center;letter-spacing:2px;
+}
+/* 签收按钮 */
+.pkg-sign-btn{
+  width:100%;padding:13px;
+  background:#c0392b;color:#fff;border:none;
+  font-size:13px;font-family:'Courier New',monospace;letter-spacing:3px;
+  border-radius:4px;cursor:pointer;
+  box-shadow:0 2px 6px rgba(192,57,43,0.4);
+}
+.pkg-sign-btn:active{transform:scale(0.98);opacity:0.9;}
+/* 撕开动画 */
+@keyframes bagTear{
+  0%{transform:translateY(0);opacity:1;}
+  20%{transform:translateY(-4px) rotate(-1deg);opacity:1;}
+  40%{transform:translateY(-8px) rotate(1deg);opacity:0.8;}
+  100%{transform:translateY(-60px) rotate(-3deg);opacity:0;}
 }
 /* 卡牌飞入动画 - 从右往左 */
 @keyframes cardFlyIn{
@@ -447,10 +523,43 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
     <div class="section">
       <div class="section-title">人力市场</div>
 
-      <!-- Pre-draw -->
+      <!-- Pre-draw: 快递档案袋 -->
       <div id="draw-zone">
-        <div class="draw-placeholder">等待探索…</div>
-        <button class="btn red" id="draw-btn">看看机会</button>
+        <div class="pkg-bag" id="pkg-bag">
+          <!-- 档案袋主体 -->
+          <div class="pkg-bag-body">
+            <!-- 快递面单 -->
+            <div class="pkg-waybill">
+              <div class="pkg-wb-header">
+                <div class="pkg-wb-brand">HR EXPRESS</div>
+                <div class="pkg-wb-type">文件快递</div>
+              </div>
+              <div class="pkg-wb-divider"></div>
+              <div class="pkg-wb-row">
+                <span class="pkg-wb-lbl">寄件方</span>
+                <span class="pkg-wb-val">人力资源市场</span>
+              </div>
+              <div class="pkg-wb-row">
+                <span class="pkg-wb-lbl">收件方</span>
+                <span class="pkg-wb-val" id="pkg-recipient">—</span>
+              </div>
+              <div class="pkg-wb-row">
+                <span class="pkg-wb-lbl">物　品</span>
+                <span class="pkg-wb-val pkg-wb-item">职业机会</span>
+              </div>
+              <div class="pkg-wb-row">
+                <span class="pkg-wb-lbl">数　量</span>
+                <span class="pkg-wb-val">5 件</span>
+              </div>
+              <div class="pkg-wb-divider" style="margin:8px 0 6px;"></div>
+              <!-- 条形码 -->
+              <div class="pkg-barcode" id="pkg-barcode"></div>
+              <div class="pkg-track-no" id="pkg-track-no">2026-HRM-00001</div>
+            </div>
+          </div>
+          <!-- 签收按钮 -->
+          <button class="pkg-sign-btn" id="draw-btn">📬 是否签收？</button>
+        </div>
       </div>
 
       <!-- Post-draw: deck stack + 2 action buttons -->
@@ -961,16 +1070,22 @@ function doDrawCards(){
   G.drawnCards=randomCards(5,[G.currentCard.name]);
   G.drawnCards.forEach(c=>addToEnc(c));
   G.activeIdx=0;G.pendingSwap=null;
-  $('draw-zone').style.transition='opacity 0.2s';
-  $('draw-zone').style.opacity='0';
-  setTimeout(()=>{
+  // 档案袋撕开动画
+  const bag=$('pkg-bag');
+  if(bag){
+    bag.style.animation='bagTear 0.5s ease-in forwards';
+    setTimeout(()=>{
+      $('draw-zone').style.display='none';
+      $('hand-zone').style.display='block';
+      renderDeck(0);
+      const activeCard=$('deck-active').firstElementChild;
+      if(activeCard)activeCard.classList.add('card-fly-in');
+    },480);
+  } else {
     $('draw-zone').style.display='none';
     $('hand-zone').style.display='block';
     renderDeck(0);
-    // 添加飞入动画
-    const activeCard=$('deck-active').firstElementChild;
-    if(activeCard)activeCard.classList.add('card-fly-in');
-  },220);
+  }
 }
 
 function startYear(){
@@ -979,6 +1094,25 @@ function startYear(){
   $('draw-zone').style.display='block';$('draw-zone').style.opacity='1';
   $('hand-zone').style.display='none';
   $('deck-active').innerHTML='';
+  // 更新快递面单
+  const y=YEARS[G.yearIndex];
+  const recEl=$('pkg-recipient');if(recEl)recEl.textContent=G.currentCard.name;
+  const tnEl=$('pkg-track-no');if(tnEl)tnEl.textContent=`${y.year}-HRM-${String(G.yearIndex+1).padStart(5,'0')}`;
+  // 生成条形码
+  const bc=$('pkg-barcode');
+  if(bc){
+    bc.innerHTML='';
+    const pattern=[3,1,2,1,3,2,1,2,1,3,2,1,1,3,2,1,3,1,2,3,1,1,2,1,3,2,1,2,3,1];
+    pattern.forEach((w,i)=>{
+      const bar=document.createElement('div');
+      bar.className='pkg-barcode-bar';
+      bar.style.width=w+'px';
+      bar.style.height=(i%3===0?28:i%3===1?22:16)+'px';
+      bc.appendChild(bar);
+    });
+  }
+  // 重置袋子样式（避免上一年的动画残留）
+  const bag=$('pkg-bag');if(bag){bag.style.animation='';bag.style.opacity='1';}
   showScreen('game-screen');
 }
 
