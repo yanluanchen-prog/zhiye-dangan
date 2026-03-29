@@ -232,52 +232,56 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* ── PRE-DRAW placeholder ─────────────────── */
 .draw-placeholder{display:none;} /* replaced by pkg-bag */
 
-/* ── 快递档案袋（仿真立体白色塑料袋） ── */
-.pkg-bag{
-  width:100%;margin-bottom:12px;
-  display:flex;flex-direction:column;gap:10px;
-}
+/* ── 快递文件袋（仿顺丰白色平面袋） ── */
+.pkg-bag{width:100%;margin-bottom:12px;}
 .pkg-bag-body{
   position:relative;
-  border-radius:8px;
-  padding:0 14px 14px;
-  /* 多层渐变：基础色 + 左上高光 + 右下阴影 + 中心微凸 */
-  background:
-    radial-gradient(ellipse at 28% 22%, rgba(255,255,255,0.88) 0%, transparent 52%),
-    radial-gradient(ellipse at 72% 75%, rgba(0,0,0,0.06) 0%, transparent 50%),
-    linear-gradient(150deg, #f5f2ed 0%, #e8e3da 45%, #d8d0c5 100%);
-  /* 立体阴影：外部投影 + 内部光影 */
+  background:#f8f8f8;
+  border-radius:4px;
+  overflow:hidden;
   box-shadow:
-    0 6px 20px rgba(0,0,0,0.25),
-    0 2px 6px rgba(0,0,0,0.15),
-    inset 0 1px 0 rgba(255,255,255,0.7),
-    inset 0 -1px 0 rgba(0,0,0,0.08),
-    inset 2px 0 4px rgba(255,255,255,0.4),
-    inset -2px 0 4px rgba(0,0,0,0.06);
+    0 4px 14px rgba(0,0,0,0.18),
+    0 1px 4px rgba(0,0,0,0.1),
+    inset 0 0 0 1px rgba(0,0,0,0.06);
+  padding:14px 14px 0;
 }
-/* 顶部封口横纹（热封边） */
-.pkg-bag-body::before{
-  content:'';display:block;height:14px;
-  margin:0 -14px 12px;border-radius:8px 8px 0 0;
-  background:
-    repeating-linear-gradient(0deg,
-      rgba(255,255,255,0.4) 0px, rgba(255,255,255,0.4) 1px,
-      rgba(0,0,0,0.07) 1px, rgba(0,0,0,0.07) 2px,
-      transparent 2px, transparent 4px
-    ),
-    linear-gradient(to bottom, #c8c0b4, #b8b0a4);
+/* 袋面品牌区 */
+.pkg-bag-brand{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;
 }
-/* 底部封口横纹 */
-.pkg-bag-body::after{
-  content:'';display:block;height:12px;
-  margin:10px -14px -14px;border-radius:0 0 8px 8px;
-  background:
-    repeating-linear-gradient(0deg,
-      rgba(255,255,255,0.3) 0px, rgba(255,255,255,0.3) 1px,
-      rgba(0,0,0,0.07) 1px, rgba(0,0,0,0.07) 2px,
-      transparent 2px, transparent 4px
-    ),
-    linear-gradient(to bottom, #b8b0a4, #c8c0b4);
+.pkg-bag-logo{
+  display:flex;align-items:center;gap:0;
+}
+.pkg-logo-circle{
+  width:44px;height:44px;border-radius:50%;
+  background:#c0392b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:900;color:#fff;
+  font-family:'Courier New',monospace;letter-spacing:-1px;
+  box-shadow:inset -2px -2px 0 rgba(0,0,0,0.15);
+  flex-shrink:0;
+}
+.pkg-logo-text{
+  margin-left:8px;
+  font-size:9px;font-weight:700;color:#555;
+  letter-spacing:2px;font-family:'Courier New',monospace;
+  line-height:1.4;
+}
+.pkg-bag-year{
+  font-size:28px;font-weight:900;color:rgba(0,0,0,0.06);
+  font-family:'Courier New',monospace;letter-spacing:2px;
+}
+/* 底部红条 */
+.pkg-bag-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#c0392b;
+  margin:12px -14px 0;
+  padding:5px 14px;
+}
+.pkg-bag-footer-txt{
+  font-size:8px;color:rgba(255,255,255,0.85);
+  font-family:'Courier New',monospace;letter-spacing:1px;
 }
 .pkg-waybill{
   background:#fff;
@@ -557,6 +561,14 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
         <div class="pkg-bag" id="pkg-bag">
           <!-- 档案袋主体 -->
           <div class="pkg-bag-body">
+            <!-- 品牌区（仿顺丰布局） -->
+            <div class="pkg-bag-brand">
+              <div class="pkg-bag-logo">
+                <div class="pkg-logo-circle">HR</div>
+                <div class="pkg-logo-text">人力资源<br>EXPRESS</div>
+              </div>
+              <div class="pkg-bag-year" id="pkg-bag-year">2026</div>
+            </div>
             <!-- 快递面单 -->
             <div class="pkg-waybill">
               <div class="pkg-wb-header">
@@ -584,6 +596,11 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
               <!-- 条形码 -->
               <div class="pkg-barcode" id="pkg-barcode"></div>
               <div class="pkg-track-no" id="pkg-track-no">2026-HRM-00001</div>
+            </div>
+            <!-- 底部红条 -->
+            <div class="pkg-bag-footer">
+              <span class="pkg-bag-footer-txt">☎ 400-HR-2026 &nbsp;·&nbsp; www.hr-express.com</span>
+              <span class="pkg-bag-footer-txt" id="pkg-footer-year">2026</span>
             </div>
           </div>
           <!-- 签收按钮 -->
@@ -1127,6 +1144,8 @@ function startYear(){
   const y=YEARS[G.yearIndex];
   const recEl=$('pkg-recipient');if(recEl)recEl.textContent=G.currentCard.name;
   const tnEl=$('pkg-track-no');if(tnEl)tnEl.textContent=`${y.year}-HRM-${String(G.yearIndex+1).padStart(5,'0')}`;
+  const byEl=$('pkg-bag-year');if(byEl)byEl.textContent=y.year;
+  const fyEl=$('pkg-footer-year');if(fyEl)fyEl.textContent=y.year;
   // 生成条形码
   const bc=$('pkg-barcode');
   if(bc){
