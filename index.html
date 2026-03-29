@@ -46,17 +46,23 @@ body{
 
 /* ── SCREENS ─────────────────────────────── */
 .screen{display:none !important;}
-.screen.active{display:block !important;min-height:100vh;background:var(--paper);}
-/* 首页强制深色背景，覆盖.screen.active的浅色背景 */
+.screen.active{display:block !important;background:var(--paper);}
+/* 首页强制深色背景 */
 #intro-screen.screen.active{background:#0a0a0a !important;}
-/* 首页激活时body背景也设为深色，防止padding区域露白 */
 body:has(#intro-screen.active){background:#0a0a0a !important;}
-/* 游戏屏安全区域适配 - 确保整体内容不会被灵动岛遮挡 */
+/* 游戏屏：固定全屏，不滚动，适配灵动岛 */
 #game-screen.active{
+  display:flex !important;
+  flex-direction:column;
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:var(--paper);
   padding-top:env(safe-area-inset-top);
   padding-bottom:env(safe-area-inset-bottom);
-  min-height:100vh;
-  background:var(--paper);
+  box-sizing:border-box;
 }
 /* 首页特殊处理 - 覆盖整个视口 */
 #intro-screen{
@@ -77,60 +83,32 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* ── HEADER ──────────────────────────────── */
 .header{
   background:var(--ink);color:var(--paper);
-  padding:10px 14px 9px;
-  /* 安全区域由父容器处理，header只需要基础padding */
-  padding-top:10px;
-  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 14px 10px;
+  display:flex;justify-content:space-between;align-items:flex-start;
   border-bottom:4px solid var(--red);
+  flex-shrink:0;
 }
 /* 左上角工牌 - 放大版 */
-.id-badge-label{font-size:9px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:2px;font-family:monospace;}
-.id-badge-row{display:flex;align-items:center;gap:5px;margin-bottom:4px;}
-.id-badge-row .id-badge-emoji{font-size:18px;line-height:1;}
-.id-badge-row .id-badge-name{font-size:13px;font-weight:900;color:var(--ink);letter-spacing:0.5px;}
-.id-badge-stats-flat{display:flex;flex-direction:column;gap:2px;}
-.id-badge{
-  display:flex;align-items:stretch;gap:10px;
-}
+.id-badge{display:flex;align-items:stretch;gap:10px;}
 .id-badge-card{
-  width:60px;height:80px;
-  border:3px solid var(--border);border-radius:6px;
+  width:66px;height:90px;
+  border:2px solid rgba(255,255,255,0.25);border-radius:6px;
   background:var(--paper-lt);overflow:hidden;
   display:flex;flex-direction:column;
   box-shadow:2px 3px 10px rgba(0,0,0,0.3);
   flex-shrink:0;
 }
-.id-badge-card.own{border-color:var(--red);}
-.id-badge-card.N{border-color:var(--N);}
-.id-badge-card.R{border-color:var(--R);}
-.id-badge-card.SR{border-color:var(--SR);}
-.id-badge-card.SSR{border-color:var(--SSR);}
-.id-badge-card.UR{border-color:var(--UR);}
 .id-badge-hdr{
   padding:3px 4px;font-size:8px;font-family:monospace;
-  color:#fff;letter-spacing:1px;font-weight:700;
+  color:rgba(255,255,255,0.9);letter-spacing:1px;font-weight:500;
+  background:rgba(255,255,255,0.15);
   flex-shrink:0;
 }
-.id-badge-card.own .id-badge-hdr{background:var(--red);}
-.id-badge-card.N .id-badge-hdr{background:var(--N);}
-.id-badge-card.R .id-badge-hdr{background:var(--R);}
-.id-badge-card.SR .id-badge-hdr{background:var(--SR);}
-.id-badge-card.SSR .id-badge-hdr{background:var(--SSR);}
-.id-badge-card.UR .id-badge-hdr{background:var(--UR);}
 .id-badge-art{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper);}
-.id-badge-emoji{font-size:24px;line-height:1;}
+.id-badge-emoji{font-size:26px;line-height:1;}
 .id-badge-name{font-size:9px;font-weight:900;color:var(--ink);margin-top:3px;text-align:center;line-height:1.2;padding:0 3px;}
-.id-badge-info{color:var(--paper);display:flex;flex-direction:column;justify-content:center;min-width:90px;gap:4px;}
-.id-badge-rarity{font-size:12px;font-weight:900;letter-spacing:2px;font-family:monospace;padding:2px 6px;border:1.5px solid rgba(255,255,255,0.5);display:inline-block;margin-bottom:20px;}
-.id-badge-rarity.N{color:var(--N);border-color:var(--N);}
-.id-badge-rarity.R{color:var(--R);border-color:var(--R);}
-.id-badge-rarity.SR{color:var(--SR);border-color:var(--SR);}
-.id-badge-rarity.SSR{color:var(--SSR);border-color:var(--SSR);}
-.id-badge-rarity.UR{color:var(--UR);border-color:var(--UR);}
-.id-badge-stats{display:flex;flex-direction:column;gap:3px;font-size:10px;}
-.id-stat{display:flex;justify-content:flex-start;gap:4px;opacity:0.95;}
-.id-stat .stat-label{color:var(--ink-faint);}
-.id-stat .stat-value{font-weight:700;color:#fff;margin-left:auto;}
+.id-badge-info{display:flex;flex-direction:column;justify-content:center;flex:1;gap:0;}
+.id-badge-stats-flat{display:flex;flex-direction:column;gap:4px;}
 .id-badge-job{font-size:15px;font-weight:900;letter-spacing:1px;line-height:1.1;margin-bottom:3px;}
 .id-badge-sub{font-size:9px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:4px;}
 .id-badge-resist{font-size:11px;font-weight:900;color:var(--red);font-family:monospace;margin-bottom:4px;}
@@ -142,13 +120,13 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .header-year-sub{font-size:8px;color:var(--ink-faint);letter-spacing:2px;margin-top:2px;font-family:monospace;}
 
 /* ── YEAR DOTS ────────────────────────────── */
-.ydots-bar{display:flex;gap:3px;padding:5px 14px;background:var(--paper-dk);border-bottom:1px solid var(--border);}
+.ydots-bar{display:flex;gap:3px;padding:5px 14px;background:var(--paper-dk);border-bottom:1px solid var(--border);flex-shrink:0;}
 .ydot{flex:1;height:4px;border-radius:2px;background:rgba(0,0,0,0.1);}
 .ydot.done{background:var(--red);opacity:0.5;}
 .ydot.cur{background:var(--red);}
 
 /* ── SECTION ──────────────────────────────── */
-.container{padding:12px 14px;}
+.container{padding:12px 14px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .section{background:var(--paper-lt);border:1px solid var(--border);padding:13px;margin-bottom:11px;position:relative;}
 .section::before{content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:1px solid var(--border);pointer-events:none;opacity:0.5;}
 .section-title{font-size:10px;letter-spacing:4px;color:var(--ink-lt);border-bottom:1px solid var(--border);padding-bottom:7px;margin-bottom:11px;font-family:monospace;}
@@ -170,7 +148,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .SSR .card-header{background:var(--SSR);}
 .UR .card-header{background:var(--UR);}
 .card-file-no{font-size:9px;color:rgba(255,255,255,0.75);font-family:monospace;letter-spacing:2px;}
-.card-rarity-stamp{font-size:11px;font-weight:900;letter-spacing:3px;padding:2px 8px;border:1.5px solid rgba(255,255,255,0.6);font-family:monospace;color:#fff;}
+.card-rarity-stamp{font-size:10px;font-weight:400;letter-spacing:1px;padding:1px 6px;border:1px solid rgba(255,255,255,0.4);font-family:monospace;color:rgba(255,255,255,0.8);}
 .card-art{padding:20px 14px 14px;text-align:center;background:var(--paper);border-bottom:1px solid var(--border);}
 .card-art-icon{font-size:64px;line-height:1;display:block;margin-bottom:10px;}
 .card-name{font-size:28px;font-weight:900;line-height:1;letter-spacing:1px;color:var(--ink);}
@@ -401,15 +379,19 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   <!-- HEADER: 工牌（左）+ 年份（右） -->
   <div class="header">
     <div class="id-badge">
-      <div class="id-badge-label">我的职业</div>
-      <div class="id-badge-row">
-        <span class="id-badge-emoji" id="id-emoji">💼</span>
-        <span class="id-badge-name" id="id-name">—</span>
+      <div class="id-badge-card" id="id-badge-card">
+        <div class="id-badge-hdr">我的职业</div>
+        <div class="id-badge-art">
+          <span class="id-badge-emoji" id="id-emoji">💼</span>
+          <span class="id-badge-name" id="id-name">—</span>
+        </div>
       </div>
-      <div class="id-badge-stats-flat">
-        <div class="stat-row stat-atk"><span class="stat-label">薪资力</span><div class="stat-track"><div class="stat-fill" id="id-sf-sal"></div></div><span class="stat-val" id="id-salary">—</span></div>
-        <div class="stat-row stat-def"><span class="stat-label">抗AI值</span><div class="stat-track"><div class="stat-fill" id="id-sf-ai"></div></div><span class="stat-val" id="id-resist">—</span></div>
-        <div class="stat-row stat-hp"><span class="stat-label">需求度</span><div class="stat-track"><div class="stat-fill" id="id-sf-dem"></div></div><span class="stat-val" id="id-demand">—</span></div>
+      <div class="id-badge-info">
+        <div class="id-badge-stats-flat">
+          <div class="stat-row stat-atk"><span class="stat-label">薪资力</span><div class="stat-track"><div class="stat-fill" id="id-sf-sal"></div></div><span class="stat-val" id="id-salary">—</span></div>
+          <div class="stat-row stat-def"><span class="stat-label">抗AI值</span><div class="stat-track"><div class="stat-fill" id="id-sf-ai"></div></div><span class="stat-val" id="id-resist">—</span></div>
+          <div class="stat-row stat-hp"><span class="stat-label">需求度</span><div class="stat-track"><div class="stat-fill" id="id-sf-dem"></div></div><span class="stat-val" id="id-demand">—</span></div>
+        </div>
       </div>
     </div>
     <div class="header-right">
@@ -738,9 +720,9 @@ function updateBadge(){
   $('id-salary').textContent=c.salary||'—';
   $('id-resist').textContent=c.aiResist||'—';
   $('id-demand').textContent=c.demand||'—';
-  $('id-sf-sal').style.width=(c.salary||0)+'%';
-  $('id-sf-ai').style.width=(c.aiResist||0)+'%';
-  $('id-sf-dem').style.width=(c.demand||0)+'%';
+  if($('id-sf-sal'))$('id-sf-sal').style.width=(c.salary||0)+'%';
+  if($('id-sf-ai'))$('id-sf-ai').style.width=(c.aiResist||0)+'%';
+  if($('id-sf-dem'))$('id-sf-dem').style.width=(c.demand||0)+'%';
 }
 
 function updateHUD(){
@@ -758,7 +740,7 @@ function buildActiveCard(card){
   const seenTxt=enc&&enc.timesDrawn>1?`已见 ${enc.timesDrawn}次`:'';
   div.innerHTML=`
     <div class="card-header">
-      <span class="card-file-no">${card.category} · ${card.fileNum.replace(/^[A-Z]+-/,'')}</span>
+      <span class="card-file-no">${card.category}</span>
       <span class="card-rarity-stamp">${card.fileNum.replace(/^[A-Z]+-/,'')}</span>
     </div>
     <div class="card-art">
@@ -843,7 +825,7 @@ function startYear(){
 /* ── card detail modal ── */
 function openCardDetail(card){
   $('cm-card').className='card '+card.rarity;
-  $('cm-file').textContent=`${card.category} · ${card.fileNum.replace(/^[A-Z]+-/,'')}`;
+  $('cm-file').textContent=card.category;
   $('cm-stamp').textContent=card.fileNum.replace(/^[A-Z]+-/,'');
   $('cm-emoji').textContent=card.emoji;
   $('cm-name').textContent=card.name;
