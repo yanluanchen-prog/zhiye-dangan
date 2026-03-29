@@ -253,7 +253,32 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
     inset 0 0 0 1px rgba(0,0,0,.08);
   padding:18px 18px 14px;
   min-height:210px;
+  transform-origin:center center;
 }
+.pkg-top-strip{
+  position:absolute;left:0;right:0;top:0;height:22px;
+  background:
+    radial-gradient(140% 90% at 20% 8%, rgba(255,255,255,.96) 0%, rgba(255,255,255,0) 42%),
+    linear-gradient(180deg,#fcfcfc 0%, #f1f1f1 100%);
+  border-bottom:1px solid rgba(0,0,0,.08);
+  z-index:3;
+  transform-origin:center top;
+}
+@keyframes bagFlyIn{
+  0%{transform:translateY(36px) scale(.96);opacity:0;}
+  100%{transform:translateY(0) scale(1);opacity:1;}
+}
+@keyframes stripTearAway{
+  0%{transform:translateY(0) rotate(0);opacity:1;}
+  100%{transform:translateY(-34px) rotate(-5deg);opacity:0;}
+}
+@keyframes bagOpenBody{
+  0%{clip-path:inset(0 0 0 0 round 8px);}
+  100%{clip-path:inset(18px 0 0 0 round 8px);}
+}
+.pkg-bag.fly-in .pkg-bag-body{animation:bagFlyIn .42s ease-out both;}
+.pkg-bag.opening #pkg-top-strip{animation:stripTearAway .36s ease-out forwards;}
+.pkg-bag.opening #pkg-bag-body{animation:bagOpenBody .36s ease-out forwards;}
 .pkg-bag-body::before{
   content:'';
   position:absolute;inset:0;
@@ -565,7 +590,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
       <div id="draw-zone">
         <div class="pkg-bag" id="pkg-bag">
           <!-- 档案袋主体 -->
-          <div class="pkg-bag-body">
+          <div class="pkg-bag-body" id="pkg-bag-body">
+            <div class="pkg-top-strip" id="pkg-top-strip"></div>
             <div class="pkg-bag-main">
               <div class="pkg-bag-left">
                 <div class="pkg-big-logo">HR<span class="dot"></span>)</div>
@@ -1141,17 +1167,18 @@ function doDrawCards(){
   G.drawnCards=randomCards(5,[G.currentCard.name]);
   G.drawnCards.forEach(c=>addToEnc(c));
   G.activeIdx=0;G.pendingSwap=null;
-  // 档案袋撕开动画
   const bag=$('pkg-bag');
   if(bag){
-    bag.style.animation='bagTear 0.5s ease-in forwards';
+    bag.classList.remove('fly-in');
+    bag.classList.add('opening');
     setTimeout(()=>{
       $('draw-zone').style.display='none';
       $('hand-zone').style.display='block';
       renderDeck(0);
       const activeCard=$('deck-active').firstElementChild;
       if(activeCard)activeCard.classList.add('card-fly-in');
-    },480);
+      bag.classList.remove('opening');
+    },380);
   } else {
     $('draw-zone').style.display='none';
     $('hand-zone').style.display='block';
@@ -1193,8 +1220,15 @@ function startYear(){
     qr.style.background=`repeating-linear-gradient(0deg,#111 0,#111 ${2+(seed%2)}px,#fff ${2+(seed%2)}px,#fff ${4+(seed%2)}px),repeating-linear-gradient(90deg,#111 0,#111 ${2+((seed+1)%2)}px,#fff ${2+((seed+1)%2)}px,#fff ${4+((seed+1)%2)}px)`;
   }
   // 重置袋子样式（避免上一年的动画残留）
-  const bag=$('pkg-bag');if(bag){bag.style.animation='';bag.style.opacity='1';}
+  const bag=$('pkg-bag');
+  if(bag){
+    bag.classList.remove('opening','fly-in');
+    const body=$('pkg-bag-body'); if(body) body.style.clipPath='';
+    const strip=$('pkg-top-strip'); if(strip) { strip.style.opacity=''; strip.style.transform=''; }
+  }
   showScreen('game-screen');
+  // 入场飞入
+  if(bag){ requestAnimationFrame(()=>bag.classList.add('fly-in')); }
 }
 
 /* ── card detail modal ── */
