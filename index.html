@@ -264,7 +264,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   position:relative;width:100%;max-width:480px;
   background:var(--paper);border-top:4px solid var(--red);
   padding:18px 20px 0;
-  max-height:72vh;
+  height:72vh; /* 固定高度，不随文字伸缩 */
   display:flex;flex-direction:column;
   animation:slideUp 0.25s ease;
 }
@@ -1058,7 +1058,7 @@ function revealResult(){
   // 更新 badge
   $('r-id-emoji').textContent=c.emoji||'💼';
   $('r-id-name').textContent=c.name;
-  $('r-id-job').textContent=c.name;
+  // r-id-job removed
   $('r-id-hdr').textContent=c.isOwn?'我的职业':c.rarity||'N';
   $('r-id-hdr').style.background=c.isOwn?'var(--red)':(c.rarity?`var(--${c.rarity})`:'var(--ink-lt)');
   $('r-yr').textContent=y.year;
@@ -1087,7 +1087,7 @@ function revealResult(){
 
 function showFail(y,elimResult){
   const c=G.currentCard;
-  $('f-id-emoji').textContent=c.emoji||'💼';$('f-id-name').textContent=c.name;$('f-id-job').textContent=c.name;
+  $('f-id-emoji').textContent=c.emoji||'💼';$('f-id-name').textContent=c.name;
   $('f-yr').textContent=y.year;$('f-yr-big').textContent=y.year;
   let reason;
   if(elimResult&&elimResult.inList){
@@ -1103,7 +1103,7 @@ function showFail(y,elimResult){
 
 function showEnding(){
   const c=G.currentCard;
-  $('en-id-emoji').textContent=c.emoji||'💼';$('en-id-name').textContent=c.name;$('en-id-job').textContent=c.name;
+  $('en-id-emoji').textContent=c.emoji||'💼';$('en-id-name').textContent=c.name;
   const encN=Object.keys(G.encyclopedia).length;
   const avgSalary=Math.round(G.totalSalary/10);
 
@@ -1286,13 +1286,6 @@ $('cm-swap').addEventListener('click',function(){
 $('enc-bg').addEventListener('click',closeEncModal);$('enc-x').addEventListener('click',closeEncModal);
 $('result-restart').addEventListener('click',doRestart);
 $('result-quit').addEventListener('click',doQuit);
-$('result-restart').addEventListener('click',()=>{
-  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0};
-  selectedJob=null;
-  $('job-display').value='';
-  document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
-  showScreen('intro-screen');
-});
 function doRestart(){
   // 保留本命职业，重置游戏进程，从第1年重来
   const own=G.ownCard;
