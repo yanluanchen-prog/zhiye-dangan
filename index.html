@@ -232,34 +232,63 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* ── PRE-DRAW placeholder ─────────────────── */
 .draw-placeholder{display:none;} /* replaced by pkg-bag */
 
-/* ── 快递档案袋 ── */
+/* ── 快递档案袋（仿真立体白色塑料袋） ── */
 .pkg-bag{
   width:100%;margin-bottom:12px;
   display:flex;flex-direction:column;gap:10px;
 }
 .pkg-bag-body{
-  background:#c8a96e; /* 牛皮纸色 */
-  border-radius:6px;
-  padding:14px;
   position:relative;
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,0.12), 2px 3px 10px rgba(0,0,0,0.2);
-  background-image:
-    repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 6px),
-    repeating-linear-gradient(90deg,transparent,transparent 3px,rgba(0,0,0,0.02) 3px,rgba(0,0,0,0.02) 6px);
+  border-radius:8px;
+  padding:0 14px 14px;
+  /* 多层渐变：基础色 + 左上高光 + 右下阴影 + 中心微凸 */
+  background:
+    radial-gradient(ellipse at 28% 22%, rgba(255,255,255,0.88) 0%, transparent 52%),
+    radial-gradient(ellipse at 72% 75%, rgba(0,0,0,0.06) 0%, transparent 50%),
+    linear-gradient(150deg, #f5f2ed 0%, #e8e3da 45%, #d8d0c5 100%);
+  /* 立体阴影：外部投影 + 内部光影 */
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.25),
+    0 2px 6px rgba(0,0,0,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    inset 0 -1px 0 rgba(0,0,0,0.08),
+    inset 2px 0 4px rgba(255,255,255,0.4),
+    inset -2px 0 4px rgba(0,0,0,0.06);
 }
+/* 顶部封口横纹（热封边） */
 .pkg-bag-body::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:6px;
-  background:repeating-linear-gradient(90deg,#a07840 0,#a07840 6px,transparent 6px,transparent 12px);
-  border-radius:6px 6px 0 0;opacity:0.5;
+  content:'';display:block;height:14px;
+  margin:0 -14px 12px;border-radius:8px 8px 0 0;
+  background:
+    repeating-linear-gradient(0deg,
+      rgba(255,255,255,0.4) 0px, rgba(255,255,255,0.4) 1px,
+      rgba(0,0,0,0.07) 1px, rgba(0,0,0,0.07) 2px,
+      transparent 2px, transparent 4px
+    ),
+    linear-gradient(to bottom, #c8c0b4, #b8b0a4);
+}
+/* 底部封口横纹 */
+.pkg-bag-body::after{
+  content:'';display:block;height:12px;
+  margin:10px -14px -14px;border-radius:0 0 8px 8px;
+  background:
+    repeating-linear-gradient(0deg,
+      rgba(255,255,255,0.3) 0px, rgba(255,255,255,0.3) 1px,
+      rgba(0,0,0,0.07) 1px, rgba(0,0,0,0.07) 2px,
+      transparent 2px, transparent 4px
+    ),
+    linear-gradient(to bottom, #b8b0a4, #c8c0b4);
 }
 .pkg-waybill{
   background:#fff;
-  border:1px solid #ddd;
-  border-radius:3px;
+  border:1px solid #ccc;
+  border-radius:4px;
   padding:10px 10px 8px;
   font-family:'Courier New',monospace;
-  box-shadow:0 1px 4px rgba(0,0,0,0.1);
+  box-shadow:0 2px 8px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.04);
   position:relative;
+  /* 面单贴在袋子上的轻微翘角感 */
+  transform:rotate(-0.3deg);
 }
 .pkg-wb-header{
   display:flex;justify-content:space-between;align-items:center;
