@@ -253,27 +253,25 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   background:repeating-linear-gradient(90deg,#ddd 0,#ddd 5px,#f8f8f8 5px,#f8f8f8 10px);
   border-top:1px solid rgba(0,0,0,.08);
 }
-.pkg-bag-main{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;position:relative;z-index:1;}
-.pkg-bag-left{width:58%;padding-top:4px;}
+.pkg-bag-main{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;position:relative;z-index:1;min-height:300px;}
+.pkg-bag-left{width:58%;padding-top:4px;display:flex;flex-direction:column;min-height:300px;}
 .pkg-big-logo{
   font-family:Arial,Helvetica,sans-serif;font-weight:900;line-height:.82;color:#111;
-  font-size:128px;letter-spacing:-10px;position:relative;height:150px;
+  font-size:108px;letter-spacing:-8px;position:relative;height:122px;
 }
-.pkg-big-logo .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:#c62828;left:104px;top:48px;}
-.pkg-contact{display:flex;align-items:center;gap:14px;margin-top:8px;font:700 11px 'Courier New',monospace;color:#222;}
-.pkg-red-line{height:5px;background:#c62828;margin-top:14px;}
-.pkg-sender-box{display:inline-block;margin-top:10px;border:1px solid #bbb;padding:4px 10px;font:700 10px 'Courier New',monospace;color:#444;background:#fff;}
+.pkg-big-logo .dot{position:absolute;width:16px;height:16px;border-radius:50%;background:#c62828;left:89px;top:39px;}
+.pkg-bag-bottom-meta{margin-top:auto;}
+.pkg-contact{display:flex;align-items:center;gap:14px;font:700 11px 'Courier New',monospace;color:#222;}
+.pkg-red-line{height:5px;background:#c62828;margin-top:10px;}
+.pkg-sender-box{display:inline-block;margin-top:8px;border:1px solid #bbb;padding:4px 10px;font:700 10px 'Courier New',monospace;color:#444;background:#fff;}
 .pkg-bag-right{width:34%;display:flex;flex-direction:column;align-items:flex-end;padding-top:2px;gap:10px;}
-.pkg-bag-topcard{width:110px;border:1px solid #aaa;background:#fff;padding:6px 7px 5px;box-shadow:0 1px 3px rgba(0,0,0,.08);}
-.pkg-bag-topcard-hd{font:900 10px 'Courier New',monospace;color:#111;line-height:1.2;margin-bottom:5px;}
-.pkg-bag-topcard-list{display:grid;grid-template-columns:repeat(2,1fr);gap:3px 4px;font:700 7px 'Courier New',monospace;color:#c62828;}
-.pkg-bag-size{font-family:'Noto Serif SC',serif;color:#444;text-align:center;line-height:1.15;margin-top:2px;}
+.pkg-bag-size{font-family:'Noto Serif SC',serif;color:#444;text-align:center;line-height:1.15;margin-top:2px;align-self:flex-end;}
 .pkg-bag-size .l{display:inline-flex;width:20px;height:20px;border-radius:50%;background:#d35400;color:#fff;align-items:center;justify-content:center;font:900 12px Arial;margin-left:4px;vertical-align:middle;}
 .pkg-bag-qrs{display:flex;gap:8px;align-self:flex-end;margin-top:auto;margin-bottom:86px;}
 .pkg-bag-qr{width:48px;height:48px;border:1px solid #777;background:repeating-linear-gradient(0deg,#111 0,#111 2px,#fff 2px,#fff 4px),repeating-linear-gradient(90deg,#111 0,#111 2px,#fff 2px,#fff 4px);background-blend-mode:multiply;}
 .pkg-waybill{
   background:#fff;border:1px solid #bbb;border-radius:2px;padding:8px 8px 6px;font-family:'Courier New',monospace;
-  box-shadow:0 2px 6px rgba(0,0,0,.14);position:absolute;right:18px;bottom:24px;transform:rotate(-1.8deg);
+  box-shadow:0 2px 6px rgba(0,0,0,.14);position:absolute;right:18px;top:18px;transform:none;
   width:min(40%,180px);z-index:2;
 }
 .pkg-wb-top{padding-bottom:4px;}
@@ -538,19 +536,13 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
             <div class="pkg-bag-main">
               <div class="pkg-bag-left">
                 <div class="pkg-big-logo">HR<span class="dot"></span>)</div>
-                <div class="pkg-contact">☎ 95338 <span>www.hr-express.com</span></div>
-                <div class="pkg-red-line"></div>
-                <div class="pkg-sender-box">信件</div>
+                <div class="pkg-bag-bottom-meta">
+                  <div class="pkg-contact">☎ 95338 <span>www.hr-express.com</span></div>
+                  <div class="pkg-red-line"></div>
+                  <div class="pkg-sender-box">信件</div>
+                </div>
               </div>
               <div class="pkg-bag-right">
-                <div class="pkg-bag-topcard">
-                  <div class="pkg-bag-topcard-hd">职场国际 为位击天下</div>
-                  <div class="pkg-bag-topcard-list">
-                    <span>○ 稳定机会</span><span>○ 行业流动</span>
-                    <span>○ 薪资波动</span><span>○ 岗位替换</span>
-                    <span>○ 组织优化</span><span>○ 临时缺口</span>
-                  </div>
-                </div>
                 <div class="pkg-bag-size">大号 <span class="l">L</span><br>文件封</div>
                 <div class="pkg-bag-qrs">
                   <div class="pkg-bag-qr" id="pkg-bag-qr1"></div>
