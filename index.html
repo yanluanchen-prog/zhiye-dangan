@@ -930,7 +930,7 @@ function generateFarewell(card,swapN){
   const belief=beliefMap[card.name]||`这份工作值得做下去`;
   const isOwn=G.ownCard&&card.name===G.ownCard.name;
   const prefix=isOwn?`你离开了「${card.name}」——\n那份你一开始填在表格里的职业。\n\n`:`你离开了「${card.name}」。\n\n`;
-  return `${prefix}${ord[swapN-2]||'这'}次转身。\n${left}。\n\nHR说赔偿金会打到卡里，三天到账。\n你想起刚做这行的时候，有人说：\n「${belief}。」\n\n${ai}。`;
+  return `${prefix}${ord[swapN-2]||'这'}次转身。\n${left}。\n\n你没有等谁来通知。\n只是自己把工牌摘下来，放进抽屉。\n\n你想起刚做这行的时候，有人说：\n「${belief}。」\n\n${ai}。`;
 }
 let _farewellCallback=null;
 function showFarewell(oldCard,swapN,cb){
