@@ -545,7 +545,6 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
         <div class="id-badge-hdr" id="r-id-hdr" style="background:var(--red)">我的职业</div>
         <div class="id-badge-art"><span class="id-badge-emoji" id="r-id-emoji">💼</span><span class="id-badge-name" id="r-id-name">—</span></div>
       </div>
-      <div class="id-badge-info"><div class="id-badge-job" id="r-id-job">—</div><div class="id-badge-sub">当前职业</div></div>
     </div>
     <div class="header-right">
       <div class="header-classify">〔职业生存图鉴〕</div>
@@ -574,7 +573,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 <!-- ═══════════════════════════ FAIL ═════════════════════════════════════ -->
 <div id="fail-screen" class="screen">
   <div class="header">
-    <div class="id-badge"><div class="id-badge-card own"><div class="id-badge-hdr" style="background:var(--red)">我的职业</div><div class="id-badge-art"><span class="id-badge-emoji" id="f-id-emoji">💼</span><span class="id-badge-name" id="f-id-name">—</span></div></div><div class="id-badge-info"><div class="id-badge-job" id="f-id-job">—</div><div class="id-badge-sub">当前职业</div></div></div>
+    <div class="id-badge"><div class="id-badge-card own"><div class="id-badge-hdr" style="background:var(--red)">我的职业</div><div class="id-badge-art"><span class="id-badge-emoji" id="f-id-emoji">💼</span><span class="id-badge-name" id="f-id-name">—</span></div></div></div>
     <div class="header-right"><div class="header-classify">〔职业生存图鉴〕</div><div class="header-year" id="f-yr" style="font-size:18px;">2028</div><div class="header-year-sub">职业生涯结束</div></div>
   </div>
   <div style="text-align:center;padding:28px 0 12px;">
@@ -594,7 +593,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 <!-- ═══════════════════════════ ENDING ═══════════════════════════════════ -->
 <div id="ending-screen" class="screen">
   <div class="header">
-    <div class="id-badge"><div class="id-badge-card own"><div class="id-badge-hdr" style="background:var(--red)">我的职业</div><div class="id-badge-art"><span class="id-badge-emoji" id="en-id-emoji">💼</span><span class="id-badge-name" id="en-id-name">—</span></div></div><div class="id-badge-info"><div class="id-badge-job" id="en-id-job">—</div><div class="id-badge-sub">存活至2035</div></div></div>
+    <div class="id-badge"><div class="id-badge-card own"><div class="id-badge-hdr" style="background:var(--red)">我的职业</div><div class="id-badge-art"><span class="id-badge-emoji" id="en-id-emoji">💼</span><span class="id-badge-name" id="en-id-name">—</span></div></div></div>
     <div class="header-right"><div class="header-classify">〔职业生存图鉴〕</div><div class="header-year">2035</div><div class="header-year-sub">最终年</div></div>
   </div>
   <div style="text-align:center;padding:20px 0 8px;">
@@ -1024,7 +1023,7 @@ function calculateElimination(card,yearIndex){
     blackSwan=true;
     survivalRate=Math.min(survivalRate,0.2);
   }
-  // 所有年份小幅随机波动 ±6%（抗AI值是参考，不是保证）
+  // 所有年份小幅随机波动 ±6%（命运有随机性）
   const noise=(Math.random()-0.5)*0.12;
   survivalRate+=noise;
   survivalRate=Math.max(0.05,Math.min(0.95,survivalRate));
@@ -1079,7 +1078,7 @@ function showFail(y,elimResult){
   } else if(elimResult&&elimResult.blackSwan){
     reason=`「${c.name}」不在今年的重点淘汰名单上——\n但黑天鹅降临了。\n\n没有预警，没有道理。市场就是这样。`;
   } else {
-    reason=`「${c.name}」不在重点名单，但市场的随机性把你卷走了。\n\n抗AI值是参考，不是保证。`;
+    reason=`「${c.name}」不在今年的重点淘汰名单上。\n\n但时代的淘汰从来不只按名单来。有时候只是浪打过来，刚好打到你。`;
   }
   $('f-text').textContent=`${y.year}年。\n\n${reason}\n\n不是你的错。只是时代的滚轮，刚好从你这里压过去了。`;
   showScreen('fail-screen');
