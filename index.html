@@ -259,9 +259,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   position:absolute;left:0;right:0;top:0;height:22px;
   background:
     radial-gradient(140% 90% at 20% 8%, rgba(255,255,255,.96) 0%, rgba(255,255,255,0) 42%),
-    linear-gradient(180deg,#fcfcfc 0%, #f4f4f4 78%, #efefef 100%);
-  border-bottom:1px dashed rgba(0,0,0,.16);
-  z-index:6;
+    linear-gradient(180deg,#fcfcfc 0%, #f1f1f1 100%);
+  border-bottom:1px solid rgba(0,0,0,.08);
+  z-index:3;
   transform-origin:center top;
   pointer-events:none;
 }
@@ -271,16 +271,15 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 }
 @keyframes stripTearAway{
   0%{transform:translateY(0) rotate(0);opacity:1;}
-  35%{transform:translateY(-6px) rotate(-1deg);opacity:1;}
-  100%{transform:translateY(-56px) rotate(-7deg);opacity:0;}
+  100%{transform:translateY(-34px) rotate(-5deg);opacity:0;}
 }
 @keyframes bagOpenBody{
   0%{clip-path:inset(0 0 0 0 round 8px);}
-  100%{clip-path:inset(20px 0 0 0 round 8px);}
+  100%{clip-path:inset(18px 0 0 0 round 8px);}
 }
 .pkg-bag.fly-in .pkg-bag-body{animation:bagFlyIn .42s ease-out both;}
-.pkg-bag.opening #pkg-top-strip{animation:stripTearAway .52s ease-out forwards;}
-.pkg-bag.opening #pkg-bag-body{animation:bagOpenBody .52s ease-out forwards;}
+.pkg-bag.opening #pkg-top-strip{animation:stripTearAway .36s ease-out forwards;}
+.pkg-bag.opening #pkg-bag-body{animation:bagOpenBody .36s ease-out forwards;}
 .pkg-bag-body::before{
   content:'';
   position:absolute;inset:0;
@@ -1181,7 +1180,7 @@ function doDrawCards(){
       const activeCard=$('deck-active').firstElementChild;
       if(activeCard)activeCard.classList.add('card-fly-in');
       bag.classList.remove('opening');
-    },560);
+    },380);
   } else {
     $('draw-zone').style.display='none';
     $('hand-zone').style.display='block';
