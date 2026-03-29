@@ -240,31 +240,24 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   position:relative;
   width:100%;
   box-sizing:border-box;
-  background:
-    radial-gradient(140% 90% at 20% 8%, rgba(255,255,255,.96) 0%, rgba(255,255,255,0) 42%),
-    linear-gradient(180deg,#fcfcfc 0%, #f4f4f4 78%, #efefef 100%);
   border-radius:8px;
-  overflow:hidden;
-  box-shadow:
-    0 10px 24px rgba(0,0,0,.14),
-    0 2px 6px rgba(0,0,0,.08),
-    inset 0 1px 0 rgba(255,255,255,.95),
-    inset 0 -1px 0 rgba(0,0,0,.05),
-    inset 0 0 0 1px rgba(0,0,0,.08);
-  padding:18px 18px 14px;
+  overflow:visible;
+  box-shadow:0 10px 24px rgba(0,0,0,.12), 0 2px 6px rgba(0,0,0,.08);
   min-height:210px;
   transform-origin:center center;
 }
+.pkg-envelope-img{display:block;width:100%;height:auto;border-radius:8px;}
+.pkg-envelope-year{
+  position:absolute;left:98px;bottom:90px;
+  font:700 18px 'Courier New',monospace;color:#222;letter-spacing:1px;
+}
 .pkg-top-strip{
-  position:absolute;left:0;right:0;top:0;height:22px;
-  background:
-    radial-gradient(140% 90% at 20% 8%, rgba(255,255,255,.96) 0%, rgba(255,255,255,0) 42%),
-    linear-gradient(180deg,#fcfcfc 0%, #f4f4f4 78%, #efefef 100%);
-  border-bottom:none;
+  position:absolute;left:0;right:0;top:0;height:24px;
+  background:linear-gradient(180deg,#fcfcfc 0%, #f4f4f4 78%, #efefef 100%);
   z-index:3;
   transform-origin:center top;
   pointer-events:none;
-  opacity:0; /* 默认完全不可见，不破坏完整信封 */
+  opacity:0;
 }
 @keyframes bagFlyIn{
   0%{transform:translateY(36px) scale(.96);opacity:0;}
@@ -288,40 +281,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   animation:stripTearAway .75s ease-out forwards;
 }
 .pkg-bag.opening #pkg-bag-body{animation:bagOpenBody .75s ease-out forwards;}
-.pkg-bag-body::before{
-  content:'';
-  position:absolute;inset:0;
-  background:
-    linear-gradient(120deg, rgba(255,255,255,.55), rgba(255,255,255,0) 22%),
-    repeating-linear-gradient(0deg, rgba(0,0,0,.012) 0, rgba(0,0,0,.012) 1px, transparent 1px, transparent 5px);
-  pointer-events:none;
-}
-.pkg-bag-body::after{
-  content:'';
-  position:absolute;right:0;top:0;width:42px;height:42px;
-  background:linear-gradient(135deg, rgba(0,0,0,.08), rgba(0,0,0,0) 55%);
-  clip-path:polygon(100% 0,0 0,100% 100%);
-  opacity:.25;
-  pointer-events:none;
-}
+.pkg-bag-body::before{content:none;}
+.pkg-bag-body::after{content:none;}
 .pkg-bag-seal{display:none;}
-.pkg-bag-main{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative;min-height:150px;}
-.pkg-bag-left{width:68%;padding-top:6px;padding-left:4px;}
-.pkg-big-logo{
-  font-family:Arial,Helvetica,sans-serif;font-weight:900;line-height:.82;color:#111;
-  font-size:86px;letter-spacing:-6px;position:relative;height:92px;
-  text-shadow:0 1px 0 rgba(255,255,255,.35), 0 2px 2px rgba(0,0,0,.04);
-}
-.pkg-big-logo .dot{position:absolute;width:15px;height:15px;border-radius:50%;background:#d83a33;left:70px;top:30px;box-shadow:0 1px 2px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.35);}
-.pkg-bag-bottom-meta{position:absolute;left:10px;right:18px;bottom:-16px;display:flex;flex-direction:column;gap:6px;}
-.pkg-contact{display:flex;align-items:center;gap:12px;font:700 10px 'Courier New',monospace;color:#222;order:3;}
-.pkg-red-line{height:4px;background:#eb4a43;width:100%;order:2;}
-.pkg-sender-box{display:inline-block;border:1px solid #bbb;padding:5px 10px;font:700 9px 'Courier New',monospace;color:#444;background:linear-gradient(180deg,#fff,#f3f3f3);order:1;align-self:flex-start;box-shadow:0 1px 2px rgba(0,0,0,.08);}
-.pkg-bag-right{width:28%;display:flex;justify-content:flex-start;}
-.pkg-bag-panel{display:none;}
-.pkg-bag-size{display:none;}
-.pkg-bag-qrs{display:none;}
-.pkg-bag-qr{display:none;}
 .pkg-waybill{
   background:linear-gradient(180deg,#fff 0%,#fbfbfb 100%);border:1px solid #bdbdbd;border-radius:2px;padding:5px 6px 4px;font-family:'Courier New',monospace;
   box-shadow:0 4px 10px rgba(0,0,0,.16), 0 1px 2px rgba(0,0,0,.08);position:absolute;right:14px;bottom:8px;transform:none;
@@ -602,17 +564,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
           <!-- 档案袋主体 -->
           <div class="pkg-bag-body" id="pkg-bag-body">
             <div class="pkg-top-strip" id="pkg-top-strip"></div>
-            <div class="pkg-bag-main">
-              <div class="pkg-bag-left">
-                <div class="pkg-big-logo">HR<span class="dot"></span>)</div>
-                <div class="pkg-bag-bottom-meta">
-                  <div class="pkg-contact">☎ <span id="pkg-contact-year">2026</span> <span>www.hr-express.com</span></div>
-                  <div class="pkg-red-line"></div>
-                  <div class="pkg-sender-box">信件</div>
-                </div>
-              </div>
-              <div class="pkg-bag-right"></div>
-            </div>
+            <img class="pkg-envelope-img" src="./assets/hr-envelope.svg" alt="HR envelope">
+            <div class="pkg-envelope-year" id="pkg-contact-year">2026</div>
             <!-- 快递面单（贴在右下角） -->
             <div class="pkg-waybill">
               <!-- 顶部：品牌+条形码 -->
