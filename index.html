@@ -764,7 +764,7 @@ function buildActiveCard(card){
   div.innerHTML=`
     <div class="card-header">
       <span class="card-file-no">${card.category} · ${card.fileNum}</span>
-      <span class="card-rarity-stamp">${card.tagline}</span>
+      <span class="card-rarity-stamp">${card.fileNum}</span>
     </div>
     <div class="card-art">
       <span class="card-art-icon">${card.emoji}</span>
@@ -849,7 +849,7 @@ function startYear(){
 function openCardDetail(card){
   $('cm-card').className='card '+card.rarity;
   $('cm-file').textContent=`${card.category} · ${card.fileNum}`;
-  $('cm-stamp').textContent=card.tagline;
+  $('cm-stamp').textContent=card.fileNum;
   $('cm-emoji').textContent=card.emoji;
   $('cm-name').textContent=card.name;
   $('cm-tag').textContent=card.tagline;
