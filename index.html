@@ -620,39 +620,39 @@ const YEARS=[
   {year:2035,event:"烹饪机器人X1发布，精准控温±0.1°C，95%标准菜品可完成。某科技公司推出「数字替身」订阅服务，AI化身代替你出席会议、处理邮件。\n\n测试报告有一行工程师手写备注：锅气问题仍未解决。成因不明，无法参数化。",eliminated:["厨师","社工","导游","农民","手艺人"],slogan:"2035年。最后一道防线。"}
 ];
 const POOL=[
-  {name:"文字编辑",rarity:"R",  aiResist:28,salary:40,demand:35,category:"文字",emoji:"📝",tagline:"笔下留情",desc:"「AI覆盖率 72%」72%的稿件已由AI辅助校对。你改的是语病，更是人情味。",fileNum:"R-001"},
-  {name:"翻译",    rarity:"R",  aiResist:22,salary:45,demand:55,category:"文字",emoji:"🌐",tagline:"跨越语言",desc:"「AI覆盖率 88%」88%的翻译任务已可由AI完成。你守的是那12%——文化、双关、语境。",fileNum:"R-002"},
-  {name:"广告文案",rarity:"SR", aiResist:42,salary:60,demand:50,category:"文字",emoji:"📣",tagline:"说服人心",desc:"「AI覆盖率 55%」55%的文案初稿已由AI生成。真正的说服，是在人心里种下一颗种子——而种子需要人播种。",fileNum:"SR-003"},
-  {name:"内容审核员",rarity:"N",aiResist:18,salary:30,demand:70,category:"文字",emoji:"👁️",tagline:"把关内容",desc:"「AI覆盖率 92%」92%的审核已由AI自动完成。你处理的是那8%的模糊地带——人性的灰色。",fileNum:"N-004"},
-  {name:"记者",    rarity:"SR", aiResist:48,salary:50,demand:40,category:"文字",emoji:"📰",tagline:"追寻真相",desc:"「AI覆盖率 45%」45%的信息整合可由AI完成。但现场的温度、眼神的闪烁，机器无法抵达。",fileNum:"SR-005"},
-  {name:"作家",    rarity:"SSR",aiResist:65,salary:35,demand:30,category:"文字",emoji:"✒️",tagline:"记录人性",desc:"「AI覆盖率 35%」AI能模仿风格，但写不出你经历过的那个雨夜。记忆是不可替代的。",fileNum:"SSR-006"},
-  {name:"平面设计师",rarity:"R",aiResist:32,salary:55,demand:60,category:"创意",emoji:"🎨",tagline:"视觉语言",desc:"「AI覆盖率 48%」48%的基础设计可由AI生成。你保留下的是——让人多看一眼的直觉。",fileNum:"R-007"},
-  {name:"插画师",  rarity:"SR", aiResist:45,salary:45,demand:40,category:"创意",emoji:"🖌️",tagline:"手绘世界",desc:"「AI覆盖率 62%」62%的插画需求已可由AI完成。但你画的每一笔，都在说「这是我」。",fileNum:"SR-008"},
-  {name:"摄影师",  rarity:"R",  aiResist:35,salary:50,demand:45,category:"创意",emoji:"📷",tagline:"定格瞬间",desc:"「AI覆盖率 68%」68%的图片处理已由AI完成。但你选择的那个角度，是机器看不到的世界。",fileNum:"R-009"},
-  {name:"编导",    rarity:"SR", aiResist:45,salary:55,demand:50,category:"创意",emoji:"🎥",tagline:"叙事构建",desc:"「AI覆盖率 52%」52%的剪辑可由AI辅助完成。但谁的故事值得讲，机器还不知道。",fileNum:"SR-010"},
-  {name:"剪辑师",  rarity:"SR", aiResist:40,salary:55,demand:55,category:"创意",emoji:"🎬",tagline:"叙事剪刀",desc:"「AI覆盖率 58%」58%的内容生产任务已可由AI完成。你的价值正在从「写」转向「判断写什么」。",fileNum:"SR-011"},
-  {name:"配音演员",rarity:"R",  aiResist:30,salary:40,demand:35,category:"创意",emoji:"🎙️",tagline:"声音灵魂",desc:"「AI覆盖率 75%」75%的配音可由AI生成。但愤怒、脆弱、爱恋的颤抖——这些无法被采样。",fileNum:"R-011"},
-  {name:"社交媒体运营",rarity:"N",aiResist:20,salary:45,demand:75,category:"创意",emoji:"📱",tagline:"数字生态",desc:"「AI覆盖率 85%」85%的日常内容已由AI生成。你存在于那15%——当算法需要有人背锅时。",fileNum:"N-012"},
-  {name:"外卖员",  rarity:"N",  aiResist:35,salary:35,demand:95,category:"执行",emoji:"🛵",tagline:"风雨无阻",desc:"「AI覆盖率 45%」配送路径已高度优化，但最后一公里的楼梯、门禁、微笑——仍需肉身完成。",fileNum:"N-013"},
-  {name:"快递员",  rarity:"N",  aiResist:32,salary:33,demand:90,category:"执行",emoji:"📦",tagline:"万件必达",desc:"「AI覆盖率 40%」无人车在试点，但老旧小区的门禁、手写地址、门卫的沟通——仍需人。",fileNum:"N-014"},
-  {name:"收银员",  rarity:"N",  aiResist:15,salary:28,demand:80,category:"执行",emoji:"🏧",tagline:"分秒必争",desc:"「AI覆盖率 95%」95%的支付已无人化。你守的是那5%——有人想付现金，或只是想被看见。",fileNum:"N-015"},
-  {name:"工厂工人",rarity:"N",  aiResist:25,salary:30,demand:75,category:"执行",emoji:"⚙️",tagline:"精密协作",desc:"「AI覆盖率 78%」78%的重复性工序已由机器人完成。柔性装配、异常处理——仍是人的领地。",fileNum:"N-016"},
-  {name:"清洁工",  rarity:"N",  aiResist:50,salary:25,demand:85,category:"执行",emoji:"🧹",tagline:"洁净守护",desc:"「AI覆盖率 25%」25%的清洁任务已可使用机器人。不规则空间、细节判断——仍是人的主场。",fileNum:"N-017"},
-  {name:"保安",    rarity:"N",  aiResist:38,salary:28,demand:80,category:"执行",emoji:"🛡️",tagline:"岗位坚守",desc:"「AI覆盖率 55%」55%的监控已由AI处理。但突发状况的判断、人际冲突的调解——仍需人在场。",fileNum:"N-018"},
-  {name:"客服代表",rarity:"N",  aiResist:12,salary:32,demand:85,category:"服务",emoji:"🎧",tagline:"耐心解答",desc:"「AI覆盖率 88%」88%的咨询已由AI处理。你守的是最后一道防线——那些机器搞不定的情绪。",fileNum:"N-019"},
-  {name:"导游",    rarity:"R",  aiResist:42,salary:42,demand:45,category:"服务",emoji:"🗺️",tagline:"引路他乡",desc:"「AI覆盖率 42%」42%的信息整合可由AI完成。但现场的氛围、临时的应变、人与人之间的温度——无法替代。",fileNum:"R-020"},
-  {name:"心理咨询师",rarity:"SSR",aiResist:58,salary:65,demand:55,category:"服务",emoji:"🧘",tagline:"倾听灵魂",desc:"「AI覆盖率 32%」32%的咨询可由AI完成。但「被真正理解」的感觉——那是机器给不了的。",fileNum:"SSR-021"},
-  {name:"社工",    rarity:"SR", aiResist:55,salary:38,demand:60,category:"服务",emoji:"🤝",tagline:"守望相助",desc:"「AI覆盖率 38%」38%的文书工作可由AI完成。但蹲下来，陪一个人坐一会儿——那不是算法。",fileNum:"SR-022"},
-  {name:"律师助理",rarity:"SR", aiResist:38,salary:55,demand:50,category:"专业",emoji:"⚖️",tagline:"法理精研",desc:"「AI覆盖率 68%」68%的案例检索已由AI完成。但策略判断、客户沟通——法律的灵魂仍在人。",fileNum:"SR-023"},
-  {name:"数据分析师",rarity:"SR",aiResist:30,salary:70,demand:65,category:"专业",emoji:"📊",tagline:"数据洞察",desc:"「AI覆盖率 72%」72%的数据处理已由AI完成。你问的是「为什么」，而机器只回答「是什么」。",fileNum:"SR-024"},
-  {name:"会计",    rarity:"R",  aiResist:22,salary:60,demand:70,category:"专业",emoji:"🧮",tagline:"账目清晰",desc:"「AI覆盖率 82%」82%的账务处理已由AI完成。税务筹划、合规判断——仍是人的战场。",fileNum:"R-025"},
-  {name:"工程师",  rarity:"SSR",aiResist:62,salary:85,demand:75,category:"专业",emoji:"🔩",tagline:"构建现实",desc:"「AI覆盖率 35%」35%的编码可由AI辅助完成。但架构设计、伦理权衡——那需要人的判断。",fileNum:"SSR-026"},
-  {name:"医疗助理",rarity:"R",  aiResist:35,salary:45,demand:70,category:"专业",emoji:"🩺",tagline:"医患桥梁",desc:"「AI覆盖率 48%」48%的预检分诊已由AI完成。但安慰、陪伴、理解——那是人的工作。",fileNum:"R-027"},
-  {name:"基础程序员",rarity:"R",aiResist:28,salary:65,demand:60,category:"技术",emoji:"💻",tagline:"代码世界",desc:"「AI覆盖率 62%」62%的基础编码已由AI完成。但系统设计、跨团队协作——仍是人的领域。",fileNum:"R-028"},
-  {name:"数据录入员",rarity:"N",aiResist:10,salary:25,demand:60,category:"技术",emoji:"⌨️",tagline:"精准录入",desc:"98%的数据录入已由AI完成。你守的是那2%的混乱。",fileNum:"N-029"},
-  {name:"非遗传承人",rarity:"UR",aiResist:95,salary:20,demand:15,category:"绝版",emoji:"🏺",tagline:"薪火相传",desc:"「AI覆盖率 5%」5%的传统技艺可由AI记录，但无法传承。「手感」和「心法」——那是活的记忆。",fileNum:"UR-030"},
-  {name:"哲学教授",rarity:"UR", aiResist:90,salary:60,demand:10,category:"绝版",emoji:"📜",tagline:"叩问本质",desc:"「AI覆盖率 8%」8%的哲学讨论可由AI参与。但「存在的焦虑」、「意义的追寻」——那是人的特权。",fileNum:"UR-031"},
-  {name:"殡葬师",  rarity:"UR", aiResist:88,salary:55,demand:40,category:"绝版",emoji:"🕯️",tagline:"送别之人",desc:"「AI覆盖率 3%」3%的仪式可由AI协助。但送别一个人，需要的是人的在场、人的温度、人的眼泪。",fileNum:"UR-032"}
+  {name:"文字编辑",rarity:"R",  aiResist:28,salary:40,demand:35,category:"文字",emoji:"📝",tagline:"笔下留情",desc:"稿件已由AI辅助校对。你改的是语病，更是人情味。",fileNum:"R-001"},
+  {name:"翻译",    rarity:"R",  aiResist:22,salary:45,demand:55,category:"文字",emoji:"🌐",tagline:"跨越语言",desc:"翻译任务已可由AI完成。你守的是文化、双关、语境。",fileNum:"R-002"},
+  {name:"广告文案",rarity:"SR", aiResist:42,salary:60,demand:50,category:"文字",emoji:"📣",tagline:"说服人心",desc:"文案初稿已由AI生成。真正的说服，是在人心里种下一颗种子——而种子需要人播种。",fileNum:"SR-003"},
+  {name:"内容审核员",rarity:"N",aiResist:18,salary:30,demand:70,category:"文字",emoji:"👁️",tagline:"把关内容",desc:"审核已由AI自动完成。你处理的是模糊地带——人性的灰色。",fileNum:"N-004"},
+  {name:"记者",    rarity:"SR", aiResist:48,salary:50,demand:40,category:"文字",emoji:"📰",tagline:"追寻真相",desc:"信息整合可由AI完成。但现场的温度、眼神的闪烁，机器无法抵达。",fileNum:"SR-005"},
+  {name:"作家",    rarity:"SSR",aiResist:65,salary:35,demand:30,category:"文字",emoji:"✒️",tagline:"记录人性",desc:"AI能模仿风格，但写不出你经历过的那个雨夜。记忆是不可替代的。",fileNum:"SSR-006"},
+  {name:"平面设计师",rarity:"R",aiResist:32,salary:55,demand:60,category:"创意",emoji:"🎨",tagline:"视觉语言",desc:"基础设计可由AI生成。你保留下的是——让人多看一眼的直觉。",fileNum:"R-007"},
+  {name:"插画师",  rarity:"SR", aiResist:45,salary:45,demand:40,category:"创意",emoji:"🖌️",tagline:"手绘世界",desc:"插画需求已可由AI完成。但你画的每一笔，都在说「这是我」。,fileNum:"SR-008"},
+  {name:"摄影师",  rarity:"R",  aiResist:35,salary:50,demand:45,category:"创意",emoji:"📷",tagline:"定格瞬间",desc:"图片处理已由AI完成。但你选择的那个角度，是机器看不到的世界。",fileNum:"R-009"},
+  {name:"编导",    rarity:"SR", aiResist:45,salary:55,demand:50,category:"创意",emoji:"🎥",tagline:"叙事构建",desc:"剪辑可由AI辅助完成。但谁的故事值得讲，机器还不知道。",fileNum:"SR-010"},
+  {name:"剪辑师",  rarity:"SR", aiResist:40,salary:55,demand:55,category:"创意",emoji:"🎬",tagline:"叙事剪刀",desc:"内容生产任务已可由AI完成。你的价值正在从「写」转向「判断写什么」。",fileNum:"SR-011"},
+  {name:"配音演员",rarity:"R",  aiResist:30,salary:40,demand:35,category:"创意",emoji:"🎙️",tagline:"声音灵魂",desc:"配音可由AI生成。但愤怒、脆弱、爱恋的颤抖——这些无法被采样。",fileNum:"R-011"},
+  {name:"社交媒体运营",rarity:"N",aiResist:20,salary:45,demand:75,category:"创意",emoji:"📱",tagline:"数字生态",desc:"日常内容已由AI生成。你存在于那一线——当算法需要有人背锅时。",fileNum:"N-012"},
+  {name:"外卖员",  rarity:"N",  aiResist:35,salary:35,demand:95,category:"执行",emoji:"🛵",tagline:"风雨无阻",desc:"配送路径已高度优化，但最后一公里的楼梯、门禁、微笑——仍需肉身完成。",fileNum:"N-013"},
+  {name:"快递员",  rarity:"N",  aiResist:32,salary:33,demand:90,category:"执行",emoji:"📦",tagline:"万件必达",desc:"无人车在试点，但老旧小区的门禁、手写地址、门卫的沟通——仍需人。",fileNum:"N-014"},
+  {name:"收银员",  rarity:"N",  aiResist:15,salary:28,demand:80,category:"执行",emoji:"🏧",tagline:"分秒必争",desc:"支付已无人化。你守的是——有人想付现金，或只是想被看见。",fileNum:"N-015"},
+  {name:"工厂工人",rarity:"N",  aiResist:25,salary:30,demand:75,category:"执行",emoji:"⚙️",tagline:"精密协作",desc:"重复性工序已由机器人完成。柔性装配、异常处理——仍是人的领地。",fileNum:"N-016"},
+  {name:"清洁工",  rarity:"N",  aiResist:50,salary:25,demand:85,category:"执行",emoji:"🧹",tagline:"洁净守护",desc:"清洁任务已可使用机器人。不规则空间、细节判断——仍是人的主场。",fileNum:"N-017"},
+  {name:"保安",    rarity:"N",  aiResist:38,salary:28,demand:80,category:"执行",emoji:"🛡️",tagline:"岗位坚守",desc:"监控已由AI处理。但突发状况的判断、人际冲突的调解——仍需人在场。",fileNum:"N-018"},
+  {name:"客服代表",rarity:"N",  aiResist:12,salary:32,demand:85,category:"服务",emoji:"🎧",tagline:"耐心解答",desc:"咨询已由AI处理。你守的是最后一道防线——那些机器搞不定的情绪。",fileNum:"N-019"},
+  {name:"导游",    rarity:"R",  aiResist:42,salary:42,demand:45,category:"服务",emoji:"🗺️",tagline:"引路他乡",desc:"信息整合可由AI完成。但现场的氛围、临时的应变、人与人之间的温度——无法替代。",fileNum:"R-020"},
+  {name:"心理咨询师",rarity:"SSR",aiResist:58,salary:65,demand:55,category:"服务",emoji:"🧘",tagline:"倾听灵魂",desc:"咨询可由AI完成。但「被真正理解」的感觉——那是机器给不了的。",fileNum:"SSR-021"},
+  {name:"社工",    rarity:"SR", aiResist:55,salary:38,demand:60,category:"服务",emoji:"🤝",tagline:"守望相助",desc:"文书工作可由AI完成。但蹲下来，陪一个人坐一会儿——那不是算法。",fileNum:"SR-022"},
+  {name:"律师助理",rarity:"SR", aiResist:38,salary:55,demand:50,category:"专业",emoji:"⚖️",tagline:"法理精研",desc:"案例检索已由AI完成。但策略判断、客户沟通——法律的灵魂仍在人。",fileNum:"SR-023"},
+  {name:"数据分析师",rarity:"SR",aiResist:30,salary:70,demand:65,category:"专业",emoji:"📊",tagline:"数据洞察",desc:"数据处理已由AI完成。你问的是「为什么」，而机器只回答「是什么」。",fileNum:"SR-024"},
+  {name:"会计",    rarity:"R",  aiResist:22,salary:60,demand:70,category:"专业",emoji:"🧮",tagline:"账目清晰",desc:"账务处理已由AI完成。税务筹划、合规判断——仍是人的战场。",fileNum:"R-025"},
+  {name:"工程师",  rarity:"SSR",aiResist:62,salary:85,demand:75,category:"专业",emoji:"🔩",tagline:"构建现实",desc:"编码可由AI辅助完成。但架构设计、伦理权衡——那需要人的判断。",fileNum:"SSR-026"},
+  {name:"医疗助理",rarity:"R",  aiResist:35,salary:45,demand:70,category:"专业",emoji:"🩺",tagline:"医患桥梁",desc:"预检分诊已由AI完成。但安慰、陪伴、理解——那是人的工作。",fileNum:"R-027"},
+  {name:"基础程序员",rarity:"R",aiResist:28,salary:65,demand:60,category:"技术",emoji:"💻",tagline:"代码世界",desc:"基础编码已由AI完成。但系统设计、跨团队协作——仍是人的领域。",fileNum:"R-028"},
+  {name:"数据录入员",rarity:"N",aiResist:10,salary:25,demand:60,category:"技术",emoji:"⌨️",tagline:"精准录入",desc:"数据录入已由AI完成。你守的是混乱。",fileNum:"N-029"},
+  {name:"非遗传承人",rarity:"UR",aiResist:95,salary:20,demand:15,category:"绝版",emoji:"🏺",tagline:"薪火相传",desc:"传统技艺可由AI记录，但无法传承。「手感」和「心法」——那是活的记忆。",fileNum:"UR-030"},
+  {name:"哲学教授",rarity:"UR", aiResist:90,salary:60,demand:10,category:"绝版",emoji:"📜",tagline:"叩问本质",desc:"哲学讨论可由AI参与。但「存在的焦虑」、「意义的追寻」——那是人的特权。",fileNum:"UR-031"},
+  {name:"殡葬师",  rarity:"UR", aiResist:88,salary:55,demand:40,category:"绝版",emoji:"🕯️",tagline:"送别之人",desc:"仪式可由AI协助。但送别一个人，需要的是人的在场、人的温度、人的眼泪。",fileNum:"UR-032"}
 ];
 const ELIM_YEAR={};
 YEARS.forEach(y=>y.eliminated.forEach(n=>{if(!ELIM_YEAR[n])ELIM_YEAR[n]=y.year;}));
@@ -766,7 +766,7 @@ function buildActiveCard(card){
       <div class="card-tag">${card.tagline}</div>
     </div>
     <div class="card-body">
-      <span class="card-type-badge">[ ${card.category}类 ]</span>
+      
       <div class="card-desc">${card.desc}</div>
       <div class="stats">
         <div class="stat-row stat-atk"><span class="stat-label">薪资力</span><div class="stat-track"><div class="stat-fill" style="width:${card.salary}%"></div></div><span class="stat-val">${card.salary}</span></div>
@@ -847,7 +847,7 @@ function openCardDetail(card){
   $('cm-emoji').textContent=card.emoji;
   $('cm-name').textContent=card.name;
   $('cm-tag').textContent=card.tagline;
-  $('cm-cat').textContent=`[ ${card.category}类 ]`;
+  $('cm-cat').textContent=`${card.category}`;
   $('cm-desc').textContent=card.desc;
   $('sf-sal').style.width=card.salary+'%';$('sv-sal').textContent=card.salary;
   $('sf-ai').style.width=card.aiResist+'%';$('sv-ai').textContent=card.aiResist;
