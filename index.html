@@ -46,24 +46,24 @@ body{
 
 /* ── SCREENS ─────────────────────────────── */
 .screen{display:none !important;}
-.screen.active{display:block !important;background:var(--paper);}
-/* 首页强制深色背景 */
-#intro-screen.screen.active{background:#0a0a0a !important;}
-body:has(#intro-screen.active){background:#0a0a0a !important;}
-/* 游戏屏：固定全屏，不滚动，适配灵动岛 */
-#game-screen.active{
+/* 所有屏：固定全屏，适配灵动岛安全区 */
+.screen.active{
   display:flex !important;
   flex-direction:column;
   position:fixed;
   top:0;left:0;right:0;bottom:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
+  width:100%;height:100%;
   background:var(--paper);
   padding-top:env(safe-area-inset-top);
   padding-bottom:env(safe-area-inset-bottom);
   box-sizing:border-box;
+  overflow:hidden;
 }
+/* 首页强制深色背景 */
+#intro-screen.screen.active{background:#0a0a0a !important;}
+body:has(#intro-screen.active){background:#0a0a0a !important;}
+/* 游戏屏：内容区可滚动 */
+#game-screen.active{overflow:hidden;}
 /* 首页特殊处理 - 覆盖整个视口 */
 #intro-screen{
   position:fixed;
@@ -1052,12 +1052,12 @@ function revealResult(){
   } else {
     $('rv-box').className='rv-letter surv';
     $('rv-stamp').textContent='安全';
-    $('rv-title').textContent='年度职业安全评估报告';
+    $('rv-title').textContent=left>0?`${y.year}年度记录`:'最终记录';
     $('rv-title').style.color='var(--green)';
     const voice=getSurvivorVoice(c);
     $('rv-body').innerHTML=left>0?
-      `评估对象：${c.name}<br><br>评估结果：<strong style="color:var(--green)">本年度安全</strong><br><br>您的职业「${c.name}」在${y.year}年成功抵御了AI替代浪潮。<br><br><em style="color:var(--ink-faint);font-size:11px;">${voice}</em><br><br>明年的评估将更加严峻。`:
-      `评估对象：${c.name}<br><br>评估结果：<strong style="color:var(--green)">十年存活</strong><br><br>恭喜。您持有的「${c.name}」成功跨越了2026-2035的完整周期。在67%的职业被AI替代的大潮中，您不仅幸存，更见证了整个时代的变迁。<br><br>这是一项值得被记录的成就。`;
+      `<strong style="color:var(--green)">又过了一年。</strong><br><br>「${c.name}」还在。<br>你还在。<br><br><em style="color:var(--ink-faint);font-size:12px;line-height:1.9;">${voice}</em><br><br><span style="font-size:11px;color:var(--ink-faint)">还有 ${left} 年。</span>`:
+      `<strong style="color:var(--green)">十年。</strong><br><br>「${c.name}」陪你走完了 2026—2035。<br><br>67%的职业在这十年里消失了。<br>你不在那67%里。<br><br><em style="color:var(--ink-faint);font-size:12px;">${voice}</em>`;
     $('result-next').style.display='block';
     $('result-fail-btns').style.display='none';
     $('r-yr-sub').textContent=left>0?`还有 ${left} 年`:'十年存活';
