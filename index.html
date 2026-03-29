@@ -518,11 +518,14 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 </div>
 
 <!-- 开场故事页 -->
-<div id="story-screen" class="screen" style="background:#0a0a0a;position:fixed;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px env(safe-area-inset-bottom);">
+<div id="story-screen" class="screen" style="background:#0a0a0a;position:fixed;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px calc(env(safe-area-inset-bottom) + 24px);">
   <div style="max-width:360px;width:100%;">
     <div id="story-job-title" style="font-size:11px;color:rgba(139,26,43,0.8);letter-spacing:4px;font-family:monospace;margin-bottom:12px;">「职业」</div>
-    <div id="story-text" style="font-size:13px;color:rgba(240,235,224,0.85);line-height:2.2;white-space:pre-line;"></div>
-    <button id="story-enter-btn" style="margin-top:32px;display:block;width:100%;background:transparent;color:rgba(240,235,224,0.6);border:1px solid rgba(240,235,224,0.2);padding:14px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;">进入 2026 年 →</button>
+    <div id="story-text" style="font-size:13px;color:rgba(240,235,224,0.85);line-height:2;white-space:pre-line;"></div>
+    <div style="display:flex;gap:10px;margin-top:28px;">
+      <button id="story-back-btn" style="flex:1;background:transparent;color:rgba(240,235,224,0.45);border:1px solid rgba(240,235,224,0.15);padding:14px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:3px;cursor:pointer;">← 返回</button>
+      <button id="story-enter-btn" style="flex:1;background:transparent;color:rgba(240,235,224,0.6);border:1px solid rgba(240,235,224,0.2);padding:14px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;">进入 2026 年 →</button>
+    </div>
   </div>
 </div>
 
@@ -850,44 +853,27 @@ let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,
 
 /* ── 开场故事生成 ── */
 function generateOpeningStory(card){
-  const days=Math.floor(Math.random()*1200)+600;
-  const yr=Math.random()>0.5?'两':'三';
-  const actMap={
-    '程序员':'你在等一个迟迟没来的测试结果','客服代表':'你在处理第四十七张投诉工单',
-    '数据录入员':'你在核对最后一批表格','医生':'你在查看早上的化验单',
-    '翻译':'你在改一份合同的第三稿','金融分析师':'你在看盘，大盘又绿了',
-    '律师':'你在整理一摞从上周就没翻完的卷宗','教师':'你在批改昨天收上来的作业',
-    '护士':'你在交接夜班，手上还有消毒水的味道','心理咨询师':'你在等下一个预约的来访者',
-    '作家':'你在修改第十七稿的开头','记者':'你在追一条下午三点的截稿',
-    '平面设计师':'你在等客户回复第四版方案','剪辑师':'你在剪一条早该交片的片子',
-    '厨师':'你在备午市的料，大蒜切了一半','修理工':'你在拆一台不知道怎么坏掉的洗碗机',
-    '社工':'你在给昨天的家访写记录','音乐家':'你在练一段练了两个月的曲子',
-    '演员':'你在等候场，剧本还没背熟','救生员':'你在监视水面，什么都没发生',
-    '酒保':'你在擦杯子，开门还有两小时'
-  };
-  const beliefMap={
-    '程序员':'代码能改变世界','客服代表':'耐心是一种力量',
-    '医生':'医者仁心','教师':'一个好老师可以影响一个人的一生',
-    '作家':'文字是有温度的','记者':'真相值得被记录',
-    '律师':'法律是最后的公正','护士':'护理是最接近人的工作',
-    '心理咨询师':'倾听本身就是治愈','翻译':'语言是人类最大的桥梁',
-    '社工':'有人需要有人在','音乐家':'音乐是不需要翻译的语言',
-    '厨师':'用手做出来的东西，有灵魂','修理工':'会修东西的人不怕失业',
-    '平面设计师':'好设计让人感觉对','剪辑师':'时间是可以被重新排列的',
-    '救生员':'危急时刻，人比机器快','演员':'表演是最接近真实的谎言'
-  };
-  const act=actMap[card.name]||`你在忙着手头的事`;
-  const belief=beliefMap[card.name]||`这份工作值得做下去`;
-  // 随机选一个「身边信号」
+  const days=Math.floor(Math.random()*900)+300;
   const signals=[
-    `隔壁部门上个月走了三个人，\n都是「优化」，没有预警。`,
-    `你手机里收藏的那篇文章——\n《AI已经能做你80%的工作了》\n——还没来得及看完。`,
-    `上周组里有人说：「感觉不太对。」\n然后大家都没说话，继续喝咖啡。`,
-    `年初还有人写过辞职信的同事，\n现在在做自媒体，说比打工赚得多。`,
-    `招聘平台上，你的职位越来越多，\n但要求里多了「熟练使用AI工具」。`,
+    '这段时间，到处都在裁员。',
+    '办公室里安静了很多。',
+    '群里总有人半夜转发新的替代案例。',
+    '你已经分不清那是传闻，还是预告。'
   ];
   const signal=signals[Math.floor(Math.random()*signals.length)];
-  return `你在这个工位坐了${days}天。\n\n${signal}\n\n这些事，你都知道。\n你只是不知道，自己是第几个。\n\n今天还是照常来了。\n${act}。\n\n午饭的时候有人问：\n「你们这行，安全吗？」\n没人接话。\n\n刚入行的时候，有人告诉你：\n「${belief}。」\n\n那是另一个时代的确信。\n\n现在，你只是把手机放下，\n继续做手头的事。`;
+
+  const typeMap={
+    体力:`你做这行 ${days} 天。\n${signal}\n\n有人说，轮不到你。\n但这个时代最不缺的，就是“本来以为”。\n\n今天你还是照常上工。`,
+    服务:`你做这行 ${days} 天。\n${signal}\n\n你知道人还需要人。\n只是你不知道，这句话还能管多久。\n\n今天你还是照常开工。`,
+    技术:`你做这行 ${days} 天。\n${signal}\n\n你比很多人更早感觉到变化。\n也更早知道，变化不会停。\n\n今天你还是照常坐下。`,
+    医疗:`你做这行 ${days} 天。\n${signal}\n\n总有人说，这一行不会那么快。\n可“不会那么快”，从来不是“不会发生”。\n\n今天你还是照常值班。`,
+    专业:`你做这行 ${days} 天。\n${signal}\n\n证书、经验、判断力，都还在。\n只是没有人敢保证，它们会一直值钱。\n\n今天你还是照常开始工作。`,
+    创作:`你做这行 ${days} 天。\n${signal}\n\n你以前觉得，这份工作最难替代的是“感觉”。\n现在连感觉都开始被拆解、被模仿。\n\n今天你还是照常打开文档。`,
+    文职:`你做这行 ${days} 天。\n${signal}\n\n有些工作，消失之前不会提前打招呼。\n它只是某一天突然变成“系统自动完成”。\n\n今天你还是照常开始。`,
+    销售:`你做这行 ${days} 天。\n${signal}\n\n人情、判断、话术，这些以前都算本事。\n现在大家开始怀疑，本事还能值几个点。\n\n今天你还是照常见人。`
+  };
+
+  return typeMap[card.category] || `你做这行 ${days} 天。\n${signal}\n\n你不知道什么时候轮到自己。\n但你知道，这件事不会离你太远。\n\n今天你还是照常开始工作。`;
 }
 
 /* ── 离职告别信 ── */
@@ -1523,6 +1509,7 @@ $('restart-btn').addEventListener('click',doRestart);
 $('quit-btn').addEventListener('click',doQuit);
 $('play-again-btn').addEventListener('click',()=>{G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};startYear();});
 $('story-enter-btn').addEventListener('click',()=>{startYear();});
+$('story-back-btn').addEventListener('click',()=>{showScreen('intro-screen');});
 $('farewell-btn').addEventListener('click',()=>{
   $('farewell-overlay').style.display='none';
   if(_farewellCallback)_farewellCallback();
