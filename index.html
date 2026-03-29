@@ -91,7 +91,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* 左上角工牌 - 放大版 */
 .id-badge{display:flex;align-items:flex-start;gap:10px;}
 .id-badge-card{
-  width:54px;height:90px;
+  width:50px;height:84px;
   border:1.5px solid rgba(255,255,255,0.45);border-radius:6px;
   background:var(--paper);overflow:hidden;
   display:flex;flex-direction:column;
@@ -383,6 +383,15 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 </div>
 
 <!-- ═══════════════════════════════ GAME ════════════════════════════════ -->
+<!-- 离职告别信 overlay -->
+<div id="farewell-overlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(10,10,10,0.97);flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px env(safe-area-inset-bottom);">
+  <div style="max-width:340px;width:100%;">
+    <div id="farewell-title" style="font-size:10px;color:rgba(139,26,43,0.7);letter-spacing:3px;font-family:monospace;margin-bottom:14px;">离开</div>
+    <div id="farewell-text" style="font-size:13px;color:rgba(240,235,224,0.82);line-height:2.3;white-space:pre-line;"></div>
+    <button id="farewell-btn" style="margin-top:28px;display:block;width:100%;background:transparent;color:rgba(240,235,224,0.45);border:1px solid rgba(240,235,224,0.15);padding:13px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:3px;cursor:pointer;">继续 →</button>
+  </div>
+</div>
+
 <!-- 开场故事页 -->
 <div id="story-screen" class="screen" style="background:#0a0a0a;position:fixed;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px env(safe-area-inset-bottom);">
   <div style="max-width:360px;width:100%;">
@@ -411,7 +420,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
       </div>
     </div>
     <div class="header-right">
-      <div class="header-classify">〔职业生存图鉴〕</div>
+      <div class="header-classify" style="cursor:pointer;" id="enc-game-btn" onclick="openEncModal()">〔职业图鉴 <span id="enc-count">0</span>〕</div>
       <div class="header-year" id="gh-year">2026</div>
       <div class="header-year-sub" id="gh-year-sub">第1年 / 共10年</div>
     </div>
@@ -698,6 +707,71 @@ function generateOpeningStory(card){
   return `你在这个工位坐了${days}天。\n工牌上的照片是${yr}年前拍的，那时候还没有这份报告。\n\n2026年，Anthropic发布报告的那天，\n${act}。\n\n散会后看到消息，67%的职业面临替代风险。\n\n${riskLine}\n\n刚入行的时候，有人告诉你：\n「${belief}。」\n\n你还记得那天的表情。`;
 }
 
+/* ── 离职告别信 ── */
+function generateFarewell(card,swapN){
+  const ord=['第一','第二','第三','第四','第五','第六','第七','第八','第九','第十'];
+  const ordStr=ord[swapN-1]||`第${swapN}`;
+  const leftMap={
+    '程序员':'那台装了七个插件的笔记本，你没有拆',
+    '客服代表':'工位上的那杯绿茶，凉了很久了',
+    '数据录入员':'那份最后没交的表格，不用交了',
+    '医生':'那件白大褂挂在椅背上，你没有回头',
+    '翻译':'那本翻了一半的词典，合上了',
+    '金融分析师':'那张贴了三年的价格走势图，你撕了',
+    '律师':'那摞没翻完的卷宗，放回了原处',
+    '教师':'那块板书，最后一次擦干净了',
+    '护士':'那双鞋底磨薄了的护士鞋，放在柜子里',
+    '心理咨询师':'那把对面的椅子，今天没有人坐',
+    '记者':'那个没跟完的线，就这样断了',
+    '作家':'那个开了一半的文档，自动保存了最后的版本',
+    '平面设计师':'那个第四稿还没改完的文件，已经没人催了',
+    '剪辑师':'那条未完成的时间线，停在了最后一帧',
+    '厨师':'那把用了六年的刀，你没有带走',
+    '修理工':'那个还没修完的零件，放回了工具箱',
+    '社工':'那个下周约好的家访，你发了消息让同事顶上',
+    '音乐家':'那段练了两个月的曲子，就这样存着了',
+    '演员':'那本剧本，夹在第37页',
+    '救生员':'那个哨子，锁进了储物柜',
+    '酒保':'那块抹布，折好放在吧台上',
+  };
+  const aiMap={
+    '程序员':'现在有东西比你写得快，也比你便宜',
+    '客服代表':'现在有东西比你更耐心，7×24小时，永不崩溃',
+    '数据录入员':'现在有东西一秒处理一万行，从不出错',
+    '医生':'现在有东西读片子比你快0.3秒，误差更小',
+    '翻译':'现在有东西支持143种语言，响应延迟0.1秒',
+    '金融分析师':'现在有东西一秒读完全年报表，比你准',
+    '律师':'现在有东西把服务协议读完了，第17条也不会漏',
+    '记者':'现在有东西写稿比你快，还不需要署名',
+    '作家':'现在有东西生成了一千篇，没有一篇是因为非写不可',
+    '剪辑师':'现在有东西三秒剪完，剪辑点比你还稳',
+    '教师':'现在有东西解答每一道题，随时响应，从不厌烦',
+  };
+  const beliefMap={
+    '程序员':'代码能改变世界','客服代表':'耐心是一种力量',
+    '医生':'医者仁心','教师':'一个好老师可以影响一个人的一生',
+    '作家':'文字是有温度的','记者':'真相值得被记录',
+    '律师':'法律是最后的公正','护士':'护理是最接近人的工作',
+    '心理咨询师':'倾听本身就是治愈','翻译':'语言是人类最大的桥梁',
+    '社工':'有人需要，就要有人在','音乐家':'音乐是不需要翻译的语言',
+    '厨师':'用手做出来的东西，有灵魂','修理工':'会修东西的人不怕失业',
+  };
+  const left=leftMap[card.name]||`工位上的东西，你什么都没有带`;
+  const ai=aiMap[card.name]||`现在有东西替代了你的位置`;
+  const belief=beliefMap[card.name]||`这份工作值得做下去`;
+  const isOwn=G.ownCard&&card.name===G.ownCard.name;
+  const prefix=isOwn?`你离开了「${card.name}」——\n那份你一开始填在表格里的职业。\n\n`:`你离开了「${card.name}」。\n\n`;
+  return `${prefix}${ord[swapN-2]||'这'}次转身。\n${left}。\n\nHR说赔偿金会打到卡里，三天到账。\n你想起刚做这行的时候，有人说：\n「${belief}。」\n\n${ai}。`;
+}
+let _farewellCallback=null;
+function showFarewell(oldCard,swapN,cb){
+  $('farewell-title').textContent=`你离开了「${oldCard.name}」`;
+  $('farewell-text').textContent=generateFarewell(oldCard,swapN);
+  _farewellCallback=cb;
+  $('farewell-overlay').style.display='flex';
+}
+// farewell-btn 绑定移至底部 script 区（DOM ready）
+
 /* ── 幸存者心声（每年存活后） ── */
 const SURVIVOR_VOICE={
   '创作':['我还在写。虽然不知道写给谁看。','这一稿，还是我写的。','有些东西，AI复制得了形，复制不了因为什么而写。'],
@@ -781,6 +855,7 @@ function randomCards(n,excl=[]){
 function addToEnc(c){
   if(G.encyclopedia[c.name])G.encyclopedia[c.name].timesDrawn++;
   else G.encyclopedia[c.name]={card:{...c},firstSeen:YEARS[G.yearIndex].year,timesDrawn:1};
+  const el=$('enc-count');if(el)el.textContent=Object.keys(G.encyclopedia).length;
 }
 
 function updateBadge(){
@@ -1123,6 +1198,7 @@ $('start-btn').addEventListener('click',()=>{
   }
   G.ownCard={...validJob,isOwn:true,tagline:'我的职业',desc:'这是你现在的职业。',fileNum:'OWN'};
   G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};G.totalSalary=0;G.swapCount=0;
+  addToEnc(validJob); // 本命职业直接入图鉴
   // 显示开场故事
   $('story-job-title').textContent=`「${validJob.name}」`;
   $('story-text').textContent=generateOpeningStory(validJob);
@@ -1152,11 +1228,14 @@ $('nav-next').addEventListener('click',()=>{if(G.activeIdx<4){G.activeIdx++;rend
 // 换成这个 → 显示头像变化动画 → 弹事件modal
 $('swap-btn').addEventListener('click',()=>{
   const newCard={...G.drawnCards[G.activeIdx],isOwn:false};
+  const oldCard={...G.currentCard};
   showChoiceAnimation(G.currentCard,newCard,true,()=>{
     G.pendingSwap=newCard;G.swapCount++;
     G.currentCard=newCard;
     updateBadge();
-    openEventModal(()=>{proceedToElim();});
+    showFarewell(oldCard,G.swapCount,()=>{
+      openEventModal(()=>{proceedToElim();});
+    });
   });
 });
 // 保留原职 → 显示确认动画 → 弹事件modal
@@ -1176,13 +1255,14 @@ $('cm-cancel').addEventListener('click',()=>$('card-modal').classList.remove('op
 $('cm-swap').addEventListener('click',function(){
   if(!this._card)return;
   const newCard={...this._card,isOwn:false};
+  const oldCard={...G.currentCard};
   $('card-modal').classList.remove('open');
   showChoiceAnimation(G.currentCard,newCard,true,()=>{
-    G.pendingSwap=newCard;
+    G.pendingSwap=newCard;G.swapCount++;
     G.currentCard=newCard;
     updateBadge();
-    openEventModal(()=>{
-      proceedToElim();
+    showFarewell(oldCard,G.swapCount,()=>{
+      openEventModal(()=>{proceedToElim();});
     });
   });
 });
@@ -1206,6 +1286,10 @@ $('restart-btn').addEventListener('click',()=>{
 });
 $('play-again-btn').addEventListener('click',()=>{G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};startYear();});
 $('story-enter-btn').addEventListener('click',()=>{startYear();});
+$('farewell-btn').addEventListener('click',()=>{
+  $('farewell-overlay').style.display='none';
+  if(_farewellCallback)_farewellCallback();
+});
 
 // 初始化职业选择器
 renderJobSelector();
