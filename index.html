@@ -109,8 +109,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .id-badge-art{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper);}
 .id-badge-emoji{font-size:26px;line-height:1;}
 .id-badge-name{font-size:9px;font-weight:900;color:var(--ink);margin-top:3px;text-align:center;line-height:1.2;padding:0 3px;}
-.id-badge-info{display:flex;flex-direction:column;justify-content:center;flex:1;gap:0;}
-.id-badge-stats-flat{display:flex;flex-direction:column;gap:5px;}
+.id-badge-info{display:flex;flex-direction:column;justify-content:center;height:90px;gap:0;}
+.id-badge-stats-flat{display:flex;flex-direction:column;gap:6px;}
 /* 工牌在深色背景上，覆盖卡牌stat颜色 */
 .id-badge-info .stat-label{color:rgba(255,255,255,0.55);}
 .id-badge-info .stat-track{background:rgba(255,255,255,0.12);}
@@ -728,12 +728,23 @@ function updateBadge(){
   const c=G.currentCard;
   $('id-emoji').textContent=c.emoji||'💼';
   $('id-name').textContent=c.name;
+  // 数值文字
   $('id-salary').textContent=c.salary||'—';
   $('id-resist').textContent=c.aiResist||'—';
   $('id-demand').textContent=c.demand||'—';
-  if($('id-sf-sal'))$('id-sf-sal').style.width=(c.salary||0)+'%';
-  if($('id-sf-ai'))$('id-sf-ai').style.width=(c.aiResist||0)+'%';
-  if($('id-sf-dem'))$('id-sf-dem').style.width=(c.demand||0)+'%';
+  // 进度条：直接写内联样式，不依赖CSS class覆盖
+  const bars=[
+    {fill:'id-sf-sal',val:c.salary||0,color:'#E05040'},
+    {fill:'id-sf-ai', val:c.aiResist||0,color:'#5A9EE0'},
+    {fill:'id-sf-dem',val:c.demand||0,color:'#42C47A'}
+  ];
+  bars.forEach(b=>{
+    const el=$(b.fill);
+    if(!el)return;
+    const track=el.parentElement;
+    track.style.cssText='flex:1;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;overflow:hidden;';
+    el.style.cssText=`width:${b.val}%;height:100%;background:${b.color};border-radius:2px;`;
+  });
 }
 
 function updateHUD(){
