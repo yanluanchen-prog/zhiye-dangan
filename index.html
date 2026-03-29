@@ -247,11 +247,6 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   transform-origin:center center;
 }
 .pkg-envelope-img{display:block;width:100%;height:auto;border-radius:8px;}
-.pkg-contact-year-inline{
-  position:absolute;left:116px;bottom:92px;
-  font:700 18px 'Courier New',monospace;color:#222;letter-spacing:1px;
-  z-index:4;
-}
 .pkg-top-strip{
   position:absolute;left:0;right:0;top:0;height:26px;
   background-image:url('./assets/hr-envelope.svg');
@@ -569,7 +564,6 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
           <div class="pkg-bag-body" id="pkg-bag-body">
             <div class="pkg-top-strip" id="pkg-top-strip"></div>
             <img class="pkg-envelope-img" src="./assets/hr-envelope.svg" alt="HR envelope">
-            <div class="pkg-contact-year-inline" id="pkg-contact-year">2026</div>
             <!-- 快递面单（贴在右下角） -->
             <div class="pkg-waybill">
               <!-- 顶部：品牌+条形码 -->
@@ -622,7 +616,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
             <div class="pkg-bag-seal"></div>
           </div>
           <!-- 签收按钮 -->
-          <button class="pkg-sign-btn" id="draw-btn">📬 是否签收？</button>
+          <button class="pkg-sign-btn" id="draw-btn" onclick="doDrawCards()">📬 是否签收？</button>
         </div>
       </div>
 
