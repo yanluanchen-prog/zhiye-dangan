@@ -252,19 +252,19 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   font-size:104px;letter-spacing:-8px;position:relative;height:112px;
 }
 .pkg-big-logo .dot{position:absolute;width:18px;height:18px;border-radius:50%;background:#d83a33;left:86px;top:37px;}
-.pkg-bag-bottom-meta{position:absolute;left:18px;right:18px;bottom:14px;}
-.pkg-contact{display:flex;align-items:center;gap:14px;font:700 11px 'Courier New',monospace;color:#222;}
-.pkg-red-line{height:5px;background:#eb4a43;margin-top:10px;width:100%;}
-.pkg-sender-box{display:inline-block;margin-top:10px;border:1px solid #bbb;padding:6px 12px;font:700 10px 'Courier New',monospace;color:#444;background:#fff;}
+.pkg-bag-bottom-meta{position:absolute;left:18px;right:18px;bottom:14px;display:flex;flex-direction:column;gap:10px;}
+.pkg-contact{display:flex;align-items:center;gap:14px;font:700 11px 'Courier New',monospace;color:#222;order:1;}
+.pkg-red-line{height:5px;background:#eb4a43;width:100%;order:2;}
+.pkg-sender-box{display:inline-block;border:1px solid #bbb;padding:6px 12px;font:700 10px 'Courier New',monospace;color:#444;background:#fff;order:3;align-self:flex-start;}
 .pkg-bag-right{width:28%;display:flex;justify-content:flex-start;}
 .pkg-bag-panel{display:none;}
 .pkg-bag-size{display:none;}
 .pkg-bag-qrs{display:none;}
 .pkg-bag-qr{display:none;}
 .pkg-waybill{
-  background:#fff;border:1px solid #bbb;border-radius:2px;padding:6px 6px 5px;font-family:'Courier New',monospace;
-  box-shadow:0 2px 6px rgba(0,0,0,.14);position:absolute;right:18px;top:18px;transform:none;
-  width:min(30%,128px);z-index:2;
+  background:#fff;border:1px solid #bbb;border-radius:2px;padding:5px 6px 4px;font-family:'Courier New',monospace;
+  box-shadow:0 2px 6px rgba(0,0,0,.14);position:absolute;right:18px;bottom:56px;transform:none;
+  width:min(28%,118px);z-index:2;
 }
 .pkg-wb-top{padding-bottom:4px;}
 .pkg-wb-logo-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
@@ -529,7 +529,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
               <div class="pkg-bag-left">
                 <div class="pkg-big-logo">HR<span class="dot"></span>)</div>
                 <div class="pkg-bag-bottom-meta">
-                  <div class="pkg-contact">☎ 95338 <span>www.hr-express.com</span></div>
+                  <div class="pkg-contact">☎ <span id="pkg-contact-year">2026</span> <span>www.hr-express.com</span></div>
                   <div class="pkg-red-line"></div>
                   <div class="pkg-sender-box">信件</div>
                 </div>
@@ -543,47 +543,30 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
                 <div class="pkg-wb-logo-row">
                   <div class="pkg-wb-logo-box">
                     <span class="pkg-wb-logo-sf">HR</span>
-                    <span class="pkg-wb-logo-name">人力资源市场<br>HR EXPRESS</span>
+                    <span class="pkg-wb-logo-name">人力市场<br>HR EXPRESS</span>
                   </div>
                   <div class="pkg-wb-right-top">
                     <div class="pkg-wb-qr" id="pkg-wb-qr"></div>
-                    <div class="pkg-wb-phone">📞 400-HR-2026</div>
                   </div>
                 </div>
                 <div class="pkg-barcode" id="pkg-barcode"></div>
                 <div class="pkg-wb-danhao-row">
                   <span class="pkg-wb-danhao-lbl">面单号</span>
                   <span class="pkg-wb-danhao-val" id="pkg-track-no">2026-HRM-00001</span>
-                  <span class="pkg-wb-type-badge">职业急送</span>
                 </div>
               </div>
               <div class="pkg-wb-hr"></div>
-              <!-- 中部：收寄方两栏 -->
               <div class="pkg-wb-mid">
                 <div class="pkg-wb-addr-col">
                   <div class="pkg-wb-addr-lbl">收方</div>
                   <div class="pkg-wb-addr-name" id="pkg-recipient">—</div>
-                  <div class="pkg-wb-addr-sub">寄件截止：<span id="pkg-year-val">2026</span>/12/31</div>
+                  <div class="pkg-wb-addr-sub">截止：<span id="pkg-year-val">2026</span>/12/31</div>
                 </div>
                 <div class="pkg-wb-addr-divider"></div>
                 <div class="pkg-wb-addr-col">
                   <div class="pkg-wb-addr-lbl">寄方</div>
-                  <div class="pkg-wb-addr-name">人力资源市场</div>
-                  <div class="pkg-wb-addr-sub">代收货款：¥0 元</div>
-                </div>
-              </div>
-              <div class="pkg-wb-hr"></div>
-              <!-- 底部：物品明细 -->
-              <div class="pkg-wb-bottom">
-                <div class="pkg-wb-bottom-row">
-                  <span class="pkg-wb-bl">数量</span>
-                  <span class="pkg-wb-bl">托寄物</span>
-                  <span class="pkg-wb-bl">备注</span>
-                </div>
-                <div class="pkg-wb-bottom-row pkg-wb-bottom-data">
-                  <span>5 件</span>
-                  <span style="color:#c0392b;font-weight:700;">职业机会</span>
-                  <span style="color:#999;">限时查看</span>
+                  <div class="pkg-wb-addr-name">人力市场</div>
+                  <div class="pkg-wb-addr-sub">职业机会 ×5</div>
                 </div>
               </div>
             </div>
@@ -1131,7 +1114,7 @@ function startYear(){
   const recEl=$('pkg-recipient');if(recEl)recEl.textContent=G.currentCard.name;
   const tnEl=$('pkg-track-no');if(tnEl)tnEl.textContent=`${y.year}-HRM-${String(G.yearIndex+1).padStart(5,'0')}`;
   const byEl=$('pkg-bag-year');if(byEl)byEl.textContent=y.year;
-  const fyEl=$('pkg-footer-year');if(fyEl)fyEl.textContent=y.year;
+  const cyEl=$('pkg-contact-year');if(cyEl)cyEl.textContent=y.year;
   const yvEl=$('pkg-year-val');if(yvEl)yvEl.textContent=y.year;
   // 生成条形码
   const bc=$('pkg-barcode');
