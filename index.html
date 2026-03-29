@@ -769,7 +769,7 @@ function buildActiveCard(card){
       </div>
     </div>
     <div class="card-footer"><span>职业生存图鉴 · ${YEARS[G.yearIndex].year}</span><span>${seenTxt}</span></div>`;
-  div.addEventListener('click',()=>openCardDetail(card));
+  // 游戏中点击卡牌不弹详情（图鉴另有入口）
   return div;
 }
 
