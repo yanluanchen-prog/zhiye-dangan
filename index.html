@@ -214,8 +214,15 @@ body{
     </div>
     <div style="margin-bottom:24px;">
       <div style="font-size:20px;color:#c8a878;letter-spacing:2px;margin-bottom:16px;">输入你的职业</div>
-      <input id="job-input" type="text" placeholder="编导、程序员、设计师……" maxlength="12" autocomplete="off"
+      <input id="job-input" type="text" placeholder="编导、程序员、设计师……" maxlength="12" autocomplete="off" list="job-list"
         style="width:100%;background:transparent;border:none;border-bottom:1px solid #3a3028;color:#e8e2d8;font-family:'Courier New',monospace;font-size:18px;letter-spacing:2px;padding:10px 0 14px;outline:none;text-align:left;border-radius:0;-webkit-appearance:none;">
+      <datalist id="job-list">
+        <option value="程序员"><option value="客服代表"><option value="数据录入员"><option value="市场研究分析师"><option value="医疗记录专员">
+        <option value="销售代表"><option value="翻译"><option value="金融分析师"><option value="会计师"><option value="软件测试员"><option value="记者">
+        <option value="信息安全分析师"><option value="技术支持专员"><option value="平面设计师"><option value="作家"><option value="剪辑师">
+        <option value="护士"><option value="教师"><option value="社工"><option value="心理咨询师"><option value="音乐家"><option value="演员"><option value="救生员"><option value="酒保">
+        <option value="厨师"><option value="修理工">
+      </datalist>
     </div>
     <button id="start-btn" style="display:block;width:100%;background:#8b1a2b;color:#f0ebe0;border:none;padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;">看看我的职业发展之路</button>
     <div style="margin-top:16px;text-align:center;font-size:9px;color:#5a4a38;font-family:'Courier New',monospace;letter-spacing:1px;">数据来源 · Anthropic经济指数报告</div>
