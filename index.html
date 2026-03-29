@@ -116,8 +116,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .id-badge-info{display:flex;flex-direction:column;justify-content:center;height:90px;gap:7px;}
 .bdg-stat{display:flex;align-items:center;gap:5px;}
 .bdg-lbl{font-size:8px;color:rgba(255,255,255,0.55);font-family:monospace;width:36px;flex-shrink:0;}
-.bdg-wrap{flex:1;height:4px;background:rgba(255,255,255,0.18);border-radius:2px;overflow:hidden;}
-.bdg-fill{height:100%;border-radius:2px;width:0;}
+.bdg-wrap{flex:1;height:5px;background:rgba(255,255,255,0.18);border-radius:3px;}
 .bdg-val{font-size:9px;font-weight:700;font-family:monospace;width:20px;text-align:right;color:#fff;}
 /* 工牌在深色背景上，覆盖卡牌stat颜色 */
 .id-badge-info .stat-label{color:rgba(255,255,255,0.55);}
@@ -406,9 +405,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
         </div>
       </div>
       <div class="id-badge-info">
-        <div class="bdg-stat"><span class="bdg-lbl">薪资力</span><div class="bdg-wrap"><div class="bdg-fill" id="id-sf-sal"></div></div><span class="bdg-val" id="id-salary">—</span></div>
-        <div class="bdg-stat"><span class="bdg-lbl">抗AI值</span><div class="bdg-wrap"><div class="bdg-fill" id="id-sf-ai"></div></div><span class="bdg-val" id="id-resist">—</span></div>
-        <div class="bdg-stat"><span class="bdg-lbl">需求度</span><div class="bdg-wrap"><div class="bdg-fill" id="id-sf-dem"></div></div><span class="bdg-val" id="id-demand">—</span></div>
+        <div class="bdg-stat"><span class="bdg-lbl">薪资力</span><div class="bdg-wrap" id="id-sf-sal"></div><span class="bdg-val" id="id-salary">—</span></div>
+        <div class="bdg-stat"><span class="bdg-lbl">抗AI值</span><div class="bdg-wrap" id="id-sf-ai"></div><span class="bdg-val" id="id-resist">—</span></div>
+        <div class="bdg-stat"><span class="bdg-lbl">需求度</span><div class="bdg-wrap" id="id-sf-dem"></div><span class="bdg-val" id="id-demand">—</span></div>
       </div>
     </div>
     <div class="header-right">
@@ -741,7 +740,7 @@ function updateBadge(){
   $('id-salary').textContent=c.salary||'—';
   $('id-resist').textContent=c.aiResist||'—';
   $('id-demand').textContent=c.demand||'—';
-  // 进度条（用颜色列表）
+  // 进度条：直接在 wrap 上画 gradient，最保险
   const fills=[
     ['id-sf-sal',c.salary||0,'#E05040'],
     ['id-sf-ai', c.aiResist||0,'#5A9EE0'],
@@ -749,7 +748,7 @@ function updateBadge(){
   ];
   fills.forEach(([id,val,color])=>{
     const el=$(id);
-    if(el){el.style.width=val+'%';el.style.background=color;}
+    if(el) el.style.background=`linear-gradient(to right,${color} ${val}%,rgba(255,255,255,0.18) ${val}%)`;
   });
 }
 
