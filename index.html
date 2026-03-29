@@ -260,10 +260,11 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   background:
     radial-gradient(140% 90% at 20% 8%, rgba(255,255,255,.96) 0%, rgba(255,255,255,0) 42%),
     linear-gradient(180deg,#fcfcfc 0%, #f4f4f4 78%, #efefef 100%);
-  border-bottom:none; /* 未签收前保持完整信封 */
+  border-bottom:none;
   z-index:3;
   transform-origin:center top;
   pointer-events:none;
+  opacity:0; /* 默认完全不可见，不破坏完整信封 */
 }
 @keyframes bagFlyIn{
   0%{transform:translateY(36px) scale(.96);opacity:0;}
@@ -279,6 +280,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 }
 .pkg-bag.fly-in .pkg-bag-body{animation:bagFlyIn .42s ease-out both;}
 .pkg-bag.opening #pkg-top-strip{
+  opacity:1;
   border-bottom:1px dashed rgba(0,0,0,.18); /* 点击后才出现切口 */
   animation:stripTearAway .36s ease-out forwards;
 }
