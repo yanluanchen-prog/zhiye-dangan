@@ -1172,7 +1172,10 @@ function openEventModal(onConfirm){
   };
 }
 
+let drawTriggered=false;
 function doDrawCards(){
+  if(drawTriggered) return;
+  drawTriggered=true;
   G.drawnCards=randomCards(5,[G.currentCard.name]);
   G.drawnCards.forEach(c=>addToEnc(c));
   G.activeIdx=0;G.pendingSwap=null;
@@ -1196,6 +1199,7 @@ function doDrawCards(){
 }
 
 function startYear(){
+  drawTriggered=false;
   G.startOfYearCard={...G.currentCard};G.activeIdx=0;G.pendingSwap=null;
   updateHUD();updateBadge();
   $('draw-zone').style.display='block';$('draw-zone').style.opacity='1';
@@ -1495,7 +1499,10 @@ $('job-dropdown').addEventListener('click',(e)=>{
   e.stopPropagation();
 });
 
-$('draw-btn').onclick=doDrawCards;
+const drawBtn=$('draw-btn');
+drawBtn.onclick=doDrawCards;
+drawBtn.addEventListener('pointerup',(e)=>{e.preventDefault();doDrawCards();});
+drawBtn.addEventListener('touchend',(e)=>{e.preventDefault();doDrawCards();},{passive:false});
 $('nav-prev').addEventListener('click',(e)=>{e.stopPropagation();if(G.activeIdx>0){G.activeIdx--;renderDeck(G.activeIdx,'left');}});
 $('nav-next').addEventListener('click',(e)=>{e.stopPropagation();if(G.activeIdx<4){G.activeIdx++;renderDeck(G.activeIdx,'right');}});
 
