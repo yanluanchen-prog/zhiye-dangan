@@ -102,15 +102,23 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   padding:3px 5px;font-size:7.5px;font-family:monospace;
   color:var(--paper);letter-spacing:0.5px;font-weight:700;
   background:var(--ink-lt);
-  flex-shrink:0;
-  text-align:center;
+  flex-shrink:0;text-align:center;
   border-bottom:1px solid rgba(255,255,255,0.15);
 }
+.id-badge-card.N .id-badge-hdr{background:var(--N);}
+.id-badge-card.R .id-badge-hdr{background:var(--R);}
+.id-badge-card.SR .id-badge-hdr{background:var(--SR);}
+.id-badge-card.SSR .id-badge-hdr{background:var(--SSR);}
+.id-badge-card.UR .id-badge-hdr{background:var(--UR);}
 .id-badge-art{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper);}
 .id-badge-emoji{font-size:26px;line-height:1;}
 .id-badge-name{font-size:9px;font-weight:900;color:var(--ink);margin-top:3px;text-align:center;line-height:1.2;padding:0 3px;}
-.id-badge-info{display:flex;flex-direction:column;justify-content:center;height:90px;gap:0;}
-.id-badge-stats-flat{display:flex;flex-direction:column;gap:6px;}
+.id-badge-info{display:flex;flex-direction:column;justify-content:center;height:90px;gap:7px;}
+.bdg-stat{display:flex;align-items:center;gap:5px;}
+.bdg-lbl{font-size:8px;color:rgba(255,255,255,0.55);font-family:monospace;width:36px;flex-shrink:0;}
+.bdg-wrap{flex:1;height:4px;background:rgba(255,255,255,0.18);border-radius:2px;overflow:hidden;}
+.bdg-fill{height:100%;border-radius:2px;width:0;}
+.bdg-val{font-size:9px;font-weight:700;font-family:monospace;width:20px;text-align:right;color:#fff;}
 /* 工牌在深色背景上，覆盖卡牌stat颜色 */
 .id-badge-info .stat-label{color:rgba(255,255,255,0.55);}
 .id-badge-info .stat-track{background:rgba(255,255,255,0.12);}
@@ -398,11 +406,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
         </div>
       </div>
       <div class="id-badge-info">
-        <div class="id-badge-stats-flat">
-          <div class="stat-row stat-atk"><span class="stat-label">薪资力</span><div class="stat-track"><div class="stat-fill" id="id-sf-sal"></div></div><span class="stat-val" id="id-salary">—</span></div>
-          <div class="stat-row stat-def"><span class="stat-label">抗AI值</span><div class="stat-track"><div class="stat-fill" id="id-sf-ai"></div></div><span class="stat-val" id="id-resist">—</span></div>
-          <div class="stat-row stat-hp"><span class="stat-label">需求度</span><div class="stat-track"><div class="stat-fill" id="id-sf-dem"></div></div><span class="stat-val" id="id-demand">—</span></div>
-        </div>
+        <div class="bdg-stat"><span class="bdg-lbl">薪资力</span><div class="bdg-wrap"><div class="bdg-fill" id="id-sf-sal"></div></div><span class="bdg-val" id="id-salary">—</span></div>
+        <div class="bdg-stat"><span class="bdg-lbl">抗AI值</span><div class="bdg-wrap"><div class="bdg-fill" id="id-sf-ai"></div></div><span class="bdg-val" id="id-resist">—</span></div>
+        <div class="bdg-stat"><span class="bdg-lbl">需求度</span><div class="bdg-wrap"><div class="bdg-fill" id="id-sf-dem"></div></div><span class="bdg-val" id="id-demand">—</span></div>
       </div>
     </div>
     <div class="header-right">
@@ -728,22 +734,22 @@ function updateBadge(){
   const c=G.currentCard;
   $('id-emoji').textContent=c.emoji||'💼';
   $('id-name').textContent=c.name;
-  // 数值文字
+  // 稀有度颜色头部
+  const rarity=c.rarity||'N';
+  $('id-badge-card').className='id-badge-card '+rarity;
+  // 数值
   $('id-salary').textContent=c.salary||'—';
   $('id-resist').textContent=c.aiResist||'—';
   $('id-demand').textContent=c.demand||'—';
-  // 进度条：直接写内联样式，不依赖CSS class覆盖
-  const bars=[
-    {fill:'id-sf-sal',val:c.salary||0,color:'#E05040'},
-    {fill:'id-sf-ai', val:c.aiResist||0,color:'#5A9EE0'},
-    {fill:'id-sf-dem',val:c.demand||0,color:'#42C47A'}
+  // 进度条（用颜色列表）
+  const fills=[
+    ['id-sf-sal',c.salary||0,'#E05040'],
+    ['id-sf-ai', c.aiResist||0,'#5A9EE0'],
+    ['id-sf-dem',c.demand||0,'#42C47A']
   ];
-  bars.forEach(b=>{
-    const el=$(b.fill);
-    if(!el)return;
-    const track=el.parentElement;
-    track.style.cssText='flex:1;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;overflow:hidden;';
-    el.style.cssText=`width:${b.val}%;height:100%;background:${b.color};border-radius:2px;`;
+  fills.forEach(([id,val,color])=>{
+    const el=$(id);
+    if(el){el.style.width=val+'%';el.style.background=color;}
   });
 }
 
