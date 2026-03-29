@@ -236,43 +236,40 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .pkg-bag{width:100%;margin-bottom:12px;}
 .pkg-bag-body{
   position:relative;
-  background:#fafafa;
-  border-radius:2px;
+  background:#fbfbfb;
+  border:4px solid #eb4a43;
+  border-radius:12px;
   overflow:hidden;
-  box-shadow:0 6px 18px rgba(0,0,0,.16),0 1px 4px rgba(0,0,0,.1),inset 0 0 0 1px rgba(0,0,0,.07);
-  padding:14px 14px 0;
+  box-shadow:0 6px 18px rgba(0,0,0,.12),0 1px 4px rgba(0,0,0,.08);
+  padding:18px 18px 14px;
   min-height:360px;
 }
-.pkg-bag-body::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(255,255,255,.65),transparent 18%,transparent 82%,rgba(0,0,0,.03));
-  pointer-events:none;
-}
-.pkg-bag-seal{
-  position:absolute;left:0;right:0;bottom:0;height:12px;
-  background:repeating-linear-gradient(90deg,#ddd 0,#ddd 5px,#f8f8f8 5px,#f8f8f8 10px);
-  border-top:1px solid rgba(0,0,0,.08);
-}
-.pkg-bag-main{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;position:relative;z-index:1;min-height:300px;}
-.pkg-bag-left{width:58%;padding-top:4px;display:flex;flex-direction:column;min-height:300px;}
+.pkg-bag-body::before{content:none;}
+.pkg-bag-seal{display:none;}
+.pkg-bag-main{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;position:relative;min-height:250px;}
+.pkg-bag-left{width:60%;padding-top:2px;}
 .pkg-big-logo{
   font-family:Arial,Helvetica,sans-serif;font-weight:900;line-height:.82;color:#111;
-  font-size:108px;letter-spacing:-8px;position:relative;height:122px;
+  font-size:112px;letter-spacing:-8px;position:relative;height:118px;
 }
-.pkg-big-logo .dot{position:absolute;width:16px;height:16px;border-radius:50%;background:#c62828;left:89px;top:39px;}
-.pkg-bag-bottom-meta{margin-top:auto;}
+.pkg-big-logo .dot{position:absolute;width:18px;height:18px;border-radius:50%;background:#d83a33;left:92px;top:40px;}
+.pkg-bag-bottom-meta{position:absolute;left:18px;right:18px;bottom:14px;}
 .pkg-contact{display:flex;align-items:center;gap:14px;font:700 11px 'Courier New',monospace;color:#222;}
-.pkg-red-line{height:5px;background:#c62828;margin-top:10px;}
-.pkg-sender-box{display:inline-block;margin-top:8px;border:1px solid #bbb;padding:4px 10px;font:700 10px 'Courier New',monospace;color:#444;background:#fff;}
-.pkg-bag-right{width:34%;display:flex;flex-direction:column;align-items:flex-end;padding-top:2px;gap:10px;}
-.pkg-bag-size{font-family:'Noto Serif SC',serif;color:#444;text-align:center;line-height:1.15;margin-top:2px;align-self:flex-end;}
-.pkg-bag-size .l{display:inline-flex;width:20px;height:20px;border-radius:50%;background:#d35400;color:#fff;align-items:center;justify-content:center;font:900 12px Arial;margin-left:4px;vertical-align:middle;}
-.pkg-bag-qrs{display:flex;gap:8px;align-self:flex-end;margin-top:auto;margin-bottom:86px;}
-.pkg-bag-qr{width:48px;height:48px;border:1px solid #777;background:repeating-linear-gradient(0deg,#111 0,#111 2px,#fff 2px,#fff 4px),repeating-linear-gradient(90deg,#111 0,#111 2px,#fff 2px,#fff 4px);background-blend-mode:multiply;}
+.pkg-red-line{height:5px;background:#eb4a43;margin-top:10px;width:100%;}
+.pkg-sender-box{display:inline-block;margin-top:10px;border:1px solid #bbb;padding:6px 12px;font:700 10px 'Courier New',monospace;color:#444;background:#fff;}
+.pkg-bag-right{width:34%;display:flex;justify-content:flex-start;}
+.pkg-bag-panel{
+  width:100%;min-height:255px;border:4px solid #eb4a43;border-radius:12px;
+  padding:10px 10px 12px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box;
+}
+.pkg-bag-size{font-family:'Noto Serif SC',serif;color:#444;text-align:center;line-height:1.15;margin-top:2px;font-size:18px;}
+.pkg-bag-size .l{display:inline-flex;width:24px;height:24px;border-radius:50%;background:#d9821f;color:#fff;align-items:center;justify-content:center;font:900 13px Arial;margin-left:4px;vertical-align:middle;}
+.pkg-bag-qrs{display:flex;gap:8px;align-self:center;margin-top:18px;}
+.pkg-bag-qr{width:56px;height:56px;border:1px solid #555;background:repeating-linear-gradient(0deg,#111 0,#111 2px,#fff 2px,#fff 4px),repeating-linear-gradient(90deg,#111 0,#111 2px,#fff 2px,#fff 4px);background-blend-mode:multiply;}
 .pkg-waybill{
   background:#fff;border:1px solid #bbb;border-radius:2px;padding:8px 8px 6px;font-family:'Courier New',monospace;
-  box-shadow:0 2px 6px rgba(0,0,0,.14);position:absolute;right:18px;top:18px;transform:none;
-  width:min(40%,180px);z-index:2;
+  box-shadow:0 2px 6px rgba(0,0,0,.14);position:absolute;right:28px;top:18px;transform:none;
+  width:min(38%,170px);z-index:2;
 }
 .pkg-wb-top{padding-bottom:4px;}
 .pkg-wb-logo-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
@@ -543,10 +540,12 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
                 </div>
               </div>
               <div class="pkg-bag-right">
-                <div class="pkg-bag-size">大号 <span class="l">L</span><br>文件封</div>
-                <div class="pkg-bag-qrs">
-                  <div class="pkg-bag-qr" id="pkg-bag-qr1"></div>
-                  <div class="pkg-bag-qr" id="pkg-bag-qr2"></div>
+                <div class="pkg-bag-panel">
+                  <div class="pkg-bag-size">大号 <span class="l">L</span><br>文件封</div>
+                  <div class="pkg-bag-qrs">
+                    <div class="pkg-bag-qr" id="pkg-bag-qr1"></div>
+                    <div class="pkg-bag-qr" id="pkg-bag-qr2"></div>
+                  </div>
                 </div>
               </div>
             </div>
