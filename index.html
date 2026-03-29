@@ -406,8 +406,6 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
       </div>
       <div class="id-badge-info">
         <div class="bdg-stat"><span class="bdg-lbl">薪资力</span><div class="bdg-wrap" id="id-sf-sal"></div><span class="bdg-val" id="id-salary">—</span></div>
-        <div class="bdg-stat"><span class="bdg-lbl">抗AI值</span><div class="bdg-wrap" id="id-sf-ai"></div><span class="bdg-val" id="id-resist">—</span></div>
-        <div class="bdg-stat"><span class="bdg-lbl">需求度</span><div class="bdg-wrap" id="id-sf-dem"></div><span class="bdg-val" id="id-demand">—</span></div>
       </div>
     </div>
     <div class="header-right">
@@ -504,8 +502,6 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
           <div class="card-elim-note" id="cm-elim" style="display:none;"></div>
           <div class="stats">
             <div class="stat-row stat-atk"><span class="stat-label">薪资力</span><div class="stat-track"><div class="stat-fill" id="sf-sal"></div></div><span class="stat-val" id="sv-sal"></span></div>
-            <div class="stat-row stat-def"><span class="stat-label">抗AI值</span><div class="stat-track"><div class="stat-fill" id="sf-ai"></div></div><span class="stat-val" id="sv-ai"></span></div>
-            <div class="stat-row stat-hp"><span class="stat-label">需求度</span><div class="stat-track"><div class="stat-fill" id="sf-dem"></div></div><span class="stat-val" id="sv-dem"></span></div>
           </div>
         </div>
         <div class="card-footer">
@@ -738,19 +734,8 @@ function updateBadge(){
   $('id-badge-card').className='id-badge-card '+rarity;
   // 数值
   $('id-salary').textContent=c.salary||'—';
-  $('id-resist').textContent=c.aiResist||'—';
-  $('id-demand').textContent=c.demand||'—';
-  // 进度条：完全用内联样式，不依赖任何CSS
-  const fills=[
-    ['id-sf-sal',c.salary||0,'#E05040'],
-    ['id-sf-ai', c.aiResist||0,'#5A9EE0'],
-    ['id-sf-dem',c.demand||0,'#42C47A']
-  ];
-  fills.forEach(([id,val,color])=>{
-    const el=$(id);
-    if(!el)return;
-    el.style.background=`linear-gradient(to right,${color} ${val}%,rgba(255,255,255,0.22) ${val}%)`;
-  });
+  const salEl=$('id-sf-sal');
+  if(salEl) salEl.style.background=`linear-gradient(to right,#E05040 ${c.salary||0}%,rgba(255,255,255,0.22) ${c.salary||0}%)`;
 }
 
 function updateHUD(){
@@ -781,8 +766,6 @@ function buildActiveCard(card){
       <div class="card-desc">${card.desc}</div>
       <div class="stats">
         <div class="stat-row stat-atk"><span class="stat-label">薪资力</span><div class="stat-track"><div class="stat-fill" style="width:${card.salary}%"></div></div><span class="stat-val">${card.salary}</span></div>
-        <div class="stat-row stat-def"><span class="stat-label">抗AI值</span><div class="stat-track"><div class="stat-fill" style="width:${card.aiResist}%"></div></div><span class="stat-val">${card.aiResist}</span></div>
-        <div class="stat-row stat-hp"><span class="stat-label">需求度</span><div class="stat-track"><div class="stat-fill" style="width:${card.demand}%"></div></div><span class="stat-val">${card.demand}</span></div>
       </div>
     </div>
     <div class="card-footer"><span>职业生存图鉴 · ${YEARS[G.yearIndex].year}</span><span>${seenTxt}</span></div>`;
@@ -860,8 +843,6 @@ function openCardDetail(card){
   $('cm-tag').textContent=card.tagline;
   $('cm-desc').textContent=card.desc;
   $('sf-sal').style.width=card.salary+'%';$('sv-sal').textContent=card.salary;
-  $('sf-ai').style.width=card.aiResist+'%';$('sv-ai').textContent=card.aiResist;
-  $('sf-dem').style.width=card.demand+'%';$('sv-dem').textContent=card.demand;
   const enc=G.encyclopedia[card.name];
   $('cm-known').textContent=enc&&enc.timesDrawn>1?`已见 ${enc.timesDrawn}次`:'';
   const curYear=YEARS[G.yearIndex].year,elimY=ELIM_YEAR[card.name],elEl=$('cm-elim');
