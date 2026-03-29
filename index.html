@@ -271,13 +271,14 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   100%{transform:translateY(0) scale(1);opacity:1;}
 }
 @keyframes stripTearAway{
-  0%{transform:translate(0,0) rotate(0);opacity:1;}
-  25%{transform:translate(0,0) rotate(0);opacity:1;}
-  100%{transform:translate(-26px,-62px) rotate(-10deg);opacity:0;}
+  0%{transform:translate(0,0) rotate(0) scale(1);opacity:1;box-shadow:none;}
+  22%{transform:translate(0,0) rotate(0) scale(1);opacity:1;box-shadow:none;}
+  45%{transform:translate(0,-6px) rotate(-2deg) scale(1.01);opacity:1;box-shadow:0 8px 14px rgba(0,0,0,.18);}
+  100%{transform:translate(-30px,-78px) rotate(-10deg) scale(0.98);opacity:1;box-shadow:0 12px 18px rgba(0,0,0,.12);}
 }
 @keyframes bagOpenBody{
   0%{clip-path:inset(0 0 0 0 round 8px);}
-  35%{clip-path:inset(0 0 0 0 round 8px);}
+  50%{clip-path:inset(0 0 0 0 round 8px);}
   100%{clip-path:inset(18px 0 0 0 round 8px);}
 }
 .pkg-bag.fly-in .pkg-bag-body{animation:bagFlyIn .42s ease-out both;}
