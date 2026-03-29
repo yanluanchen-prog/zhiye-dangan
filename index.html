@@ -48,7 +48,6 @@ body{
 .id-badge-hdr{padding:2px 3px;font-size:6px;font-family:monospace;color:#fff;letter-spacing:1px;font-weight:700;flex-shrink:0;}
 .id-badge-card.own .id-badge-hdr{background:var(--red);}
 .id-badge-art{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper);}
-.id-badge-emoji{font-size:16px;line-height:1;}
 .id-badge-name{font-size:7px;font-weight:900;color:var(--ink);margin-top:2px;text-align:center;line-height:1.2;padding:0 2px;}
 .id-badge-info{color:var(--paper);}
 .id-badge-job{font-size:14px;font-weight:900;letter-spacing:1px;line-height:1;}
@@ -90,7 +89,8 @@ body{
 .card-file-no{font-size:9px;color:rgba(255,255,255,0.75);font-family:monospace;letter-spacing:2px;}
 .card-rarity-stamp{font-size:10px;font-style:italic;letter-spacing:1px;padding:2px 8px;border:1.5px solid rgba(255,255,255,0.5);font-family:monospace;color:rgba(255,255,255,0.9);}
 .card-art{padding:20px 14px 14px;text-align:center;background:var(--paper);border-bottom:1px solid var(--border);}
-.card-art-icon{font-size:64px;line-height:1;display:block;margin-bottom:10px;}
+.card-art-icon{font-size:64px;line-height:1;display:block;margin-bottom:10px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;}
+.id-badge-emoji{font-size:16px;line-height:1;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;}
 .card-name{font-size:28px;font-weight:900;line-height:1;letter-spacing:1px;color:var(--ink);}
 .card-tag{font-size:10px;color:var(--ink-faint);letter-spacing:3px;margin-top:4px;font-family:monospace;}
 .card-body{padding:12px 14px 10px;}
@@ -736,7 +736,7 @@ function showEnding(){
     const btn=document.createElement('button');
     btn.dataset.name=card.name;
     btn.style.cssText='background:#1a1410;border:1px solid #3a3028;color:#c8b888;font-family:\'Courier New\',monospace;font-size:13px;padding:7px 10px;cursor:pointer;display:flex;align-items:center;gap:5px;border-radius:3px;white-space:nowrap;transition:all 0.15s;';
-    btn.innerHTML=`<span style="font-size:16px;line-height:1;">${card.emoji}</span><span>${card.name}</span>`;
+    btn.innerHTML=`<span style="font-size:16px;line-height:1;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;">${card.emoji}</span><span>${card.name}</span>`;
     btn.addEventListener('click',()=>{
       document.querySelectorAll('#job-grid button').forEach(b=>{
         b.style.background='#1a1410';b.style.borderColor='#3a3028';b.style.color='#c8b888';
