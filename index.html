@@ -206,7 +206,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .deck-counter{font-size:11px;font-family:monospace;color:var(--ink-faint);letter-spacing:2px;min-width:36px;text-align:center;}
 
 /* ── CARD ACTIONS (2 buttons below deck) ──── */
-.card-actions{display:flex;gap:8px;margin-top:12px;}
+.card-actions{display:flex;gap:8px;margin-top:20px;padding-top:4px;border-top:1px solid var(--border);}
 .card-actions .btn{flex:1;}
 
 /* ── BUTTONS ──────────────────────────────── */
@@ -252,14 +252,16 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .ev-sheet{
   position:relative;width:100%;max-width:480px;
   background:var(--paper);border-top:4px solid var(--red);
-  padding:22px 20px calc(40px + env(safe-area-inset-bottom));
-  height:420px;overflow-y:auto;
+  padding:18px 20px 0;
+  max-height:72vh;
+  display:flex;flex-direction:column;
   animation:slideUp 0.25s ease;
 }
 @keyframes slideUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
-.ev-year{font-size:9px;letter-spacing:4px;color:var(--red);font-family:monospace;margin-bottom:12px;}
-.ev-body{font-size:12px;line-height:2;color:var(--ink-lt);white-space:pre-wrap;margin-bottom:14px;height:220px;overflow-y:auto;}
-.ev-slogan{font-size:10px;color:var(--red);letter-spacing:3px;font-family:monospace;text-align:right;padding-top:10px;border-top:1px solid var(--border);margin-bottom:16px;display:none;}
+.ev-year{font-size:9px;letter-spacing:4px;color:var(--red);font-family:monospace;margin-bottom:12px;flex-shrink:0;}
+.ev-body{font-size:12px;line-height:2;color:var(--ink-lt);white-space:pre-wrap;flex:1;overflow-y:auto;margin-bottom:10px;}
+.ev-slogan{font-size:10px;color:var(--red);letter-spacing:3px;font-family:monospace;text-align:right;padding-top:10px;border-top:1px solid var(--border);margin-bottom:10px;flex-shrink:0;display:none;}
+#ev-confirm{flex-shrink:0;margin-bottom:calc(16px + env(safe-area-inset-bottom));}
 
 /* ── CARD DETAIL MODAL ────────────────────── */
 #card-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(28,26,20,0.78);align-items:flex-end;justify-content:center;}
@@ -1216,8 +1218,8 @@ $('job-dropdown').addEventListener('click',(e)=>{
 });
 
 $('draw-btn').addEventListener('click',doDrawCards);
-$('nav-prev').addEventListener('click',()=>{if(G.activeIdx>0){G.activeIdx--;renderDeck(G.activeIdx,'left');}});
-$('nav-next').addEventListener('click',()=>{if(G.activeIdx<4){G.activeIdx++;renderDeck(G.activeIdx,'right');}});
+$('nav-prev').addEventListener('click',(e)=>{e.stopPropagation();if(G.activeIdx>0){G.activeIdx--;renderDeck(G.activeIdx,'left');}});
+$('nav-next').addEventListener('click',(e)=>{e.stopPropagation();if(G.activeIdx<4){G.activeIdx++;renderDeck(G.activeIdx,'right');}});
 
 // 换成这个 → 显示头像变化动画 → 弹事件modal
 $('swap-btn').addEventListener('click',()=>{
