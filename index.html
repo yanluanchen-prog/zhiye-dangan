@@ -564,8 +564,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   <div style="padding:0 20px 20px;">
     <button class="btn red" id="result-next">继续 →</button>
     <div style="margin-top:8px;display:flex;gap:8px;" id="result-fail-btns" style="display:none;">
-      <button class="btn outline" id="result-retry" style="flex:1;">重新选择这一年</button>
-      <button class="btn outline" id="result-restart" style="flex:1;">重新开始</button>
+      <button class="btn red" id="result-restart" style="flex:1;">重新开始职业生涯</button>
+      <button class="btn outline" id="result-quit" style="flex:1;">退出游戏</button>
     </div>
   </div>
 </div>
@@ -583,9 +583,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   <div class="container">
     <div class="section"><div style="font-size:12px;line-height:2.2;color:var(--ink-lt);white-space:pre-wrap;" id="f-text"></div></div>
     <div class="btn-row">
-      <button class="btn red" id="retry-btn">退回这一年，重新选择</button>
-      <button class="btn outline" id="f-enc-btn" onclick="openEncModal()">查看职业图鉴</button>
-      <button class="btn outline" id="restart-btn">重新开始</button>
+      <button class="btn red" id="restart-btn">重新开始职业生涯</button>
+      <button class="btn outline" id="quit-btn">退出游戏</button>
     </div>
   </div>
 </div>
@@ -1267,7 +1266,8 @@ $('cm-swap').addEventListener('click',function(){
 });
 
 $('enc-bg').addEventListener('click',closeEncModal);$('enc-x').addEventListener('click',closeEncModal);
-$('result-retry').addEventListener('click',()=>{G.currentCard={...G.startOfYearCard};startYear();});
+$('result-restart').addEventListener('click',doRestart);
+$('result-quit').addEventListener('click',()=>$('quit-btn').click());
 $('result-restart').addEventListener('click',()=>{
   G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0};
   selectedJob=null;
@@ -1275,13 +1275,22 @@ $('result-restart').addEventListener('click',()=>{
   document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
   showScreen('intro-screen');
 });
-$('retry-btn').addEventListener('click',()=>{G.currentCard={...G.startOfYearCard};startYear();});
-$('restart-btn').addEventListener('click',()=>{
-  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0};
+function doRestart(){
+  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0};
   selectedJob=null;
-  $('job-display').value='';
+  $('enc-count').textContent='0';
   document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
+  $('job-display').textContent='请选择你的职业';
   showScreen('intro-screen');
+}
+$('restart-btn').addEventListener('click',doRestart);
+$('quit-btn').addEventListener('click',()=>{
+  // web 环境无法真正"退出"，展示一个结束卡片
+  document.body.innerHTML=`<div style="position:fixed;inset:0;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Courier New',monospace;color:rgba(240,235,224,0.5);text-align:center;padding:28px;">
+    <div style="font-size:9px;letter-spacing:4px;margin-bottom:16px;">2026 — 2035</div>
+    <div style="font-size:18px;font-weight:900;color:rgba(240,235,224,0.85);letter-spacing:3px;margin-bottom:24px;">再见。</div>
+    <div style="font-size:12px;line-height:2;max-width:280px;">这十年还在继续。<br>只是今天，你先离开了。</div>
+  </div>`;
 });
 $('play-again-btn').addEventListener('click',()=>{G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};startYear();});
 $('story-enter-btn').addEventListener('click',()=>{startYear();});
