@@ -266,31 +266,34 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .pkg-bag-qrs{display:none;}
 .pkg-bag-qr{display:none;}
 .pkg-waybill{
-  background:#fff;border:1px solid #bbb;border-radius:2px;padding:5px 6px 4px;font-family:'Courier New',monospace;
-  box-shadow:0 2px 6px rgba(0,0,0,.14);position:absolute;right:18px;bottom:56px;transform:none;
-  width:min(28%,118px);z-index:2;
+  background:#fff;border:1px solid #bdbdbd;border-radius:2px;padding:6px 7px 5px;font-family:'Courier New',monospace;
+  box-shadow:0 2px 6px rgba(0,0,0,.14);position:absolute;right:16px;bottom:26px;transform:none;
+  width:min(40%,170px);z-index:2;
 }
-.pkg-wb-top{padding-bottom:4px;}
-.pkg-wb-logo-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
-.pkg-wb-logo-box{display:flex;align-items:center;gap:6px;}
-.pkg-wb-logo-sf{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#d9362a;color:#fff;font-size:10px;font-weight:900;}
-.pkg-wb-logo-name{font-size:8px;line-height:1.25;color:#333;font-weight:700;letter-spacing:.5px;}
+.pkg-wb-top{padding-bottom:3px;}
+.pkg-wb-logo-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3px;}
+.pkg-wb-logo-box{display:flex;align-items:flex-start;gap:6px;}
+.pkg-wb-logo-sf{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#d9362a;color:#fff;font-size:10px;font-weight:900;flex-shrink:0;}
+.pkg-wb-logo-name{font-size:7px;line-height:1.15;color:#333;font-weight:700;letter-spacing:.2px;}
 .pkg-wb-right-top{display:flex;flex-direction:column;align-items:flex-end;gap:2px;}
-.pkg-wb-qr{width:24px;height:24px;border:1px solid #777;background:
+.pkg-wb-qr{width:26px;height:26px;border:1px solid #777;background:
   repeating-linear-gradient(0deg,#111 0,#111 2px,#fff 2px,#fff 4px),
   repeating-linear-gradient(90deg,#111 0,#111 2px,#fff 2px,#fff 4px);background-blend-mode:multiply;}
-.pkg-wb-phone{font-size:7px;color:#666;}
-.pkg-wb-hr{height:1px;background:#cfcfcf;margin:4px 0;}
-.pkg-wb-danhao-row{display:flex;align-items:center;gap:5px;}
-.pkg-wb-danhao-lbl{font-size:8px;color:#666;}
-.pkg-wb-danhao-val{font-size:10px;font-weight:800;color:#222;letter-spacing:1px;flex:1;}
-.pkg-wb-type-badge{font-size:8px;color:#d9362a;border:1px solid #d9362a;border-radius:2px;padding:1px 4px;}
-.pkg-wb-mid{display:flex;gap:6px;align-items:stretch;}
+.pkg-wb-phone{font-size:6px;color:#666;line-height:1;}
+.pkg-wb-hr{height:1px;background:#d7d7d7;margin:4px 0;}
+.pkg-wb-danhao-row{display:flex;align-items:center;gap:4px;}
+.pkg-wb-danhao-lbl{font-size:7px;color:#666;white-space:nowrap;}
+.pkg-wb-danhao-val{font-size:9px;font-weight:800;color:#222;letter-spacing:.8px;flex:1;line-height:1.1;}
+.pkg-wb-type-badge{font-size:7px;color:#d9362a;border:1px solid #d9362a;border-radius:2px;padding:1px 3px;white-space:nowrap;}
+.pkg-wb-mid{display:flex;gap:5px;align-items:stretch;}
 .pkg-wb-addr-col{flex:1;min-width:0;}
 .pkg-wb-addr-divider{width:1px;background:#ddd;}
-.pkg-wb-addr-lbl{font-size:8px;color:#888;margin-bottom:2px;}
-.pkg-wb-addr-name{font-size:11px;font-weight:800;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.pkg-wb-addr-sub{font-size:7px;color:#777;margin-top:2px;}
+.pkg-wb-addr-lbl{font-size:7px;color:#888;margin-bottom:1px;}
+.pkg-wb-addr-name{font-size:8px;font-weight:800;color:#222;line-height:1.15;word-break:break-all;}
+.pkg-wb-addr-sub{font-size:6px;color:#777;margin-top:2px;line-height:1.2;}
+.pkg-wb-bottom{margin-top:3px;}
+.pkg-wb-bottom-row{display:grid;grid-template-columns:28px 1fr 32px;gap:4px;font-size:7px;color:#888;align-items:center;}
+.pkg-wb-bottom-data{font-size:8px;color:#333;font-weight:700;margin-top:2px;}
 .pkg-wb-bottom{margin-top:2px;}
 .pkg-wb-bottom-row{display:grid;grid-template-columns:40px 1fr 54px;gap:4px;font-size:8px;color:#888;align-items:center;}
 .pkg-wb-bottom-data{font-size:9px;color:#333;font-weight:700;margin-top:2px;}
@@ -546,30 +549,45 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
                 <div class="pkg-wb-logo-row">
                   <div class="pkg-wb-logo-box">
                     <span class="pkg-wb-logo-sf">HR</span>
-                    <span class="pkg-wb-logo-name">人力市场<br>HR EXPRESS</span>
+                    <span class="pkg-wb-logo-name">人力资源市场<br>HR<br>EXPRESS</span>
                   </div>
                   <div class="pkg-wb-right-top">
                     <div class="pkg-wb-qr" id="pkg-wb-qr"></div>
+                    <div class="pkg-wb-phone">400-HR-<br><span id="pkg-phone-year">2026</span></div>
                   </div>
                 </div>
                 <div class="pkg-barcode" id="pkg-barcode"></div>
                 <div class="pkg-wb-danhao-row">
                   <span class="pkg-wb-danhao-lbl">面单号</span>
                   <span class="pkg-wb-danhao-val" id="pkg-track-no">2026-HRM-00001</span>
+                  <span class="pkg-wb-type-badge">职业急送</span>
                 </div>
               </div>
               <div class="pkg-wb-hr"></div>
               <div class="pkg-wb-mid">
                 <div class="pkg-wb-addr-col">
                   <div class="pkg-wb-addr-lbl">收方</div>
-                  <div class="pkg-wb-addr-name" id="pkg-recipient">—</div>
-                  <div class="pkg-wb-addr-sub">截止：<span id="pkg-year-val">2026</span>/12/31</div>
+                  <div class="pkg-wb-addr-name" id="pkg-recipient">记者</div>
+                  <div class="pkg-wb-addr-sub">寄件截止：<br><span id="pkg-year-val">2026</span>/12/31</div>
                 </div>
                 <div class="pkg-wb-addr-divider"></div>
                 <div class="pkg-wb-addr-col">
                   <div class="pkg-wb-addr-lbl">寄方</div>
-                  <div class="pkg-wb-addr-name">人力市场</div>
-                  <div class="pkg-wb-addr-sub">职业机会 ×5</div>
+                  <div class="pkg-wb-addr-name">人力资源…</div>
+                  <div class="pkg-wb-addr-sub">代收货款： ¥0 元</div>
+                </div>
+              </div>
+              <div class="pkg-wb-hr"></div>
+              <div class="pkg-wb-bottom">
+                <div class="pkg-wb-bottom-row">
+                  <span class="pkg-wb-bl">数量</span>
+                  <span class="pkg-wb-bl">托寄物</span>
+                  <span class="pkg-wb-bl">备注</span>
+                </div>
+                <div class="pkg-wb-bottom-row pkg-wb-bottom-data">
+                  <span>5 件</span>
+                  <span style="color:#c0392b;font-weight:700;">职业机会</span>
+                  <span style="color:#999;">限时查看</span>
                 </div>
               </div>
             </div>
@@ -1118,6 +1136,7 @@ function startYear(){
   const tnEl=$('pkg-track-no');if(tnEl)tnEl.textContent=`${y.year}-HRM-${String(G.yearIndex+1).padStart(5,'0')}`;
   const byEl=$('pkg-bag-year');if(byEl)byEl.textContent=y.year;
   const cyEl=$('pkg-contact-year');if(cyEl)cyEl.textContent=y.year;
+  const pyEl=$('pkg-phone-year');if(pyEl)pyEl.textContent=y.year;
   const yvEl=$('pkg-year-val');if(yvEl)yvEl.textContent=y.year;
   // 生成条形码
   const bc=$('pkg-barcode');
