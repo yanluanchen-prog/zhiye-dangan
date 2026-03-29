@@ -629,65 +629,36 @@ const YEARS=[
   {year:2035,event:"烹饪机器人X1发布，精准控温±0.1°C，95%标准菜品可完成。某科技公司推出「数字替身」订阅服务，AI化身代替你出席会议、处理邮件。\n\n测试报告有一行工程师手写备注：锅气问题仍未解决。成因不明，无法参数化。",eliminated:["修理工"],slogan:"2035年。最后一道防线。"}
 ];
 const POOL=[
-  // === 报告有明确数据的职业（严格按报告）===
-  // 计算机程序员 74.5%暴露度 → 26%抗AI
-  {name:"程序员",rarity:"R",aiResist:26,salary:65,demand:60,category:"技术",emoji:"💻",tagline:"代码世界",desc:"写、更新和维护软件程序。AI已深度介入这一领域。",fileNum:"R-001"},
-  // 客服代表 70.1%暴露度 → 30%抗AI
-  {name:"客服代表",rarity:"N",aiResist:30,salary:32,demand:85,category:"服务",emoji:"🎧",tagline:"耐心解答",desc:"向客户提供信息、接收订单和处理投诉。AI平台API流量中频繁出现。",fileNum:"N-002"},
-  // 数据录入员 67.1%暴露度 → 33%抗AI
-  {name:"数据录入员",rarity:"N",aiResist:33,salary:25,demand:60,category:"文职",emoji:"⌨️",tagline:"精准录入",desc:"操作数据输入设备录入数据。观测暴露度排名靠前。",fileNum:"N-003"},
-  // 医疗记录专员 66.7%暴露度 → 33%抗AI
-  {name:"医疗记录专员",rarity:"R",aiResist:33,salary:45,demand:70,category:"专业",emoji:"📋",tagline:"医疗档案",desc:"编译、处理和医疗记录的维护工作。",fileNum:"R-004"},
-  // 市场研究分析师 64.8%暴露度 → 35%抗AI
-  {name:"市场研究分析师",rarity:"SR",aiResist:35,salary:70,demand:65,category:"专业",emoji:"📊",tagline:"市场洞察",desc:"研究市场条件以评估产品或服务的潜在销售。",fileNum:"SR-005"},
-  // 销售代表 62.8%暴露度 → 37%抗AI
-  {name:"销售代表",rarity:"R",aiResist:37,salary:50,demand:75,category:"销售",emoji:"🤝",tagline:"成交艺术",desc:"向组织或企业销售商品或服务。",fileNum:"R-006"},
-  // 金融投资分析师 57.2%暴露度 → 43%抗AI
-  {name:"金融分析师",rarity:"SR",aiResist:43,salary:80,demand:55,category:"专业",emoji:"📈",tagline:"投资决策",desc:"进行定量分析以评估投资项目的财务可行性。",fileNum:"SR-007"},
-  // 软件QA测试员 51.9%暴露度 → 48%抗AI
-  {name:"软件测试员",rarity:"SR",aiResist:48,salary:55,demand:60,category:"技术",emoji:"🐛",tagline:"质量保证",desc:"开发和执行软件测试以识别问题和确保质量标准。",fileNum:"SR-008"},
-  // 信息安全分析师 48.6%暴露度 → 51%抗AI
-  {name:"信息安全分析师",rarity:"SSR",aiResist:51,salary:85,demand:70,category:"技术",emoji:"🔒",tagline:"安全守护",desc:"规划、实施、升级或监控安全措施以保护计算机网络和信息。",fileNum:"SSR-009"},
-  // 计算机用户支持专员 46.8%暴露度 → 53%抗AI
-  {name:"技术支持专员",rarity:"SSR",aiResist:53,salary:50,demand:80,category:"技术",emoji:"🔧",tagline:"技术支援",desc:"为计算机用户解答问题或解决计算机问题。",fileNum:"SSR-010"},
-
-  // === 报告提及的零暴露度职业 ===
-  {name:"厨师",rarity:"UR",aiResist:95,salary:40,demand:90,category:"体力",emoji:"👨‍🍳",tagline:"烹饪艺术",desc:"准备、调味和烹饪食物。零AI暴露度，体力劳动密集型。",fileNum:"UR-011"},
-  {name:"修理工",rarity:"UR",aiResist:92,salary:45,demand:85,category:"体力",emoji:"🔧",tagline:"维修专家",desc:"修理和维护机械设备。零AI暴露度，需要手工技能。",fileNum:"UR-012"},
-  {name:"救生员",rarity:"SSR",aiResist:90,salary:35,demand:60,category:"体力",emoji:"🏊",tagline:"生命守护",desc:"监控游泳区域防止事故。零AI暴露度，需要实时判断和救援能力。",fileNum:"SSR-013"},
-  {name:"酒保",rarity:"SSR",aiResist:88,salary:38,demand:70,category:"服务",emoji:"🍸",tagline:"调酒艺术",desc:"调制饮料并提供给顾客。零AI暴露度，需要人际互动。",fileNum:"SSR-014"},
-  {name:"洗碗工",rarity:"SR",aiResist:85,salary:25,demand:80,category:"体力",emoji:"🍽️",tagline:"清洁卫士",desc:"清洗餐具和其他厨房设备。零AI暴露度。",fileNum:"SR-015"},
-  {name:"更衣室服务员",rarity:"SR",aiResist:85,salary:28,demand:65,category:"服务",emoji:"👔",tagline:"顾客服务",desc:"为顾客提供更衣服务。零AI暴露度。",fileNum:"SR-016"},
-
-  // === 按报告逻辑推断的职业 ===
-  // 作家：报告提及27.6%查询量，但创作类相对较低，推断60%抗AI
-  {name:"作家",rarity:"SSR",aiResist:60,salary:35,demand:30,category:"创作",emoji:"✒️",tagline:"记录人性",desc:"创作原创书面作品。AI查询占比较低，但理论能力较高。",fileNum:"SSR-017"},
-  // 平面设计师：报告提及36.7%查询量，推断55%抗AI
-  {name:"平面设计师",rarity:"SR",aiResist:55,salary:55,demand:60,category:"创作",emoji:"🎨",tagline:"视觉语言",desc:"设计视觉材料以传达信息。AI辅助增强型使用为主。",fileNum:"SR-018"},
-  // 记者：报告提及40.1%查询量，推断52%抗AI
-  {name:"记者",rarity:"SR",aiResist:52,salary:50,demand:40,category:"创作",emoji:"📰",tagline:"追寻真相",desc:"收集和分析关于新闻事件的事实。需要现场采访和判断。",fileNum:"SR-019"},
-  // 翻译：报告提及24.3%查询量，推断58%抗AI（但实际查询量低，说明已有部分替代）
-  {name:"翻译",rarity:"R",aiResist:42,salary:45,demand:55,category:"语言",emoji:"🌐",tagline:"跨越语言",desc:"将一种语言翻译成另一种语言。机器翻译发展迅速。",fileNum:"R-020"},
-  // 剪辑师：报告提及15.8%查询量，推断70%抗AI
-  {name:"剪辑师",rarity:"SR",aiResist:70,salary:55,demand:55,category:"创作",emoji:"🎬",tagline:"叙事剪刀",desc:"编辑移动图像和声音片段。AI工具辅助程度有限。",fileNum:"SR-021"},
-  // 音乐家：报告提及8.5%查询量，推断80%抗AI
-  {name:"音乐家",rarity:"SSR",aiResist:80,salary:40,demand:35,category:"创作",emoji:"🎵",tagline:"声音艺术",desc:"演奏乐器或演唱。AI查询量极低。",fileNum:"SSR-022"},
-  // 演员：报告提及4.8%查询量，推断88%抗AI
-  {name:"演员",rarity:"SSR",aiResist:88,salary:45,demand:40,category:"表演",emoji:"🎭",tagline:"舞台人生",desc:"在舞台、电影或电视中扮演角色。AI查询量极低。",fileNum:"SSR-023"},
-  // 会计师：与金融分析师类似，推断45%抗AI
-  {name:"会计师",rarity:"R",aiResist:45,salary:60,demand:70,category:"专业",emoji:"🧮",tagline:"账目清晰",desc:"分析财务信息并准备财务报告。AI已通过注册会计师考试。",fileNum:"R-024"},
-  // 教师：教育类，推断72%抗AI（人际互动为主）
-  {name:"教师",rarity:"SR",aiResist:72,salary:45,demand:80,category:"教育",emoji:"👨‍🏫",tagline:"传道授业",desc:"教授学生一门或多门学科。需要人际互动和因材施教。",fileNum:"SR-025"},
-  // 护士：医疗护理，推断68%抗AI
-  {name:"护士",rarity:"SR",aiResist:68,salary:50,demand:90,category:"医疗",emoji:"👩‍⚕️",tagline:"白衣天使",desc:"为患者提供护理服务。需要实际操作和人际关怀。",fileNum:"SR-026"},
-  // 医生：医疗诊断，推断40%抗AI（报告提及AI诊断超越医生）
-  {name:"医生",rarity:"R",aiResist:40,salary:95,demand:95,category:"医疗",emoji:"👨‍⚕️",tagline:"生命守护",desc:"诊断和治疗疾病。AI诊断准确率已全面超越专科医生。",fileNum:"R-027"},
-  // 律师：法律专业，推断50%抗AI
-  {name:"律师",rarity:"SR",aiResist:50,salary:85,demand:60,category:"专业",emoji:"⚖️",tagline:"法理精研",desc:"为客户提供法律建议和代理。需要策略判断和客户沟通。",fileNum:"SR-028"},
-  // 社工：社会服务，推断75%抗AI（人际互动密集）
-  {name:"社工",rarity:"SR",aiResist:75,salary:38,demand:60,category:"服务",emoji:"🤝",tagline:"守望相助",desc:"帮助个人和社区解决问题。需要深度人际互动。",fileNum:"SR-029"},
-  // 心理咨询师：深度人际服务，推断78%抗AI
-  {name:"心理咨询师",rarity:"SSR",aiResist:78,salary:65,demand:55,category:"服务",emoji:"🧘",tagline:"倾听灵魂",desc:"为客户提供心理咨询服务。需要深度理解和共情。",fileNum:"SSR-030"}
+  {name:"程序员",rarity:"R",aiResist:26,salary:65,demand:60,category:"技术",emoji:"💻",tagline:"代码世界",desc:"制造虚拟世界的人，最先被自己的造物审视。你写的每一行代码，都在训练下一个替代你的模型。",fileNum:"R-001"},
+  {name:"客服代表",rarity:"N",aiResist:30,salary:32,demand:85,category:"服务",emoji:"🎧",tagline:"耐心解答",desc:"倾听是最后的人性堡垒，但愤怒可以被算法预判。当机器学会安抚，沉默比辱骂更难承受。",fileNum:"N-002"},
+  {name:"数据录入员",rarity:"N",aiResist:33,salary:25,demand:60,category:"文职",emoji:"⌨️",tagline:"精准录入",desc:"复制，粘贴，确认。这份工作的终点从一开始就写好了。",fileNum:"N-003"},
+  {name:"医疗记录专员",rarity:"R",aiResist:33,salary:45,demand:70,category:"专业",emoji:"📋",tagline:"医疗档案",desc:"你整理别人的病历，记录生老病死。最后连这份记录，也不再需要你来整理。",fileNum:"R-004"},
+  {name:"市场研究分析师",rarity:"SR",aiResist:35,salary:70,demand:65,category:"专业",emoji:"📊",tagline:"市场洞察",desc:"从数字里找规律。规律现在自己会找了。",fileNum:"SR-005"},
+  {name:"销售代表",rarity:"R",aiResist:37,salary:50,demand:75,category:"销售",emoji:"🤝",tagline:"成交艺术",desc:"用人情促成交易。算法比你更懂客户想要什么，且不会在客户说到一半时走神。",fileNum:"R-006"},
+  {name:"金融分析师",rarity:"SR",aiResist:43,salary:80,demand:55,category:"专业",emoji:"📈",tagline:"洞察先机",desc:"分析历史数据，预判未来走向。历史数据足够多的时候，未来就不再需要人来预判了。",fileNum:"SR-007"},
+  {name:"软件测试员",rarity:"SR",aiResist:48,salary:55,demand:60,category:"技术",emoji:"🐛",tagline:"寻找漏洞",desc:"找bug的人。AI不仅能找bug，还能写出从一开始就没有bug的代码。",fileNum:"SR-008"},
+  {name:"信息安全分析师",rarity:"SSR",aiResist:51,salary:85,demand:70,category:"技术",emoji:"🔒",tagline:"守护数据",desc:"防御看不见的威胁。当攻击者和防御者都用上了同样的AI，人类夹在中间那道防线越来越薄。",fileNum:"SSR-009"},
+  {name:"技术支持专员",rarity:"SSR",aiResist:53,salary:50,demand:80,category:"技术",emoji:"🔧",tagline:"解决难题",desc:"在电话里指导老人重启路由器。耐心和共情，暂时还难以量化。",fileNum:"SSR-010"},
+  {name:"厨师",rarity:"UR",aiResist:95,salary:40,demand:90,category:"体力",emoji:"👨‍🍳",tagline:"火候艺术",desc:"味觉、嗅觉、触觉的综合判断。机器能复制配方，但锅气无法参数化。工程师在报告里手写了一行备注：成因不明。",fileNum:"UR-011"},
+  {name:"修理工",rarity:"UR",aiResist:92,salary:45,demand:85,category:"体力",emoji:"🔧",tagline:"化腐朽为神奇",desc:"面对每一台不同的故障，用经验和直觉找到解法。世界上有一种智慧叫「上手感觉一下」，至今无法下载。",fileNum:"UR-012"},
+  {name:"救生员",rarity:"SSR",aiResist:90,salary:35,demand:60,category:"体力",emoji:"🏊",tagline:"守护生命",desc:"在千钧一发之际跃入水中。这需要身体，更需要不假思索的勇气。有些反应，不能等待加载。",fileNum:"SSR-013"},
+  {name:"酒保",rarity:"SSR",aiResist:88,salary:38,demand:70,category:"服务",emoji:"🍸",tagline:"深夜倾听",desc:"调酒，也听故事。顾客要的不是完美的酒，是一个记得他名字、不会把他的秘密训练成数据集的人。",fileNum:"SSR-014"},
+  {name:"洗碗工",rarity:"SR",aiResist:85,salary:25,demand:80,category:"体力",emoji:"🍽️",tagline:"清洁卫士",desc:"每一个盘子都洗过，每一块油污都见过。最朴素的劳动，往往是最后被数字化的劳动。",fileNum:"SR-015"},
+  {name:"更衣室服务员",rarity:"SR",aiResist:85,salary:28,demand:65,category:"服务",emoji:"👔",tagline:"人情细节",desc:"为顾客保管衣物，偶尔保管秘密。人与人之间最后的那点小信任，机器还替代不了。",fileNum:"SR-016"},
+  {name:"作家",rarity:"SSR",aiResist:60,salary:35,demand:30,category:"创作",emoji:"✒️",tagline:"记录人性",desc:"写那些没有发生过的事，或者没人愿意直说的事。AI也会写，但它写的是所有人都曾想过的话。",fileNum:"SSR-017"},
+  {name:"平面设计师",rarity:"SR",aiResist:55,salary:55,demand:60,category:"创作",emoji:"🎨",tagline:"视觉语言",desc:"把想法变成看得见的东西。现在想法可以直接被看见，不再需要经过你的眼睛和手。",fileNum:"SR-018"},
+  {name:"记者",rarity:"SR",aiResist:52,salary:50,demand:40,category:"创作",emoji:"📰",tagline:"追寻真相",desc:"去现场，问问题，把真相带回来。AI不需要去现场——它在等你把现场带给它。",fileNum:"SR-019"},
+  {name:"翻译",rarity:"R",aiResist:42,salary:45,demand:55,category:"语言",emoji:"🌐",tagline:"跨越语言",desc:"两种语言之间的摆渡人。摆渡船开始自动驾驶了。",fileNum:"R-020"},
+  {name:"剪辑师",rarity:"SR",aiResist:70,salary:55,demand:55,category:"创作",emoji:"🎬",tagline:"叙事剪刀",desc:"决定什么留下，什么消失。这个判断目前还需要人来做。但「目前」这个词越来越短暂。",fileNum:"SR-021"},
+  {name:"音乐家",rarity:"SSR",aiResist:80,salary:40,demand:35,category:"创作",emoji:"🎵",tagline:"声音灵魂",desc:"创造没有标准答案的美。AI可以模仿所有已被演奏过的音符，除了你第一次弹错时意外产生的那个惊喜。",fileNum:"SSR-022"},
+  {name:"演员",rarity:"SSR",aiResist:88,salary:45,demand:40,category:"表演",emoji:"🎭",tagline:"演绎人生",desc:"把自己变成另一个人。真实的泪水和颤抖，需要真实地经历过才能演出来。",fileNum:"SSR-023"},
+  {name:"会计师",rarity:"R",aiResist:45,salary:60,demand:70,category:"专业",emoji:"🧮",tagline:"账目清晰",desc:"让账对上。有东西比你对得更快，而且它不会在做完一份报表后去接孩子放学。",fileNum:"R-024"},
+  {name:"教师",rarity:"SR",aiResist:72,salary:45,demand:80,category:"教育",emoji:"👨‍🏫",tagline:"点燃好奇心",desc:"传授知识，更传递困惑时的那一个眼神。AI能回答所有问题，但它没有在课堂上走神过。",fileNum:"SR-025"},
+  {name:"护士",rarity:"SR",aiResist:68,salary:50,demand:90,category:"医疗",emoji:"👩‍⚕️",tagline:"白衣天使",desc:"打针换药，也握着害怕的手。没有一根针管能替代那个让你觉得「有人在」的体温。",fileNum:"SR-026"},
+  {name:"医生",rarity:"R",aiResist:40,salary:95,demand:95,category:"医疗",emoji:"👨‍⚕️",tagline:"生命守护",desc:"AI在六项诊断维度全面超越你之后，病人仍然想要听一个人类说：「没事。」但这种时刻越来越贵。",fileNum:"R-027"},
+  {name:"律师",rarity:"SR",aiResist:50,salary:85,demand:60,category:"专业",emoji:"⚖️",tagline:"法理精研",desc:"为客户争取那10%的胜算。AI能穷举所有判例，但还不能在庭上感知法官今天心情是否好。",fileNum:"SR-028"},
+  {name:"社工",rarity:"SR",aiResist:75,salary:38,demand:60,category:"服务",emoji:"🤲",tagline:"守望相助",desc:"去那些没人想去的地方，陪那些没人陪的人。AI可以分析他们的处境，但没办法陪他们。",fileNum:"SR-029"},
+  {name:"心理咨询师",rarity:"SSR",aiResist:78,salary:65,demand:55,category:"服务",emoji:"🧘",tagline:"倾听灵魂",desc:"不评判，不建议，只是在那里。68%的人更愿意找AI倾诉——因为AI不会在你说到一半时说「我也有类似的经历……」",fileNum:"SSR-030"}
 ];
 const ELIM_YEAR={};
 YEARS.forEach(y=>y.eliminated.forEach(n=>{if(!ELIM_YEAR[n])ELIM_YEAR[n]=y.year;}));
