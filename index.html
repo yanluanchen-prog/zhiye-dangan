@@ -590,9 +590,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
     <div class="id-badge"><div class="id-badge-card own"><div class="id-badge-hdr" style="background:var(--red)">我的职业</div><div class="id-badge-art"><span class="id-badge-emoji" id="en-id-emoji">💼</span><span class="id-badge-name" id="en-id-name">—</span></div></div><div class="id-badge-info"><div class="id-badge-job" id="en-id-job">—</div><div class="id-badge-sub">存活至2035</div></div></div>
     <div class="header-right"><div class="header-classify">〔职业生存图鉴〕</div><div class="header-year">2035</div><div class="header-year-sub">最终年</div></div>
   </div>
-  <div style="text-align:center;padding:24px 0 12px;">
-    <div style="font-size:9px;color:var(--red);letter-spacing:4px;font-family:monospace;margin-bottom:6px;">十年存活</div>
-    <div style="font-size:22px;font-weight:900;color:var(--ink);letter-spacing:4px;">你活下来了。</div>
+  <div style="text-align:center;padding:20px 0 8px;">
+    <div style="font-size:9px;color:var(--red);letter-spacing:4px;font-family:monospace;margin-bottom:4px;">2026 — 2035</div>
+    <div style="font-size:20px;font-weight:900;color:var(--ink);letter-spacing:3px;">十年已过。</div>
   </div>
   <div class="container">
     <div class="section" id="end-text" style="font-size:13px;line-height:2.4;color:var(--ink-lt);"></div>
@@ -661,7 +661,7 @@ const POOL=[
 const ELIM_YEAR={};
 YEARS.forEach(y=>y.eliminated.forEach(n=>{if(!ELIM_YEAR[n])ELIM_YEAR[n]=y.year;}));
 
-let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0};
+let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0};
 const $=id=>document.getElementById(id);
 
 /* ── 选择动画 ── */
@@ -947,6 +947,7 @@ function revealResult(){
     $('result-next').style.display='block';
     $('result-fail-btns').style.display='none';
     $('r-yr-sub').textContent=left>0?`还有 ${left} 年`:'十年存活';
+    G.totalSalary+=(c.salary||0); // 每年存活时累计薪资
     $('result-next').textContent=G.yearIndex>=9?'查看结局 →':`进入 ${y.year+1} 年 →`;
     $('result-next').onclick=()=>{if(G.yearIndex>=9)showEnding();else{G.yearIndex++;startYear();}};
   }
@@ -972,9 +973,31 @@ function showFail(y,elimResult){
 function showEnding(){
   const c=G.currentCard;
   $('en-id-emoji').textContent=c.emoji||'💼';$('en-id-name').textContent=c.name;$('en-id-job').textContent=c.name;
-  const usedOwn=G.currentCard.isOwn,encN=Object.keys(G.encyclopedia).length;
-  let html=usedOwn?`<p>十年。</p><p>你从2026年开始，带着「<strong>${G.ownCard.name}</strong>」，一路走到了2035年。</p><p><strong>这件事，AI不懂。</strong></p>`:`<p>十年。</p><p>你从「${G.ownCard.name}」出发，最终以「<strong>${G.currentCard.name}</strong>」活到了2035年。</p><p><strong>这件事，AI不懂。</strong></p>`;
-  html+=`<p style="font-size:11px;color:var(--ink-faint);margin-top:12px;">这十年你见过 ${encN} 种职业。</p>`;
+  const encN=Object.keys(G.encyclopedia).length;
+  const avgSalary=Math.round(G.totalSalary/10);
+
+  // 三级结局
+  let tier,tierColor,tierLabel,tierLine;
+  if(avgSalary<38){
+    tier='survival';tierColor='var(--N)';tierLabel='勉强度日';
+    tierLine=`你活下来了。但「${c.name}」这条路，代价是什么，你自己清楚。<br><br>有一种存活，叫做悄无声息地消失在时代边缘。AI没打败你——但你也不能说，你赢了。`;
+  } else if(avgSalary<60){
+    tier='decent';tierColor='var(--green)';tierLabel='活得体面';
+    tierLine=`你活下来了，也没丢掉体面。<br><br>在67%的职业被淘汰的这十年里，「${c.name}」给了你一席之地。不算辉煌，但已经足够。`;
+  } else {
+    tier='winner';tierColor='var(--SSR)';tierLabel='逆势而为';
+    tierLine=`你不只活下来——你还活得不错。<br><br>这件事比听起来难得多。高薪意味着高风险，你一路走钢丝，没有掉下去。<br><br><strong>这件事，AI不懂。</strong>`;
+  }
+
+  const usedOwn=G.currentCard.isOwn;
+  let html=`<div style="text-align:center;margin-bottom:16px;">
+    <div style="font-size:9px;color:${tierColor};letter-spacing:3px;font-family:monospace;margin-bottom:4px;">存活等级</div>
+    <div style="font-size:20px;font-weight:900;color:${tierColor};letter-spacing:2px;">${tierLabel}</div>
+    <div style="font-size:10px;color:var(--ink-faint);margin-top:4px;font-family:monospace;">十年均薪力 ${avgSalary}</div>
+  </div>`;
+  html+=`<p style="font-size:13px;line-height:2;color:var(--ink-lt);">${tierLine}</p>`;
+  if(!usedOwn) html+=`<p style="font-size:11px;color:var(--ink-faint);margin-top:8px;">你从「${G.ownCard.name}」出发，最终以「${c.name}」收尾。</p>`;
+  html+=`<p style="font-size:10px;color:var(--ink-faint);margin-top:8px;font-family:monospace;">这十年你见过 ${encN} 种职业。</p>`;
   $('end-text').innerHTML=html;
   showScreen('ending-screen');
 }
@@ -1116,7 +1139,7 @@ $('cm-swap').addEventListener('click',function(){
 $('enc-bg').addEventListener('click',closeEncModal);$('enc-x').addEventListener('click',closeEncModal);
 $('result-retry').addEventListener('click',()=>{G.currentCard={...G.startOfYearCard};startYear();});
 $('result-restart').addEventListener('click',()=>{
-  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0};
+  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0};
   selectedJob=null;
   $('job-display').value='';
   document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
@@ -1124,7 +1147,7 @@ $('result-restart').addEventListener('click',()=>{
 });
 $('retry-btn').addEventListener('click',()=>{G.currentCard={...G.startOfYearCard};startYear();});
 $('restart-btn').addEventListener('click',()=>{
-  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0};
+  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0};
   selectedJob=null;
   $('job-display').value='';
   document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
