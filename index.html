@@ -285,52 +285,43 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 }
 .pkg-waybill{
   background:#fff;
-  border:1px solid #ccc;
-  border-radius:4px;
-  padding:10px 10px 8px;
+  border:1px solid #bbb;
+  border-radius:2px;
+  padding:8px 8px 6px;
   font-family:'Courier New',monospace;
-  box-shadow:0 2px 8px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.04);
+  box-shadow:0 2px 6px rgba(0,0,0,0.14);
   position:relative;
-  /* 面单贴在袋子上的轻微翘角感 */
-  transform:rotate(-0.3deg);
+  transform:rotate(-0.2deg);
 }
-.pkg-wb-header{
-  display:flex;justify-content:space-between;align-items:center;
-  background:#c0392b;
-  margin:-10px -10px 8px;
-  padding:5px 10px;
-  border-radius:2px 2px 0 0;
-}
-.pkg-wb-brand{
-  font-size:13px;font-weight:900;color:#fff;letter-spacing:3px;
-  font-family:'Courier New',monospace;
-}
-.pkg-wb-type{
-  font-size:9px;color:rgba(255,255,255,0.8);letter-spacing:1px;
-}
-.pkg-wb-divider{height:1px;background:repeating-linear-gradient(90deg,#ccc 0,#ccc 4px,transparent 4px,transparent 8px);margin:6px 0;}
-.pkg-wb-row{
-  display:flex;align-items:baseline;gap:6px;margin-bottom:4px;
-}
-.pkg-wb-lbl{
-  font-size:9px;color:#888;width:36px;flex-shrink:0;letter-spacing:1px;
-}
-.pkg-wb-val{
-  font-size:11px;font-weight:700;color:#222;letter-spacing:0.5px;flex:1;
-}
-.pkg-wb-item{color:#c0392b;font-size:13px;letter-spacing:2px;}
+.pkg-wb-top{padding-bottom:4px;}
+.pkg-wb-logo-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
+.pkg-wb-logo-box{display:flex;align-items:center;gap:6px;}
+.pkg-wb-logo-sf{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#d9362a;color:#fff;font-size:10px;font-weight:900;}
+.pkg-wb-logo-name{font-size:8px;line-height:1.25;color:#333;font-weight:700;letter-spacing:.5px;}
+.pkg-wb-right-top{display:flex;flex-direction:column;align-items:flex-end;gap:2px;}
+.pkg-wb-qr{width:24px;height:24px;border:1px solid #777;background:
+  repeating-linear-gradient(0deg,#111 0,#111 2px,#fff 2px,#fff 4px),
+  repeating-linear-gradient(90deg,#111 0,#111 2px,#fff 2px,#fff 4px);background-blend-mode:multiply;}
+.pkg-wb-phone{font-size:7px;color:#666;}
+.pkg-wb-hr{height:1px;background:#cfcfcf;margin:4px 0;}
+.pkg-wb-danhao-row{display:flex;align-items:center;gap:5px;}
+.pkg-wb-danhao-lbl{font-size:8px;color:#666;}
+.pkg-wb-danhao-val{font-size:10px;font-weight:800;color:#222;letter-spacing:1px;flex:1;}
+.pkg-wb-type-badge{font-size:8px;color:#d9362a;border:1px solid #d9362a;border-radius:2px;padding:1px 4px;}
+.pkg-wb-mid{display:flex;gap:6px;align-items:stretch;}
+.pkg-wb-addr-col{flex:1;min-width:0;}
+.pkg-wb-addr-divider{width:1px;background:#ddd;}
+.pkg-wb-addr-lbl{font-size:8px;color:#888;margin-bottom:2px;}
+.pkg-wb-addr-name{font-size:11px;font-weight:800;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pkg-wb-addr-sub{font-size:7px;color:#777;margin-top:2px;}
+.pkg-wb-bottom{margin-top:2px;}
+.pkg-wb-bottom-row{display:grid;grid-template-columns:40px 1fr 54px;gap:4px;font-size:8px;color:#888;align-items:center;}
+.pkg-wb-bottom-data{font-size:9px;color:#333;font-weight:700;margin-top:2px;}
+.pkg-wb-bl{font-size:8px;color:#888;}
 /* 条形码 */
-.pkg-barcode{
-  display:flex;gap:1px;height:28px;align-items:flex-end;margin:2px 0 3px;
-}
-.pkg-barcode-bar{
-  background:#222;
-  flex-shrink:0;
-}
-.pkg-track-no{
-  font-size:8px;color:#666;font-family:'Courier New',monospace;
-  text-align:center;letter-spacing:2px;
-}
+.pkg-barcode{display:flex;gap:1px;height:20px;align-items:flex-end;margin:2px 0 2px;}
+.pkg-barcode-bar{background:#222;flex-shrink:0;}
+.pkg-track-no{font-size:8px;color:#666;font-family:'Courier New',monospace;text-align:center;letter-spacing:1px;}
 /* 签收按钮 */
 .pkg-sign-btn{
   width:100%;padding:13px;
@@ -569,38 +560,56 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
               </div>
               <div class="pkg-bag-year" id="pkg-bag-year">2026</div>
             </div>
-            <!-- 快递面单 -->
+            <!-- 快递面单（仿顺丰真实格式） -->
             <div class="pkg-waybill">
-              <div class="pkg-wb-header">
-                <div class="pkg-wb-brand">HR EXPRESS</div>
-                <div class="pkg-wb-type">文件快递</div>
+              <!-- 顶部：品牌+条形码 -->
+              <div class="pkg-wb-top">
+                <div class="pkg-wb-logo-row">
+                  <div class="pkg-wb-logo-box">
+                    <span class="pkg-wb-logo-sf">HR</span>
+                    <span class="pkg-wb-logo-name">人力资源市场<br>HR EXPRESS</span>
+                  </div>
+                  <div class="pkg-wb-right-top">
+                    <div class="pkg-wb-qr" id="pkg-wb-qr"></div>
+                    <div class="pkg-wb-phone">📞 400-HR-2026</div>
+                  </div>
+                </div>
+                <div class="pkg-barcode" id="pkg-barcode"></div>
+                <div class="pkg-wb-danhao-row">
+                  <span class="pkg-wb-danhao-lbl">面单号</span>
+                  <span class="pkg-wb-danhao-val" id="pkg-track-no">2026-HRM-00001</span>
+                  <span class="pkg-wb-type-badge">职业急送</span>
+                </div>
               </div>
-              <div class="pkg-wb-divider"></div>
-              <div class="pkg-wb-row">
-                <span class="pkg-wb-lbl">寄件方</span>
-                <span class="pkg-wb-val">人力资源市场</span>
+              <div class="pkg-wb-hr"></div>
+              <!-- 中部：收寄方两栏 -->
+              <div class="pkg-wb-mid">
+                <div class="pkg-wb-addr-col">
+                  <div class="pkg-wb-addr-lbl">收方</div>
+                  <div class="pkg-wb-addr-name" id="pkg-recipient">—</div>
+                  <div class="pkg-wb-addr-sub">寄件截止：<span id="pkg-year-val">2026</span>/12/31</div>
+                </div>
+                <div class="pkg-wb-addr-divider"></div>
+                <div class="pkg-wb-addr-col">
+                  <div class="pkg-wb-addr-lbl">寄方</div>
+                  <div class="pkg-wb-addr-name">人力资源市场</div>
+                  <div class="pkg-wb-addr-sub">代收货款：¥0 元</div>
+                </div>
               </div>
-              <div class="pkg-wb-row">
-                <span class="pkg-wb-lbl">收件方</span>
-                <span class="pkg-wb-val" id="pkg-recipient">—</span>
+              <div class="pkg-wb-hr"></div>
+              <!-- 底部：物品明细 -->
+              <div class="pkg-wb-bottom">
+                <div class="pkg-wb-bottom-row">
+                  <span class="pkg-wb-bl">数量</span>
+                  <span class="pkg-wb-bl">托寄物</span>
+                  <span class="pkg-wb-bl">备注</span>
+                </div>
+                <div class="pkg-wb-bottom-row pkg-wb-bottom-data">
+                  <span>5 件</span>
+                  <span style="color:#c0392b;font-weight:700;">职业机会</span>
+                  <span style="color:#999;">限时查看</span>
+                </div>
               </div>
-              <div class="pkg-wb-row">
-                <span class="pkg-wb-lbl">物　品</span>
-                <span class="pkg-wb-val pkg-wb-item">职业机会</span>
-              </div>
-              <div class="pkg-wb-row">
-                <span class="pkg-wb-lbl">数　量</span>
-                <span class="pkg-wb-val">5 件</span>
-              </div>
-              <div class="pkg-wb-divider" style="margin:8px 0 6px;"></div>
-              <!-- 条形码 -->
-              <div class="pkg-barcode" id="pkg-barcode"></div>
-              <div class="pkg-track-no" id="pkg-track-no">2026-HRM-00001</div>
-            </div>
-            <!-- 底部红条 -->
-            <div class="pkg-bag-footer">
-              <span class="pkg-bag-footer-txt">☎ 400-HR-2026 &nbsp;·&nbsp; www.hr-express.com</span>
-              <span class="pkg-bag-footer-txt" id="pkg-footer-year">2026</span>
             </div>
           </div>
           <!-- 签收按钮 -->
@@ -1146,6 +1155,7 @@ function startYear(){
   const tnEl=$('pkg-track-no');if(tnEl)tnEl.textContent=`${y.year}-HRM-${String(G.yearIndex+1).padStart(5,'0')}`;
   const byEl=$('pkg-bag-year');if(byEl)byEl.textContent=y.year;
   const fyEl=$('pkg-footer-year');if(fyEl)fyEl.textContent=y.year;
+  const yvEl=$('pkg-year-val');if(yvEl)yvEl.textContent=y.year;
   // 生成条形码
   const bc=$('pkg-barcode');
   if(bc){
@@ -1158,6 +1168,12 @@ function startYear(){
       bar.style.height=(i%3===0?28:i%3===1?22:16)+'px';
       bc.appendChild(bar);
     });
+  }
+  // 伪二维码（每年微变化）
+  const qr=$('pkg-wb-qr');
+  if(qr){
+    const seed=(y.year*7+G.yearIndex*13)%17;
+    qr.style.background=`repeating-linear-gradient(0deg,#111 0,#111 ${2+(seed%2)}px,#fff ${2+(seed%2)}px,#fff ${4+(seed%2)}px),repeating-linear-gradient(90deg,#111 0,#111 ${2+((seed+1)%2)}px,#fff ${2+((seed+1)%2)}px,#fff ${4+((seed+1)%2)}px)`;
   }
   // 重置袋子样式（避免上一年的动画残留）
   const bag=$('pkg-bag');if(bag){bag.style.animation='';bag.style.opacity='1';}
