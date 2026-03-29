@@ -238,16 +238,18 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .pkg-bag{width:100%;margin-bottom:12px;display:flex;flex-direction:column;align-items:center;}
 .pkg-bag-body{
   position:relative;
+  width:100%;
+  box-sizing:border-box;
   background:#fbfbfb;
   border-radius:8px;
   overflow:hidden;
   box-shadow:0 6px 18px rgba(0,0,0,.12),0 1px 4px rgba(0,0,0,.08), inset 0 0 0 1px rgba(0,0,0,.08);
   padding:18px 18px 14px;
-  min-height:250px; /* 横长竖短的信封比例 */
+  min-height:210px; /* 先调成更宽更扁 */
 }
 .pkg-bag-body::before{content:none;}
 .pkg-bag-seal{display:none;}
-.pkg-bag-main{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative;min-height:170px;}
+.pkg-bag-main{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative;min-height:132px;}
 .pkg-bag-left{width:68%;padding-top:2px;}
 .pkg-big-logo{
   font-family:Arial,Helvetica,sans-serif;font-weight:900;line-height:.82;color:#111;
