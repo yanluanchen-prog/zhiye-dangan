@@ -250,6 +250,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .pkg-envelope-year{
   position:absolute;left:98px;bottom:90px;
   font:700 18px 'Courier New',monospace;color:#222;letter-spacing:1px;
+  z-index:4; /* 固定在袋身上，不跟切条飞走 */
 }
 .pkg-top-strip{
   position:absolute;left:0;right:0;top:0;height:26px;
@@ -289,7 +290,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .pkg-bag-seal{display:none;}
 .pkg-waybill{
   background:linear-gradient(180deg,#fff 0%,#fbfbfb 100%);border:1px solid #bdbdbd;border-radius:2px;padding:5px 6px 4px;font-family:'Courier New',monospace;
-  box-shadow:0 4px 10px rgba(0,0,0,.16), 0 1px 2px rgba(0,0,0,.08);position:absolute;right:14px;bottom:8px;transform:none;
+  box-shadow:0 4px 10px rgba(0,0,0,.16), 0 1px 2px rgba(0,0,0,.08);position:absolute;right:14px;bottom:20px;transform:none;
   width:min(38%,164px);z-index:2;
 }
 .pkg-waybill::before{
