@@ -1490,19 +1490,23 @@ $('enc-bg').addEventListener('click',closeEncModal);$('enc-x').addEventListener(
 $('result-restart').addEventListener('click',doRestart);
 $('result-quit').addEventListener('click',doQuit);
 function doRestart(){
-  // 保留本命职业，重置游戏进程，从第1年重来
-  const own=G.ownCard;
-  G={ownCard:own,currentCard:{...own},yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0};
-  addToEnc(own);
-  startYear();
-}
-function doQuit(){
-  // 真正退出：回到职业选择页
+  // 重新开始职业生涯：回到职业选择页
   G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0};
   selectedJob=null;
   $('enc-count').textContent='0';
   document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
-  $('job-display').textContent='请选择你的职业';
+  $('job-display').value='';
+  $('job-display').textContent='';
+  showScreen('intro-screen');
+}
+function doQuit(){
+  // 退出游戏：回到职业选择页
+  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0};
+  selectedJob=null;
+  $('enc-count').textContent='0';
+  document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
+  $('job-display').value='';
+  $('job-display').textContent='';
   showScreen('intro-screen');
 }
 $('restart-btn').addEventListener('click',doRestart);
