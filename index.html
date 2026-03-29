@@ -766,7 +766,7 @@ function updateBadge(){
   $('id-name').textContent=c.name;
   const rarity=c.rarity||'N';
   const rarityEl=$('id-rarity');
-  rarityEl.textContent=rarity;
+  rarityEl.textContent=''; // 不显示稀有度文字，仅保留颜色
   rarityEl.className='id-badge-rarity '+rarity;
   $('id-salary').textContent=c.salary||'—';
   $('id-resist').textContent=c.aiResist||'—';
@@ -792,8 +792,8 @@ function buildActiveCard(card){
   const seenTxt=enc&&enc.timesDrawn>1?`已见 ${enc.timesDrawn}次`:'';
   div.innerHTML=`
     <div class="card-header">
-      <span class="card-file-no">${card.rarity}-${card.category}</span>
-      <span class="card-rarity-stamp">${card.rarity}</span>
+      <span class="card-file-no">${card.category} · ${card.fileNum}</span>
+      <span class="card-rarity-stamp">${card.tagline}</span>
     </div>
     <div class="card-art">
       <span class="card-art-icon">${card.emoji}</span>
@@ -877,8 +877,8 @@ function startYear(){
 /* ── card detail modal ── */
 function openCardDetail(card){
   $('cm-card').className='card '+card.rarity;
-  $('cm-file').textContent=`${card.rarity}-${card.category}`;
-  $('cm-stamp').textContent=card.rarity;
+  $('cm-file').textContent=`${card.category} · ${card.fileNum}`;
+  $('cm-stamp').textContent=card.tagline;
   $('cm-emoji').textContent=card.emoji;
   $('cm-name').textContent=card.name;
   $('cm-tag').textContent=card.tagline;
