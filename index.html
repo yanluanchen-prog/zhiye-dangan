@@ -698,11 +698,7 @@ function generateOpeningStory(card){
   };
   const act=actMap[card.name]||`你在忙着手头的事`;
   const belief=beliefMap[card.name]||`这份工作值得做下去`;
-  const inList=YEARS[0].eliminated.includes(card.name);
-  const riskLine=inList
-    ?`你算了算，「${card.name}」在那67%里。\n\n你盯着手机屏幕，窗外在下雨。\n还要开下午两点的会。`
-    :`你算了算，「${card.name}」不在那67%里——暂时。\n\n但你知道，「暂时」是这个时代最诚实的词。`;
-  return `你在这个工位坐了${days}天。\n工牌上的照片是${yr}年前拍的，那时候还没有这份报告。\n\n2026年，Anthropic发布报告的那天，\n${act}。\n\n散会后看到消息，67%的职业面临替代风险。\n\n${riskLine}\n\n刚入行的时候，有人告诉你：\n「${belief}。」\n\n你还记得那天的表情。`;
+  return `你在这个工位坐了${days}天。\n工牌上的照片是${yr}年前拍的，那时候还没有这些数字。\n\n2026年，一份行业报告发布的那天，\n${act}。\n\n散会后看到消息，67%的职业面临替代风险。\n\n你算了算。\n然后，你把手机放下了。\n\n下午还有一个会。\n\n刚入行的时候，有人告诉你：\n「${belief}。」\n\n你还记得那天的表情。`;
 }
 
 /* ── 离职告别信 ── */
