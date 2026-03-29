@@ -240,35 +240,69 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   position:relative;
   width:100%;
   box-sizing:border-box;
-  background:#fbfbfb;
+  background:
+    radial-gradient(140% 90% at 20% 8%, rgba(255,255,255,.96) 0%, rgba(255,255,255,0) 42%),
+    linear-gradient(180deg,#fcfcfc 0%, #f4f4f4 78%, #efefef 100%);
   border-radius:8px;
   overflow:hidden;
-  box-shadow:0 6px 18px rgba(0,0,0,.12),0 1px 4px rgba(0,0,0,.08), inset 0 0 0 1px rgba(0,0,0,.08);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.14),
+    0 2px 6px rgba(0,0,0,.08),
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -1px 0 rgba(0,0,0,.05),
+    inset 0 0 0 1px rgba(0,0,0,.08);
   padding:18px 18px 14px;
-  min-height:210px; /* 先调成更宽更扁 */
+  min-height:210px;
 }
-.pkg-bag-body::before{content:none;}
+.pkg-bag-body::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    linear-gradient(120deg, rgba(255,255,255,.55), rgba(255,255,255,0) 22%),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.012) 0, rgba(0,0,0,.012) 1px, transparent 1px, transparent 5px);
+  pointer-events:none;
+}
+.pkg-bag-body::after{
+  content:'';
+  position:absolute;right:0;top:0;width:42px;height:42px;
+  background:linear-gradient(135deg, rgba(0,0,0,.08), rgba(0,0,0,0) 55%);
+  clip-path:polygon(100% 0,0 0,100% 100%);
+  opacity:.25;
+  pointer-events:none;
+}
 .pkg-bag-seal{display:none;}
 .pkg-bag-main{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative;min-height:150px;}
 .pkg-bag-left{width:68%;padding-top:6px;padding-left:4px;}
 .pkg-big-logo{
   font-family:Arial,Helvetica,sans-serif;font-weight:900;line-height:.82;color:#111;
   font-size:86px;letter-spacing:-6px;position:relative;height:92px;
+  text-shadow:0 1px 0 rgba(255,255,255,.35), 0 2px 2px rgba(0,0,0,.04);
 }
-.pkg-big-logo .dot{position:absolute;width:15px;height:15px;border-radius:50%;background:#d83a33;left:70px;top:30px;}
+.pkg-big-logo .dot{position:absolute;width:15px;height:15px;border-radius:50%;background:#d83a33;left:70px;top:30px;box-shadow:0 1px 2px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.35);}
 .pkg-bag-bottom-meta{position:absolute;left:10px;right:18px;bottom:-16px;display:flex;flex-direction:column;gap:6px;}
 .pkg-contact{display:flex;align-items:center;gap:12px;font:700 10px 'Courier New',monospace;color:#222;order:3;}
 .pkg-red-line{height:4px;background:#eb4a43;width:100%;order:2;}
-.pkg-sender-box{display:inline-block;border:1px solid #bbb;padding:5px 10px;font:700 9px 'Courier New',monospace;color:#444;background:#fff;order:1;align-self:flex-start;}
+.pkg-sender-box{display:inline-block;border:1px solid #bbb;padding:5px 10px;font:700 9px 'Courier New',monospace;color:#444;background:linear-gradient(180deg,#fff,#f3f3f3);order:1;align-self:flex-start;box-shadow:0 1px 2px rgba(0,0,0,.08);}
 .pkg-bag-right{width:28%;display:flex;justify-content:flex-start;}
 .pkg-bag-panel{display:none;}
 .pkg-bag-size{display:none;}
 .pkg-bag-qrs{display:none;}
 .pkg-bag-qr{display:none;}
 .pkg-waybill{
-  background:#fff;border:1px solid #bdbdbd;border-radius:2px;padding:5px 6px 4px;font-family:'Courier New',monospace;
-  box-shadow:0 2px 6px rgba(0,0,0,.14);position:absolute;right:14px;bottom:8px;transform:none;
+  background:linear-gradient(180deg,#fff 0%,#fbfbfb 100%);border:1px solid #bdbdbd;border-radius:2px;padding:5px 6px 4px;font-family:'Courier New',monospace;
+  box-shadow:0 4px 10px rgba(0,0,0,.16), 0 1px 2px rgba(0,0,0,.08);position:absolute;right:14px;bottom:8px;transform:none;
   width:min(38%,164px);z-index:2;
+}
+.pkg-waybill::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:10px;
+  background:linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,0));
+  pointer-events:none;
+}
+.pkg-waybill::after{
+  content:'';position:absolute;right:0;top:0;width:14px;height:14px;
+  background:linear-gradient(135deg, rgba(0,0,0,.09), rgba(0,0,0,0) 60%);
+  clip-path:polygon(100% 0,0 0,100% 100%);
+  opacity:.18;pointer-events:none;
 }
 .pkg-wb-top{padding-bottom:2px;}
 .pkg-wb-logo-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2px;}
@@ -305,10 +339,10 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* 签收按钮 */
 .pkg-sign-btn{
   width:auto;padding:12px 18px;
-  background:#c0392b;color:#fff;border:none;
+  background:linear-gradient(180deg,#cf4334,#b93428);color:#fff;border:none;
   font-size:13px;font-family:'Courier New',monospace;letter-spacing:2px;
   border-radius:6px;cursor:pointer;
-  box-shadow:0 2px 6px rgba(192,57,43,0.4);
+  box-shadow:0 4px 10px rgba(192,57,43,0.28), inset 0 1px 0 rgba(255,255,255,.22);
   align-self:center;
 }
 .pkg-sign-btn:active{transform:scale(0.98);opacity:0.9;}
