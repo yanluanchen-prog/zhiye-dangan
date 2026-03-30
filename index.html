@@ -143,6 +143,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .header-tab.folder .id-badge-art{background:linear-gradient(180deg,var(--paper),#ebe2d3);}
 .header-tab.folder .id-badge-emoji{font-size:20px;}
 .header-tab.folder .id-badge-name{font-size:7px;letter-spacing:.5px;}
+.id-badge-mini-count{margin-top:4px;font-size:7px;font-family:monospace;color:var(--red);font-weight:800;letter-spacing:.5px;padding:1px 6px;border:1px solid rgba(194,59,34,.18);border-radius:999px;background:rgba(194,59,34,.06);}
 .header-right{text-align:right;}
 .header-classify{font-size:8px;letter-spacing:3px;color:var(--red);font-family:monospace;margin-bottom:2px;}
 .header-year{font-size:24px;font-weight:900;color:var(--red);font-family:monospace;letter-spacing:3px;line-height:1;}
@@ -468,14 +469,11 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 #ev-confirm{flex-shrink:0;margin-bottom:calc(16px + env(safe-area-inset-bottom));}
 
 /* ── CARD DETAIL MODAL ────────────────────── */
-#card-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(28,26,20,0.78);align-items:flex-end;justify-content:center;}
+#card-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(28,26,20,0.78);align-items:center;justify-content:center;padding:20px;}
 #card-modal.open{display:flex;}
-.cm-sheet{position:relative;width:100%;max-width:480px;background:var(--paper);border-top:4px solid var(--red);padding:18px 18px calc(36px + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto;animation:slideUp 0.22s ease;}
-.cm-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:18px;color:var(--ink-faint);cursor:pointer;}
-.cm-card-wrap{max-width:300px;margin:0 auto 12px;}
-.cm-swap{width:100%;padding:12px;background:var(--red);color:var(--paper);border:none;font-family:monospace;font-size:12px;font-weight:700;letter-spacing:3px;cursor:pointer;margin-bottom:7px;}
-.cm-swap:disabled{background:var(--paper-dk);color:var(--ink-faint);cursor:not-allowed;}
-.cm-cancel{width:100%;padding:10px;background:transparent;color:var(--ink-lt);border:1px solid var(--border);font-size:11px;font-family:monospace;letter-spacing:2px;cursor:pointer;}
+.cm-sheet{position:relative;width:auto;max-width:340px;background:transparent;border:none;padding:0;max-height:none;overflow:visible;animation:slideUp 0.18s ease;box-shadow:none;}
+.cm-close,.cm-swap,.cm-cancel{display:none !important;}
+.cm-card-wrap{max-width:300px;margin:0 auto;}
 
 /* ── ENC MODAL ────────────────────────────── */
 #enc-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(28,26,20,0.78);align-items:flex-end;justify-content:center;}
@@ -618,25 +616,18 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
           <div class="id-badge-art">
             <span class="id-badge-emoji" id="id-emoji">💼</span>
             <span class="id-badge-name" id="id-name">—</span>
-            <div class="id-badge-sal-row">
-              <span class="id-badge-sal-lbl">薪资力</span>
-              <div class="id-badge-sal-wrap" id="id-sf-sal"></div>
-              <span class="id-badge-sal-val" id="id-salary">—</span>
-            </div>
           </div>
         </div>
-        <div class="header-tab-label">当前职业</div>
       </div>
       <div class="header-tab folder" id="enc-game-btn" onclick="openEncModal()">
         <div class="id-badge-card">
-          <div class="id-badge-hdr">图鉴</div>
+          <div class="id-badge-hdr">我的图鉴</div>
           <div class="id-badge-art">
             <span class="id-badge-emoji">🗂</span>
-            <span class="id-badge-name">职业图鉴</span>
+            <span class="id-badge-name">我的图鉴</span>
+            <div class="id-badge-mini-count"><span id="enc-count">0</span> / 30</div>
           </div>
         </div>
-        <div class="header-tab-label">职业图鉴</div>
-        <div class="header-tab-count"><span id="enc-count">0</span> / 30</div>
       </div>
     </div>
   </div>
@@ -771,30 +762,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   <div style="position:absolute;inset:0;" id="cm-bg"></div>
   <div class="cm-sheet">
     <button class="cm-close" id="cm-x">✕</button>
-    <div class="cm-card-wrap">
-      <div class="card" id="cm-card">
-        <div class="card-header">
-          <span class="card-file-no" id="cm-file"></span>
-          <span class="card-rarity-stamp" id="cm-stamp">N</span>
-        </div>
-        <div class="card-art">
-          <span class="card-art-icon" id="cm-emoji">💼</span>
-          <div class="card-name" id="cm-name">职业名</div>
-          <div class="card-tag" id="cm-tag">标语</div>
-        </div>
-        <div class="card-body">
-          <div class="card-desc" id="cm-desc"></div>
-          <div class="card-elim-note" id="cm-elim" style="display:none;"></div>
-          <div class="stats">
-            <div class="stat-row stat-atk"><span class="stat-label">薪资力</span><div class="stat-track"><div class="stat-fill" id="sf-sal"></div></div><span class="stat-val" id="sv-sal"></span></div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span>职业生存图鉴 · 2026</span>
-          <span id="cm-known"></span>
-        </div>
-      </div>
-    </div>
+    <div class="cm-card-wrap" id="cm-card-wrap"></div>
     <button class="cm-swap" id="cm-swap">换成这个职业</button>
     <button class="cm-cancel" id="cm-cancel">关闭</button>
   </div>
@@ -1121,11 +1089,10 @@ function updateBadge(){
   const c=G.currentCard;
   $('id-emoji').textContent=c.emoji||'💼';
   $('id-name').textContent=c.name;
-  // 稀有度颜色头部
   const rarity=c.rarity||'N';
   $('id-badge-card').className='id-badge-card '+rarity;
-  // 数值
-  $('id-salary').textContent=c.salary||'—';
+  const salaryEl=$('id-salary');
+  if(salaryEl) salaryEl.textContent=c.salary||'—';
   const salEl=$('id-sf-sal');
   if(salEl) salEl.style.background=`linear-gradient(to right,#C23B22 ${c.salary||0}%,rgba(0,0,0,0.08) ${c.salary||0}%)`;
 }
@@ -1143,10 +1110,11 @@ function buildActiveCard(card){
   div.className='card '+card.rarity;
   const enc=G.encyclopedia[card.name];
   const seenTxt=enc&&enc.timesDrawn>1?`已见 ${enc.timesDrawn}次`:'';
+  const stamp=(card.fileNum||card.rarity||'').toString().replace(/^[A-Z]+-/,'');
   div.innerHTML=`
     <div class="card-header">
-      <span class="card-file-no">${card.category}</span>
-      <span class="card-rarity-stamp">${card.fileNum.replace(/^[A-Z]+-/,'')}</span>
+      <span class="card-file-no">${card.category||''}</span>
+      <span class="card-rarity-stamp">${stamp}</span>
     </div>
     <div class="card-art">
       <span class="card-art-icon">${card.emoji}</span>
@@ -1160,7 +1128,7 @@ function buildActiveCard(card){
         <div class="stat-row stat-atk"><span class="stat-label">薪资力</span><div class="stat-track"><div class="stat-fill" style="width:${card.salary}%"></div></div><span class="stat-val">${card.salary}</span></div>
       </div>
     </div>
-    <div class="card-footer"><span>职业生存图鉴 · ${YEARS[G.yearIndex].year}</span><span>${seenTxt}</span></div>`;
+    <div class="card-footer"><span>${YEARS[G.yearIndex].year}</span><span>${seenTxt}</span></div>`;
   // 游戏中点击卡牌不弹详情（图鉴另有入口）
   return div;
 }
@@ -1308,21 +1276,11 @@ function startYear(){
 
 /* ── card detail modal ── */
 function openCardDetail(card){
-  $('cm-card').className='card '+card.rarity;
-  $('cm-file').textContent=card.category;
-  $('cm-stamp').textContent=card.fileNum.replace(/^[A-Z]+-/,'');
-  $('cm-emoji').textContent=card.emoji;
-  $('cm-name').textContent=card.name;
-  $('cm-tag').textContent=card.tagline;
-  $('cm-desc').textContent=card.desc;
-  $('sf-sal').style.width=card.salary+'%';$('sv-sal').textContent=card.salary;
-  const enc=G.encyclopedia[card.name];
-  $('cm-known').textContent=enc&&enc.timesDrawn>1?`已见 ${enc.timesDrawn}次`:'';
-  const curYear=YEARS[G.yearIndex].year,elimY=ELIM_YEAR[card.name],elEl=$('cm-elim');
-  if(elimY&&elimY<=curYear){elEl.style.display='block';elEl.textContent=`⚠ 此职业在 ${elimY} 年被AI淘汰`;}
-  else if(elimY){elEl.style.display='block';elEl.textContent=`预计 ${elimY} 年后面临淘汰风险`;}
-  else elEl.style.display='none';
-  const sw=$('cm-swap');sw._card=card;sw.disabled=false;sw.textContent='换成这个职业';
+  const wrap=$('cm-card-wrap');
+  wrap.innerHTML='';
+  const preview=buildActiveCard(card);
+  preview.classList.remove('card-fly-in','card-fly-in-left');
+  wrap.appendChild(preview);
   $('card-modal').classList.add('open');
 }
 
@@ -1673,9 +1631,10 @@ $('keep-btn').addEventListener('click',()=>{
 // card modal swap
 $('current-card-btn').addEventListener('click',()=>{ if(G.currentCard) openCardDetail(G.currentCard); });
 $('cm-bg').addEventListener('click',()=>$('card-modal').classList.remove('open'));
+$('card-modal').addEventListener('click',(e)=>{ if(e.target.id==='card-modal' || e.target.id==='cm-bg') $('card-modal').classList.remove('open'); });
 $('cm-x').addEventListener('click',()=>$('card-modal').classList.remove('open'));
 $('cm-cancel').addEventListener('click',()=>$('card-modal').classList.remove('open'));
-$('cm-swap').addEventListener('click',function(){
+$('cm-swap').addEventListener('click',function(){ 
   if(!this._card)return;
   const newCard={...this._card,isOwn:false};
   const oldCard={...G.currentCard};
