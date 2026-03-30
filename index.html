@@ -473,14 +473,15 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 #card-modal.open{display:flex;}
 .cm-sheet{position:relative;width:auto;max-width:300px;background:transparent;border:none;padding:0;max-height:none;overflow:visible;animation:slideUp 0.18s ease;box-shadow:none;}
 .cm-close,.cm-swap,.cm-cancel{display:none !important;}
-.cm-card-wrap{width:268px;margin:0 auto;display:flex;justify-content:center;}
-.cm-card-wrap .card{width:268px;}
-.cm-card-wrap .card-art{padding:16px 12px 12px;}
-.cm-card-wrap .card-art-icon{font-size:52px;margin-bottom:8px;}
+.cm-card-wrap{width:272px;height:398px;margin:0 auto;display:flex;justify-content:center;align-items:center;}
+.cm-card-wrap .card{width:272px;height:398px;display:flex;flex-direction:column;}
+.cm-card-wrap .card-art{min-height:160px;padding:18px 12px 12px;}
+.cm-card-wrap .card-art-icon{font-size:54px;margin-bottom:8px;}
 .cm-card-wrap .card-name{font-size:24px;}
 .cm-card-wrap .card-tag{font-size:9px;margin-top:3px;}
-.cm-card-wrap .card-body{padding:10px 12px 8px;}
-.cm-card-wrap .card-desc{font-size:10px;line-height:1.6;margin-bottom:10px;}
+.cm-card-wrap .card-body{flex:1;overflow:hidden;padding:10px 12px 8px;display:flex;flex-direction:column;}
+.cm-card-wrap .card-desc{font-size:10px;line-height:1.6;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:48px;}
+.cm-card-wrap .stats{margin-top:auto;}
 .cm-card-wrap .card-footer{padding:7px 12px;font-size:7px;}
 
 /* ── ENC MODAL ────────────────────────────── */
