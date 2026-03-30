@@ -205,8 +205,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* ── DECK STACK ───────────────────────────── */
 .deck-viewer{
   position:relative;
-  max-width:320px;margin:0 auto;
-  padding:0 24px 10px 24px;
+  max-width:310px;margin:0 auto;
+  padding:0 20px 10px 20px;
   height:408px; /* 固定抽卡区总高度，彻底避免卡片长短不一导致上下跳 */
   touch-action:pan-y;
   user-select:none;
@@ -248,16 +248,16 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* nav */
 .deck-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:18px;margin-bottom:18px;}
 .deck-nav-btn{
-  width:46px;height:46px;border-radius:50%;background:rgba(245,240,232,0.96);
-  border:1.5px solid var(--border);font-size:20px;color:var(--ink);cursor:pointer;
+  width:46px;height:46px;border-radius:50%;background:rgba(216,208,192,0.96);
+  border:1.5px solid rgba(120,102,78,0.55);font-size:20px;color:#52473d;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 6px 14px rgba(0,0,0,0.10);
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
 .deck-nav-btn.side{
   position:absolute;top:180px;z-index:20;
 }
-.deck-nav-btn.side.left{left:-2px;}
-.deck-nav-btn.side.right{right:-2px;}
+.deck-nav-btn.side.left{left:-12px;}
+.deck-nav-btn.side.right{right:-12px;}
 .deck-nav-btn:active{background:var(--ink);color:var(--paper);}
 .deck-nav-btn:disabled{opacity:0.25;cursor:default;}
 .deck-counter{font-size:11px;font-family:monospace;color:var(--ink-faint);letter-spacing:2px;min-width:36px;text-align:center;}
