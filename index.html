@@ -205,9 +205,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* ── DECK STACK ───────────────────────────── */
 .deck-viewer{
   position:relative;
-  max-width:302px;margin:0 auto;
-  padding:0 18px 10px 18px;
-  height:408px; /* 固定抽卡区总高度，彻底避免卡片长短不一导致上下跳 */
+  max-width:292px;margin:0 auto;
+  padding:0 16px 10px 16px;
+  height:392px; /* 卡片再短一点，给左右按钮腾出空间 */
   touch-action:pan-y;
   user-select:none;
   -webkit-user-select:none;
@@ -231,7 +231,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   position:relative;
   z-index:10;
   margin-right:0;
-  height:398px; /* 固定卡片显示高度，不再随内容长短伸缩 */
+  height:382px; /* 主卡更短一点，避免和左右按钮打架 */
   display:flex;
   overflow:hidden;
 }
@@ -253,8 +253,11 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
+.deck-nav-btn::before{
+  content:'';position:absolute;inset:-12px;
+}
 .deck-nav-btn.side{
-  position:absolute;top:180px;z-index:20;
+  position:absolute;top:168px;z-index:20;
 }
 .deck-nav-btn.side.left{left:-30px;}
 .deck-nav-btn.side.right{right:-30px;}
@@ -1579,10 +1582,23 @@ function navDeck(delta,direction){
 
 function bindNavButton(id,delta,direction){
   const el=$(id);
+  let pressed=false;
+  ['pointerdown','touchstart'].forEach(evt=>{
+    el.addEventListener(evt,(e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      pressed=true;
+    },{passive:false});
+  });
+  ['pointercancel','touchcancel','pointerleave'].forEach(evt=>{
+    el.addEventListener(evt,()=>{ pressed=false; },{passive:true});
+  });
   ['pointerup','touchend','click'].forEach(evt=>{
     el.addEventListener(evt,(e)=>{
       e.preventDefault();
       e.stopPropagation();
+      if(evt==='click' && pressed) return;
+      pressed=false;
       navDeck(delta,direction);
     },{passive:false});
   });
