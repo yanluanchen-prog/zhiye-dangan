@@ -192,8 +192,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* ── DECK STACK ───────────────────────────── */
 .deck-viewer{
   position:relative;
-  max-width:280px;margin:0 auto;
-  padding-right:28px;padding-bottom:10px;
+  max-width:320px;margin:0 auto;
+  padding:0 24px 10px 24px;
+  height:408px; /* 固定抽卡区总高度，彻底避免卡片长短不一导致上下跳 */
   touch-action:pan-y;
   user-select:none;
   -webkit-user-select:none;
@@ -213,17 +214,59 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .deck-shadow.s1{transform:translate(9px,3px);z-index:3;opacity:0.85;}
 .deck-shadow.s2{transform:translate(18px,6px);z-index:2;opacity:0.6;}
 .deck-shadow.s3{transform:translate(27px,9px);z-index:1;opacity:0.4;}
-.deck-active{position:relative;z-index:10;margin-right:28px;}
+.deck-active{
+  position:relative;
+  z-index:10;
+  margin-right:0;
+  height:398px; /* 固定卡片显示高度，不再随内容长短伸缩 */
+  display:flex;
+  overflow:hidden;
+}
+.deck-active .card{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+}
+.deck-active .card-body{flex:1;overflow:hidden;}
+.deck-active .card-art{min-height:160px;}
+.deck-active .card-desc{min-height:56px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.deck-active .stats{margin-top:auto;}
 /* nav */
-.deck-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:12px;}
-.deck-nav-btn{width:34px;height:34px;border-radius:50%;background:var(--paper-dk);border:1px solid var(--border);font-size:16px;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.deck-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:18px;margin-bottom:18px;}
+.deck-nav-btn{
+  width:46px;height:46px;border-radius:50%;background:rgba(245,240,232,0.96);
+  border:1.5px solid var(--border);font-size:20px;color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 14px rgba(0,0,0,0.10);
+}
+.deck-nav-btn.side{
+  position:absolute;top:180px;z-index:20;
+}
+.deck-nav-btn.side.left{left:-2px;}
+.deck-nav-btn.side.right{right:-2px;}
 .deck-nav-btn:active{background:var(--ink);color:var(--paper);}
 .deck-nav-btn:disabled{opacity:0.25;cursor:default;}
 .deck-counter{font-size:11px;font-family:monospace;color:var(--ink-faint);letter-spacing:2px;min-width:36px;text-align:center;}
 
 /* ── CARD ACTIONS (2 buttons below deck) ──── */
-.card-actions{display:flex;gap:8px;margin-top:20px;padding-top:4px;border-top:1px solid var(--border);}
+.card-actions{display:flex;gap:8px;margin-top:28px;padding-top:12px;border-top:1px solid var(--border);}
 .card-actions .btn{flex:1;}
+
+/* ── ENCYCLOPEDIA ENTRY ─────────────────── */
+.enc-entry{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:12px 14px;margin-bottom:14px;
+  background:linear-gradient(180deg,var(--paper-lt),var(--paper-dk));
+  border:1px solid var(--border);border-radius:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  cursor:pointer;
+}
+.enc-entry:active{transform:scale(0.995);opacity:.92;}
+.enc-entry-left{display:flex;flex-direction:column;gap:4px;min-width:0;}
+.enc-entry-top{font-size:13px;font-weight:800;color:var(--ink);letter-spacing:1px;display:flex;align-items:center;gap:8px;}
+.enc-entry-sub{font-size:10px;color:var(--ink-faint);letter-spacing:1px;line-height:1.5;}
+.enc-entry-badge{font-size:11px;font-weight:800;color:var(--red);border:1px solid rgba(194,59,34,.25);background:rgba(194,59,34,.06);padding:6px 10px;border-radius:999px;white-space:nowrap;}
 
 /* ── BUTTONS ──────────────────────────────── */
 .btn{padding:12px 16px;border:2px solid var(--ink);background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;font-family:monospace;width:100%;}
@@ -344,8 +387,31 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   align-self:center;
   margin-top:20px;
   position:relative;z-index:5;
+  touch-action:manipulation;
+  transition:transform .08s ease, opacity .08s ease, box-shadow .12s ease, filter .12s ease;
+  will-change:transform;
 }
-.pkg-sign-btn:active{transform:scale(0.98);opacity:0.9;}
+.pkg-sign-btn:active,
+.pkg-sign-btn.is-pressed{
+  transform:translateY(2px) scale(0.975);
+  opacity:0.92;
+  box-shadow:0 2px 5px rgba(192,57,43,0.22), inset 0 1px 0 rgba(255,255,255,.16);
+  filter:saturate(.92);
+}
+.pkg-sign-btn.is-loading{
+  pointer-events:none;
+  opacity:0.95;
+}
+.pkg-sign-btn.is-loading::after{
+  content:'';
+  display:inline-block;
+  width:10px;height:10px;margin-left:8px;
+  border:2px solid rgba(255,255,255,.55);
+  border-top-color:#fff;border-radius:50%;
+  animation:spin .7s linear infinite;
+  vertical-align:-1px;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
 /* 撕开动画 */
 @keyframes bagTear{
   0%{transform:translateY(0);opacity:1;}
@@ -548,7 +614,6 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
       </div>
     </div>
     <div class="header-right">
-      <div class="header-classify" style="cursor:pointer;" id="enc-game-btn" onclick="openEncModal()">〔职业图鉴 <span id="enc-count">0</span>〕</div>
       <div class="header-year" id="gh-year">2026</div>
       <div class="header-year-sub" id="gh-year-sub">第1年 / 共10年</div>
     </div>
@@ -560,6 +625,13 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 
     <!-- 职业选择 section -->
     <div class="section no-frame">
+      <div class="enc-entry" id="enc-game-btn" onclick="openEncModal()">
+        <div class="enc-entry-left">
+          <div class="enc-entry-top">🗂 职业图鉴</div>
+          <div class="enc-entry-sub">已体验职业会自动收藏，点开看看你见过多少种职业</div>
+        </div>
+        <div class="enc-entry-badge"><span id="enc-count">0</span> / 30</div>
+      </div>
       <!-- Pre-draw: 快递档案袋 -->
       <div id="draw-zone">
         <div class="pkg-bag" id="pkg-bag">
@@ -619,7 +691,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
             <div class="pkg-bag-seal"></div>
           </div>
           <!-- 签收按钮 -->
-          <button class="pkg-sign-btn" id="draw-btn" onclick="doDrawCards()">📬 是否签收？</button>
+          <button class="pkg-sign-btn" id="draw-btn">📬 是否签收？</button>
         </div>
       </div>
 
@@ -629,17 +701,17 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
           <div class="deck-shadow s3"></div>
           <div class="deck-shadow s2"></div>
           <div class="deck-shadow s1"></div>
+          <button class="deck-nav-btn side left" id="nav-prev">‹</button>
           <div class="deck-active" id="deck-active"></div>
+          <button class="deck-nav-btn side right" id="nav-next">›</button>
         </div>
         <div class="deck-nav">
-          <button class="deck-nav-btn" id="nav-prev">‹</button>
           <span class="deck-counter" id="deck-counter">1 / 5</span>
-          <button class="deck-nav-btn" id="nav-next">›</button>
         </div>
         <!-- 两个决策按钮 -->
         <div class="card-actions" id="card-actions">
-          <button class="btn red" id="swap-btn">选择跳槽</button>
           <button class="btn outline" id="keep-btn">继续苟着</button>
+          <button class="btn red" id="swap-btn">选择跳槽</button>
         </div>
       </div>
     </div>
@@ -1091,6 +1163,30 @@ function renderDeck(idx,direction='right'){
 }
 
 let twTimer=null;
+let lastDeckNavAt=0;
+let suppressDecisionUntil=0;
+let deckNavLockTimer=null;
+function lockDecisionButtons(ms=900){
+  const now=Date.now();
+  lastDeckNavAt=now;
+  suppressDecisionUntil=now+ms;
+  const actions=$('card-actions');
+  const swapBtn=$('swap-btn');
+  const keepBtn=$('keep-btn');
+  if(actions) actions.style.pointerEvents='none';
+  if(swapBtn) swapBtn.disabled=true;
+  if(keepBtn) keepBtn.disabled=true;
+  if(deckNavLockTimer) clearTimeout(deckNavLockTimer);
+  deckNavLockTimer=setTimeout(()=>{
+    if(Date.now()<suppressDecisionUntil) return;
+    if(actions) actions.style.pointerEvents='';
+    if(swapBtn) swapBtn.disabled=false;
+    if(keepBtn) keepBtn.disabled=false;
+  },ms);
+}
+function decisionBlocked(){
+  return Date.now()<suppressDecisionUntil;
+}
 function openEventModal(onConfirm){
   const y=YEARS[G.yearIndex];
   $('ev-year').textContent=`${y.year} · 今年发生了`;
@@ -1113,6 +1209,11 @@ let drawTriggered=false;
 function doDrawCards(){
   if(drawTriggered) return;
   drawTriggered=true;
+  const drawBtn=$('draw-btn');
+  if(drawBtn){
+    drawBtn.classList.add('is-loading');
+    drawBtn.textContent='📬 正在签收…';
+  }
   G.drawnCards=randomCards(5,[G.currentCard.name]);
   G.drawnCards.forEach(c=>addToEnc(c));
   G.activeIdx=0;G.pendingSwap=null;
@@ -1175,6 +1276,11 @@ function startYear(){
     bag.classList.remove('opening','fly-in');
     const body=$('pkg-bag-body'); if(body) body.style.clipPath='';
     const strip=$('pkg-top-strip'); if(strip) { strip.style.opacity=''; strip.style.transform=''; }
+  }
+  const drawBtn=$('draw-btn');
+  if(drawBtn){
+    drawBtn.classList.remove('is-loading','is-pressed');
+    drawBtn.textContent='📬 是否签收？';
   }
   showScreen('game-screen');
   // 入场飞入
@@ -1436,18 +1542,57 @@ $('job-dropdown').addEventListener('click',(e)=>{
   e.stopPropagation();
 });
 
-const drawBtn=$('draw-btn');
-drawBtn.onclick=doDrawCards;
-drawBtn.addEventListener('pointerup',(e)=>{e.preventDefault();doDrawCards();});
-drawBtn.addEventListener('touchend',(e)=>{e.preventDefault();doDrawCards();},{passive:false});
-$('nav-prev').addEventListener('click',(e)=>{e.stopPropagation();if(G.activeIdx>0){G.activeIdx--;renderDeck(G.activeIdx,'left');}});
-$('nav-next').addEventListener('click',(e)=>{e.stopPropagation();if(G.activeIdx<4){G.activeIdx++;renderDeck(G.activeIdx,'right');}});
+let lastNavTapAt=0;
 
-// 手机端左右滑动查看 5 张卡
+const drawBtn=$('draw-btn');
+['pointerdown','touchstart'].forEach(evt=>{
+  drawBtn.addEventListener(evt,()=>{
+    drawBtn.classList.add('is-pressed');
+  },{passive:true});
+});
+['pointercancel','touchcancel','pointerleave','touchmove'].forEach(evt=>{
+  drawBtn.addEventListener(evt,()=>{
+    drawBtn.classList.remove('is-pressed');
+  },{passive:true});
+});
+['pointerup','touchend','click'].forEach(evt=>{
+  drawBtn.addEventListener(evt,(e)=>{
+    e.preventDefault();
+    e.stopPropagation();
+    drawBtn.classList.remove('is-pressed');
+    doDrawCards();
+  },{passive:false});
+});
+
+function navDeck(delta,direction){
+  const now=Date.now();
+  if(now-lastNavTapAt<220) return;
+  lastNavTapAt=now;
+  lockDecisionButtons(1000);
+  const nextIdx=G.activeIdx+delta;
+  if(nextIdx<0||nextIdx>4) return;
+  G.activeIdx=nextIdx;
+  renderDeck(G.activeIdx,direction);
+}
+
+function bindNavButton(id,delta,direction){
+  const el=$(id);
+  ['pointerup','touchend','click'].forEach(evt=>{
+    el.addEventListener(evt,(e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      navDeck(delta,direction);
+    },{passive:false});
+  });
+}
+bindNavButton('nav-prev',-1,'left');
+bindNavButton('nav-next',1,'right');
+
+// 恢复卡片区域左右滑动切卡；只有明确横向滑动才翻卡，普通点击不触发
 (function(){
   const viewer=$('deck-active');
   let sx=0, sy=0, active=false;
-  const THRESHOLD=36;
+  const THRESHOLD=42;
   viewer.addEventListener('touchstart',(e)=>{
     if(!e.touches||!e.touches[0]) return;
     sx=e.touches[0].clientX;
@@ -1461,14 +1606,29 @@ $('nav-next').addEventListener('click',(e)=>{e.stopPropagation();if(G.activeIdx<
     if(!t) return;
     const dx=t.clientX-sx;
     const dy=t.clientY-sy;
-    if(Math.abs(dx)<THRESHOLD || Math.abs(dx)<Math.abs(dy)) return;
-    if(dx<0 && G.activeIdx<4){ G.activeIdx++; renderDeck(G.activeIdx,'right'); }
-    if(dx>0 && G.activeIdx>0){ G.activeIdx--; renderDeck(G.activeIdx,'left'); }
-  },{passive:true});
+    if(Math.abs(dx)<THRESHOLD || Math.abs(dx)<=Math.abs(dy)*1.25) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if(dx<0 && G.activeIdx<4){ navDeck(1,'right'); }
+    if(dx>0 && G.activeIdx>0){ navDeck(-1,'left'); }
+  },{passive:false});
 })();
 
 // 换成这个 → 显示头像变化动画 → 弹事件modal
+['swap-btn','keep-btn'].forEach(id=>{
+  const el=$(id);
+  ['pointerdown','pointerup','touchstart','touchend','click'].forEach(evt=>{
+    el.addEventListener(evt,(e)=>{
+      if(!decisionBlocked()) return;
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    },{passive:false,capture:true});
+  });
+});
+
 $('swap-btn').addEventListener('click',()=>{
+  if(decisionBlocked()) return;
   const newCard={...G.drawnCards[G.activeIdx],isOwn:false};
   const oldCard={...G.currentCard};
   showChoiceAnimation(G.currentCard,newCard,true,()=>{
@@ -1482,6 +1642,7 @@ $('swap-btn').addEventListener('click',()=>{
 });
 // 保留原职 → 显示确认动画 → 弹事件modal
 $('keep-btn').addEventListener('click',()=>{
+  if(decisionBlocked()) return;
   showChoiceAnimation(G.currentCard,G.currentCard,false,()=>{
     G.pendingSwap=null;
     openEventModal(()=>{
