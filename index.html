@@ -392,17 +392,22 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .pkg-track-no{font-size:8px;color:#666;font-family:'Courier New',monospace;text-align:center;letter-spacing:1px;}
 /* 签收按钮 */
 .pkg-sign-btn{
-  width:auto;padding:12px 18px;
+  width:min(82vw,220px);min-height:50px;padding:14px 20px;
   background:linear-gradient(180deg,#cf4334,#b93428);color:#fff;border:none;
-  font-size:13px;font-family:'Courier New',monospace;letter-spacing:2px;
-  border-radius:6px;cursor:pointer;
+  font-size:14px;font-family:'Courier New',monospace;letter-spacing:2px;
+  border-radius:8px;cursor:pointer;
   box-shadow:0 4px 10px rgba(192,57,43,0.28), inset 0 1px 0 rgba(255,255,255,.22);
   align-self:center;
-  margin-top:20px;
+  margin-top:22px;
   position:relative;z-index:5;
   touch-action:manipulation;
   transition:transform .08s ease, opacity .08s ease, box-shadow .12s ease, filter .12s ease;
   will-change:transform;
+}
+.pkg-sign-btn::before{
+  content:'';
+  position:absolute;
+  inset:-14px;
 }
 .pkg-sign-btn:active,
 .pkg-sign-btn.is-pressed{
@@ -1541,6 +1546,7 @@ $('job-dropdown').addEventListener('click',(e)=>{
 let lastNavTapAt=0;
 
 const drawBtn=$('draw-btn');
+drawBtn.style.cursor='pointer';
 ['pointerdown','touchstart'].forEach(evt=>{
   drawBtn.addEventListener(evt,()=>{
     drawBtn.classList.add('is-pressed');
