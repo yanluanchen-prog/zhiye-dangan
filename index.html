@@ -1294,7 +1294,10 @@ function startYear(){
 function openCardDetail(card){
   const wrap=$('cm-card-wrap');
   wrap.innerHTML='';
-  const preview=buildActiveCard(card);
+  const sourceCard = (card && card.isOwn)
+    ? (POOL.find(c=>c.name===card.name) || card)
+    : card;
+  const preview=buildActiveCard(sourceCard);
   preview.classList.remove('card-fly-in','card-fly-in-left');
   wrap.appendChild(preview);
   $('card-modal').classList.add('open');
