@@ -623,7 +623,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
       </div>
     </div>
     <div class="header-center">
-      <div class="header-tab current" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <div class="header-tab current" id="current-card-btn">
         <div class="id-badge-card">
           <div class="id-badge-hdr">当前</div>
           <div class="id-badge-art">
@@ -811,7 +811,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   <div style="position:absolute;inset:0;" id="enc-bg"></div>
   <div class="enc-sheet">
     <div class="enc-ttl">人力市场</div>
-    <div class="enc-sub" id="enc-sub-txt">已收录 0 种</div>
+    <div class="enc-sub" id="enc-sub-txt">已收录 0 种职业｜已体验的职业会自动收藏</div>
     <button class="enc-x" id="enc-x">✕</button>
     <div class="enc-grid" id="enc-grid"></div>
   </div>
@@ -1336,7 +1336,7 @@ function openCardDetail(card){
 function openEncModal(){
   const entries=Object.values(G.encyclopedia).sort((a,b)=>['N','R','SR','SSR','UR'].indexOf(b.card.rarity)-['N','R','SR','SSR','UR'].indexOf(a.card.rarity));
   const curYear=YEARS[Math.min(G.yearIndex,9)].year;
-  $('enc-sub-txt').textContent=`已收录 ${entries.length} 种职业（共 ${POOL.length} 种）`;
+  $('enc-sub-txt').textContent=`已收录 ${entries.length} 种职业（共 ${POOL.length} 种）｜已体验的职业会自动收藏`;
   const grid=$('enc-grid');grid.innerHTML='';
   entries.forEach(({card,timesDrawn})=>{
     const elim=ELIM_YEAR[card.name]&&ELIM_YEAR[card.name]<=curYear;
@@ -1677,6 +1677,7 @@ $('keep-btn').addEventListener('click',()=>{
 });
 
 // card modal swap
+$('current-card-btn').addEventListener('click',()=>{ if(G.currentCard) openCardDetail(G.currentCard); });
 $('cm-bg').addEventListener('click',()=>$('card-modal').classList.remove('open'));
 $('cm-x').addEventListener('click',()=>$('card-modal').classList.remove('open'));
 $('cm-cancel').addEventListener('click',()=>$('card-modal').classList.remove('open'));
