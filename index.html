@@ -383,9 +383,6 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .pkg-wb-addr-name{font-size:8px;font-weight:800;color:#222;line-height:1.08;word-break:break-all;}
 .pkg-wb-addr-sub{font-size:6px;color:#777;margin-top:1px;line-height:1.12;}
 .pkg-wb-bottom{margin-top:2px;}
-.pkg-wb-bottom-row{display:grid;grid-template-columns:28px 1fr 32px;gap:4px;font-size:7px;color:#888;align-items:center;}
-.pkg-wb-bottom-data{font-size:8px;color:#333;font-weight:700;margin-top:1px;}
-.pkg-wb-bottom{margin-top:2px;}
 .pkg-wb-bottom-row{display:grid;grid-template-columns:40px 1fr 54px;gap:4px;font-size:8px;color:#888;align-items:center;}
 .pkg-wb-bottom-data{font-size:9px;color:#333;font-weight:700;margin-top:2px;}
 .pkg-wb-bl{font-size:8px;color:#888;}
@@ -1035,7 +1032,7 @@ const SURVIVOR_VOICE={
 };
 function getSurvivorVoice(card){
   const cat=card.category||'服务';
-  const catMap={'创作':['作家','平面设计师','记者','剪辑师','音乐家','演员'],'技术':['程序员','软件测试员','信息安全分析师','技术支持专员'],'专业':['金融分析师','市场研究分析师','律师','会计师'],'服务':['客服代表','酒保','更衣室服务员','社工','救生员'],'体力':['厨师','修理工','洗碗工'],'医疗':['医生','护士','医疗记录专员','心理咨询师'],'教育':['教师']};
+  const catMap={'创作':['作家','平面设计师','记者','剪辑师','音乐家','演员'],'技术':['程序员','软件测试员','信息安全分析师','技术支持专员','数据录入员'],'专业':['金融分析师','市场研究分析师','律师','会计师','翻译'],'服务':['客服代表','酒保','更衣室服务员','社工','救生员','销售代表'],'体力':['厨师','修理工','洗碗工'],'医疗':['医生','护士','医疗记录专员','心理咨询师'],'教育':['教师']};
   let group='服务';
   for(const [k,v] of Object.entries(catMap)){if(v.includes(card.name))group=k;}
   const arr=SURVIVOR_VOICE[group];
@@ -1715,7 +1712,12 @@ function doQuit(){
 }
 $('restart-btn').addEventListener('click',doRestart);
 $('quit-btn').addEventListener('click',doQuit);
-$('play-again-btn').addEventListener('click',()=>{G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};startYear();});
+$('play-again-btn').addEventListener('click',()=>{
+  const ownJob=POOL.find(c=>c.name===G.ownCard.name);
+  G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};G.totalSalary=0;G.swapCount=0;G.drawnCards=[];G.pendingSwap=null;G.startOfYearCard=null;G.activeIdx=0;
+  if(ownJob)addToEnc(ownJob);
+  startYear();
+});
 $('story-enter-btn').addEventListener('click',()=>{startYear();});
 $('farewell-btn').addEventListener('click',()=>{
   $('farewell-overlay').style.display='none';
