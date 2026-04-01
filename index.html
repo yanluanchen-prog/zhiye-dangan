@@ -825,7 +825,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 <div id="result-screen" class="screen">
   <div class="header">
     <div class="header-center">
-      <div class="header-tab current">
+      <div class="header-tab current" id="result-card-btn" style="cursor:pointer;">
         <div class="id-badge-card" id="r-id-card">
           <div class="id-badge-hdr" id="r-id-hdr" style="background:var(--red)">我的职业</div>
           <div class="id-badge-art"><span class="id-badge-emoji" id="r-id-emoji">💼</span><span class="id-badge-name" id="r-id-name">—</span></div>
@@ -899,7 +899,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 <div id="ending-screen" class="screen">
   <div class="header">
     <div class="header-center">
-      <div class="header-tab current">
+      <div class="header-tab current" id="ending-card-btn" style="cursor:pointer;">
         <div class="id-badge-card">
           <div class="id-badge-hdr" style="background:var(--red)">我的职业</div>
           <div class="id-badge-art"><span class="id-badge-emoji" id="en-id-emoji">💼</span><span class="id-badge-name" id="en-id-name">—</span></div>
@@ -1665,6 +1665,8 @@ $('keep-btn').addEventListener('click',()=>{
 // card modal swap
 $('current-card-btn').addEventListener('click',()=>{ if(G.currentCard) openCardDetail(G.currentCard); });
 $('fail-card-btn').addEventListener('click',()=>{ if(G.currentCard) openCardDetail(G.currentCard); });
+$('result-card-btn').addEventListener('click',()=>{ if(G.currentCard) openCardDetail(G.currentCard); });
+$('ending-card-btn').addEventListener('click',()=>{ if(G.currentCard) openCardDetail(G.currentCard); });
 $('cm-bg').addEventListener('click',()=>$('card-modal').classList.remove('open'));
 $('card-modal').addEventListener('click',(e)=>{ if(e.target.id==='card-modal' || e.target.id==='cm-bg') $('card-modal').classList.remove('open'); });
 $('cm-x').addEventListener('click',()=>$('card-modal').classList.remove('open'));
