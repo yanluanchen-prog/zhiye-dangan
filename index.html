@@ -15,6 +15,7 @@
   --red:#C23B22; --green:#1A6B3A; --border:#B8A878;
   --N:#888070; --R:#1A3A6B; --SR:#B85A00; --SSR:#C23B22; --UR:#1E1C18;
 }
+button,a{touch-action:manipulation;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;background:#0a0a0a;}
 body{
@@ -203,10 +204,14 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .card-footer{display:flex;justify-content:space-between;padding:8px 14px;border-top:1px solid var(--border);font-size:8px;color:var(--ink-faint);font-family:monospace;background:var(--paper-dk);}
 
 /* ── DECK STACK ───────────────────────────── */
+.deck-row{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  max-width:420px;margin:0 auto;padding:0 4px;
+}
 .deck-viewer{
   position:relative;
-  max-width:380px;margin:0 auto;
-  padding:0 50px 10px 50px;
+  flex:1;max-width:282px;
+  padding:0 0 10px 0;
   height:380px;
   touch-action:pan-y;
   user-select:none;
@@ -214,7 +219,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 }
 /* shadow cards — 有颜色纹路，明显可见 */
 .deck-shadow{
-  position:absolute;top:0;left:50px;right:78px;bottom:10px;
+  position:absolute;top:0;left:0;right:28px;bottom:10px;
   border:2px solid var(--border);border-radius:8px;
   background:var(--paper-dk);
   background-image:repeating-linear-gradient(
@@ -254,13 +259,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   box-shadow:0 3px 8px rgba(0,0,0,0.06);touch-action:manipulation;
 }
 .deck-nav-btn::before{
-  content:'';position:absolute;inset:-14px;
+  content:'';position:absolute;inset:-10px;
 }
-.deck-nav-btn.side{
-  position:absolute;top:160px;z-index:30;
-}
-.deck-nav-btn.side.left{left:4px;}
-.deck-nav-btn.side.right{right:4px;}
 .deck-nav-btn:active{background:var(--ink);color:var(--paper);}
 .deck-nav-btn:disabled{opacity:0.25;cursor:default;}
 .deck-counter{font-size:11px;font-family:monospace;color:var(--ink-faint);letter-spacing:2px;min-width:36px;text-align:center;}
@@ -723,13 +723,15 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 
       <!-- Post-draw: deck stack + 2 action buttons -->
       <div id="hand-zone" style="display:none;">
-        <div class="deck-viewer">
-          <div class="deck-shadow s3"></div>
-          <div class="deck-shadow s2"></div>
-          <div class="deck-shadow s1"></div>
-          <button class="deck-nav-btn side left" id="nav-prev">‹</button>
-          <div class="deck-active" id="deck-active"></div>
-          <button class="deck-nav-btn side right" id="nav-next">›</button>
+        <div class="deck-row">
+          <button class="deck-nav-btn" id="nav-prev">‹</button>
+          <div class="deck-viewer">
+            <div class="deck-shadow s3"></div>
+            <div class="deck-shadow s2"></div>
+            <div class="deck-shadow s1"></div>
+            <div class="deck-active" id="deck-active"></div>
+          </div>
+          <button class="deck-nav-btn" id="nav-next">›</button>
         </div>
         <div class="deck-nav">
           <span class="deck-counter" id="deck-counter">1 / 5</span>
@@ -842,8 +844,24 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 <!-- ═══════════════════════════ FAIL ═════════════════════════════════════ -->
 <div id="fail-screen" class="screen">
   <div class="header">
-    <div class="id-badge"><div class="id-badge-card own"><div class="id-badge-hdr" style="background:var(--red)">我的职业</div><div class="id-badge-art"><span class="id-badge-emoji" id="f-id-emoji">💼</span><span class="id-badge-name" id="f-id-name">—</span></div></div></div>
-    <div class="header-right"><div class="header-classify">〔职业生存图鉴〕</div><div class="header-year" id="f-yr" style="font-size:18px;">2028</div><div class="header-year-sub">职业生涯结束</div></div>
+    <div class="header-center">
+      <div class="header-tab current">
+        <div class="id-badge-card">
+          <div class="id-badge-hdr" style="background:var(--red)">我的职业</div>
+          <div class="id-badge-art"><span class="id-badge-emoji" id="f-id-emoji">💼</span><span class="id-badge-name" id="f-id-name">—</span></div>
+        </div>
+      </div>
+      <div class="header-tab folder" onclick="openEncModal()">
+        <div class="id-badge-card">
+          <div class="id-badge-hdr">我的图鉴</div>
+          <div class="id-badge-art">
+            <span class="id-badge-emoji">🗂</span>
+            <span class="id-badge-name">我的图鉴</span>
+            <div class="id-badge-mini-count"><span id="f-enc-count">1</span>/30</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div style="text-align:center;padding:28px 0 12px;">
     <div style="font-size:44px;font-weight:900;color:var(--red);opacity:0.22;font-family:monospace;letter-spacing:8px;" id="f-yr-big">2028</div>
@@ -861,8 +879,24 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 <!-- ═══════════════════════════ ENDING ═══════════════════════════════════ -->
 <div id="ending-screen" class="screen">
   <div class="header">
-    <div class="id-badge"><div class="id-badge-card own"><div class="id-badge-hdr" style="background:var(--red)">我的职业</div><div class="id-badge-art"><span class="id-badge-emoji" id="en-id-emoji">💼</span><span class="id-badge-name" id="en-id-name">—</span></div></div></div>
-    <div class="header-right"><div class="header-classify">〔职业生存图鉴〕</div><div class="header-year">2035</div><div class="header-year-sub">最终年</div></div>
+    <div class="header-center">
+      <div class="header-tab current">
+        <div class="id-badge-card">
+          <div class="id-badge-hdr" style="background:var(--red)">我的职业</div>
+          <div class="id-badge-art"><span class="id-badge-emoji" id="en-id-emoji">💼</span><span class="id-badge-name" id="en-id-name">—</span></div>
+        </div>
+      </div>
+      <div class="header-tab folder" onclick="openEncModal()">
+        <div class="id-badge-card">
+          <div class="id-badge-hdr">我的图鉴</div>
+          <div class="id-badge-art">
+            <span class="id-badge-emoji">🗂</span>
+            <span class="id-badge-name">我的图鉴</span>
+            <div class="id-badge-mini-count"><span id="en-enc-count">1</span>/30</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div style="text-align:center;padding:20px 0 8px;">
     <div style="font-size:9px;color:var(--red);letter-spacing:4px;font-family:monospace;margin-bottom:4px;">2026 — 2035</div>
@@ -1379,7 +1413,8 @@ function revealResult(){
 function showFail(y,elimResult){
   const c=G.currentCard;
   $('f-id-emoji').textContent=c.emoji||'💼';$('f-id-name').textContent=c.name;
-  $('f-yr').textContent=y.year;$('f-yr-big').textContent=y.year;
+  const fEncEl=$('f-enc-count');if(fEncEl)fEncEl.textContent=Object.keys(G.encyclopedia).length;
+  $('f-yr-big').textContent=y.year;
   let reason;
   if(elimResult&&elimResult.inList){
     reason=`「${c.name}」在 ${y.year} 年进入了AI淘汰名单。\n\n这是大势所趋，早有征兆。`;
@@ -1395,6 +1430,7 @@ function showFail(y,elimResult){
 function showEnding(){
   const c=G.currentCard;
   $('en-id-emoji').textContent=c.emoji||'💼';$('en-id-name').textContent=c.name;
+  const enEncEl=$('en-enc-count');if(enEncEl)enEncEl.textContent=Object.keys(G.encyclopedia).length;
   const encN=Object.keys(G.encyclopedia).length;
   const avgSalary=Math.round(G.totalSalary/10);
 
