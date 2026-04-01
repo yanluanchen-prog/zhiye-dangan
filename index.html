@@ -233,6 +233,23 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .deck-shadow.s2{transform:translate(14px,-4px) rotate(3deg);z-index:2;opacity:0.65;}
 .deck-shadow.s3{transform:translate(21px,-6px) rotate(4.5deg);z-index:1;opacity:0.45;}
 .deck-shadow.s4{transform:translate(28px,-8px) rotate(6deg);z-index:0;opacity:0.3;}
+/* 左侧已翻过的卡片堆叠 */
+.deck-shadow-left{
+  position:absolute;top:4px;left:4px;right:4px;bottom:14px;
+  border:2px solid var(--border);border-radius:8px;
+  background:var(--paper-dk);
+  background-image:repeating-linear-gradient(
+    -45deg,
+    transparent,transparent 12px,
+    rgba(184,168,120,0.25) 12px,rgba(184,168,120,0.25) 24px
+  );
+  pointer-events:none;transform-origin:center bottom;
+  display:none;
+}
+.deck-shadow-left.sl1{transform:translate(-7px,-2px) rotate(-1.5deg);z-index:3;opacity:0.88;}
+.deck-shadow-left.sl2{transform:translate(-14px,-4px) rotate(-3deg);z-index:2;opacity:0.65;}
+.deck-shadow-left.sl3{transform:translate(-21px,-6px) rotate(-4.5deg);z-index:1;opacity:0.45;}
+.deck-shadow-left.sl4{transform:translate(-28px,-8px) rotate(-6deg);z-index:0;opacity:0.3;}
 .deck-active{
   position:relative;
   z-index:10;
@@ -724,6 +741,10 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
         <div class="deck-row">
           <button class="deck-nav-btn" id="nav-prev">‹</button>
           <div class="deck-viewer">
+            <div class="deck-shadow-left sl1"></div>
+            <div class="deck-shadow-left sl2"></div>
+            <div class="deck-shadow-left sl3"></div>
+            <div class="deck-shadow-left sl4"></div>
             <div class="deck-shadow s4"></div>
             <div class="deck-shadow s3"></div>
             <div class="deck-shadow s2"></div>
@@ -1213,6 +1234,11 @@ function renderDeck(idx,direction='right'){
   const remaining=4-idx; // idx=0→4张,idx=1→3张,...,idx=4→0张
   document.querySelectorAll('.deck-shadow').forEach((s,i)=>{
     s.style.display=(i<remaining)?'':'none';
+  });
+  // 左侧已翻过的牌堆叠
+  const passed=idx; // idx=0→0张,idx=1→1张,...,idx=4→4张
+  document.querySelectorAll('.deck-shadow-left').forEach((s,i)=>{
+    s.style.display=(i<passed)?'':'none';
   });
 }
 
