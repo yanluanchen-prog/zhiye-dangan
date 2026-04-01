@@ -865,7 +865,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 <div id="fail-screen" class="screen">
   <div class="header">
     <div class="header-center">
-      <div class="header-tab current">
+      <div class="header-tab current" id="fail-card-btn" style="cursor:pointer;">
         <div class="id-badge-card">
           <div class="id-badge-hdr" style="background:var(--red)">我的职业</div>
           <div class="id-badge-art"><span class="id-badge-emoji" id="f-id-emoji">💼</span><span class="id-badge-name" id="f-id-name">—</span></div>
@@ -891,7 +891,6 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
     <div class="section"><div style="font-size:12px;line-height:2.2;color:var(--ink-lt);white-space:pre-wrap;" id="f-text"></div></div>
     <div class="btn-row">
       <button class="btn red" id="restart-btn">重新开始职业生涯</button>
-      <button class="btn outline" id="quit-btn">退出游戏</button>
     </div>
   </div>
 </div>
@@ -1665,6 +1664,7 @@ $('keep-btn').addEventListener('click',()=>{
 
 // card modal swap
 $('current-card-btn').addEventListener('click',()=>{ if(G.currentCard) openCardDetail(G.currentCard); });
+$('fail-card-btn').addEventListener('click',()=>{ if(G.currentCard) openCardDetail(G.currentCard); });
 $('cm-bg').addEventListener('click',()=>$('card-modal').classList.remove('open'));
 $('card-modal').addEventListener('click',(e)=>{ if(e.target.id==='card-modal' || e.target.id==='cm-bg') $('card-modal').classList.remove('open'); });
 $('cm-x').addEventListener('click',()=>$('card-modal').classList.remove('open'));
@@ -1708,7 +1708,7 @@ function doQuit(){
   showScreen('intro-screen');
 }
 $('restart-btn').addEventListener('click',doRestart);
-$('quit-btn').addEventListener('click',doQuit);
+// quit-btn removed from fail screen
 $('play-again-btn').addEventListener('click',()=>{
   const ownJob=POOL.find(c=>c.name===G.ownCard.name);
   G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};G.totalSalary=0;G.swapCount=0;G.drawnCards=[];G.pendingSwap=null;G.startOfYearCard=null;G.activeIdx=0;
