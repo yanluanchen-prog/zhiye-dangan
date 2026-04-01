@@ -1238,7 +1238,7 @@ function renderDeck(idx,direction='right'){
   // 左侧已翻过的牌堆叠
   const passed=idx; // idx=0→0张,idx=1→1张,...,idx=4→4张
   document.querySelectorAll('.deck-shadow-left').forEach((s,i)=>{
-    s.style.display=(i<passed)?'':'none';
+    s.style.display=(i<passed)?'block':'none';
   });
 }
 
