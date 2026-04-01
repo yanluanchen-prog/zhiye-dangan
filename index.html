@@ -248,19 +248,19 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* nav */
 .deck-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:18px;margin-bottom:18px;}
 .deck-nav-btn{
-  width:54px;height:54px;border-radius:50%;background:rgba(214,205,189,0.98);
-  border:1.5px solid rgba(120,102,78,0.48);font-size:22px;color:#5a4d43;cursor:pointer;
+  width:36px;height:36px;border-radius:50%;background:rgba(214,205,189,0.85);
+  border:1px solid rgba(120,102,78,0.35);font-size:15px;color:#5a4d43;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 5px 12px rgba(0,0,0,0.08);
+  box-shadow:0 3px 8px rgba(0,0,0,0.06);
 }
 .deck-nav-btn::before{
-  content:'';position:absolute;inset:-18px;
+  content:'';position:absolute;inset:-14px;
 }
 .deck-nav-btn.side{
-  position:absolute;top:152px;z-index:30;
+  position:absolute;top:160px;z-index:30;
 }
-.deck-nav-btn.side.left{left:-36px;}
-.deck-nav-btn.side.right{right:-36px;}
+.deck-nav-btn.side.left{left:-48px;}
+.deck-nav-btn.side.right{right:-48px;}
 .deck-nav-btn:active{background:var(--ink);color:var(--paper);}
 .deck-nav-btn:disabled{opacity:0.25;cursor:default;}
 .deck-counter{font-size:11px;font-family:monospace;color:var(--ink-faint);letter-spacing:2px;min-width:36px;text-align:center;}
@@ -803,16 +803,23 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 <!-- ═══════════════════════════ RESULT ═══════════════════════════════════ -->
 <div id="result-screen" class="screen">
   <div class="header">
-    <div class="id-badge">
-      <div class="id-badge-card own" id="r-id-card">
-        <div class="id-badge-hdr" id="r-id-hdr" style="background:var(--red)">我的职业</div>
-        <div class="id-badge-art"><span class="id-badge-emoji" id="r-id-emoji">💼</span><span class="id-badge-name" id="r-id-name">—</span></div>
+    <div class="header-center">
+      <div class="header-tab current">
+        <div class="id-badge-card" id="r-id-card">
+          <div class="id-badge-hdr" id="r-id-hdr" style="background:var(--red)">我的职业</div>
+          <div class="id-badge-art"><span class="id-badge-emoji" id="r-id-emoji">💼</span><span class="id-badge-name" id="r-id-name">—</span></div>
+        </div>
       </div>
-    </div>
-    <div class="header-right">
-      <div class="header-classify">〔职业生存图鉴〕</div>
-      <div class="header-year" id="r-yr">2026</div>
-      <div class="header-year-sub" id="r-yr-sub">年度结果</div>
+      <div class="header-tab folder" onclick="openEncModal()">
+        <div class="id-badge-card">
+          <div class="id-badge-hdr">我的图鉴</div>
+          <div class="id-badge-art">
+            <span class="id-badge-emoji">🗂</span>
+            <span class="id-badge-name">我的图鉴</span>
+            <div class="id-badge-mini-count"><span id="r-enc-count">1</span>/30</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="rv-wrap">
@@ -1026,7 +1033,7 @@ const SURVIVOR_VOICE={
   '技术':['机器不会累。但我今天也没累到放弃。','这个bug，它找不出来。','系统还在运行。我也是。'],
   '专业':['证书还挂在墙上。还能挂几年，不知道。','又一年。还有判断力，就还有位置。','那本教科书说，经验是不可替代的。我在验证这句话。'],
   '服务':['他们需要的不是答案，是有人在。','今天又送走了一个说谢谢的人。','机器可以回应，但我选择了留下。'],
-  '体力':['他们淘汰不了我的手。','今天又修好了一台只有我知道怎么修的东西。','这活不体面，但是真实的。'],
+  '体力':['他们淘汰不了我的手。','今天又修好了一台只有我知道怎么修的东西。','这双手做出来的东西，是真实的。'],
   '医疗':['又一轮。数字说我是安全的，但数字不知道我今天有多累。','病床旁边，始终需要一双手。','我的工作，就是在AI说完之后，再说一遍。'],
   '教育':['今天有个学生懂了。AI看不见这个表情。','教室里还有人在等我。','知识传下去了，但教会他们的，是我。']
 };
@@ -1168,6 +1175,11 @@ function renderDeck(idx,direction='right'){
   $('deck-counter').textContent=`${idx+1} / 5`;
   $('nav-prev').disabled=idx===0;
   $('nav-next').disabled=idx===4;
+  // 更新阴影卡牌数量（右侧剩余未查看的牌）
+  const remaining=4-idx; // idx=0→4张,idx=1→3张,...,idx=4→0张
+  document.querySelectorAll('.deck-shadow').forEach((s,i)=>{
+    s.style.display=(i<remaining&&i<3)?'':'none';
+  });
 }
 
 let twTimer=null;
@@ -1245,7 +1257,7 @@ function doDrawCards(){
 }
 
 function startYear(){
-  drawTriggered=false;
+  drawTriggered=false;decisionInProgress=false;suppressDecisionUntil=0;
   G.startOfYearCard={...G.currentCard};G.activeIdx=0;G.pendingSwap=null;
   updateHUD();updateBadge();
   $('draw-zone').style.display='block';$('draw-zone').style.opacity='1';
@@ -1364,10 +1376,9 @@ function revealResult(){
   // 更新 badge
   $('r-id-emoji').textContent=c.emoji||'💼';
   $('r-id-name').textContent=c.name;
-  // r-id-job removed
   $('r-id-hdr').textContent=c.isOwn?'我的职业':c.rarity||'N';
   $('r-id-hdr').style.background=c.isOwn?'var(--red)':(c.rarity?`var(--${c.rarity})`:'var(--ink-lt)');
-  $('r-yr').textContent=y.year;
+  const rEncEl=$('r-enc-count');if(rEncEl)rEncEl.textContent=Object.keys(G.encyclopedia).length;
   $('rv-year').textContent=`${y.year} · 年度评估`;
   if(isElim){
     showFail(y,elimResult);
@@ -1383,7 +1394,6 @@ function revealResult(){
       `<strong style="color:var(--green)">十年。</strong><br><br>「${c.name}」陪你走完了 2026—2035。<br><br>67%的职业在这十年里消失了。<br>你不在那67%里。<br><br><em style="color:var(--ink-faint);font-size:12px;">${voice}</em>`;
     $('result-next').style.display='block';
     $('result-fail-btns').style.display='none';
-    $('r-yr-sub').textContent=left>0?`还有 ${left} 年`:'十年存活';
     G.totalSalary+=(c.salary||0); // 每年存活时累计薪资
     $('result-next').textContent=G.yearIndex>=9?'查看结局 →':`进入 ${y.year+1} 年 →`;
     $('result-next').onclick=()=>{if(G.yearIndex>=9)showEnding();else{G.yearIndex++;startYear();}};
@@ -1630,20 +1640,10 @@ bindNavButton('nav-next',1,'right');
 })();
 
 // 换成这个 → 显示头像变化动画 → 弹事件modal
-['swap-btn','keep-btn'].forEach(id=>{
-  const el=$(id);
-  ['pointerdown','pointerup','touchstart','touchend','click'].forEach(evt=>{
-    el.addEventListener(evt,(e)=>{
-      if(!decisionBlocked()) return;
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-    },{passive:false,capture:true});
-  });
-});
-
+let decisionInProgress=false;
 $('swap-btn').addEventListener('click',()=>{
-  if(decisionBlocked()) return;
+  if(decisionBlocked()||decisionInProgress) return;
+  decisionInProgress=true;
   const newCard={...G.drawnCards[G.activeIdx],isOwn:false};
   const oldCard={...G.currentCard};
   showChoiceAnimation(G.currentCard,newCard,true,()=>{
@@ -1651,17 +1651,18 @@ $('swap-btn').addEventListener('click',()=>{
     G.currentCard=newCard;
     updateBadge();
     showFarewell(oldCard,G.swapCount,()=>{
-      openEventModal(()=>{proceedToElim();});
+      openEventModal(()=>{decisionInProgress=false;proceedToElim();});
     });
   });
 });
 // 保留原职 → 显示确认动画 → 弹事件modal
 $('keep-btn').addEventListener('click',()=>{
-  if(decisionBlocked()) return;
+  if(decisionBlocked()||decisionInProgress) return;
+  decisionInProgress=true;
   showChoiceAnimation(G.currentCard,G.currentCard,false,()=>{
     G.pendingSwap=null;
     openEventModal(()=>{
-      proceedToElim();
+      decisionInProgress=false;proceedToElim();
     });
   });
 });
