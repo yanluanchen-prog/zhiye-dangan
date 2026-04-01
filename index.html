@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>我的事业 · 职业生存图鉴</title>
-<!-- v20260329-0035 强制刷新缓存 -->
+<!-- v20260401-0100 强制刷新缓存 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -205,16 +205,16 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* ── DECK STACK ───────────────────────────── */
 .deck-viewer{
   position:relative;
-  max-width:282px;margin:0 auto;
-  padding:0 14px 10px 14px;
-  height:380px; /* 卡片再收窄收短，给左右按钮继续腾空间 */
+  max-width:380px;margin:0 auto;
+  padding:0 50px 10px 50px;
+  height:380px;
   touch-action:pan-y;
   user-select:none;
   -webkit-user-select:none;
 }
 /* shadow cards — 有颜色纹路，明显可见 */
 .deck-shadow{
-  position:absolute;top:0;left:0;right:28px;bottom:10px;
+  position:absolute;top:0;left:50px;right:78px;bottom:10px;
   border:2px solid var(--border);border-radius:8px;
   background:var(--paper-dk);
   background-image:repeating-linear-gradient(
@@ -251,7 +251,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   width:36px;height:36px;border-radius:50%;background:rgba(214,205,189,0.85);
   border:1px solid rgba(120,102,78,0.35);font-size:15px;color:#5a4d43;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 3px 8px rgba(0,0,0,0.06);
+  box-shadow:0 3px 8px rgba(0,0,0,0.06);touch-action:manipulation;
 }
 .deck-nav-btn::before{
   content:'';position:absolute;inset:-14px;
@@ -259,8 +259,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .deck-nav-btn.side{
   position:absolute;top:160px;z-index:30;
 }
-.deck-nav-btn.side.left{left:-48px;}
-.deck-nav-btn.side.right{right:-48px;}
+.deck-nav-btn.side.left{left:4px;}
+.deck-nav-btn.side.right{right:4px;}
 .deck-nav-btn:active{background:var(--ink);color:var(--paper);}
 .deck-nav-btn:disabled{opacity:0.25;cursor:default;}
 .deck-counter{font-size:11px;font-family:monospace;color:var(--ink-faint);letter-spacing:2px;min-width:36px;text-align:center;}
@@ -285,7 +285,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .enc-entry-badge{font-size:11px;font-weight:800;color:var(--red);border:1px solid rgba(194,59,34,.25);background:rgba(194,59,34,.06);padding:6px 10px;border-radius:999px;white-space:nowrap;}
 
 /* ── BUTTONS ──────────────────────────────── */
-.btn{padding:12px 16px;border:2px solid var(--ink);background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;font-family:monospace;width:100%;}
+.btn{padding:12px 16px;border:2px solid var(--ink);background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;font-family:monospace;width:100%;touch-action:manipulation;}
 .btn:active{opacity:0.85;}
 .btn.red{border-color:var(--red);background:var(--red);}
 .btn.outline{background:transparent;color:var(--ink);border-color:var(--border);}
@@ -400,9 +400,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   align-self:center;
   margin-top:22px;
   position:relative;z-index:5;
-  touch-action:manipulation;
   transition:transform .08s ease, opacity .08s ease, box-shadow .12s ease, filter .12s ease;
-  will-change:transform;
+  will-change:transform;touch-action:manipulation;
 }
 .pkg-sign-btn::before{
   content:'';
@@ -1183,30 +1182,6 @@ function renderDeck(idx,direction='right'){
 }
 
 let twTimer=null;
-let lastDeckNavAt=0;
-let suppressDecisionUntil=0;
-let deckNavLockTimer=null;
-function lockDecisionButtons(ms=900){
-  const now=Date.now();
-  lastDeckNavAt=now;
-  suppressDecisionUntil=now+ms;
-  const actions=$('card-actions');
-  const swapBtn=$('swap-btn');
-  const keepBtn=$('keep-btn');
-  if(actions) actions.style.pointerEvents='none';
-  if(swapBtn) swapBtn.disabled=true;
-  if(keepBtn) keepBtn.disabled=true;
-  if(deckNavLockTimer) clearTimeout(deckNavLockTimer);
-  deckNavLockTimer=setTimeout(()=>{
-    if(Date.now()<suppressDecisionUntil) return;
-    if(actions) actions.style.pointerEvents='';
-    if(swapBtn) swapBtn.disabled=false;
-    if(keepBtn) keepBtn.disabled=false;
-  },ms);
-}
-function decisionBlocked(){
-  return Date.now()<suppressDecisionUntil;
-}
 function openEventModal(onConfirm){
   const y=YEARS[G.yearIndex];
   $('ev-year').textContent=`${y.year} · 今年发生了`;
@@ -1257,7 +1232,7 @@ function doDrawCards(){
 }
 
 function startYear(){
-  drawTriggered=false;decisionInProgress=false;suppressDecisionUntil=0;
+  drawTriggered=false;decisionInProgress=false;
   G.startOfYearCard={...G.currentCard};G.activeIdx=0;G.pendingSwap=null;
   updateHUD();updateBadge();
   $('draw-zone').style.display='block';$('draw-zone').style.opacity='1';
@@ -1556,62 +1531,20 @@ $('job-dropdown').addEventListener('click',(e)=>{
 let lastNavTapAt=0;
 
 const drawBtn=$('draw-btn');
-drawBtn.style.cursor='pointer';
-['pointerdown','touchstart'].forEach(evt=>{
-  drawBtn.addEventListener(evt,()=>{
-    drawBtn.classList.add('is-pressed');
-  },{passive:true});
-});
-['pointercancel','touchcancel','pointerleave','touchmove'].forEach(evt=>{
-  drawBtn.addEventListener(evt,()=>{
-    drawBtn.classList.remove('is-pressed');
-  },{passive:true});
-});
-['pointerup','touchend','click'].forEach(evt=>{
-  drawBtn.addEventListener(evt,(e)=>{
-    e.preventDefault();
-    e.stopPropagation();
-    drawBtn.classList.remove('is-pressed');
-    doDrawCards();
-  },{passive:false});
-});
+drawBtn.addEventListener('click',()=>{ doDrawCards(); });
 
 function navDeck(delta,direction){
   const now=Date.now();
-  if(now-lastNavTapAt<220) return;
+  if(now-lastNavTapAt<250) return;
   lastNavTapAt=now;
-  lockDecisionButtons(1000);
   const nextIdx=G.activeIdx+delta;
   if(nextIdx<0||nextIdx>4) return;
   G.activeIdx=nextIdx;
   renderDeck(G.activeIdx,direction);
 }
 
-function bindNavButton(id,delta,direction){
-  const el=$(id);
-  let pressed=false;
-  ['pointerdown','touchstart'].forEach(evt=>{
-    el.addEventListener(evt,(e)=>{
-      e.preventDefault();
-      e.stopPropagation();
-      pressed=true;
-    },{passive:false});
-  });
-  ['pointercancel','touchcancel','pointerleave'].forEach(evt=>{
-    el.addEventListener(evt,()=>{ pressed=false; },{passive:true});
-  });
-  ['pointerup','touchend','click'].forEach(evt=>{
-    el.addEventListener(evt,(e)=>{
-      e.preventDefault();
-      e.stopPropagation();
-      if(evt==='click' && pressed) return;
-      pressed=false;
-      navDeck(delta,direction);
-    },{passive:false});
-  });
-}
-bindNavButton('nav-prev',-1,'left');
-bindNavButton('nav-next',1,'right');
+$('nav-prev').addEventListener('click',()=>navDeck(-1,'left'));
+$('nav-next').addEventListener('click',()=>navDeck(1,'right'));
 
 // 恢复卡片区域左右滑动切卡；只有明确横向滑动才翻卡，普通点击不触发
 (function(){
@@ -1642,7 +1575,7 @@ bindNavButton('nav-next',1,'right');
 // 换成这个 → 显示头像变化动画 → 弹事件modal
 let decisionInProgress=false;
 $('swap-btn').addEventListener('click',()=>{
-  if(decisionBlocked()||decisionInProgress) return;
+  if(decisionInProgress) return;
   decisionInProgress=true;
   const newCard={...G.drawnCards[G.activeIdx],isOwn:false};
   const oldCard={...G.currentCard};
@@ -1657,7 +1590,7 @@ $('swap-btn').addEventListener('click',()=>{
 });
 // 保留原职 → 显示确认动画 → 弹事件modal
 $('keep-btn').addEventListener('click',()=>{
-  if(decisionBlocked()||decisionInProgress) return;
+  if(decisionInProgress) return;
   decisionInProgress=true;
   showChoiceAnimation(G.currentCard,G.currentCard,false,()=>{
     G.pendingSwap=null;
