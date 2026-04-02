@@ -1592,17 +1592,25 @@ $('job-dropdown').addEventListener('click',(e)=>{
 
 let lastNavTapAt=0;
 
-/* 响应式点击：pointerup立即触发，click作兜底（键盘/无障碍） */
+/* 响应式点击：touchend立即触发（移动端），click兜底（桌面/键盘） */
 function onTap(el,fn){
-  let fired=false;
-  el.addEventListener('pointerup',(e)=>{e.preventDefault();fired=true;fn(e);},{passive:false});
-  el.addEventListener('click',(e)=>{if(fired){fired=false;return;}fn(e);});
+  let sy=0,handled=false;
+  el.addEventListener('touchstart',(e)=>{sy=e.touches[0].clientY;},{passive:true});
+  el.addEventListener('touchend',(e)=>{
+    if(Math.abs(e.changedTouches[0].clientY-sy)>10) return;
+    e.preventDefault();handled=true;fn(e);
+  },{passive:false});
+  el.addEventListener('click',(e)=>{if(handled){handled=false;return;}fn(e);});
 }
 /* 可动态更换handler的版本（用于ev-confirm, result-next等） */
 function bindDynTap(el){
-  let fired=false;
-  el.addEventListener('pointerup',(e)=>{e.preventDefault();fired=true;if(el._tapFn)el._tapFn(e);},{passive:false});
-  el.addEventListener('click',(e)=>{if(fired){fired=false;return;}if(el._tapFn)el._tapFn(e);});
+  let sy=0,handled=false;
+  el.addEventListener('touchstart',(e)=>{sy=e.touches[0].clientY;},{passive:true});
+  el.addEventListener('touchend',(e)=>{
+    if(Math.abs(e.changedTouches[0].clientY-sy)>10) return;
+    e.preventDefault();handled=true;if(el._tapFn)el._tapFn(e);
+  },{passive:false});
+  el.addEventListener('click',(e)=>{if(handled){handled=false;return;}if(el._tapFn)el._tapFn(e);});
 }
 bindDynTap($('ev-confirm'));
 bindDynTap($('result-next'));
