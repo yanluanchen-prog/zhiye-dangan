@@ -160,7 +160,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .ydot.cur{background:var(--red);}
 
 /* ── SECTION ──────────────────────────────── */
-.container{padding:12px 14px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.container{padding:12px 14px;flex:1;overflow-y:auto;}
 .section{background:var(--paper-lt);border:1px solid var(--border);padding:13px;margin-bottom:11px;position:relative;}
 .section::before{content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:1px solid var(--border);pointer-events:none;opacity:0.5;}
 .section.no-frame{background:transparent;border:none;padding:0;}
@@ -1254,7 +1254,7 @@ function openEventModal(onConfirm){
     if(i<y.event.length){el.textContent+=y.event[i];i++;}
     else{clearInterval(twTimer);$('ev-slogan').textContent='— '+y.slogan;$('ev-slogan').style.display='block';}
   },12);
-  $('ev-confirm').onclick=()=>{
+  $('ev-confirm')._tapFn=()=>{
     $('event-modal').classList.remove('open');
     onConfirm();
   };
@@ -1431,7 +1431,7 @@ function revealResult(){
     $('result-fail-btns').style.display='none';
     G.totalSalary+=(c.salary||0); // 每年存活时累计薪资
     $('result-next').textContent=G.yearIndex>=9?'查看结局 →':`进入 ${y.year+1} 年 →`;
-    $('result-next').onclick=()=>{if(G.yearIndex>=9)showEnding();else{G.yearIndex++;startYear();}};
+    $('result-next')._tapFn=()=>{if(G.yearIndex>=9)showEnding();else{G.yearIndex++;startYear();}};
   }
   showScreen('result-screen');
 }
@@ -1592,8 +1592,22 @@ $('job-dropdown').addEventListener('click',(e)=>{
 
 let lastNavTapAt=0;
 
-const drawBtn=$('draw-btn');
-drawBtn.addEventListener('click',()=>{ doDrawCards(); });
+/* 响应式点击：pointerup立即触发，click作兜底（键盘/无障碍） */
+function onTap(el,fn){
+  let fired=false;
+  el.addEventListener('pointerup',(e)=>{e.preventDefault();fired=true;fn(e);},{passive:false});
+  el.addEventListener('click',(e)=>{if(fired){fired=false;return;}fn(e);});
+}
+/* 可动态更换handler的版本（用于ev-confirm, result-next等） */
+function bindDynTap(el){
+  let fired=false;
+  el.addEventListener('pointerup',(e)=>{e.preventDefault();fired=true;if(el._tapFn)el._tapFn(e);},{passive:false});
+  el.addEventListener('click',(e)=>{if(fired){fired=false;return;}if(el._tapFn)el._tapFn(e);});
+}
+bindDynTap($('ev-confirm'));
+bindDynTap($('result-next'));
+
+onTap($('draw-btn'),()=>{ doDrawCards(); });
 
 function navDeck(delta,direction){
   const now=Date.now();
@@ -1605,8 +1619,8 @@ function navDeck(delta,direction){
   renderDeck(G.activeIdx,direction);
 }
 
-$('nav-prev').addEventListener('click',()=>navDeck(-1,'left'));
-$('nav-next').addEventListener('click',()=>navDeck(1,'right'));
+onTap($('nav-prev'),()=>navDeck(-1,'left'));
+onTap($('nav-next'),()=>navDeck(1,'right'));
 
 // 恢复卡片区域左右滑动切卡；只有明确横向滑动才翻卡，普通点击不触发
 (function(){
@@ -1636,7 +1650,7 @@ $('nav-next').addEventListener('click',()=>navDeck(1,'right'));
 
 // 换成这个 → 显示头像变化动画 → 弹事件modal
 let decisionInProgress=false;
-$('swap-btn').addEventListener('click',()=>{
+onTap($('swap-btn'),()=>{
   if(decisionInProgress) return;
   decisionInProgress=true;
   const newCard={...G.drawnCards[G.activeIdx],isOwn:false};
@@ -1651,7 +1665,7 @@ $('swap-btn').addEventListener('click',()=>{
   });
 });
 // 保留原职 → 显示确认动画 → 弹事件modal
-$('keep-btn').addEventListener('click',()=>{
+onTap($('keep-btn'),()=>{
   if(decisionInProgress) return;
   decisionInProgress=true;
   showChoiceAnimation(G.currentCard,G.currentCard,false,()=>{
@@ -1687,8 +1701,8 @@ $('cm-swap').addEventListener('click',function(){
 });
 
 $('enc-bg').addEventListener('click',closeEncModal);$('enc-x').addEventListener('click',closeEncModal);
-$('result-restart').addEventListener('click',doRestart);
-$('result-quit').addEventListener('click',doQuit);
+onTap($('result-restart'),doRestart);
+onTap($('result-quit'),doQuit);
 function doRestart(){
   // 重新开始职业生涯：回到职业选择页
   G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0};
@@ -1709,16 +1723,15 @@ function doQuit(){
   $('job-display').textContent='';
   showScreen('intro-screen');
 }
-$('restart-btn').addEventListener('click',doRestart);
-// quit-btn removed from fail screen
-$('play-again-btn').addEventListener('click',()=>{
+onTap($('restart-btn'),doRestart);
+onTap($('play-again-btn'),()=>{
   const ownJob=POOL.find(c=>c.name===G.ownCard.name);
   G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};G.totalSalary=0;G.swapCount=0;G.drawnCards=[];G.pendingSwap=null;G.startOfYearCard=null;G.activeIdx=0;
   if(ownJob)addToEnc(ownJob);
   startYear();
 });
-$('story-enter-btn').addEventListener('click',()=>{startYear();});
-$('farewell-btn').addEventListener('click',()=>{
+onTap($('story-enter-btn'),()=>{startYear();});
+onTap($('farewell-btn'),()=>{
   $('farewell-overlay').style.display='none';
   if(_farewellCallback)_farewellCallback();
 });
