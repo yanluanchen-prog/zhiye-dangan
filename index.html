@@ -1462,24 +1462,24 @@ function calculateElimination(card,yearIndex){
   const y=YEARS[yearIndex];
   const inList=y.eliminated.includes(card.name);
   const resistance=card.aiResist||50;
-  let survivalRate=resistance/100;
   let blackSwan=false;
-  // 零淘汰年：关闭所有冲击
-  if(y.eliminated.length===0){
-    survivalRate=Math.min(0.97,(resistance/100)+0.1);
-    return{survived:Math.random()<survivalRate,inList,resistance,blackSwan:false};
+
+  // 救生员永久存活
+  if(card.aiResist>=99) return{survived:true,inList:false,resistance,blackSwan:false};
+
+  // 不在淘汰名单：默认存活
+  if(!inList){
+    // 黑天鹅年：非名单职业有10%概率被波及（财政危机随机伤害）
+    if(y.blackSwan&&Math.random()<0.10){
+      blackSwan=true;
+      return{survived:false,inList,resistance,blackSwan};
+    }
+    return{survived:true,inList,resistance,blackSwan:false};
   }
-  // 在淘汰名单：生存率大幅下降
-  if(inList)survivalRate*=0.3;
-  // 黑天鹅年：未在名单的职业有15%概率被意外波及
-  if(y.blackSwan&&!inList&&Math.random()<0.15){
-    blackSwan=true;
-    survivalRate=Math.min(survivalRate,0.2);
-  }
-  // 所有年份小幅随机波动 ±6%（命运有随机性）
-  const noise=(Math.random()-0.5)*0.12;
-  survivalRate+=noise;
-  survivalRate=Math.max(0.05,Math.min(0.95,survivalRate));
+
+  // 在淘汰名单：按aiResist决定能否抵抗
+  // aiResist越高，越可能撑过去（但仍有较大概率被淘汰）
+  const survivalRate=Math.max(0.05, Math.min(0.45, (resistance-20)/100));
   return{survived:Math.random()<survivalRate,inList,resistance,blackSwan};
 }
 
