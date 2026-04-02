@@ -1467,15 +1467,8 @@ function calculateElimination(card,yearIndex){
   // 救生员永久存活
   if(card.aiResist>=99) return{survived:true,inList:false,resistance,blackSwan:false};
 
-  // 不在淘汰名单：默认存活
-  if(!inList){
-    // 黑天鹅年：非名单职业有10%概率被波及（财政危机随机伤害）
-    if(y.blackSwan&&Math.random()<0.10){
-      blackSwan=true;
-      return{survived:false,inList,resistance,blackSwan};
-    }
-    return{survived:true,inList,resistance,blackSwan:false};
-  }
+  // 不在淘汰名单：必然存活（包括黑天鹅年）
+  if(!inList) return{survived:true,inList,resistance,blackSwan:false};
 
   // 在淘汰名单：按aiResist决定能否抵抗
   // aiResist越高，越可能撑过去（但仍有较大概率被淘汰）
