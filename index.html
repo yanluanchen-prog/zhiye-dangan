@@ -756,19 +756,23 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
         <div class="deck-nav">
           <span class="deck-counter" id="deck-counter">1 / 5</span>
         </div>
-        <!-- 两个决策按钮 -->
-        <div class="card-actions" id="card-actions">
-          <button class="btn outline" id="keep-btn">继续苟着</button>
-          <button class="btn red" id="swap-btn">选择跳槽</button>
-        </div>
-        <div class="game-year-footer">
-          <div class="game-year-main" id="gh-year">2026</div>
-          <div class="game-year-sub" id="gh-year-sub">第1年 / 共10年</div>
-        </div>
       </div>
     </div>
 
   </div>
+
+  <!-- 决策按钮区 - 放在container外面，避免iOS scrollable容器吞触摸 -->
+  <div id="game-bottom" style="display:none;flex-shrink:0;padding:0 14px calc(8px + env(safe-area-inset-bottom));">
+    <div class="card-actions" id="card-actions">
+      <button class="btn outline" id="keep-btn">继续苟着</button>
+      <button class="btn red" id="swap-btn">选择跳槽</button>
+    </div>
+    <div class="game-year-footer">
+      <div class="game-year-main" id="gh-year">2026</div>
+      <div class="game-year-sub" id="gh-year-sub">第1年 / 共10年</div>
+    </div>
+  </div>
+
 </div>
 
 <!-- ═══════════════════ CHOICE CONFIRM MODAL ═══════════════════════ -->
@@ -1279,6 +1283,7 @@ function doDrawCards(){
     setTimeout(()=>{
       $('draw-zone').style.display='none';
       $('hand-zone').style.display='block';
+      $('game-bottom').style.display='block';
       renderDeck(0);
       const activeCard=$('deck-active').firstElementChild;
       if(activeCard)activeCard.classList.add('card-fly-in');
@@ -1287,6 +1292,7 @@ function doDrawCards(){
   } else {
     $('draw-zone').style.display='none';
     $('hand-zone').style.display='block';
+    $('game-bottom').style.display='block';
     renderDeck(0);
   }
 }
@@ -1297,6 +1303,7 @@ function startYear(){
   updateHUD();updateBadge();
   $('draw-zone').style.display='block';$('draw-zone').style.opacity='1';
   $('hand-zone').style.display='none';
+  $('game-bottom').style.display='none';
   $('deck-active').innerHTML='';
   // 更新快递面单
   const y=YEARS[G.yearIndex];
