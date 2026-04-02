@@ -1518,14 +1518,17 @@ function showFail(y,elimResult){
   const fEncEl=$('f-enc-count');if(fEncEl)fEncEl.textContent=Object.keys(G.encyclopedia).length;
   $('f-yr-big').textContent=y.year;
   let reason;
-  if(elimResult&&elimResult.inList){
+  let suffix='不是你的错。只是时代的滚轮，刚好从你这里压过去了。';
+  if(elimResult&&elimResult.inList&&y.blackSwan){
+    // 黑天鹅年（2030）：不是AI直接替代，是财政紧缩
+    reason=`「${c.name}」这一年的失业，和AI没有直接关系。\n\nAI量化算法崩盘，全球市场单周跌38%，政府财政紧缩，编制削减。\n\n${y.slogan}`;
+    suffix='不是AI替代了你。是AI把这一切搞砸了，然后预算里没有了你的位置。';
+  } else if(elimResult&&elimResult.inList){
     reason=`「${c.name}」在 ${y.year} 年进入了AI淘汰名单。\n\n这是大势所趋，早有征兆。`;
-  } else if(elimResult&&elimResult.blackSwan){
-    reason=`「${c.name}」不在今年的重点淘汰名单上——\n但黑天鹅降临了。\n\n没有预警，没有道理。市场就是这样。`;
   } else {
     reason=`「${c.name}」不在今年的重点淘汰名单上。\n\n但时代的淘汰从来不只按名单来。有时候只是浪打过来，刚好打到你。`;
   }
-  $('f-text').textContent=`${y.year}年。\n\n${reason}\n\n不是你的错。只是时代的滚轮，刚好从你这里压过去了。`;
+  $('f-text').textContent=`${y.year}年。\n\n${reason}\n\n${suffix}`;
   showScreen('fail-screen');
 }
 
