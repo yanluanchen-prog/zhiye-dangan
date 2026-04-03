@@ -1209,53 +1209,30 @@ body:has(#story-screen.active) {
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* 2. 暖光爆闪 - 更亮更大 */
+/* 2. 暖光晕去掉 */
 .pkg-bag { position: relative; overflow: visible; }
-.pkg-bag.opening::after {
-  content: '' !important;
-  position: absolute !important;
-  top: -10% !important; left: -10% !important;
-  width: 120% !important; height: 120% !important;
-  z-index: 8 !important;
-  pointer-events: none !important;
-  border-radius: 12px !important;
-  background: radial-gradient(
-    ellipse 90% 70% at 50% 20%,
-    rgba(255,255,210,1.0) 0%,
-    rgba(255,230,100,0.75) 22%,
-    rgba(255,190,60,0.35) 48%,
-    transparent 70%
-  ) !important;
-  animation: mv-unbox-glow 0.85s ease-out forwards !important;
-}
-@keyframes mv-unbox-glow {
-  0%   { opacity: 0;    transform: scale(0.7); }
-  12%  { opacity: 0; }
-  28%  { opacity: 1;    transform: scale(1.08); } /* 撕开瞬间爆光 */
-  48%  { opacity: 0.88; transform: scale(1.02); }
-  80%  { opacity: 0.4; }
-  100% { opacity: 0;    transform: scale(1.05); }
-}
 
-/* 3. 条带：先抖动两下，再猛甩出去 */
+/* 3. 条带：放慢整体节奏，撕开过程和飞走过程都看得清 */
 .pkg-bag.opening #pkg-top-strip {
-  animation: mv-strip-tear 0.75s cubic-bezier(0.25,0.46,0.45,0.94) forwards !important;
+  animation: mv-strip-tear 1.4s ease-in-out forwards !important;
 }
 @keyframes mv-strip-tear {
   0%   { transform: translate(0,0) rotate(0); opacity: 1; }
-  8%   { transform: translate(4px, 1px) rotate(1.5deg); }        /* 抖右 */
-  16%  { transform: translate(-5px, 0) rotate(-2deg); }          /* 抖左 */
-  24%  { transform: translate(5px, -3px) rotate(2.5deg); }       /* 抖右+上挑 */
-  32%  { transform: translate(0, -6px) rotate(-1deg) scale(1.02); } /* 蓄力 */
-  /* 开撕 */
-  45%  { transform: translate(15px,-30px) rotate(12deg) scale(1.0); opacity: 1; }
-  70%  { transform: translate(60px,-90px) rotate(28deg) scale(0.97); opacity: 0.7; }
-  100% { transform: translate(95px,-145px) rotate(42deg) scale(0.93); opacity: 0; }
+  /* 蓄力抖动 - 放慢让人看清 */
+  8%   { transform: translate(5px, 1px) rotate(2deg); }
+  18%  { transform: translate(-6px, 0) rotate(-2.5deg); }
+  28%  { transform: translate(6px, -4px) rotate(3deg); }
+  38%  { transform: translate(0, -8px) rotate(-1deg) scale(1.025); }
+  /* 撕开起飞 - 慢起 */
+  50%  { transform: translate(20px,-38px) rotate(14deg); opacity: 1; }
+  /* 飞走 - 匀速飞远 */
+  75%  { transform: translate(65px,-100px) rotate(30deg) scale(0.96); opacity: 0.75; }
+  100% { transform: translate(105px,-160px) rotate(46deg) scale(0.92); opacity: 0; }
 }
 
 /* 4. 袋体：弹跳 + 显露开口 */
 .pkg-bag.opening #pkg-bag-body {
-  animation: mv-bag-pop 0.75s ease-out forwards !important;
+  animation: mv-bag-pop 1.4s ease-out forwards !important;
 }
 @keyframes mv-bag-pop {
   0%   { transform: scale(1) translateY(0);   clip-path: inset(0 0 0 0 round 8px); }
@@ -2076,7 +2053,7 @@ function doDrawCards(){
       const activeCard=$('deck-active').firstElementChild;
       if(activeCard)activeCard.classList.add('card-fly-in');
       bag.classList.remove('opening');
-    },980);
+    },1450);
   } else {
     $('draw-zone').style.display='none';
     $('hand-zone').style.display='block';
