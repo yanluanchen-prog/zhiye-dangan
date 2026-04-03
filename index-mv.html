@@ -1150,6 +1150,12 @@ body:has(#story-screen.active) {
 /* deck-viewer 外壳也透明 */
 .deck-viewer { background: transparent !important; border: none !important; }
 
+/* deck-active 要和 card 的 border-radius 一致，否则 overflow:hidden 裁掉圆角 */
+.deck-active {
+  border-radius: 22px !important;
+  overflow: hidden !important;
+}
+
 </style>
 
 
