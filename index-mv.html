@@ -888,8 +888,17 @@ html, body {
   background: var(--mv-bg) !important;
 }
 
-/* 开场文字亮化 */
-#intro-screen { background: var(--mv-bg) !important; }
+/* ── 开场页：提升选择器优先级以覆盖原有 !important ─────────── */
+#intro-screen,
+#intro-screen.screen,
+#intro-screen.screen.active,
+body:has(#intro-screen.active) {
+  background: var(--mv-bg) !important;
+}
+/* 故事/告别页同理 */
+#story-screen.screen,
+#story-screen.screen.active,
+#farewell-overlay { background: var(--mv-bg) !important; }
 
 /* 职业下拉框 */
 #job-dropdown {
@@ -952,28 +961,28 @@ html, body {
 <div id="intro-screen" class="screen active" style="background:#0a0a0a;position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);z-index:1;">
   <div style="max-width:380px;width:100%;padding:32px 24px;box-sizing:border-box;">
     <div style="text-align:center;margin-bottom:36px;">
-      <div style="font-size:11px;letter-spacing:5px;color:#3a4a5a;font-family:'Courier New',monospace;text-transform:uppercase;margin-bottom:16px;">〔职业生存图鉴〕</div>
-      <div style="font-family:'Courier New',monospace;font-size:40px;color:#d4cfc6;letter-spacing:12px;line-height:1.1;margin-bottom:16px;">我的事业</div>
-      <div style="width:40px;height:2px;background:#8b1a2b;margin:0 auto 32px;"></div>
+      <div style="font-size:11px;letter-spacing:5px;color:rgba(180,155,225,0.5);font-family:'Courier New',monospace;text-transform:uppercase;margin-bottom:16px;">〔职业生存图鉴〕</div>
+      <div style="font-family:'Courier New',monospace;font-size:40px;color:rgba(237,232,224,0.95);letter-spacing:12px;line-height:1.1;margin-bottom:16px;text-shadow:0 0 40px rgba(180,155,225,0.18);">我的事业</div>
+      <div style="width:40px;height:2px;background:rgba(180,155,225,0.55);margin:0 auto 32px;box-shadow:0 0 10px rgba(180,155,225,0.3);border-radius:2px;"></div>
     </div>
-    <div style="font-family:'Courier New',monospace;color:#d4cfc6;line-height:2;font-size:15px;margin-bottom:40px;">
+    <div style="font-family:'Courier New',monospace;color:rgba(237,232,224,0.82);line-height:2;font-size:15px;margin-bottom:40px;">
       <p style="margin:0 0 14px;">2026年，67% 的职业面临AI替代风险。</p>
       <p style="margin:0 0 14px;">从这一年起，每年都有职业消失。</p>
       <p style="margin:0;">你的职业，还能撑多久？</p>
     </div>
     <div style="margin-bottom:24px;position:relative;">
-      <div style="font-size:20px;color:#c8a878;letter-spacing:2px;margin-bottom:16px;">选择你的职业</div>
+      <div style="font-size:20px;color:rgba(210,188,240,0.88);letter-spacing:2px;margin-bottom:16px;">选择你的职业</div>
       <div id="job-input-wrapper" style="position:relative;">
         <input id="job-display" type="text" placeholder="点击选择职业" readonly
-          style="width:100%;background:transparent;border:none;border-bottom:1px solid #3a3028;color:#d4cfc6;font-family:'Courier New',monospace;font-size:14px;letter-spacing:1px;padding:10px 0 14px;outline:none;text-align:left;border-radius:0;-webkit-appearance:none;cursor:pointer;opacity:0.6;">
+          style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.18);color:rgba(237,232,224,0.88);font-family:'Courier New',monospace;font-size:14px;letter-spacing:1px;padding:10px 0 14px;outline:none;text-align:left;border-radius:0;-webkit-appearance:none;cursor:pointer;opacity:0.6;">
         <div id="job-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:280px;overflow-y:auto;border:1px solid #3a3028;border-radius:4px;background:#0a0a0a;z-index:100;margin-top:4px;box-shadow:0 4px 20px rgba(0,0,0,0.5);">
           <!-- 职业选择列表 -->
         </div>
       </div>
       <div id="job-error" style="color:#8b1a2b;font-size:11px;margin-top:8px;letter-spacing:1px;opacity:0;transition:opacity 0.3s;font-family:'Courier New',monospace;">请先选择职业</div>
     </div>
-    <button id="start-btn" style="display:block;width:100%;background:#8b1a2b;color:#f0ebe0;border:none;padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;">看看我的职业发展之路</button>
-    <div style="margin-top:16px;text-align:center;font-size:9px;color:#5a4a38;font-family:'Courier New',monospace;letter-spacing:1px;">数据来源 · Anthropic经济指数报告</div>
+    <button id="start-btn" style="display:block;width:100%;background:rgba(120,95,165,0.65);color:rgba(237,232,224,0.92);border:1px solid rgba(180,155,225,0.3);padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;border-radius:10px;">看看我的职业发展之路</button>
+    <div style="margin-top:16px;text-align:center;font-size:9px;color:rgba(237,232,224,0.28);font-family:'Courier New',monospace;letter-spacing:1px;">数据来源 · Anthropic经济指数报告</div>
   </div>
 </div>
 
