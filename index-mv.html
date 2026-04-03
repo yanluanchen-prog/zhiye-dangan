@@ -1309,6 +1309,7 @@ body:has(#story-screen.active) {
 
 </head>
 <body>
+<button id="music-toggle" onclick="toggleMusic()" title="音乐开关">♪</button>
 
 <!-- ═══════════════════════════════ INTRO ═══════════════════════════════ -->
 <div id="intro-screen" class="screen active" style="background:transparent;position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);z-index:1;">
@@ -1900,7 +1901,7 @@ function generateFarewell(card,swapN){
 }
 let _farewellCallback=null;
 function showFarewell(oldCard,swapN,cb){
-  $('farewell-title').textContent=`你离开了「${oldCard.name}」`;
+  $('farewell-title').textContent=`—— ${oldCard.name} ——`;
   $('farewell-text').textContent=generateFarewell(oldCard,swapN);
   _farewellCallback=cb;
   $('farewell-overlay').style.display='flex';
@@ -2836,6 +2837,223 @@ onTap($('farewell-btn'),()=>{
 // 初始化职业选择器
 renderJobSelector();
 </script>
+
+<!-- ══ 音效 & 音乐系统 (Web Audio API) ══════════════════════════ -->
+<script>
+(function(){
+  'use strict';
+  const AC = window.AudioContext || window.webkitAudioContext;
+  let ctx = null, musicOn = true, musicTimer = null;
+
+  function C() {
+    if (!ctx) ctx = new AC();
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  // 淡入淡出辅助
+  function fade(gain, from, to, t, dur) {
+    gain.gain.setValueAtTime(from, t);
+    if (to < 0.001) gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    else gain.gain.linearRampToValueAtTime(to, t + dur);
+  }
+
+  // 单音（正弦/三角）
+  function tone(freq, dur, vol=0.18, type='sine', attack=0.02, delay=0) {
+    const c = C(), t = c.currentTime + delay;
+    const osc = c.createOscillator(), g = c.createGain();
+    osc.connect(g); g.connect(c.destination);
+    osc.type = type; osc.frequency.value = freq;
+    fade(g, 0.0001, vol, t, attack);
+    fade(g, vol, 0, t + attack, dur - attack);
+    osc.start(t); osc.stop(t + dur + 0.05);
+  }
+
+  // 白噪声脉冲（开包撕裂感）
+  function noise(dur, vol=0.18, filterFreq=3000, filterQ=0.8) {
+    const c = C();
+    const len = c.sampleRate * dur;
+    const buf = c.createBuffer(1, len, c.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, 1.8);
+    const src = c.createBufferSource(), flt = c.createBiquadFilter(), g = c.createGain();
+    flt.type = 'bandpass'; flt.frequency.value = filterFreq; flt.Q.value = filterQ;
+    src.buffer = buf;
+    src.connect(flt); flt.connect(g); g.connect(c.destination);
+    g.gain.value = vol;
+    src.start();
+  }
+
+  /* ── 各种音效 ──────────────────────────────────────────────── */
+
+  // 按钮轻点
+  window.sndClick = function() {
+    try { tone(1100, 0.08, 0.10, 'sine', 0.005); } catch(e){}
+  };
+
+  // 开包撕裂
+  window.sndOpen = function() {
+    try {
+      noise(0.28, 0.22, 2800, 0.7);
+      tone(600, 0.18, 0.08, 'sine', 0.01, 0.05);
+    } catch(e){}
+  };
+
+  // 卡牌升起
+  window.sndCardRise = function() {
+    try {
+      const c = C(), t = c.currentTime;
+      const osc = c.createOscillator(), g = c.createGain();
+      osc.connect(g); g.connect(c.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(220, t);
+      osc.frequency.exponentialRampToValueAtTime(440, t + 0.35);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.linearRampToValueAtTime(0.14, t + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+      osc.start(t); osc.stop(t + 0.45);
+    } catch(e){}
+  };
+
+  // 年份事件弹出（单一钟声）
+  window.sndBell = function() {
+    try { tone(880, 1.2, 0.14, 'sine', 0.01); } catch(e){}
+  };
+
+  // 年份推进（上行琶音 F大调五声）
+  window.sndYearUp = function() {
+    try {
+      [349.23, 440, 523.25, 698.46].forEach((f, i) => tone(f, 0.55, 0.13, 'sine', 0.02, i*0.11));
+    } catch(e){}
+  };
+
+  // 游戏胜利（温暖大三和弦）
+  window.sndWin = function() {
+    try {
+      [261.63, 329.63, 392, 523.25].forEach((f, i) => tone(f, 2.8, 0.14, 'sine', 0.08, i*0.08));
+    } catch(e){}
+  };
+
+  // 游戏失败（下行小调）
+  window.sndFail = function() {
+    try {
+      const c = C(), t = c.currentTime;
+      const osc = c.createOscillator(), g = c.createGain();
+      osc.connect(g); g.connect(c.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(440, t);
+      osc.frequency.exponentialRampToValueAtTime(220, t + 1.2);
+      fade(g, 0.0001, 0.18, t, 0.05);
+      fade(g, 0.18, 0, t+0.1, 1.1);
+      osc.start(t); osc.stop(t + 1.3);
+      // 小三度 (261.63 = C4, 220 = A3)
+      tone(261.63, 1.5, 0.10, 'sine', 0.04, 0.3);
+    } catch(e){}
+  };
+
+  /* ── 环境音乐（五声音阶随机琶音）─────────────────────────── */
+  const PENTA = [261.63, 293.66, 329.63, 392, 440, 523.25, 587.33, 659.25];
+
+  function ambientTick() {
+    if (!musicOn) return;
+    try {
+      const freq = PENTA[Math.floor(Math.random()*PENTA.length)];
+      const oct  = Math.random() < 0.25 ? 2 : 1;
+      tone(freq * oct, 2.5 + Math.random()*2, 0.055 + Math.random()*0.035, 'sine', 0.15);
+    } catch(e){}
+    musicTimer = setTimeout(ambientTick, 900 + Math.random()*2200);
+  }
+
+  window.startAmbient = function() {
+    if (!musicOn || musicTimer) return;
+    ambientTick();
+  };
+
+  window.stopAmbient = function() {
+    if (musicTimer) { clearTimeout(musicTimer); musicTimer = null; }
+  };
+
+  window.toggleMusic = function() {
+    musicOn = !musicOn;
+    if (musicOn) { window.startAmbient(); }
+    else { window.stopAmbient(); }
+    const btn = document.getElementById('music-toggle');
+    if (btn) btn.textContent = musicOn ? '♪' : '♩';
+  };
+
+  /* ── 事件监听绑定 ──────────────────────────────────────────── */
+  function bindSounds() {
+    // 所有按钮点击音
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('button, .pkg-sign-btn');
+      if (btn) {
+        C(); // 激活 AudioContext（需要用户手势）
+        sndClick();
+      }
+    }, true);
+
+    // 开包：监听 .pkg-bag 加 opening class
+    const bag = document.getElementById('pkg-bag');
+    if (bag) {
+      new MutationObserver(ms => {
+        ms.forEach(m => {
+          if (m.attributeName==='class' && bag.classList.contains('opening')) {
+            setTimeout(sndOpen, 50);
+            setTimeout(sndCardRise, 850);
+          }
+        });
+      }).observe(bag, {attributes:true});
+    }
+
+    // 年份事件弹出
+    const evModal = document.getElementById('event-modal');
+    if (evModal) {
+      new MutationObserver(ms => {
+        ms.forEach(m => {
+          if (m.attributeName==='style' && evModal.style.display==='flex') sndBell();
+        });
+      }).observe(evModal, {attributes:true, attributeFilter:['style']});
+    }
+
+    // 结局/年份推进
+    const endScreen = document.getElementById('ending-screen');
+    const failScreen = document.getElementById('fail-screen');
+    const resultScreen = document.getElementById('result-screen');
+
+    if (endScreen) new MutationObserver(ms => {
+      ms.forEach(m => { if (endScreen.classList.contains('active')) setTimeout(sndWin, 300); });
+    }).observe(endScreen, {attributes:true, attributeFilter:['class']});
+
+    if (failScreen) new MutationObserver(ms => {
+      ms.forEach(m => { if (failScreen.classList.contains('active')) setTimeout(sndFail, 200); });
+    }).observe(failScreen, {attributes:true, attributeFilter:['class']});
+
+    if (resultScreen) new MutationObserver(ms => {
+      ms.forEach(m => { if (resultScreen.classList.contains('active')) setTimeout(sndYearUp, 100); });
+    }).observe(resultScreen, {attributes:true, attributeFilter:['class']});
+
+    // 游戏开始时启动音乐（首次进入故事页）
+    const storyScreen = document.getElementById('story-screen');
+    if (storyScreen) {
+      let started = false;
+      new MutationObserver(() => {
+        if (!started && storyScreen.classList.contains('active')) {
+          started = true;
+          window.startAmbient();
+        }
+      }).observe(storyScreen, {attributes:true, attributeFilter:['class']});
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindSounds);
+  } else {
+    bindSounds();
+  }
+})();
+</script>
+<!-- ════════════════════════════════════════════════════════════ -->
+
 </body>
 </html>
 <!-- deploy Sun Mar 29 06:55:41 PM CST 2026 -->
