@@ -2446,7 +2446,9 @@ function openEncModal(){
     const elim=ELIM_YEAR[card.name]&&ELIM_YEAR[card.name]<=curYear;
     const div=document.createElement('div');
     div.className='enc-item mini-card '+card.rarity+(elim?' elim':'');
-    div.innerHTML=`<div class="mini-header"><span class="mini-rarity">${card.rarity}</span></div><div class="mini-art"><span class="mini-icon">${card.emoji}</span><span class="mini-name">${card.name}</span></div><div class="enc-info">${elim?ELIM_YEAR[card.name]+'年':'×'+timesDrawn}</div>`;
+    const fileNo=(card.fileNum||'').replace(/^[A-Z]+-/,'');
+    const elimYear=ELIM_YEAR[card.name]&&ELIM_YEAR[card.name]<=curYear?ELIM_YEAR[card.name]+'年':'—';
+    div.innerHTML=`<div class="mini-header"><span class="mini-rarity">${fileNo}</span></div><div class="mini-art"><span class="mini-icon">${card.emoji}</span><span class="mini-name">${card.name}</span></div><div class="enc-info">${elimYear}</div>`;
     div.addEventListener('click',()=>{closeEncModal();openCardDetail(card);});
     grid.appendChild(div);
   });
