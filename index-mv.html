@@ -1250,6 +1250,12 @@ body:has(#story-screen.active) {
   animation: bagOpenBody 0.01s linear forwards !important;
   clip-path: none !important;
 }
+
+/* 袋体顶部虚线：和上半截 border-bottom 对称，上半截飞走后显现 */
+#pkg-bag-body {
+  border-top: 2px dashed rgba(160,140,110,0.45) !important;
+  border-radius: 0 0 8px 8px !important;
+}
 /* ════════════════════════════════════════════════════════════════ */
 
 
