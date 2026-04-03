@@ -1289,7 +1289,7 @@ body:has(#story-screen.active) {
 /* 4. 袋体：条带起飞时瞬间切掉 22px（和条带高度一致），不做沉降 */
 @keyframes bagOpenBody {
   0%,30% { clip-path: inset(0 0 0 0 round 8px); }       /* 等条带起飞 */
-  31%,100%{ clip-path: inset(22px 0 0 0 round 8px); }   /* 瞬间切断 22px */
+  31%,100%{ clip-path: inset(10px 0 0 0 round 8px); }   /* 瞬间切断 10px */
 }
 .pkg-bag.opening #pkg-bag-body {
   animation: bagOpenBody 1.0s linear forwards !important;
