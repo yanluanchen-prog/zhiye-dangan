@@ -160,7 +160,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .ydot.cur{background:var(--red);}
 
 /* ── SECTION ──────────────────────────────── */
-.container{padding:12px 14px;flex:1;overflow-y:auto;}
+.container{padding:12px 14px;flex:1;overflow-y:auto;display:flex;flex-direction:column;}
 .section{background:var(--paper-lt);border:1px solid var(--border);padding:13px;margin-bottom:11px;position:relative;}
 .section::before{content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:1px solid var(--border);pointer-events:none;opacity:0.5;}
 .section.no-frame{background:transparent;border:none;padding:0;}
@@ -605,6 +605,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 ══════════════════════════════════════════════════════════════ */
 
 /* ── 强制所有屏幕透明（覆盖原始CSS的 background:var(--paper)）── */
+/* 额外：用更高特异性覆盖 header 4px 红边框 */
+#game-screen .header,
+.header { border-bottom: 1px solid rgba(255,255,255,0.4) !important; }
 .screen { background: transparent !important; }
 .screen.active { background: transparent !important; }
 #game-screen.active { background: transparent !important; }
@@ -995,6 +998,11 @@ body:has(#story-screen.active) {
 .container { background: transparent !important; }
 
 /* ── 额外清除背景干扰 ──────────────────────────────────────── */
+/* 内容撑满屏幕，不留大片空白 */
+.container > .section { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+#draw-zone { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; }
+/* 抽卡区同样居中撑满 */
+.deck-viewer-wrap, .deck-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; }
 
 /* 年份进度条：完全透明，只保留点 */
 .ydots-bar {
