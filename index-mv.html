@@ -128,7 +128,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .id-badge-sal-row{display:flex;align-items:center;gap:2px;margin-top:4px;width:100%;}
 .id-badge-sal-lbl{font-size:6px;color:var(--ink-faint);font-family:monospace;flex-shrink:0;}
 .id-badge-sal-wrap{flex:1;height:3px;border-radius:2px;}
-.id-badge-sal-val{font-size:7px;font-weight:700;font-family:monospace;color:#C23B22;flex-shrink:0;}
+.id-badge-sal-val{font-size:7px;font-weight:700;font-family:monospace;color:rgba(80,60,45,0.75);flex-shrink:0;}
 
 .id-badge-job{font-size:15px;font-weight:900;letter-spacing:1px;line-height:1.1;margin-bottom:3px;}
 .id-badge-sub{font-size:9px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:4px;}
@@ -140,13 +140,13 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .header-tab-label{font-size:8px;color:rgba(240,235,224,.82);letter-spacing:2px;font-family:monospace;text-align:center;line-height:1.2;}
 .header-tab-count{font-size:7px;color:rgba(240,235,224,.5);font-family:monospace;letter-spacing:1px;}
 .header-tab .id-badge-card{width:50px;height:84px;}
-.header-tab.folder .id-badge-hdr{background:var(--red);}
+.header-tab.folder .id-badge-hdr{background:rgba(180,150,110,0.75);}
 .header-tab.folder .id-badge-art{background:linear-gradient(180deg,var(--paper),#ebe2d3);}
 .header-tab.folder .id-badge-emoji{font-size:20px;}
 .header-tab.folder .id-badge-name{font-size:7px;letter-spacing:.5px;}
-.id-badge-mini-count{margin-top:4px;font-size:8px;font-family:monospace;color:var(--red);font-weight:800;letter-spacing:.8px;line-height:1;}
+.id-badge-mini-count{margin-top:4px;font-size:8px;font-family:monospace;color:rgba(80,60,45,0.75);font-weight:800;letter-spacing:.8px;line-height:1;}
 .header-right{text-align:right;}
-.header-classify{font-size:8px;letter-spacing:3px;color:var(--red);font-family:monospace;margin-bottom:2px;}
+.header-classify{font-size:8px;letter-spacing:3px;color:rgba(100,80,65,0.55);font-family:monospace;margin-bottom:2px;}
 .header-year{font-size:24px;font-weight:900;color:rgba(58,50,40,0.82);font-family:monospace;letter-spacing:3px;line-height:1;}
 .header-year-sub{font-size:8px;color:var(--ink-faint);letter-spacing:2px;margin-top:2px;font-family:monospace;}
 .game-year-footer{margin-top:12px;text-align:center;display:flex;flex-direction:column;gap:2px;}
@@ -198,9 +198,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .stat-label{font-size:9px;color:var(--ink-faint);width:62px;flex-shrink:0;font-family:monospace;white-space:nowrap;}
 .stat-track{flex:1;height:4px;background:var(--paper-dk);border-radius:2px;}
 .stat-fill{height:100%;border-radius:2px;transition:width 0.4s;}
-.stat-atk .stat-fill{background:#C23B22;}.stat-def .stat-fill{background:#1A3A6B;}.stat-hp .stat-fill{background:#1A6B3A;}
+.stat-atk .stat-fill{background:rgba(200,130,120,0.7);}.stat-def .stat-fill{background:#1A3A6B;}.stat-hp .stat-fill{background:#1A6B3A;}
 .stat-val{font-size:10px;font-weight:700;width:24px;text-align:right;font-family:monospace;}
-.stat-atk .stat-val{color:#C23B22;}.stat-def .stat-val{color:#1A3A6B;}.stat-hp .stat-val{color:#1A6B3A;}
+.stat-atk .stat-val{color:rgba(160,80,72,0.9);}.stat-def .stat-val{color:#1A3A6B;}.stat-hp .stat-val{color:#1A6B3A;}
 .card-footer{display:flex;justify-content:space-between;padding:8px 14px;border-top:1px solid var(--border);font-size:8px;color:var(--ink-faint);font-family:monospace;background:var(--paper-dk);}
 
 /* ── DECK STACK ───────────────────────────── */
@@ -513,7 +513,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 /* ── ENC MODAL ────────────────────────────── */
 #enc-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(28,26,20,0.78);align-items:flex-end;justify-content:center;}
 #enc-modal.open{display:flex;}
-.enc-sheet{position:relative;width:100%;max-width:480px;background:var(--paper);border-top:4px solid var(--red);padding:18px 14px calc(40px + env(safe-area-inset-bottom));max-height:85vh;overflow-y:auto;animation:slideUp 0.22s ease;}
+.enc-sheet{position:relative;width:100%;max-width:480px;background:var(--paper);border-top:4px solid rgba(100,174,208,0.6);padding:18px 14px calc(40px + env(safe-area-inset-bottom));max-height:85vh;overflow-y:auto;animation:slideUp 0.22s ease;}
 .enc-ttl{font-size:16px;font-weight:900;letter-spacing:4px;color:var(--ink);margin-bottom:3px;}
 .enc-sub{font-size:10px;color:var(--ink-faint);font-family:monospace;margin-bottom:14px;}
 .enc-x{position:absolute;top:12px;right:16px;background:none;border:none;font-size:18px;color:var(--ink-faint);cursor:pointer;}
@@ -1185,7 +1185,7 @@ body:has(#story-screen.active) {
 
 <!-- ═══════════════════════════════ GAME ════════════════════════════════ -->
 <!-- 离职告别信 overlay -->
-<div id="farewell-overlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(220,230,240,0.85);flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px env(safe-area-inset-bottom);">
+<div id="farewell-overlay" style="display:none;position:fixed;inset:0;z-index:300;background:linear-gradient(165deg,#c8dff0,#f0ddd0,#c0d4e8);flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px env(safe-area-inset-bottom);">
   <div style="max-width:340px;width:100%;">
     <div id="farewell-title" style="font-size:10px;color:rgba(160,100,90,0.75);letter-spacing:3px;font-family:monospace;margin-bottom:14px;">离开</div>
     <div id="farewell-text" style="font-size:13px;color:rgba(240,235,224,0.82);line-height:2.3;white-space:pre-line;"></div>
