@@ -1218,16 +1218,10 @@ body:has(#story-screen.active) {
 }
 @keyframes mv-strip-tear {
   0%   { transform: translate(0,0) rotate(0); opacity: 1; }
-  /* 蓄力抖动 - 放慢让人看清 */
-  8%   { transform: translate(5px, 1px) rotate(2deg); }
-  18%  { transform: translate(-6px, 0) rotate(-2.5deg); }
-  28%  { transform: translate(6px, -4px) rotate(3deg); }
-  38%  { transform: translate(0, -8px) rotate(-1deg) scale(1.025); }
-  /* 撕开起飞 - 慢起 */
-  50%  { transform: translate(20px,-38px) rotate(14deg); opacity: 1; }
-  /* 飞走 - 匀速飞远 */
-  75%  { transform: translate(65px,-100px) rotate(30deg) scale(0.96); opacity: 0.75; }
-  100% { transform: translate(105px,-160px) rotate(46deg) scale(0.92); opacity: 0; }
+  /* 直接切开飞走，无抖动 */
+  15%  { transform: translate(10px,-18px) rotate(8deg); opacity: 1; }
+  50%  { transform: translate(55px,-90px) rotate(28deg) scale(0.97); opacity: 0.85; }
+  100% { transform: translate(100px,-160px) rotate(44deg) scale(0.92); opacity: 0; }
 }
 
 /* 4. 袋体：弹跳 + 显露开口 */
