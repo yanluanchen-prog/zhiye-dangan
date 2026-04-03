@@ -597,375 +597,343 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 ═══════════════════════════════════════════════════════════════ -->
 <style id="mv-theme">
 
-/* ── 颜色系统重写（用 :root 覆盖原始 :root，相同优先级后者胜）── */
+/* ══════════════════════════════════════════════════════════════
+   MONUMENT VALLEY THEME v5
+   亮莫兰迪配色 · 漂浮感 · 全屏统一
+══════════════════════════════════════════════════════════════ */
+
+/* ── 亮莫兰迪色系变量 ─────────────────────────────────────── */
 :root {
-  --paper:    #252840;
-  --paper-dk: #1c1f35;
-  --paper-lt: #2e3250;
-  --ink:      #ede8e0;
-  --ink-lt:   rgba(237,232,224,0.78);
-  --ink-faint:rgba(237,232,224,0.45);
-  --red:      #d4827e;
-  --green:    #7bbf96;
-  --border:   rgba(255,255,255,0.13);
-  /* 莫兰迪稀有度色 */
-  --N:   rgba(155,143,132,0.9);
-  --R:   rgba(105,138,175,0.9);
-  --SR:  rgba(178,146,110,0.9);
-  --SSR: rgba(175,126,136,0.9);
-  --UR:  rgba(100,165,132,0.9);
-  /* 舞台色 */
-  --mv-bg:      #1c1f35;
-  --mv-bg2:     #1e2440;
-  --mv-card-bg: rgba(38,42,68,0.75);
-  --mv-rim:     rgba(255,255,255,0.14);
+  /* 背景：中调紫灰渐变 */
+  --mv-bg:       #2e2c42;
+  --mv-bg2:      #36304a;
+  --mv-bg3:      #2c3448;
+
+  /* 覆盖原始纸色为深调莫兰迪 */
+  --paper:    #363250;
+  --paper-dk: #2c2944;
+  --paper-lt: #403c5a;
+
+  /* 文字：温暖米白，足够亮 */
+  --ink:       #ede8e0;
+  --ink-lt:    rgba(237,232,224,0.82);
+  --ink-faint: rgba(237,232,224,0.48);
+
+  /* 功能色：莫兰迪化 */
+  --red:    #d49090;   /* 旧椒红 → 尘粉玫瑰 */
+  --green:  #82b898;   /* 旧墨绿 → 苔藓绿 */
+  --border: rgba(255,255,255,0.13);
+
+  /* 稀有度——鲜亮莫兰迪 */
+  --N:   #b0a898;   /* 暖石灰 */
+  --R:   #7eaacc;   /* 烟雨蓝 */
+  --SR:  #c8a464;   /* 琥珀金 */
+  --SSR: #c87888;   /* 茱萸粉 */
+  --UR:  #68b890;   /* 松石绿 */
+
+  /* 卡牌稀有度半透明背景 */
+  --card-N:   rgba(176,168,152,0.10);
+  --card-R:   rgba(126,170,204,0.10);
+  --card-SR:  rgba(200,164,100,0.10);
+  --card-SSR: rgba(200,120,136,0.10);
+  --card-UR:  rgba(104,184,144,0.10);
 }
 
-/* 全局背景（深石板蓝渐变） */
+/* ── 全局背景 ─────────────────────────────────────────────── */
 html, body {
-  background: var(--mv-bg) !important;
+  background: linear-gradient(145deg, #2e2c42, #36304a, #2c3448) !important;
+  background-attachment: fixed !important;
   color: var(--ink) !important;
 }
-/* 所有 screen 统一背景 */
+
+/* 所有 screen 继承背景 */
+.screen,
 .screen.active,
+#intro-screen, #intro-screen.screen, #intro-screen.screen.active,
+#story-screen, #story-screen.screen, #story-screen.screen.active,
 #farewell-overlay,
-#story-screen,
-#intro-screen { background: var(--mv-bg) !important; }
-/* 深色覆盖层也走统一色 */
-[style*="background:#0a0a0a"],
-[style*="background: #0a0a0a"] {
-  background: var(--mv-bg) !important;
-}
-/* 开场/故事/告别等叠加层文字 */
-#intro-screen *, #story-screen *, #farewell-overlay * {
-  font-family: 'Courier New', monospace;
+body:has(#intro-screen.active) {
+  background: linear-gradient(145deg,#2e2c42,#36304a,#2c3448) !important;
+  background-attachment: fixed !important;
 }
 
-/* ── 卡牌：磨砂玻璃（平放+光影模拟立体，不用旋转以避免点击错位）── */
+/* ── 漂浮感：去掉 section 硬边框，改用柔和阴影 ─────────────── */
+.section {
+  background: rgba(255,255,255,0.05) !important;
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.15) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+.section::before { display: none !important; }
+.section-title {
+  color: rgba(237,232,224,0.5) !important;
+  border-bottom-color: rgba(255,255,255,0.08) !important;
+}
+
+/* ── 卡牌：亮莫兰迪磨砂玻璃 ─────────────────────────────── */
 .card {
-  background: var(--mv-card-bg) !important;
-  backdrop-filter: blur(20px) saturate(1.3) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(1.3) !important;
-  border: 1px solid var(--mv-rim) !important;
+  background: rgba(45,42,66,0.75) !important;
+  backdrop-filter: blur(24px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
   border-radius: 20px !important;
   overflow: hidden !important;
-  /* 用多层 box-shadow 模拟立体厚度：右下深色=侧面；顶边高光=顶面光 */
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.18),
-    inset 0 -1px 0 rgba(0,0,0,0.18),
-    inset 1px 0 0 rgba(255,255,255,0.08),
-    6px 12px 0 rgba(10,12,28,0.55),
-    8px 16px 32px rgba(0,0,0,0.45),
-    0 2px 8px rgba(0,0,0,0.25) !important;
+    inset 0 1.5px 0 rgba(255,255,255,0.2),
+    inset 0 -1px 0 rgba(0,0,0,0.2),
+    8px 16px 40px rgba(0,0,0,0.45),
+    0 4px 12px rgba(0,0,0,0.25) !important;
   transform: none !important;
   transition: box-shadow 0.3s ease !important;
 }
-/* 稀有度：边框彩色光晕 */
-.card.N  { border-color: rgba(165,150,138,0.3) !important; }
-.card.R  { border-color: rgba(110,148,192,0.35) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.18), 6px 12px 0 rgba(10,12,28,0.55), 8px 16px 32px rgba(0,0,0,0.45), 0 0 20px rgba(110,148,192,0.12) !important; }
-.card.SR { border-color: rgba(195,158,110,0.35) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.18), 6px 12px 0 rgba(10,12,28,0.55), 8px 16px 32px rgba(0,0,0,0.45), 0 0 20px rgba(195,158,110,0.12) !important; }
-.card.SSR{ border-color: rgba(192,136,146,0.4)  !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.18), 6px 12px 0 rgba(10,12,28,0.55), 8px 16px 32px rgba(0,0,0,0.45), 0 0 24px rgba(192,136,146,0.15) !important; }
-.card.UR { border-color: rgba(100,178,140,0.42) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),  inset 0 -1px 0 rgba(0,0,0,0.18), 6px 12px 0 rgba(10,12,28,0.55), 8px 16px 32px rgba(0,0,0,0.45), 0 0 28px rgba(100,178,140,0.18) !important; }
 
-/* ── 卡头：渐变色带 ──────────────────────────────────────────── */
-.card-header {
-  padding: 10px 16px 9px !important;
-  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
-}
-.N   .card-header { background: linear-gradient(90deg,rgba(148,136,126,0.45),transparent) !important; }
-.R   .card-header { background: linear-gradient(90deg,rgba(100,132,168,0.45),transparent) !important; }
-.SR  .card-header { background: linear-gradient(90deg,rgba(172,140,106,0.45),transparent) !important; }
-.SSR .card-header { background: linear-gradient(90deg,rgba(168,120,130,0.45),transparent) !important; }
-.UR  .card-header { background: linear-gradient(90deg,rgba(100,158,128,0.45),transparent) !important; }
-.card-file-no     { color: rgba(232,224,216,0.5) !important; }
-.card-rarity-stamp{ color: rgba(232,224,216,0.72) !important; border-color: rgba(255,255,255,0.22) !important; }
+/* 稀有度：彩色边框 + 背景微调 */
+.card.N   { border-color:rgba(176,168,152,0.4) !important; background:rgba(176,168,152,0.08) !important; }
+.card.R   { border-color:rgba(126,170,204,0.45) !important; background:rgba(126,170,204,0.08) !important; box-shadow:inset 0 1.5px 0 rgba(255,255,255,0.2),8px 16px 40px rgba(0,0,0,0.4),0 0 28px rgba(126,170,204,0.12) !important; }
+.card.SR  { border-color:rgba(200,164,100,0.45) !important; background:rgba(200,164,100,0.08) !important; box-shadow:inset 0 1.5px 0 rgba(255,255,255,0.2),8px 16px 40px rgba(0,0,0,0.4),0 0 28px rgba(200,164,100,0.12) !important; }
+.card.SSR { border-color:rgba(200,120,136,0.5)  !important; background:rgba(200,120,136,0.08) !important; box-shadow:inset 0 1.5px 0 rgba(255,255,255,0.2),8px 16px 40px rgba(0,0,0,0.4),0 0 32px rgba(200,120,136,0.14) !important; }
+.card.UR  { border-color:rgba(104,184,144,0.5)  !important; background:rgba(104,184,144,0.08) !important; box-shadow:inset 0 1.5px 0 rgba(255,255,255,0.22),8px 16px 40px rgba(0,0,0,0.4),0 0 36px rgba(104,184,144,0.16) !important; }
 
-/* ── 卡面：标本室（暗腔 + 悬浮发光图标）─────────────────────── */
+/* 卡头：彩色渐变光带 */
+.card-header { padding:10px 16px 9px !important; border-bottom:1px solid rgba(255,255,255,0.07) !important; }
+.N   .card-header { background:linear-gradient(90deg,rgba(176,168,152,0.4),transparent) !important; }
+.R   .card-header { background:linear-gradient(90deg,rgba(126,170,204,0.45),transparent) !important; }
+.SR  .card-header { background:linear-gradient(90deg,rgba(200,164,100,0.45),transparent) !important; }
+.SSR .card-header { background:linear-gradient(90deg,rgba(200,120,136,0.45),transparent) !important; }
+.UR  .card-header { background:linear-gradient(90deg,rgba(104,184,144,0.45),transparent) !important; }
+.card-file-no      { color:rgba(237,232,224,0.55) !important; }
+.card-rarity-stamp { color:rgba(237,232,224,0.78) !important; border-color:rgba(255,255,255,0.25) !important; }
+
+/* 卡面：标本室 */
 .card-art {
-  background: rgba(8,8,18,0.62) !important;
-  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
-  padding: 28px 14px 22px !important;
-  position: relative !important;
+  background:rgba(20,18,36,0.55) !important;
+  border-bottom:1px solid rgba(255,255,255,0.06) !important;
+  padding:28px 14px 22px !important;
+  position:relative !important;
 }
-/* 穹顶光晕 */
 .card-art::before {
-  content: '' !important;
-  position: absolute !important;
-  inset: 0 !important;
-  background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(190,170,240,0.07), transparent 70%) !important;
-  pointer-events: none !important;
+  content:'' !important;
+  position:absolute !important; inset:0 !important;
+  background:radial-gradient(ellipse 80% 55% at 50% 30%,rgba(200,180,255,0.07),transparent 70%) !important;
+  pointer-events:none !important;
 }
-/* 标本底座阴影 */
 .card-art::after {
-  content: '' !important;
-  position: absolute !important;
-  bottom: 24px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  width: 60px !important;
-  height: 10px !important;
-  background: rgba(0,0,0,0.45) !important;
-  border-radius: 50% !important;
-  filter: blur(8px) !important;
-  pointer-events: none !important;  /* 不阻挡点击 */
-  z-index: 0 !important;
+  content:'' !important;
+  position:absolute !important;
+  bottom:20px !important; left:50% !important;
+  transform:translateX(-50%) !important;
+  width:55px !important; height:8px !important;
+  background:rgba(0,0,0,0.4) !important;
+  border-radius:50% !important; filter:blur(7px) !important;
+  pointer-events:none !important; z-index:0 !important;
 }
 
-/* 悬浮图标：按稀有度换发光色 */
+/* 悬浮图标：按稀有度彩色发光 */
 .card-art-icon {
-  font-size: 64px !important;
-  display: block !important;
-  margin-bottom: 14px !important;
-  position: relative !important;
-  z-index: 1 !important;
-  animation: mv-float 4s ease-in-out infinite !important;
+  font-size:66px !important; display:block !important;
+  margin-bottom:14px !important;
+  position:relative !important; z-index:1 !important;
+  animation:mv-float 4s ease-in-out infinite !important;
 }
-.N   .card-art-icon { filter: drop-shadow(0 0 10px rgba(200,188,176,0.40)) drop-shadow(0 6px 10px rgba(0,0,0,0.6)) !important; }
-.R   .card-art-icon { filter: drop-shadow(0 0 14px rgba(120,168,215,0.52)) drop-shadow(0 6px 10px rgba(0,0,0,0.6)) !important; }
-.SR  .card-art-icon { filter: drop-shadow(0 0 14px rgba(215,168,105,0.52)) drop-shadow(0 6px 10px rgba(0,0,0,0.6)) !important; }
-.SSR .card-art-icon { filter: drop-shadow(0 0 16px rgba(215,138,150,0.58)) drop-shadow(0 6px 12px rgba(0,0,0,0.6)) !important; }
-.UR  .card-art-icon { filter: drop-shadow(0 0 20px rgba(105,205,158,0.65)) drop-shadow(0 6px 12px rgba(0,0,0,0.6)) !important; }
+.N   .card-art-icon { filter:drop-shadow(0 0 10px rgba(200,192,180,0.5)) drop-shadow(0 6px 10px rgba(0,0,0,0.55)) !important; }
+.R   .card-art-icon { filter:drop-shadow(0 0 16px rgba(126,170,204,0.65)) drop-shadow(0 6px 10px rgba(0,0,0,0.55)) !important; }
+.SR  .card-art-icon { filter:drop-shadow(0 0 16px rgba(200,164,100,0.65)) drop-shadow(0 6px 10px rgba(0,0,0,0.55)) !important; }
+.SSR .card-art-icon { filter:drop-shadow(0 0 18px rgba(200,120,136,0.70)) drop-shadow(0 6px 12px rgba(0,0,0,0.55)) !important; }
+.UR  .card-art-icon { filter:drop-shadow(0 0 22px rgba(104,184,144,0.75)) drop-shadow(0 6px 12px rgba(0,0,0,0.55)) !important; }
 
 @keyframes mv-float {
-  0%,100% { transform: translateY(0px); }
-  50%      { transform: translateY(-7px); }
+  0%,100% { transform:translateY(0); }
+  50%      { transform:translateY(-8px); }
 }
 
-.card-name {
-  color: rgba(240,234,226,0.92) !important;
-  font-size: 26px !important;
-  letter-spacing: 2px !important;
-  position: relative !important;
-  z-index: 1 !important;
-}
-.card-tag {
-  color: rgba(232,224,216,0.4) !important;
-  letter-spacing: 4px !important;
-  position: relative !important;
-  z-index: 1 !important;
-}
+.card-name { color:rgba(242,237,228,0.95) !important; font-size:26px !important; letter-spacing:2px !important; position:relative !important; z-index:1 !important; }
+.card-tag  { color:rgba(237,232,224,0.48) !important; letter-spacing:4px !important; position:relative !important; z-index:1 !important; }
 
-/* ── 卡体：墨水散开文字 ─────────────────────────────────────── */
-.card-body {
-  background: transparent !important;
-  padding: 14px 16px 12px !important;
-}
+/* 卡体：墨水动画 */
+.card-body { background:transparent !important; padding:14px 16px 12px !important; }
 .card-desc {
-  color: rgba(218,210,202,0.76) !important;
-  font-style: normal !important;
-  font-size: 12px !important;
-  line-height: 1.85 !important;
-  animation: mv-ink-in 0.9s ease-out 0.15s both !important;
+  color:rgba(225,218,210,0.82) !important;
+  font-style:normal !important; font-size:12px !important; line-height:1.9 !important;
+  animation:mv-ink 0.8s ease-out 0.1s both !important;
 }
-@keyframes mv-ink-in {
-  from { opacity: 0; transform: translateY(8px); letter-spacing: 3px; }
-  to   { opacity: 1; transform: translateY(0);   letter-spacing: normal; }
+@keyframes mv-ink {
+  from { opacity:0; transform:translateY(6px); }
+  to   { opacity:1; transform:translateY(0); }
 }
+.card-footer { background:rgba(0,0,0,0.15) !important; border-top:1px solid rgba(255,255,255,0.06) !important; color:rgba(237,232,224,0.33) !important; }
+.card-type-badge { background:rgba(255,255,255,0.05) !important; border-color:rgba(255,255,255,0.1) !important; color:rgba(237,232,224,0.52) !important; }
+.card-elim-note  { color:#d49090 !important; border-left-color:#d49090 !important; background:rgba(212,144,144,0.08) !important; }
 
-.card-footer {
-  background: rgba(0,0,0,0.18) !important;
-  border-top: 1px solid rgba(255,255,255,0.05) !important;
-  color: rgba(232,224,216,0.3) !important;
-}
-.card-type-badge {
-  background: rgba(255,255,255,0.05) !important;
-  border-color: rgba(255,255,255,0.1) !important;
-  color: rgba(232,224,216,0.5) !important;
-}
-.card-elim-note {
-  color: #c96a68 !important;
-  border-left-color: #c96a68 !important;
-  background: rgba(201,106,104,0.08) !important;
-}
+/* ── 数值条 ─────────────────────────────────────────────────── */
+.stat-label { color:rgba(237,232,224,0.42) !important; }
+.stat-track { background:rgba(255,255,255,0.08) !important; }
+.stat-atk .stat-fill { background:linear-gradient(90deg,#d49090,#e8b8b8) !important; }
+.stat-def .stat-fill { background:linear-gradient(90deg,#7eaacc,#a8c8e0) !important; }
+.stat-hp  .stat-fill { background:linear-gradient(90deg,#68b890,#96d0b0) !important; }
+.stat-atk .stat-val  { color:#e8b8b8 !important; }
+.stat-def .stat-val  { color:#a8c8e0 !important; }
+.stat-hp  .stat-val  { color:#96d0b0 !important; }
 
-/* ── 数值条 ──────────────────────────────────────────────────── */
-.stat-label { color: rgba(232,224,216,0.38) !important; }
-.stat-track { background: rgba(255,255,255,0.07) !important; }
-.stat-atk .stat-fill { background: linear-gradient(90deg,#c96a68,#e8a0a0) !important; }
-.stat-def .stat-fill { background: linear-gradient(90deg,#6484a8,#9ab8d8) !important; }
-.stat-hp  .stat-fill { background: linear-gradient(90deg,#5a9870,#8ec4a0) !important; }
-.stat-atk .stat-val  { color: #e8a0a0 !important; }
-.stat-def .stat-val  { color: #9ab8d8 !important; }
-.stat-hp  .stat-val  { color: #8ec4a0 !important; }
-
-/* ── 牌堆阴影 ────────────────────────────────────────────────── */
+/* ── 牌堆阴影（漂浮感） ──────────────────────────────────────── */
 .deck-shadow, .deck-shadow-left {
-  background: rgba(16,16,30,0.65) !important;
-  border: 1px solid rgba(255,255,255,0.07) !important;
-  background-image: none !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  border-radius: 22px !important;
+  background:rgba(32,30,50,0.60) !important;
+  border:1px solid rgba(255,255,255,0.08) !important;
+  background-image:none !important;
+  backdrop-filter:blur(8px) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+  border-radius:20px !important;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3) !important;
 }
 
 /* ── 导航按钮 ────────────────────────────────────────────────── */
 .deck-nav-btn {
-  background: rgba(255,255,255,0.07) !important;
-  border: 1px solid rgba(255,255,255,0.14) !important;
-  color: rgba(232,224,216,0.65) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  box-shadow: none !important;
+  background:rgba(255,255,255,0.08) !important;
+  border:1px solid rgba(255,255,255,0.16) !important;
+  color:rgba(237,232,224,0.7) !important;
+  backdrop-filter:blur(12px) !important;
+  -webkit-backdrop-filter:blur(12px) !important;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25) !important;
 }
-.deck-nav-btn:active { background: rgba(255,255,255,0.15) !important; }
-.deck-counter { color: rgba(232,224,216,0.38) !important; }
+.deck-nav-btn:active { background:rgba(255,255,255,0.16) !important; }
+.deck-counter { color:rgba(237,232,224,0.42) !important; }
 
-/* ── 通用 section 卡片 ───────────────────────────────────────── */
-.section {
-  background: rgba(255,255,255,0.04) !important;
-  border: 1px solid rgba(255,255,255,0.07) !important;
-  border-radius: 12px !important;
+/* ── 年份进度条 ──────────────────────────────────────────────── */
+.ydots-bar { background:rgba(0,0,0,0.2) !important; }
+.ydot      { background:rgba(255,255,255,0.12) !important; }
+.ydot.done { background:rgba(237,232,224,0.35) !important; }
+.ydot.cur  { background:var(--SSR) !important; box-shadow:0 0 10px rgba(200,120,136,0.55) !important; }
+
+/* ── Header ──────────────────────────────────────────────────── */
+.header {
+  background:rgba(22,20,38,0.82) !important;
+  border-bottom:1px solid rgba(255,255,255,0.07) !important;
+  backdrop-filter:blur(16px) !important;
+  -webkit-backdrop-filter:blur(16px) !important;
 }
-.section::before { border-color: rgba(255,255,255,0.04) !important; opacity: 1 !important; }
-.section-title { color: rgba(232,224,216,0.42) !important; border-bottom-color: rgba(255,255,255,0.07) !important; }
+.id-badge-card { background:rgba(255,255,255,0.06) !important; border:1px solid rgba(255,255,255,0.12) !important; border-radius:8px !important; }
+.id-badge-card.N  .id-badge-hdr, .N  .id-badge-hdr { background:rgba(176,168,152,0.75) !important; }
+.id-badge-card.R  .id-badge-hdr, .R  .id-badge-hdr { background:rgba(126,170,204,0.75) !important; }
+.id-badge-card.SR .id-badge-hdr, .SR .id-badge-hdr { background:rgba(200,164,100,0.75) !important; }
+.id-badge-card.SSR.id-badge-hdr, .SSR.id-badge-hdr { background:rgba(200,120,136,0.75) !important; }
+.id-badge-card.UR .id-badge-hdr, .UR .id-badge-hdr { background:rgba(104,184,144,0.75) !important; }
+.id-badge-name { color:rgba(237,232,224,0.82) !important; }
 
 /* ── 按钮 ────────────────────────────────────────────────────── */
 .btn {
-  border: 1px solid rgba(255,255,255,0.16) !important;
-  background: rgba(255,255,255,0.06) !important;
-  color: rgba(232,224,216,0.82) !important;
-  border-radius: 10px !important;
+  border:1px solid rgba(255,255,255,0.18) !important;
+  background:rgba(255,255,255,0.07) !important;
+  color:rgba(237,232,224,0.88) !important;
+  border-radius:12px !important;
+  backdrop-filter:blur(8px) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
 }
-.btn.red    { background: rgba(170,55,52,0.45) !important; border-color: rgba(210,90,85,0.38) !important; }
-.btn.outline{ background: transparent !important; color: rgba(232,224,216,0.55) !important; border-color: rgba(255,255,255,0.11) !important; }
+.btn.red    { background:rgba(212,144,144,0.22) !important; border-color:rgba(212,144,144,0.4) !important; color:rgba(237,232,224,0.92) !important; }
+.btn.outline{ background:transparent !important; color:rgba(237,232,224,0.6) !important; border-color:rgba(255,255,255,0.14) !important; }
+.card-actions { position:relative !important; z-index:20 !important; }
 
-/* ── 顶部 header ─────────────────────────────────────────────── */
-.header {
-  background: rgba(10,10,22,0.88) !important;
-  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-}
-.id-badge-card { background: rgba(255,255,255,0.05) !important; border: 1px solid rgba(255,255,255,0.1) !important; }
-.N  .id-badge-hdr, .id-badge-card.N .id-badge-hdr  { background: rgba(148,136,126,0.7) !important; }
-.R  .id-badge-hdr, .id-badge-card.R .id-badge-hdr  { background: rgba(100,132,168,0.7) !important; }
-.SR .id-badge-hdr, .id-badge-card.SR .id-badge-hdr { background: rgba(172,140,106,0.7) !important; }
-.SSR.id-badge-hdr, .id-badge-card.SSR .id-badge-hdr{ background: rgba(168,120,130,0.7) !important; }
-.UR .id-badge-hdr, .id-badge-card.UR .id-badge-hdr { background: rgba(100,158,128,0.7) !important; }
-.id-badge-emoji { text-shadow: 0 0 8px rgba(200,180,255,0.4); }
-.id-badge-name  { color: rgba(232,224,216,0.75) !important; }
-
-/* ── 年份进度点 ──────────────────────────────────────────────── */
-.ydot      { background: rgba(255,255,255,0.1)  !important; }
-.ydot.done { background: rgba(255,255,255,0.28) !important; }
-.ydot.cur  { background: rgba(185,162,230,0.75) !important; box-shadow: 0 0 8px rgba(185,162,230,0.5) !important; }
-.ydots-bar { background: rgba(0,0,0,0.2) !important; }
-
-/* ── 图鉴条目 ────────────────────────────────────────────────── */
-.enc-entry {
-  background: rgba(255,255,255,0.04) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  border-radius: 12px !important;
-}
-.enc-entry-top  { color: rgba(232,224,216,0.85) !important; }
-.enc-entry-sub  { color: rgba(232,224,216,0.42) !important; }
-.enc-entry-badge{ color: #c96a68 !important; border-color: rgba(201,106,104,0.3) !important; background: rgba(201,106,104,0.07) !important; }
-
-
-/* 卡牌飞入动画（不用 perspective，保持 flat） */
-.card-fly-in     { animation: cardFlyIn 0.45s ease-out forwards !important; }
-.card-fly-in-left{ animation: cardFlyInLeft 0.45s ease-out forwards !important; }
-@keyframes cardFlyIn{
-  0%  { transform: translateX(80px) scale(0.95); opacity:0; }
-  65% { transform: translateX(-6px) scale(1.01); opacity:1; }
-  100%{ transform: translateX(0)    scale(1);    opacity:1; }
-}
-@keyframes cardFlyInLeft{
-  0%  { transform: translateX(-80px) scale(0.95); opacity:0; }
-  65% { transform: translateX(6px)   scale(1.01); opacity:1; }
-  100%{ transform: translateX(0)     scale(1);    opacity:1; }
-}
-
-/* 全局按钮区域保证可点击 */
-.card-actions { position: relative !important; z-index: 20 !important; }
-.btn { position: relative !important; z-index: 10 !important; }
-
-/* ══ 全屏风格统一 ════════════════════════════════════════════ */
-
-/* 通用弹窗/遮罩背景 */
-#farewell-overlay,
-#story-screen {
-  background: var(--mv-bg) !important;
-}
-
-/* ── 开场页：提升选择器优先级以覆盖原有 !important ─────────── */
-#intro-screen,
-#intro-screen.screen,
-#intro-screen.screen.active,
-body:has(#intro-screen.active) {
-  background: var(--mv-bg) !important;
-}
-/* 故事/告别页同理 */
-#story-screen.screen,
-#story-screen.screen.active,
-#farewell-overlay { background: var(--mv-bg) !important; }
-
-/* 职业下拉框 */
-#job-dropdown {
-  background: rgba(28,32,55,0.98) !important;
-  border-color: rgba(255,255,255,0.1) !important;
-}
-.job-item:hover { background: rgba(140,120,190,0.12) !important; border-left-color: rgba(180,155,225,0.5) !important; }
-.job-item.selected { background: rgba(120,90,160,0.2) !important; border-left-color: rgba(180,150,220,0.6) !important; }
-.job-group { border-bottom-color: rgba(255,255,255,0.07) !important; }
-.job-group-title { color: rgba(180,155,225,0.8) !important; background: rgba(120,90,160,0.12) !important; }
-.job-name { color: rgba(237,232,224,0.82) !important; }
-
-/* 故事/告别按钮 */
-#story-enter-btn, #farewell-btn {
-  background: rgba(255,255,255,0.04) !important;
-  border-color: rgba(255,255,255,0.14) !important;
-  color: rgba(237,232,224,0.6) !important;
-  border-radius: 8px !important;
-}
-
-/* 年份事件弹窗 */
+/* ── 年份事件弹窗 ─────────────────────────────────────────────── */
+#event-modal { background:rgba(15,13,28,0.88) !important; }
 .ev-sheet {
-  background: var(--paper) !important;
-  border-top-color: rgba(180,155,225,0.5) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  background:rgba(42,38,60,0.92) !important;
+  border-top:4px solid var(--SSR) !important;
+  backdrop-filter:blur(24px) !important;
+  -webkit-backdrop-filter:blur(24px) !important;
+  border-radius:20px 20px 0 0 !important;
 }
-#ev-year,  .ev-year  { color: rgba(190,165,232,0.9) !important; }
-#ev-slogan,.ev-slogan{ color: rgba(210,188,240,0.7) !important; }
-#ev-body,  .ev-body  { color: rgba(237,232,224,0.82) !important; line-height: 2 !important; }
-#event-modal { background: rgba(10,12,25,0.88) !important; }
-
-/* 弹窗背景 */
-#event-modal, #enc-modal, #card-detail-modal {
-  background: rgba(22,25,42,0.97) !important;
+.ev-year, #ev-year   { color:var(--SSR) !important; font-size:10px !important; letter-spacing:4px !important; }
+.ev-slogan,#ev-slogan{ color:rgba(200,120,136,0.72) !important; }
+.ev-body, #ev-body   { color:rgba(237,232,224,0.88) !important; line-height:2.1 !important; font-size:13px !important; }
+#ev-confirm {
+  background:rgba(200,120,136,0.25) !important;
+  border:1px solid rgba(200,120,136,0.4) !important;
+  color:rgba(237,232,224,0.92) !important;
+  border-radius:12px !important;
 }
 
-/* 胜利/失败结果页 */
+/* ── 图鉴/弹窗 ───────────────────────────────────────────────── */
+#enc-modal, #card-detail-modal {
+  background:rgba(24,22,40,0.97) !important;
+}
+.enc-entry {
+  background:rgba(255,255,255,0.05) !important;
+  border:1px solid rgba(255,255,255,0.09) !important;
+  border-radius:12px !important;
+  box-shadow:0 4px 16px rgba(0,0,0,0.2) !important;
+}
+.enc-entry-top   { color:rgba(237,232,224,0.88) !important; }
+.enc-entry-sub   { color:rgba(237,232,224,0.45) !important; }
+.enc-entry-badge { color:var(--SSR) !important; border-color:rgba(200,120,136,0.3) !important; background:rgba(200,120,136,0.08) !important; }
+
+/* ── 结局页 ──────────────────────────────────────────────────── */
 .rv-letter {
-  background: rgba(38,42,68,0.65) !important;
-  border: 1px solid rgba(255,255,255,0.1) !important;
-  border-radius: 16px !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
+  background:rgba(50,46,72,0.7) !important;
+  border:1px solid rgba(255,255,255,0.1) !important;
+  border-radius:16px !important;
+  backdrop-filter:blur(16px) !important;
+  -webkit-backdrop-filter:blur(16px) !important;
 }
-.rv-letter-body  { color: rgba(237,232,224,0.8) !important; }
-.rv-letter-title { border-bottom-color: rgba(255,255,255,0.1) !important; }
-.rv-letter.surv .rv-letter-title { color: #7bbf96 !important; }
-.rv-letter.fail .rv-letter-title { color: #d4827e !important; }
-.rv-letter-sign  { color: rgba(237,232,224,0.38) !important; }
+.rv-letter-body  { color:rgba(237,232,224,0.82) !important; }
+.rv-letter-title { border-bottom-color:rgba(255,255,255,0.1) !important; }
+.rv-letter.surv .rv-letter-title { color:var(--green) !important; }
+.rv-letter.fail .rv-letter-title { color:var(--red) !important; }
+.rv-letter-sign  { color:rgba(237,232,224,0.38) !important; }
 
-/* container */
-.container { background: transparent !important; }
+/* ── 故事/告别屏幕 ───────────────────────────────────────────── */
+#farewell-overlay [style*="color:rgba(240,235,224"],
+#farewell-overlay [style*="color: rgba(240,235,224"] { color:rgba(237,232,224,0.90) !important; }
+#story-enter-btn, #farewell-btn {
+  background:rgba(255,255,255,0.05) !important;
+  border-color:rgba(255,255,255,0.16) !important;
+  color:rgba(237,232,224,0.65) !important;
+  border-radius:10px !important;
+}
 
-/* 签收按钮 MV 化 */
+/* ── 开场页细节 ──────────────────────────────────────────────── */
+#job-dropdown {
+  background:rgba(30,28,48,0.98) !important;
+  border-color:rgba(255,255,255,0.1) !important;
+  border-radius:10px !important;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4) !important;
+}
+.job-item:hover   { background:rgba(126,170,204,0.1) !important; border-left-color:var(--R) !important; }
+.job-item.selected{ background:rgba(200,120,136,0.15) !important; border-left-color:var(--SSR) !important; }
+.job-group        { border-bottom-color:rgba(255,255,255,0.07) !important; }
+.job-group-title  { color:rgba(190,170,235,0.82) !important; background:rgba(130,110,180,0.12) !important; }
+.job-name         { color:rgba(237,232,224,0.84) !important; }
+
+/* ── 签收按钮 ───────────────────────────────────────────────── */
 .pkg-sign-btn {
-  background: linear-gradient(180deg, rgba(120,95,160,0.75), rgba(90,68,130,0.85)) !important;
-  box-shadow: 0 4px 16px rgba(120,90,160,0.3), inset 0 1px 0 rgba(255,255,255,0.18) !important;
-  border-radius: 10px !important;
+  background:linear-gradient(180deg,rgba(126,170,204,0.65),rgba(96,140,175,0.75)) !important;
+  box-shadow:0 6px 20px rgba(126,170,204,0.3),inset 0 1px 0 rgba(255,255,255,0.2) !important;
+  border-radius:12px !important;
 }
+
+/* ── 卡牌飞入动画 ───────────────────────────────────────────── */
+.card-fly-in      { animation:mv-fly-r 0.45s ease-out forwards !important; }
+.card-fly-in-left { animation:mv-fly-l 0.45s ease-out forwards !important; }
+@keyframes mv-fly-r {
+  0%   { transform:translateX(80px) scale(0.94); opacity:0; }
+  65%  { transform:translateX(-5px) scale(1.01); opacity:1; }
+  100% { transform:translateX(0)    scale(1);    opacity:1; }
+}
+@keyframes mv-fly-l {
+  0%   { transform:translateX(-80px) scale(0.94); opacity:0; }
+  65%  { transform:translateX(5px)   scale(1.01); opacity:1; }
+  100% { transform:translateX(0)     scale(1);    opacity:1; }
+}
+
+/* container 透明 */
+.container { background:transparent !important; }
 
 </style>
+
 </head>
 <body>
 
 <!-- ═══════════════════════════════ INTRO ═══════════════════════════════ -->
-<div id="intro-screen" class="screen active" style="background:#0a0a0a;position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);z-index:1;">
+<div id="intro-screen" class="screen active" style="background:#2e2c42;position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);z-index:1;">
   <div style="max-width:380px;width:100%;padding:32px 24px;box-sizing:border-box;">
     <div style="text-align:center;margin-bottom:36px;">
       <div style="font-size:11px;letter-spacing:5px;color:rgba(180,155,225,0.5);font-family:'Courier New',monospace;text-transform:uppercase;margin-bottom:16px;">〔职业生存图鉴〕</div>
@@ -995,18 +963,18 @@ body:has(#intro-screen.active) {
 
 <!-- ═══════════════════════════════ GAME ════════════════════════════════ -->
 <!-- 离职告别信 overlay -->
-<div id="farewell-overlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(10,10,10,0.97);flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px env(safe-area-inset-bottom);">
+<div id="farewell-overlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(22,20,38,0.96);flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px env(safe-area-inset-bottom);">
   <div style="max-width:340px;width:100%;">
-    <div id="farewell-title" style="font-size:10px;color:rgba(139,26,43,0.7);letter-spacing:3px;font-family:monospace;margin-bottom:14px;">离开</div>
+    <div id="farewell-title" style="font-size:10px;color:rgba(190,165,232,0.7);letter-spacing:3px;font-family:monospace;margin-bottom:14px;">离开</div>
     <div id="farewell-text" style="font-size:13px;color:rgba(240,235,224,0.82);line-height:2.3;white-space:pre-line;"></div>
     <button id="farewell-btn" style="margin-top:28px;display:block;width:100%;background:transparent;color:rgba(240,235,224,0.45);border:1px solid rgba(240,235,224,0.15);padding:13px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:3px;cursor:pointer;">继续 →</button>
   </div>
 </div>
 
 <!-- 开场故事页 -->
-<div id="story-screen" class="screen" style="background:#0a0a0a;position:fixed;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:25vh 28px calc(env(safe-area-inset-bottom) + 24px) 28px;">
+<div id="story-screen" class="screen" style="background:#2e2c42;position:fixed;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:25vh 28px calc(env(safe-area-inset-bottom) + 24px) 28px;">
   <div style="max-width:360px;width:100%;">
-    <div id="story-job-title" style="font-size:11px;color:rgba(139,26,43,0.8);letter-spacing:4px;font-family:monospace;margin-bottom:12px;">「职业」</div>
+    <div id="story-job-title" style="font-size:11px;color:rgba(190,165,232,0.8);letter-spacing:4px;font-family:monospace;margin-bottom:12px;">「职业」</div>
     <div id="story-text" style="font-size:13px;color:rgba(240,235,224,0.85);line-height:2;white-space:pre-line;"></div>
     <button id="story-enter-btn" style="margin-top:28px;display:block;width:100%;background:transparent;color:rgba(240,235,224,0.6);border:1px solid rgba(240,235,224,0.2);padding:14px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;">进入 2026 年 →</button>
   </div>
