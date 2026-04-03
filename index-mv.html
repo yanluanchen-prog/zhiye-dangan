@@ -27,10 +27,10 @@ body{
 }
 #job-input::placeholder{color:#3a3028;font-size:14px;letter-spacing:1px;}
 /* 光标闪烁动画 */
-@keyframes cursor-blink{0%,100%{border-bottom-color:#c8a878;}50%{border-bottom-color:transparent;}}
+@keyframes cursor-blink{0%,100%{border-bottom-color:rgba(100,174,208,0.7);}50%{border-bottom-color:transparent;}}
 #job-input{cursor:text;}
 #job-input:not(:focus){animation:cursor-blink 1.2s infinite;}
-#job-input:focus{animation:none;border-bottom-color:#c8a878;}
+#job-input:focus{animation:none;border-bottom-color:rgba(100,174,208,0.7);}
 /* 输入错误提示 */
 .input-error{animation:shake 0.4s ease;}
 @keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
@@ -850,8 +850,8 @@ body:has(#story-screen.active) {
 /* ── 年份进度点 ─────────────────────────────────────────── */
 .ydots-bar { background: rgba(0,0,0,0.06) !important; }
 .ydot      { background: rgba(0,0,0,0.12) !important; }
-.ydot.done { background: rgba(58,50,40,0.3) !important; }
-.ydot.cur  { background: var(--SSR) !important; box-shadow: 0 0 8px rgba(224,120,112,0.5) !important; }
+.ydot.done { background: rgba(100,120,160,0.28) !important; }
+.ydot.cur  { background: var(--R) !important; box-shadow: 0 0 6px rgba(100,174,208,0.5) !important; }
 
 /* ── Header ─────────────────────────────────────────────── */
 .header {
@@ -875,7 +875,7 @@ body:has(#story-screen.active) {
 .SSR .id-badge-hdr{ background: rgba(224,120,112,0.7) !important; }
 .UR .id-badge-hdr { background: rgba(104,180,136,0.7) !important; }
 .header-tab { color: rgba(58,50,40,0.55) !important; }
-.header-tab.active { color: rgba(58,50,40,0.85) !important; border-bottom-color: var(--SSR) !important; }
+.header-tab.active { color: rgba(58,50,40,0.88) !important; border-bottom-color: var(--R) !important; }
 
 /* ── 按钮 ────────────────────────────────────────────────── */
 .btn {
