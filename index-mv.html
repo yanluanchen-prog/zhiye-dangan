@@ -2254,7 +2254,12 @@ function showEnding(){
   if(neverSwapped){
     // 守护者：从未换过职业
     tier='guardian';tierColor='var(--gold,#B8860B)';tierLabel='守护者';
-    tierLine=`你守住了「${G.ownCard.name}」。<br><br>十年里，浪打过来，你没有跑。<br>不是因为你不怕，是因为你选择了留下。<br><br>最后一个找你的人说：「我试过AI，但我只想找个人。」<br>你记得2026年看到那份报告时，心里的那种沉。<br>现在你知道了答案。<br><br><strong>这件事，AI不懂。</strong>`;
+    // 救生员专属结局
+    if(G.ownCard.name==='救生员'){
+      tierLine=`你守住了「救生员」。<br><br>这十年，AI替代了67%的职业。<br>救生员，不在名单上。<br><br>不是因为你有什么特别——<br>是因为有些东西，AI替代不了：<br>那一秒的判断，那双在水里伸出的手。<br><br>但安全，不等于轻松。<br><br>这份薪资，从来不高。<br>十年里，你看着同届的人纷纷转型、跳槽、所谓「上岸」。<br>你还是坐在那把高椅子上，看着水面。<br><br>不是没有动摇过。<br>只是最后，选择了留下。<br><br><strong>这件事，AI不懂。</strong>`;
+    } else {
+      tierLine=`你守住了「${G.ownCard.name}」。<br><br>十年里，浪打过来，你没有跑。<br>不是因为你不怕，是因为你选择了留下。<br><br>最后一个找你的人说：「我试过AI，但我只想找个人。」<br>你记得2026年看到那份报告时，心里的那种沉。<br>现在你知道了答案。<br><br><strong>这件事，AI不懂。</strong>`;
+    }
   } else if(wanderer){
     // 流浪者：换了5次以上
     tier='wanderer';tierColor='var(--ink-lt)';tierLabel='漂流者';
