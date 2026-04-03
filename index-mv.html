@@ -1089,6 +1089,31 @@ body:has(#story-screen.active) {
 .enc-entry-badge { color: var(--SSR) !important; border-color: rgba(224,120,112,0.3) !important; background: rgba(224,120,112,0.06) !important; }
 .enc-section-title { color: rgba(58,50,40,0.42) !important; }
 
+
+/* ── 图鉴小卡牌：使用 MV 稀有度色 ──────────────────────────── */
+.mini-card {
+  background: rgba(245,242,238,0.92) !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255,255,255,0.85) !important;
+  box-shadow: 0 2px 8px rgba(100,120,160,0.12) !important;
+  overflow: hidden !important;
+}
+.mini-card.N   { border-color: rgba(160,152,128,0.5) !important; }
+.mini-card.R   { border-color: rgba(100,174,208,0.5) !important; }
+.mini-card.SR  { border-color: rgba(216,160,64,0.5) !important;  }
+.mini-card.SSR { border-color: rgba(224,120,112,0.5) !important; }
+.mini-card.UR  { border-color: rgba(104,180,136,0.5) !important; }
+
+.mini-card.N   .mini-header { background: rgba(160,152,128,0.25) !important; }
+.mini-card.R   .mini-header { background: rgba(100,174,208,0.22) !important; }
+.mini-card.SR  .mini-header { background: rgba(216,160,64,0.22) !important;  }
+.mini-card.SSR .mini-header { background: rgba(224,120,112,0.22) !important; }
+.mini-card.UR  .mini-header { background: rgba(104,180,136,0.22) !important; }
+
+.mini-rarity { color: rgba(48,38,28,0.7) !important; }
+.mini-name   { color: rgba(48,38,28,0.88) !important; }
+.enc-info    { color: rgba(48,38,28,0.5) !important; font-size: 9px; }
+/* ─────────────────────────────────────────────────────────── */
 /* ── 弹窗卡牌 = 和游戏卡完全一致 ──────────────────────────── */
 .cm-card-wrap .card {
   border-radius: 22px !important;
