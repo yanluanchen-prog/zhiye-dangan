@@ -1196,65 +1196,73 @@ body:has(#story-screen.active) {
   overflow: hidden !important;
 }
 
-/* ═══ 开箱动效增强 ══════════════════════════════════════════════ */
+/* ═══ 开箱动效 v2（加强版）══════════════════════════════════════ */
 
-/* 1. 卡牌从箱底升起（覆盖原 card-fly-in 横向飞入） */
+/* 1. 卡牌从箱底升起 + 弹性过冲 */
 .deck-active .card.card-fly-in {
-  animation: mv-unbox-rise 0.58s cubic-bezier(0.34, 1.56, 0.64, 1) both !important;
+  animation: mv-unbox-rise 0.62s cubic-bezier(0.34, 1.56, 0.64, 1) both !important;
 }
 @keyframes mv-unbox-rise {
-  0%   { transform: translateY(70px) scale(0.86); opacity: 0; }
-  55%  { transform: translateY(-10px) scale(1.03); opacity: 1; }
-  78%  { transform: translateY(2px) scale(0.99); }
+  0%   { transform: translateY(80px) scale(0.84); opacity: 0; }
+  50%  { transform: translateY(-12px) scale(1.04); opacity: 1; }
+  75%  { transform: translateY(3px) scale(0.99); }
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* 2. 开箱时袋内暖光晕（.pkg-bag.opening::after） */
-.pkg-bag { position: relative; }
+/* 2. 暖光爆闪 - 更亮更大 */
+.pkg-bag { position: relative; overflow: visible; }
 .pkg-bag.opening::after {
   content: '' !important;
   position: absolute !important;
-  inset: 0 !important;
+  top: -10% !important; left: -10% !important;
+  width: 120% !important; height: 120% !important;
   z-index: 8 !important;
   pointer-events: none !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   background: radial-gradient(
-    ellipse 85% 65% at 50% 28%,
-    rgba(255,248,210,0.92) 0%,
-    rgba(255,220,130,0.45) 28%,
-    transparent 68%
+    ellipse 90% 70% at 50% 20%,
+    rgba(255,255,210,1.0) 0%,
+    rgba(255,230,100,0.75) 22%,
+    rgba(255,190,60,0.35) 48%,
+    transparent 70%
   ) !important;
-  animation: mv-unbox-glow 1.0s ease-out forwards !important;
+  animation: mv-unbox-glow 0.85s ease-out forwards !important;
 }
 @keyframes mv-unbox-glow {
-  0%   { opacity: 0; }
-  18%  { opacity: 0; }         /* 等条带开始撕 */
-  35%  { opacity: 1; }         /* 撕开瞬间爆光 */
-  65%  { opacity: 0.75; }
-  100% { opacity: 0; }
+  0%   { opacity: 0;    transform: scale(0.7); }
+  12%  { opacity: 0; }
+  28%  { opacity: 1;    transform: scale(1.08); } /* 撕开瞬间爆光 */
+  48%  { opacity: 0.88; transform: scale(1.02); }
+  80%  { opacity: 0.4; }
+  100% { opacity: 0;    transform: scale(1.05); }
 }
 
-/* 3. 撕条更有力 + 飞出后淡出 */
+/* 3. 条带：先抖动两下，再猛甩出去 */
 .pkg-bag.opening #pkg-top-strip {
-  animation: mv-strip-tear 0.9s ease-out forwards !important;
+  animation: mv-strip-tear 0.75s cubic-bezier(0.25,0.46,0.45,0.94) forwards !important;
 }
 @keyframes mv-strip-tear {
-  0%   { transform: translate(0,0) rotate(0) scale(1); opacity: 1; }
-  18%  { transform: translate(0,0) rotate(0) scale(1); opacity: 1; }
-  38%  { transform: translate(0,-5px) rotate(-2.5deg) scale(1.015); opacity: 1; }
-  75%  { transform: translate(-42px,-95px) rotate(-14deg) scale(0.97); opacity: 0.55; }
-  100% { transform: translate(-65px,-130px) rotate(-18deg) scale(0.93); opacity: 0; }
+  0%   { transform: translate(0,0) rotate(0); opacity: 1; }
+  8%   { transform: translate(4px, 1px) rotate(1.5deg); }        /* 抖右 */
+  16%  { transform: translate(-5px, 0) rotate(-2deg); }          /* 抖左 */
+  24%  { transform: translate(5px, -3px) rotate(2.5deg); }       /* 抖右+上挑 */
+  32%  { transform: translate(0, -6px) rotate(-1deg) scale(1.02); } /* 蓄力 */
+  /* 开撕 */
+  45%  { transform: translate(15px,-30px) rotate(12deg) scale(1.0); opacity: 1; }
+  70%  { transform: translate(60px,-90px) rotate(28deg) scale(0.97); opacity: 0.7; }
+  100% { transform: translate(95px,-145px) rotate(42deg) scale(0.93); opacity: 0; }
 }
 
-/* 4. 开箱瞬间袋体微弹 */
+/* 4. 袋体：弹跳 + 显露开口 */
 .pkg-bag.opening #pkg-bag-body {
-  animation: mv-bag-pop 0.9s ease-out forwards !important;
+  animation: mv-bag-pop 0.75s ease-out forwards !important;
 }
 @keyframes mv-bag-pop {
-  0%   { transform: scale(1);    clip-path: inset(0 0 0 0 round 8px); }
-  22%  { transform: scale(1.015); clip-path: inset(0 0 0 0 round 8px); }  /* 微弹 */
-  42%  { transform: scale(1);    clip-path: inset(0 0 0 0 round 8px); }
-  100% { transform: scale(1);    clip-path: inset(24px 0 0 0 round 8px); }
+  0%   { transform: scale(1) translateY(0);   clip-path: inset(0 0 0 0 round 8px); }
+  20%  { transform: scale(1.025) translateY(-4px); clip-path: inset(0 0 0 0 round 8px); }
+  36%  { transform: scale(1.008) translateY(-1px); clip-path: inset(4px 0 0 0 round 8px); }
+  55%  { transform: scale(1) translateY(0);   clip-path: inset(16px 0 0 0 round 8px); }
+  100% { transform: scale(1) translateY(0);   clip-path: inset(26px 0 0 0 round 8px); }
 }
 /* ════════════════════════════════════════════════════════════════ */
 
