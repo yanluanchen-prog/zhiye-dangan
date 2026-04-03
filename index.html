@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>我的事业 · 职业生存图鉴</title>
-<!-- v20260401-0100 强制刷新缓存 -->
+<!-- v20260403-MV01 Monument Valley Theme Step 1 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -27,10 +27,10 @@ body{
 }
 #job-input::placeholder{color:#3a3028;font-size:14px;letter-spacing:1px;}
 /* 光标闪烁动画 */
-@keyframes cursor-blink{0%,100%{border-bottom-color:#c8a878;}50%{border-bottom-color:transparent;}}
+@keyframes cursor-blink{0%,100%{border-bottom-color:rgba(100,174,208,0.7);}50%{border-bottom-color:transparent;}}
 #job-input{cursor:text;}
 #job-input:not(:focus){animation:cursor-blink 1.2s infinite;}
-#job-input:focus{animation:none;border-bottom-color:#c8a878;}
+#job-input:focus{animation:none;border-bottom-color:rgba(100,174,208,0.7);}
 /* 输入错误提示 */
 .input-error{animation:shake 0.4s ease;}
 @keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
@@ -97,7 +97,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   background:var(--ink);color:var(--paper);
   padding:12px 14px 10px;
   display:flex;justify-content:center;align-items:flex-start;
-  border-bottom:4px solid var(--red);
+  border-bottom:none;
   flex-shrink:0;
 }
 /* 左上角工牌 - 放大版 */
@@ -128,7 +128,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .id-badge-sal-row{display:flex;align-items:center;gap:2px;margin-top:4px;width:100%;}
 .id-badge-sal-lbl{font-size:6px;color:var(--ink-faint);font-family:monospace;flex-shrink:0;}
 .id-badge-sal-wrap{flex:1;height:3px;border-radius:2px;}
-.id-badge-sal-val{font-size:7px;font-weight:700;font-family:monospace;color:#C23B22;flex-shrink:0;}
+.id-badge-sal-val{font-size:7px;font-weight:700;font-family:monospace;color:rgba(80,60,45,0.75);flex-shrink:0;}
 
 .id-badge-job{font-size:15px;font-weight:900;letter-spacing:1px;line-height:1.1;margin-bottom:3px;}
 .id-badge-sub{font-size:9px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:4px;}
@@ -140,29 +140,29 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .header-tab-label{font-size:8px;color:rgba(240,235,224,.82);letter-spacing:2px;font-family:monospace;text-align:center;line-height:1.2;}
 .header-tab-count{font-size:7px;color:rgba(240,235,224,.5);font-family:monospace;letter-spacing:1px;}
 .header-tab .id-badge-card{width:50px;height:84px;}
-.header-tab.folder .id-badge-hdr{background:var(--red);}
+.header-tab.folder .id-badge-hdr{background:rgba(180,150,110,0.75);}
 .header-tab.folder .id-badge-art{background:linear-gradient(180deg,var(--paper),#ebe2d3);}
 .header-tab.folder .id-badge-emoji{font-size:20px;}
 .header-tab.folder .id-badge-name{font-size:7px;letter-spacing:.5px;}
-.id-badge-mini-count{margin-top:4px;font-size:8px;font-family:monospace;color:var(--red);font-weight:800;letter-spacing:.8px;line-height:1;}
+.id-badge-mini-count{margin-top:4px;font-size:8px;font-family:monospace;color:rgba(80,60,45,0.75);font-weight:800;letter-spacing:.8px;line-height:1;}
 .header-right{text-align:right;}
-.header-classify{font-size:8px;letter-spacing:3px;color:var(--red);font-family:monospace;margin-bottom:2px;}
-.header-year{font-size:24px;font-weight:900;color:var(--red);font-family:monospace;letter-spacing:3px;line-height:1;}
+.header-classify{font-size:8px;letter-spacing:3px;color:rgba(100,80,65,0.55);font-family:monospace;margin-bottom:2px;}
+.header-year{font-size:24px;font-weight:900;color:rgba(58,50,40,0.82);font-family:monospace;letter-spacing:3px;line-height:1;}
 .header-year-sub{font-size:8px;color:var(--ink-faint);letter-spacing:2px;margin-top:2px;font-family:monospace;}
 .game-year-footer{margin-top:12px;text-align:center;display:flex;flex-direction:column;gap:2px;}
-.game-year-main{font-size:18px;font-weight:900;color:var(--red);font-family:monospace;letter-spacing:2px;line-height:1;}
+.game-year-main{font-size:18px;font-weight:900;color:rgba(58,50,40,0.82);font-family:monospace;letter-spacing:2px;line-height:1;}
 .game-year-sub{font-size:9px;color:var(--ink-faint);letter-spacing:2px;font-family:monospace;}
 
 /* ── YEAR DOTS ────────────────────────────── */
 .ydots-bar{display:flex;gap:3px;padding:5px 14px;background:var(--paper-dk);border-bottom:1px solid var(--border);flex-shrink:0;}
 .ydot{flex:1;height:4px;border-radius:2px;background:rgba(0,0,0,0.1);}
-.ydot.done{background:var(--red);opacity:0.5;}
-.ydot.cur{background:var(--red);}
+.ydot.done{background:rgba(100,120,160,0.22);}
+.ydot.cur{background:rgba(100,174,208,0.8);}
 
 /* ── SECTION ──────────────────────────────── */
 .container{padding:12px 14px;flex:1;overflow-y:auto;}
-.section{background:var(--paper-lt);border:1px solid var(--border);padding:13px;margin-bottom:11px;position:relative;}
-.section::before{content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:1px solid var(--border);pointer-events:none;opacity:0.5;}
+.section{background:transparent;border:none;padding:13px;margin-bottom:0;position:relative;}
+.section::before{display:none;}
 .section.no-frame{background:transparent;border:none;padding:0;}
 .section.no-frame::before{display:none;}
 .section-title{font-size:10px;letter-spacing:4px;color:var(--ink-lt);border-bottom:1px solid var(--border);padding-bottom:7px;margin-bottom:11px;font-family:monospace;}
@@ -198,9 +198,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .stat-label{font-size:9px;color:var(--ink-faint);width:62px;flex-shrink:0;font-family:monospace;white-space:nowrap;}
 .stat-track{flex:1;height:4px;background:var(--paper-dk);border-radius:2px;}
 .stat-fill{height:100%;border-radius:2px;transition:width 0.4s;}
-.stat-atk .stat-fill{background:#C23B22;}.stat-def .stat-fill{background:#1A3A6B;}.stat-hp .stat-fill{background:#1A6B3A;}
+.stat-atk .stat-fill{background:rgba(200,130,120,0.7);}.stat-def .stat-fill{background:#1A3A6B;}.stat-hp .stat-fill{background:#1A6B3A;}
 .stat-val{font-size:10px;font-weight:700;width:24px;text-align:right;font-family:monospace;}
-.stat-atk .stat-val{color:#C23B22;}.stat-def .stat-val{color:#1A3A6B;}.stat-hp .stat-val{color:#1A6B3A;}
+.stat-atk .stat-val{color:rgba(160,80,72,0.9);}.stat-def .stat-val{color:#1A3A6B;}.stat-hp .stat-val{color:#1A6B3A;}
 .card-footer{display:flex;justify-content:space-between;padding:8px 14px;border-top:1px solid var(--border);font-size:8px;color:var(--ink-faint);font-family:monospace;background:var(--paper-dk);}
 
 /* ── DECK STACK ───────────────────────────── */
@@ -475,25 +475,25 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 #event-modal.open{display:flex;}
 .ev-sheet{
   position:relative;width:100%;max-width:480px;
-  background:var(--paper);border-top:4px solid var(--red);
+  background:var(--paper);border-top:4px solid rgba(180,155,225,0.5);
   padding:18px 20px 0;
   height:72vh; /* 固定高度，不随文字伸缩 */
   display:flex;flex-direction:column;
   animation:slideUp 0.25s ease;
 }
 @keyframes slideUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
-.ev-year{font-size:9px;letter-spacing:4px;color:var(--red);font-family:monospace;margin-bottom:12px;flex-shrink:0;}
+.ev-year{font-size:9px;letter-spacing:4px;color:rgba(190,165,232,0.85);font-family:monospace;margin-bottom:12px;flex-shrink:0;}
 .ev-body{font-size:12px;line-height:2;color:var(--ink-lt);white-space:pre-wrap;flex:1;overflow-y:auto;margin-bottom:10px;}
-.ev-slogan{font-size:10px;color:var(--red);letter-spacing:3px;font-family:monospace;text-align:right;padding-top:10px;border-top:1px solid var(--border);margin-bottom:10px;flex-shrink:0;display:none;}
+.ev-slogan{font-size:10px;color:rgba(190,165,232,0.7);letter-spacing:3px;font-family:monospace;text-align:right;padding-top:10px;border-top:1px solid var(--border);margin-bottom:10px;flex-shrink:0;display:none;}
 #ev-confirm{flex-shrink:0;margin-bottom:calc(16px + env(safe-area-inset-bottom));}
 
 /* ── CARD DETAIL MODAL ────────────────────── */
-#card-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(28,26,20,0.78);align-items:center;justify-content:center;padding:24px;}
+#card-modal{display:none;position:fixed;inset:0;z-index:100;background:transparent;align-items:center;justify-content:center;padding:24px;}
 #card-modal.open{display:flex;}
 .cm-sheet{position:relative;width:auto;max-width:300px;background:transparent;border:none;padding:0;max-height:none;overflow:visible;animation:slideUp 0.18s ease;box-shadow:none;}
 .cm-close,.cm-swap,.cm-cancel{display:none !important;}
 .cm-card-wrap{width:244px;height:358px;margin:0 auto;display:flex;justify-content:center;align-items:center;}
-.cm-card-wrap .card{width:244px;height:358px;display:flex;flex-direction:column;border-width:3px;border-radius:8px;}
+.cm-card-wrap .card{width:244px;height:358px;display:flex;flex-direction:column;border-width:1px;border-radius:22px;}
 .cm-card-wrap .card-header{padding:8px 12px 7px;}
 .cm-card-wrap .card-file-no{font-size:8px;letter-spacing:1.5px;}
 .cm-card-wrap .card-rarity-stamp{font-size:9px;padding:1px 5px;}
@@ -511,9 +511,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .cm-card-wrap .card-footer{padding:7px 12px;font-size:7px;}
 
 /* ── ENC MODAL ────────────────────────────── */
-#enc-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(28,26,20,0.78);align-items:flex-end;justify-content:center;}
+#enc-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(210,205,198,0.35);align-items:flex-end;justify-content:center;}
 #enc-modal.open{display:flex;}
-.enc-sheet{position:relative;width:100%;max-width:480px;background:var(--paper);border-top:4px solid var(--red);padding:18px 14px calc(40px + env(safe-area-inset-bottom));max-height:85vh;overflow-y:auto;animation:slideUp 0.22s ease;}
+.enc-sheet{position:relative;width:100%;max-width:480px;background:var(--paper);border-top:4px solid rgba(100,174,208,0.6);padding:18px 14px calc(40px + env(safe-area-inset-bottom));max-height:85vh;overflow-y:auto;animation:slideUp 0.22s ease;}
 .enc-ttl{font-size:16px;font-weight:900;letter-spacing:4px;color:var(--ink);margin-bottom:3px;}
 .enc-sub{font-size:10px;color:var(--ink-faint);font-family:monospace;margin-bottom:14px;}
 .enc-x{position:absolute;top:12px;right:16px;background:none;border:none;font-size:18px;color:var(--ink-faint);cursor:pointer;}
@@ -589,54 +589,788 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .rv-body{font-size:12px;color:var(--ink-lt);line-height:2;text-align:left;}
 .rv-years-left{font-size:10px;color:var(--ink-faint);font-family:monospace;letter-spacing:2px;margin-top:12px;}
 </style>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MONUMENT VALLEY THEME — Step 1 v2
+     莫兰迪配色 · 磨砂玻璃卡牌 · 标本图标 · 墨水文字动画
+     fix: 减轻黑度 / 修复按钮点击 / 全屏风格统一
+═══════════════════════════════════════════════════════════════ -->
+<style id="mv-theme">
+
+/* ══════════════════════════════════════════════════════════════
+   MONUMENT VALLEY THEME v6 — 晴空·亮莫兰迪
+   背景：天蓝→暖桃→雾蓝柔光渐变（参考图配色）
+   卡牌：奶白磨砂玻璃方块
+   文字：深炭色（亮底深字）
+══════════════════════════════════════════════════════════════ */
+
+/* ── 强制所有屏幕透明（覆盖原始CSS的 background:var(--paper)）── */
+/* 额外：用更高特异性覆盖 header 4px 红边框 */
+#game-screen .header,
+.header { border-bottom: 1px solid rgba(255,255,255,0.4) !important; }
+.screen { background: transparent !important; }
+
+/* story/farewell：showScreen() 加 active 后强制恢复 flex 居中 */
+#story-screen.active,
+#story-screen.screen.active {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: calc(env(safe-area-inset-top) + 40px) 28px
+           calc(env(safe-area-inset-bottom) + 40px) 28px !important;
+  box-sizing: border-box !important;
+}
+.screen.active { background: transparent !important; }
+#game-screen.active { background: transparent !important; }
+#result-screen.active { background: transparent !important; }
+#fail-screen.active { background: transparent !important; }
+#ending-screen.active { background: transparent !important; }
+#intro-screen { background: transparent !important; }
+#intro-screen.screen.active { background: transparent !important; }
+body:has(#intro-screen.active) { background: transparent !important; }
+/* 滚动容器内部也透明（防断层） */
+.game-scroll, .scroll-content, .container { background: transparent !important; }
+
+/* ── 亮色系变量 ───────────────────────────────────────────── */
+:root {
+  /* 背景渐变锚点 */
+  --mv-bg-a: #dce8f2;   /* 天蓝 */
+  --mv-bg-b: #f0e4d8;   /* 暖桃 */
+  --mv-bg-c: #cdd8e8;   /* 雾蓝 */
+
+  /* 纸色覆盖：奶白 */
+  --paper:    #f5f0ea;
+  --paper-dk: #ede6de;
+  --paper-lt: #faf7f4;
+
+  /* 文字：深炭暖色 */
+  --ink:       #3a3228;
+  --ink-lt:    rgba(58,50,40,0.65);
+  --ink-faint: rgba(58,50,40,0.35);
+
+  /* 功能色：柔莫兰迪 */
+  --red:    #c87870;   /* 淡珊瑚 */
+  --green:  #72a882;   /* 薄荷绿 */
+  --border: rgba(0,0,0,0.08);
+
+  /* 稀有度——参考图的鲜亮点缀 */
+  --N:   #a09880;   /* 暖石 */
+  --R:   #64aed0;   /* 晴空蓝 */
+  --SR:  #d8a040;   /* 琥珀 */
+  --SSR: #e07870;   /* 珊瑚红 */
+  --UR:  #68b488;   /* 翡翠绿 */
+}
+
+/* ── 全屏背景：html::before 固定层（iOS Safari 兼容）──────── */
+/* 背景只有一个来源，所有屏幕改透明，不再各自设颜色 */
+html {
+  background: #c8dff0 !important; /* 渐变 fallback 纯色 */
+  min-height: 100vh !important;
+  height: -webkit-fill-available !important;
+}
+/* @property 注册 CSS 变量，允许 transition 动画 */
+@property --mv-bg-a { syntax:'<color>'; initial-value:#c8dff0; inherits:true; }
+@property --mv-bg-b { syntax:'<color>'; initial-value:#f0ddd0; inherits:true; }
+@property --mv-bg-c { syntax:'<color>'; initial-value:#c0d4e8; inherits:true; }
+
+html::before {
+  content: '' !important;
+  position: fixed !important;
+  top: -5% !important; left: -5% !important;
+  width: 110% !important;
+  height: 110% !important;
+  background: linear-gradient(165deg,
+    var(--mv-bg-a) 0%, var(--mv-bg-b) 45%, var(--mv-bg-c) 100%) !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  /* A: 背景缓慢呼吸漂移 */
+  animation: mv-bg-drift 22s ease-in-out infinite !important;
+  /* C: 年份色彩过渡（CSS变量transition需要@property注册） */
+  transition: --mv-bg-a 2s ease, --mv-bg-b 2s ease, --mv-bg-c 2s ease !important;
+  transform-origin: center center !important;
+}
+@keyframes mv-bg-drift {
+  0%   { transform: scale(1.02) translate(0%,   0%);   }
+  25%  { transform: scale(1.04) translate(1.5%, -1%);  }
+  50%  { transform: scale(1.02) translate(-1%,  1.5%); }
+  75%  { transform: scale(1.03) translate(1%,   1%);   }
+  100% { transform: scale(1.02) translate(0%,   0%);   }
+}
+
+/* A: 游走暖光晕 */
+html::after {
+  content: '' !important;
+  position: fixed !important;
+  top: -30% !important; left: -30% !important;
+  width: 160% !important; height: 160% !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  background: radial-gradient(
+    ellipse 55% 55% at 50% 38%,
+    rgba(255,244,218,0.14) 0%,
+    rgba(220,200,175,0.05) 45%,
+    transparent 70%
+  ) !important;
+  animation: mv-ambient-light 16s ease-in-out infinite !important;
+}
+@keyframes mv-ambient-light {
+  0%   { transform: translate(0%,   0%);  opacity: 0.72; }
+  30%  { transform: translate(10%,  -6%); opacity: 1;    }
+  60%  { transform: translate(-7%,  10%); opacity: 0.60; }
+  100% { transform: translate(0%,   0%);  opacity: 0.72; }
+}
+body {
+  background: transparent !important;
+  color: var(--ink) !important;
+}
+/* 所有 screen 全部透明，共享 html::before 背景 */
+.screen,
+.screen.active,
+#intro-screen, #intro-screen.screen, #intro-screen.screen.active,
+#story-screen,  #story-screen.screen,  #story-screen.screen.active,
+#game-screen, #game-screen.active,
+#result-screen, #result-screen.active,
+#fail-screen, #fail-screen.active,
+#ending-screen, #ending-screen.active,
+body:has(#intro-screen.active),
+body:has(#story-screen.active) {
+  background: transparent !important;
+}
+
+/* farewell overlay 必须完全不透明，不能透出背后的游戏卡牌 */
+#farewell-overlay {
+  background: linear-gradient(165deg, #c8dff0 0%, #f0ddd0 45%, #c0d4e8 100%) !important;
+}
+
+/* ── Section：去硬框，白色漂浮玻璃 ──────────────────────── */
+.section {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
+}
+.section::before { display: none !important; }
+.section-title {
+  color: rgba(58,50,40,0.42) !important;
+  border-bottom-color: rgba(0,0,0,0.06) !important;
+}
+
+/* ── 卡牌：真实磨砂玻璃（半透+饱和滤镜+大投影）──────────── */
+.card {
+  /* 微蓝冷玻璃，不是纯白 */
+  background: rgba(235,242,252,0.52) !important;
+  /* saturate让背景渐变色透过玻璃，制造彩色磨砂效果 */
+  backdrop-filter: blur(40px) saturate(2.0) brightness(1.08) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(2.0) brightness(1.08) !important;
+  border: 1px solid rgba(255,255,255,0.88) !important;
+  border-radius: 22px !important;
+  overflow: hidden !important;
+  /* 多层投影：近距离清晰+远距离扩散，制造漂浮感 */
+  box-shadow:
+    0 2px 4px rgba(100,120,160,0.08),
+    0 8px 20px rgba(100,120,160,0.14),
+    0 28px 56px rgba(100,120,160,0.18),
+    inset 0 1.5px 0 rgba(255,255,255,1),
+    inset 1px 0 0 rgba(255,255,255,0.55),
+    inset 0 -1px 0 rgba(160,140,200,0.1) !important;
+  transform: none !important;
+  transition: box-shadow 0.3s ease !important;
+}
+
+/* 稀有度：顶边彩色 + 彩色漫射投影 */
+.card.N   {
+  border-top: 3px solid rgba(160,152,128,0.6) !important;
+}
+.card.R   {
+  border-top: 3px solid rgba(100,174,208,0.72) !important;
+  box-shadow: 0 2px 4px rgba(100,174,208,0.08), 0 8px 20px rgba(100,174,208,0.16), 0 28px 56px rgba(100,174,208,0.16), inset 0 1.5px 0 rgba(255,255,255,1), inset 1px 0 0 rgba(255,255,255,0.55) !important;
+}
+.card.SR  {
+  border-top: 3px solid rgba(216,160,64,0.72) !important;
+  box-shadow: 0 2px 4px rgba(216,160,64,0.08), 0 8px 20px rgba(216,160,64,0.16), 0 28px 56px rgba(216,160,64,0.14), inset 0 1.5px 0 rgba(255,255,255,1), inset 1px 0 0 rgba(255,255,255,0.55) !important;
+}
+.card.SSR {
+  border-top: 3px solid rgba(224,120,112,0.75) !important;
+  box-shadow: 0 2px 4px rgba(224,120,112,0.08), 0 8px 20px rgba(224,120,112,0.18), 0 28px 56px rgba(224,120,112,0.16), inset 0 1.5px 0 rgba(255,255,255,1), inset 1px 0 0 rgba(255,255,255,0.55) !important;
+}
+.card.UR  {
+  border-top: 3px solid rgba(104,180,136,0.75) !important;
+  box-shadow: 0 2px 4px rgba(104,180,136,0.08), 0 8px 20px rgba(104,180,136,0.18), 0 28px 56px rgba(104,180,136,0.18), inset 0 1.5px 0 rgba(255,255,255,1), inset 1px 0 0 rgba(255,255,255,0.55) !important;
+}
+
+/* 卡头：浅彩色调 */
+.card-header { padding: 10px 16px 9px !important; border-bottom: 1px solid rgba(0,0,0,0.06) !important; }
+.N   .card-header { background: linear-gradient(90deg,rgba(160,152,128,0.18),transparent) !important; }
+.R   .card-header { background: linear-gradient(90deg,rgba(100,174,208,0.22),transparent) !important; }
+.SR  .card-header { background: linear-gradient(90deg,rgba(216,160,64,0.22),transparent)  !important; }
+.SSR .card-header { background: linear-gradient(90deg,rgba(224,120,112,0.22),transparent) !important; }
+.UR  .card-header { background: linear-gradient(90deg,rgba(104,180,136,0.22),transparent) !important; }
+
+.card-file-no      { color: rgba(58,50,40,0.38) !important; }
+.card-rarity-stamp { color: rgba(58,50,40,0.68) !important; border-color: rgba(0,0,0,0.14) !important; }
+
+/* 卡面：柔光内室（参考图2的"玻璃盒子"感） */
+.card-art {
+  background: rgba(248,244,238,0.85) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+  padding: 28px 14px 22px !important;
+  position: relative !important;
+}
+.card-art::before {
+  content: '' !important;
+  position: absolute !important; inset: 0 !important;
+  background: radial-gradient(ellipse 85% 60% at 50% 30%,
+    rgba(255,255,255,0.7), transparent 70%) !important;
+  pointer-events: none !important;
+}
+.card-art::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 18px !important; left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 55px !important; height: 7px !important;
+  background: rgba(160,140,120,0.25) !important;
+  border-radius: 50% !important; filter: blur(6px) !important;
+  pointer-events: none !important; z-index: 0 !important;
+}
+
+/* 悬浮图标：发光（亮色调） */
+.card-art-icon {
+  font-size: 66px !important; display: block !important;
+  margin-bottom: 14px !important;
+  position: relative !important; z-index: 1 !important;
+  animation: mv-float 4s ease-in-out infinite !important;
+}
+.N   .card-art-icon { filter: drop-shadow(0 4px 12px rgba(160,152,128,0.4)) !important; }
+.R   .card-art-icon { filter: drop-shadow(0 4px 18px rgba(100,174,208,0.55)) drop-shadow(0 0 8px rgba(100,174,208,0.3)) !important; }
+.SR  .card-art-icon { filter: drop-shadow(0 4px 18px rgba(216,160,64,0.55))  drop-shadow(0 0 8px rgba(216,160,64,0.3))  !important; }
+.SSR .card-art-icon { filter: drop-shadow(0 4px 18px rgba(224,120,112,0.55)) drop-shadow(0 0 8px rgba(224,120,112,0.3)) !important; }
+.UR  .card-art-icon { filter: drop-shadow(0 4px 22px rgba(104,180,136,0.6))  drop-shadow(0 0 10px rgba(104,180,136,0.35)) !important; }
+
+@keyframes mv-float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+
+.card-name { color: rgba(42,36,28,0.90) !important; font-size: 26px !important; letter-spacing: 2px !important; position: relative !important; z-index: 1 !important; }
+.card-tag  { color: rgba(58,50,40,0.42) !important; letter-spacing: 4px !important; position: relative !important; z-index: 1 !important; }
+
+/* 卡体 */
+.card-body { background: transparent !important; padding: 14px 16px 12px !important; }
+.card-desc {
+  color: rgba(58,50,40,0.75) !important;
+  font-size: 12px !important; line-height: 1.9 !important;
+  animation: mv-ink 0.8s ease-out 0.1s both !important;
+}
+@keyframes mv-ink {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.card-footer { background: rgba(0,0,0,0.03) !important; border-top: 1px solid rgba(0,0,0,0.05) !important; color: rgba(58,50,40,0.28) !important; }
+.card-type-badge { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: rgba(58,50,40,0.48) !important; }
+.card-elim-note  { color: var(--red) !important; border-left-color: var(--red) !important; background: rgba(200,120,112,0.06) !important; }
+
+/* ── 数值条 ─────────────────────────────────────────────── */
+.stat-label { color: rgba(58,50,40,0.4) !important; }
+.stat-track { background: rgba(0,0,0,0.06) !important; }
+.stat-atk .stat-fill { background: linear-gradient(90deg,#c8963c,#e0b860) !important; }
+.stat-def .stat-fill { background: linear-gradient(90deg,#80b8d8,#a8d0e8) !important; }
+.stat-hp  .stat-fill { background: linear-gradient(90deg,#78c098,#a0d8b8) !important; }
+.stat-atk .stat-val  { color: #a07828 !important; }
+.stat-def .stat-val  { color: #5898c0 !important; }
+.stat-hp  .stat-val  { color: #58a880 !important; }
+
+/* ── 牌堆阴影卡 ─────────────────────────────────────────── */
+.deck-shadow, .deck-shadow-left {
+  background: rgba(255,255,255,0.22) !important;
+  border: 1px solid rgba(255,255,255,0.55) !important;
+  background-image: none !important;
+  backdrop-filter: blur(18px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.6) !important;
+  border-radius: 20px !important;
+  box-shadow: none !important;
+}
+
+/* ── 导航按钮 ────────────────────────────────────────────── */
+.deck-nav-btn {
+  background: rgba(255,255,255,0.65) !important;
+  border: 1px solid rgba(255,255,255,0.9) !important;
+  color: rgba(58,50,40,0.6) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 12px rgba(160,140,120,0.14) !important;
+}
+.deck-counter { color: rgba(58,50,40,0.38) !important; }
+
+/* ── 年份进度点 ─────────────────────────────────────────── */
+.ydots-bar { background: rgba(0,0,0,0.06) !important; }
+.ydot      { background: rgba(0,0,0,0.12) !important; }
+.ydot.done { background: rgba(100,120,160,0.28) !important; }
+.ydot.cur  { background: var(--R) !important; box-shadow: 0 0 6px rgba(100,174,208,0.5) !important; }
+
+/* ── Header ─────────────────────────────────────────────── */
+.header {
+  background: rgba(255,255,255,0.35) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.5) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: none !important;
+}
+.id-badge-card {
+  background: rgba(255,255,255,0.32) !important;
+  border: 1px solid rgba(255,255,255,0.6) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+.id-badge-name { color: rgba(58,50,40,0.78) !important; }
+.id-badge-hdr { background: rgba(200,190,180,0.6) !important; }
+.N  .id-badge-hdr { background: rgba(160,152,128,0.7) !important; }
+.R  .id-badge-hdr { background: rgba(100,174,208,0.7) !important; }
+.SR .id-badge-hdr { background: rgba(216,160,64,0.7)  !important; }
+.SSR .id-badge-hdr{ background: rgba(224,120,112,0.7) !important; }
+.UR .id-badge-hdr { background: rgba(104,180,136,0.7) !important; }
+.header-tab { color: rgba(58,50,40,0.55) !important; }
+.header-tab.active { color: rgba(58,50,40,0.88) !important; border-bottom-color: var(--R) !important; }
+
+/* ── 按钮：胶囊形 + 彩色渐变 + 弹性交互 ───────────────────── */
+.btn {
+  /* 基础胶囊形（无 backdrop-filter，iOS 触摸兼容）*/
+  background: rgba(255,255,255,0.62) !important;
+  border: 1px solid rgba(255,255,255,0.85) !important;
+  color: rgba(48,38,28,0.85) !important;
+  border-radius: 999px !important;
+  box-shadow:
+    0 4px 14px rgba(100,120,160,0.14),
+    0 1px 3px rgba(0,0,0,0.07),
+    inset 0 1px 0 rgba(255,255,255,0.9) !important;
+  transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.12s ease !important;
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+/* 按下弹性反馈 */
+.btn:active {
+  transform: scale(0.94) !important;
+  box-shadow:
+    0 2px 6px rgba(100,120,160,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.7) !important;
+}
+
+/* 主要行动按钮（绿/继续）— 天空蓝渐变 */
+.btn.green,
+.btn:not(.red):not(.outline):not(.gray) {
+  background: linear-gradient(145deg,
+    rgba(140,195,225,0.72),
+    rgba(100,165,210,0.60)) !important;
+  border-color: rgba(255,255,255,0.80) !important;
+  color: rgba(30,55,80,0.90) !important;
+  box-shadow:
+    0 5px 18px rgba(100,165,210,0.28),
+    0 1px 3px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.75) !important;
+}
+.btn.green:active,
+.btn:not(.red):not(.outline):not(.gray):active {
+  transform: scale(0.94) !important;
+  box-shadow: 0 2px 8px rgba(100,165,210,0.2) !important;
+}
+
+/* 危险/跳槽按钮 — 暖珊瑚渐变 */
+.btn.red {
+  background: linear-gradient(145deg,
+    rgba(224,140,130,0.65),
+    rgba(200,108,100,0.55)) !important;
+  border-color: rgba(255,255,255,0.72) !important;
+  color: rgba(80,28,24,0.88) !important;
+  box-shadow:
+    0 5px 18px rgba(200,100,95,0.24),
+    0 1px 3px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.65) !important;
+}
+.btn.red:active {
+  transform: scale(0.94) !important;
+  box-shadow: 0 2px 8px rgba(200,100,95,0.18) !important;
+}
+
+/* 轮廓按钮 */
+.btn.outline {
+  background: rgba(255,255,255,0.30) !important;
+  color: rgba(58,50,40,0.60) !important;
+  border-color: rgba(255,255,255,0.60) !important;
+  box-shadow: none !important;
+}
+.btn.outline:active { transform: scale(0.95) !important; }
+
+.card-actions { position: relative !important; z-index: 20 !important; }
+
+/* ── 签收按钮：天蓝大胶囊 ──────────────────────────────────── */
+.pkg-sign-btn {
+  background: linear-gradient(145deg,
+    rgba(120,185,220,0.78),
+    rgba(88,155,200,0.68)) !important;
+  border: 1px solid rgba(255,255,255,0.82) !important;
+  border-radius: 999px !important;
+  color: rgba(20,50,80,0.90) !important;
+  box-shadow:
+    0 6px 22px rgba(100,165,210,0.32),
+    inset 0 1px 0 rgba(255,255,255,0.75) !important;
+  transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.12s ease !important;
+}
+.pkg-sign-btn:active { transform: scale(0.95) !important; box-shadow: 0 2px 8px rgba(100,165,210,0.2) !important; }
+
+/* ── 「进入 xxxx 年 →」story 按钮也用渐变 ───────────────────── */
+#story-enter-btn {
+  background: linear-gradient(145deg,
+    rgba(255,255,255,0.68),
+    rgba(230,240,250,0.60)) !important;
+  border: 1px solid rgba(255,255,255,0.85) !important;
+  border-radius: 999px !important;
+  color: rgba(48,38,28,0.75) !important;
+  box-shadow:
+    0 4px 16px rgba(100,120,160,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.9) !important;
+  transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.12s ease !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+#story-enter-btn:active { transform: scale(0.95) !important; }
+
+/* ── 「继续 →」告别页按钮 ──────────────────────────────────── */
+#farewell-btn {
+  background: rgba(255,255,255,0.45) !important;
+  border: 1px solid rgba(255,255,255,0.70) !important;
+  border-radius: 999px !important;
+  color: rgba(48,38,28,0.65) !important;
+  box-shadow: 0 2px 10px rgba(100,120,160,0.10) !important;
+  transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+#farewell-btn:active { transform: scale(0.95) !important; }
+
+/* ── 年份事件弹窗 ────────────────────────────────────────── */
+#event-modal { background: rgba(180,170,158,0.45) !important; }
+.ev-sheet {
+  background: rgba(250,246,240,0.98) !important;
+  border-top: 4px solid rgba(100,174,208,0.6) !important;
+  /* 去掉 backdrop-filter，避免 iOS 子元素触摸失效 */
+  border-radius: 20px 20px 0 0 !important;
+  box-shadow: 0 -8px 40px rgba(160,140,120,0.2) !important;
+  isolation: isolate !important;
+}
+.ev-year,  #ev-year   { color: rgba(80,120,160,0.85) !important; letter-spacing: 4px !important; }
+.ev-slogan,#ev-slogan { color: rgba(100,130,160,0.60) !important; }
+.ev-body,  #ev-body   { color: rgba(58,50,40,0.85) !important; line-height: 2.1 !important; font-size: 13px !important; }
+#ev-confirm {
+  background: rgba(224,120,112,0.18) !important;
+  border: 1px solid rgba(224,120,112,0.38) !important;
+  color: rgba(160,60,55,0.88) !important;
+  border-radius: 12px !important;
+}
+
+/* ── 图鉴弹窗 ───────────────────────────────────────────── */
+#enc-modal, #card-detail-modal {
+  background: rgba(235,228,218,0.97) !important;
+}
+.enc-entry {
+  background: rgba(255,255,255,0.6) !important;
+  border: 1px solid rgba(255,255,255,0.85) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 10px rgba(160,140,120,0.1) !important;
+}
+.enc-entry-top { color: rgba(58,50,40,0.85) !important; }
+.enc-entry-sub { color: rgba(58,50,40,0.42) !important; }
+.enc-entry-badge { color: var(--SSR) !important; border-color: rgba(224,120,112,0.3) !important; background: rgba(224,120,112,0.06) !important; }
+.enc-section-title { color: rgba(58,50,40,0.42) !important; }
+
+
+/* ── 图鉴小卡牌：使用 MV 稀有度色 ──────────────────────────── */
+.mini-card {
+  background: rgba(245,242,238,0.92) !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255,255,255,0.85) !important;
+  box-shadow: 0 2px 8px rgba(100,120,160,0.12) !important;
+  overflow: hidden !important;
+}
+.mini-card.N   { border-color: rgba(160,152,128,0.5) !important; }
+.mini-card.R   { border-color: rgba(100,174,208,0.5) !important; }
+.mini-card.SR  { border-color: rgba(216,160,64,0.5) !important;  }
+.mini-card.SSR { border-color: rgba(224,120,112,0.5) !important; }
+.mini-card.UR  { border-color: rgba(104,180,136,0.5) !important; }
+
+.mini-card.N   .mini-header { background: rgba(160,152,128,0.25) !important; }
+.mini-card.R   .mini-header { background: rgba(100,174,208,0.22) !important; }
+.mini-card.SR  .mini-header { background: rgba(216,160,64,0.22) !important;  }
+.mini-card.SSR .mini-header { background: rgba(224,120,112,0.22) !important; }
+.mini-card.UR  .mini-header { background: rgba(104,180,136,0.22) !important; }
+
+.mini-rarity { color: rgba(48,38,28,0.7) !important; }
+.mini-name   { color: rgba(48,38,28,0.88) !important; }
+.enc-info    { color: rgba(48,38,28,0.5) !important; font-size: 9px; }
+/* ─────────────────────────────────────────────────────────── */
+
+/* ── 卡牌弹窗：毛玻璃背景（用 ::before 隔离，不影响 iOS 触摸） ─ */
+#card-modal.open {
+  isolation: isolate !important;
+}
+#card-modal.open::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(235,230,222,0.16) !important;
+  backdrop-filter: blur(22px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.3) !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+}
+#card-modal.open > * {
+  position: relative !important;
+  z-index: 1 !important;
+}
+/* ─────────────────────────────────────────────────────────── */
+/* ── 弹窗卡牌 = 和游戏卡完全一致 ──────────────────────────── */
+.cm-card-wrap .card {
+  border-radius: 22px !important;
+  border-width: 1px !important;
+  background: rgba(235,242,252,0.52) !important;
+  backdrop-filter: blur(40px) saturate(2.0) brightness(1.08) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(2.0) brightness(1.08) !important;
+  box-shadow:
+    0 2px 4px rgba(100,120,160,0.08),
+    0 8px 20px rgba(100,120,160,0.14),
+    0 28px 56px rgba(100,120,160,0.18),
+    inset 0 1.5px 0 rgba(255,255,255,1),
+    inset 1px 0 0 rgba(255,255,255,0.55) !important;
+}
+
+/* ── 结局页 ─────────────────────────────────────────────── */
+.rv-letter {
+  background: rgba(255,255,255,0.7) !important;
+  border: 1px solid rgba(255,255,255,0.9) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(160,140,120,0.18) !important;
+}
+.rv-letter-body  { color: rgba(58,50,40,0.75) !important; }
+.rv-letter-title { border-bottom-color: rgba(0,0,0,0.06) !important; color: rgba(58,50,40,0.85) !important; }
+.rv-letter.surv .rv-letter-title { color: var(--green) !important; }
+.rv-letter.fail .rv-letter-title { color: var(--red) !important; }
+.rv-letter-sign { color: rgba(58,50,40,0.3) !important; }
+
+/* ── 故事/告别页 ─────────────────────────────────────────── */
+#farewell-overlay * { color: rgba(58,50,40,0.82) !important; }
+#farewell-overlay #farewell-text { color: rgba(58,50,40,0.78) !important; }
+#story-enter-btn, #farewell-btn {
+  background: rgba(255,255,255,0.55) !important;
+  border-color: rgba(0,0,0,0.14) !important;
+  color: rgba(58,50,40,0.60) !important;
+  border-radius: 10px !important;
+}
+
+/* ── 开场下拉框 ─────────────────────────────────────────── */
+#job-dropdown {
+  background: rgba(248,244,238,0.98) !important;
+  border-color: rgba(0,0,0,0.1) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(160,140,120,0.2) !important;
+}
+.job-item       { color: rgba(58,50,40,0.82) !important; }
+.job-item:hover { background: rgba(100,174,208,0.1) !important; border-left-color: var(--R) !important; }
+.job-item.selected { background: rgba(224,120,112,0.1) !important; border-left-color: var(--SSR) !important; }
+.job-group       { border-bottom-color: rgba(0,0,0,0.06) !important; }
+.job-group-title { color: rgba(100,80,65,0.65) !important; background: rgba(200,180,160,0.1) !important; }
+.job-name        { color: rgba(58,50,40,0.82) !important; }
+
+/* ── 签收按钮 ───────────────────────────────────────────── */
+.pkg-sign-btn {
+  background: linear-gradient(180deg,rgba(100,174,208,0.7),rgba(75,148,185,0.8)) !important;
+  color: rgba(255,255,255,0.95) !important;
+  box-shadow: 0 6px 20px rgba(100,174,208,0.35),inset 0 1px 0 rgba(255,255,255,0.35) !important;
+  border-radius: 12px !important;
+}
+
+/* ── 卡牌飞入动画 ───────────────────────────────────────── */
+.card-fly-in      { animation: mv-fly-r 0.45s ease-out forwards !important; }
+.card-fly-in-left { animation: mv-fly-l 0.45s ease-out forwards !important; }
+@keyframes mv-fly-r {
+  0%   { transform: translateX(80px) scale(0.94); opacity: 0; }
+  65%  { transform: translateX(-5px) scale(1.01); opacity: 1; }
+  100% { transform: translateX(0)    scale(1);    opacity: 1; }
+}
+@keyframes mv-fly-l {
+  0%   { transform: translateX(-80px) scale(0.94); opacity: 0; }
+  65%  { transform: translateX(5px)   scale(1.01); opacity: 1; }
+  100% { transform: translateX(0)     scale(1);    opacity: 1; }
+}
+
+/* container 完全透明 */
+.container { background: transparent !important; }
+
+/* ── 额外清除背景干扰 ──────────────────────────────────────── */
+/* 快递签收区域：垂直内边距居中，不用 flex（避免 iOS 触摸吞噬） */
+#draw-zone { padding: 20px 0; }
+
+/* 袋子容器背景去掉 */
+#pkg-bag-body {
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* 年份进度条：完全透明，只保留点 */
+.ydots-bar {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: none !important;
+}
+
+/* game-screen 容器透明 */
+#game-screen, #game-screen .container {
+  background: transparent !important;
+}
+
+/* 底部操作区：无背景 */
+.card-actions-wrap, .actions-wrap {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 快递文件袋外壳：只保留内容，去掉外框 */
+.pkg-bag { background: transparent !important; border: none !important; }
+.pkg-waybill {
+  background: rgba(255,255,255,0.55) !important;
+  border: 1px solid rgba(255,255,255,0.8) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(16px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.6) !important;
+  box-shadow: 0 8px 32px rgba(100,120,160,0.15) !important;
+}
+
+/* deck-viewer 外壳也透明 */
+.deck-viewer { background: transparent !important; border: none !important; }
+
+/* deck-active 要和 card 的 border-radius 一致，否则 overflow:hidden 裁掉圆角 */
+.deck-active {
+  border-radius: 22px !important;
+  overflow: hidden !important;
+}
+
+
+
+/* ═══ 开箱动效 v2（加强版）══════════════════════════════════════ */
+
+/* 1. 卡牌从箱底升起 + 弹性过冲 */
+.deck-active .card.card-fly-in {
+  animation: mv-unbox-rise 0.62s cubic-bezier(0.34, 1.56, 0.64, 1) both !important;
+}
+@keyframes mv-unbox-rise {
+  0%   { transform: translateY(80px) scale(0.84); opacity: 0; }
+  50%  { transform: translateY(-12px) scale(1.04); opacity: 1; }
+  75%  { transform: translateY(3px) scale(0.99); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* 2. 暖光晕去掉 */
+.pkg-bag { position: relative; overflow: visible; }
+
+/* 3. 条带：放慢整体节奏，撕开过程和飞走过程都看得清 */
+.pkg-bag.opening #pkg-top-strip {
+  animation: mv-strip-tear 1.0s ease-in-out forwards !important;
+}
+@keyframes mv-strip-tear {
+  0%   { transform: translate(0,0) rotate(0); opacity: 1; }
+  /* 直接切开飞走，无抖动 */
+  15%  { transform: translate(10px,-18px) rotate(8deg); opacity: 1; }
+  50%  { transform: translate(55px,-90px) rotate(28deg) scale(0.97); opacity: 0.85; }
+  100% { transform: translate(100px,-160px) rotate(44deg) scale(0.92); opacity: 0; }
+}
+
+/* 4. 袋体：条带起飞时瞬间切掉 22px（和条带高度一致），不做沉降 */
+@keyframes bagOpenBody {
+  0%,30% { clip-path: inset(0 0 0 0 round 8px); }       /* 等条带起飞 */
+  31%,100%{ clip-path: inset(10px 0 0 0 round 8px); }   /* 瞬间切断 10px */
+}
+.pkg-bag.opening #pkg-bag-body {
+  animation: bagOpenBody 1.0s linear forwards !important;
+}
+
+/* ════════════════════════════════════════════════════════════════ */
+
+
+</style>
+
+
 </head>
+
+<!-- ══ 分享引导浮层 ════════════════════════════════════════════ -->
+<div id="share-overlay" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.72);" onclick="document.getElementById('share-overlay').style.display='none'">
+  <div style="position:absolute;top:0;right:0;padding:16px 20px;text-align:right;">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 8 Q24 4 40 8" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" stroke-dasharray="4 2"/>
+      <path d="M40 8 L36 18" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M40 8 L44 20" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <div style="color:white;font-size:13px;font-family:PingFang SC,sans-serif;margin-top:6px;line-height:1.7;text-align:right;">
+      点击右上角 <strong>···</strong><br>选择「发送给朋友」<br>或「分享到朋友圈」
+    </div>
+  </div>
+  <div style="position:absolute;bottom:80px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.5);font-size:12px;">点击任意位置关闭</div>
+</div>
+<!-- ══════════════════════════════════════════════════════════ -->
 <body>
+<button id="music-toggle" onclick="toggleMusic()" title="音乐开关">♪</button>
 
 <!-- ═══════════════════════════════ INTRO ═══════════════════════════════ -->
-<div id="intro-screen" class="screen active" style="background:#0a0a0a;position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);z-index:1;">
+<div id="intro-screen" class="screen active" style="background:transparent;position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);z-index:1;">
   <div style="max-width:380px;width:100%;padding:32px 24px;box-sizing:border-box;">
     <div style="text-align:center;margin-bottom:36px;">
-      <div style="font-size:11px;letter-spacing:5px;color:#3a4a5a;font-family:'Courier New',monospace;text-transform:uppercase;margin-bottom:16px;">〔职业生存图鉴〕</div>
-      <div style="font-family:'Courier New',monospace;font-size:40px;color:#d4cfc6;letter-spacing:12px;line-height:1.1;margin-bottom:16px;">我的事业</div>
-      <div style="width:40px;height:2px;background:#8b1a2b;margin:0 auto 32px;"></div>
+      <div style="font-size:11px;letter-spacing:5px;color:rgba(120,100,88,0.55);font-family:'Courier New',monospace;text-transform:uppercase;margin-bottom:16px;">〔职业生存图鉴〕</div>
+      <div style="font-family:'Courier New',monospace;font-size:40px;color:rgba(58,50,44,0.90);letter-spacing:12px;line-height:1.1;margin-bottom:16px;">我的事业</div>
+      <div style="width:40px;height:2px;background:rgba(180,160,140,0.35);margin:0 auto 32px;border-radius:2px;"></div>
     </div>
-    <div style="font-family:'Courier New',monospace;color:#d4cfc6;line-height:2;font-size:15px;margin-bottom:40px;">
+    <div style="font-family:'Courier New',monospace;color:rgba(58,50,44,0.72);line-height:2;font-size:15px;margin-bottom:40px;">
       <p style="margin:0 0 14px;">2026年，67% 的职业面临AI替代风险。</p>
       <p style="margin:0 0 14px;">从这一年起，每年都有职业消失。</p>
       <p style="margin:0;">你的职业，还能撑多久？</p>
     </div>
     <div style="margin-bottom:24px;position:relative;">
-      <div style="font-size:20px;color:#c8a878;letter-spacing:2px;margin-bottom:16px;">选择你的职业</div>
+      <div style="font-size:20px;color:rgba(80,68,58,0.78);letter-spacing:2px;margin-bottom:16px;">选择你的职业</div>
       <div id="job-input-wrapper" style="position:relative;">
         <input id="job-display" type="text" placeholder="点击选择职业" readonly
-          style="width:100%;background:transparent;border:none;border-bottom:1px solid #3a3028;color:#d4cfc6;font-family:'Courier New',monospace;font-size:14px;letter-spacing:1px;padding:10px 0 14px;outline:none;text-align:left;border-radius:0;-webkit-appearance:none;cursor:pointer;opacity:0.6;">
+          style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(0,0,0,0.18);color:rgba(58,50,44,0.88);font-family:'Courier New',monospace;font-size:14px;letter-spacing:1px;padding:10px 0 14px;outline:none;text-align:left;border-radius:0;-webkit-appearance:none;cursor:pointer;opacity:0.6;">
         <div id="job-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:280px;overflow-y:auto;border:1px solid #3a3028;border-radius:4px;background:#0a0a0a;z-index:100;margin-top:4px;box-shadow:0 4px 20px rgba(0,0,0,0.5);">
           <!-- 职业选择列表 -->
         </div>
       </div>
       <div id="job-error" style="color:#8b1a2b;font-size:11px;margin-top:8px;letter-spacing:1px;opacity:0;transition:opacity 0.3s;font-family:'Courier New',monospace;">请先选择职业</div>
     </div>
-    <button id="start-btn" style="display:block;width:100%;background:#8b1a2b;color:#f0ebe0;border:none;padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;">看看我的职业发展之路</button>
-    <div style="margin-top:16px;text-align:center;font-size:9px;color:#5a4a38;font-family:'Courier New',monospace;letter-spacing:1px;">数据来源 · Anthropic经济指数报告</div>
+    <button id="start-btn" style="display:block;width:100%;background:rgba(255,255,255,0.65);color:rgba(58,50,44,0.85);border:1px solid rgba(0,0,0,0.12);padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;border-radius:999px;">看看我的职业发展之路</button>
   </div>
 </div>
 
 <!-- ═══════════════════════════════ GAME ════════════════════════════════ -->
 <!-- 离职告别信 overlay -->
-<div id="farewell-overlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(10,10,10,0.97);flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px env(safe-area-inset-bottom);">
+<div id="farewell-overlay" style="display:none;position:fixed;inset:0;z-index:300;background:linear-gradient(165deg,#c8dff0,#f0ddd0,#c0d4e8);flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px env(safe-area-inset-bottom);">
   <div style="max-width:340px;width:100%;">
-    <div id="farewell-title" style="font-size:10px;color:rgba(139,26,43,0.7);letter-spacing:3px;font-family:monospace;margin-bottom:14px;">离开</div>
+    <div id="farewell-title" style="font-size:10px;color:rgba(160,100,90,0.75);letter-spacing:3px;font-family:monospace;margin-bottom:14px;">离开</div>
     <div id="farewell-text" style="font-size:13px;color:rgba(240,235,224,0.82);line-height:2.3;white-space:pre-line;"></div>
     <button id="farewell-btn" style="margin-top:28px;display:block;width:100%;background:transparent;color:rgba(240,235,224,0.45);border:1px solid rgba(240,235,224,0.15);padding:13px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:3px;cursor:pointer;">继续 →</button>
   </div>
 </div>
 
 <!-- 开场故事页 -->
-<div id="story-screen" class="screen" style="background:#0a0a0a;position:fixed;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:25vh 28px calc(env(safe-area-inset-bottom) + 24px) 28px;">
+<div id="story-screen" class="screen" style="background:transparent;position:fixed;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top) + 40px) 28px calc(env(safe-area-inset-bottom) + 40px) 28px;">
   <div style="max-width:360px;width:100%;">
-    <div id="story-job-title" style="font-size:11px;color:rgba(139,26,43,0.8);letter-spacing:4px;font-family:monospace;margin-bottom:12px;">「职业」</div>
-    <div id="story-text" style="font-size:13px;color:rgba(240,235,224,0.85);line-height:2;white-space:pre-line;"></div>
-    <button id="story-enter-btn" style="margin-top:28px;display:block;width:100%;background:transparent;color:rgba(240,235,224,0.6);border:1px solid rgba(240,235,224,0.2);padding:14px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;">进入 2026 年 →</button>
+    <div id="story-job-title" style="font-size:11px;color:rgba(100,80,70,0.72);letter-spacing:4px;font-family:monospace;margin-bottom:12px;">「职业」</div>
+    <div id="story-text" style="font-size:15px;color:rgba(38,28,18,0.90);line-height:2.2;white-space:pre-line;"></div>
+    <button id="story-enter-btn" style="margin-top:32px;display:block;width:100%;background:rgba(255,255,255,0.45);color:rgba(58,50,40,0.65);border:1px solid rgba(255,255,255,0.75);padding:14px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;border-radius:14px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">进入 2026 年 →</button>
   </div>
 </div>
 
@@ -799,7 +1533,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
     <div class="ev-year" id="ev-year">2026 · 今年发生了</div>
     <div class="ev-body" id="ev-body"></div>
     <div class="ev-slogan" id="ev-slogan"></div>
-    <button class="btn red" id="ev-confirm">你的职业还安全吗？</button>
+    <button class="btn" id="ev-confirm" style="background:rgba(200,120,112,0.22);border:1px solid rgba(200,120,112,0.4);color:rgba(140,50,45,0.9);border-radius:999px;position:relative;z-index:10;">你的职业还安全吗？</button>
   </div>
 </div>
 
@@ -857,7 +1591,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
     </div>
   </div>
   <div style="padding:0 20px 20px;">
-    <button class="btn red" id="result-next">继续 →</button>
+    <button class="btn red" id="result-next" style="position:relative;z-index:10;">继续 →</button>
     <div style="margin-top:8px;gap:8px;display:none;" id="result-fail-btns">
       <button class="btn red" id="result-restart" style="flex:1;">重新开始职业生涯</button>
       <button class="btn outline" id="result-quit" style="flex:1;">退出游戏</button>
@@ -871,7 +1605,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
     <div class="header-center">
       <div class="header-tab current" id="fail-card-btn" style="cursor:pointer;">
         <div class="id-badge-card">
-          <div class="id-badge-hdr" style="background:var(--red)">我的职业</div>
+          <div class="id-badge-hdr" style="background:rgba(180,140,110,0.7)">我的职业</div>
           <div class="id-badge-art"><span class="id-badge-emoji" id="f-id-emoji">💼</span><span class="id-badge-name" id="f-id-name">—</span></div>
         </div>
       </div>
@@ -887,12 +1621,12 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
       </div>
     </div>
   </div>
-  <div style="text-align:center;padding:28px 0 12px;">
-    <div style="font-size:44px;font-weight:900;color:var(--red);opacity:0.22;font-family:monospace;letter-spacing:8px;" id="f-yr-big">2028</div>
+  <div style="text-align:center;padding:12px 0 8px;">
+    <div style="font-size:44px;font-weight:900;color:rgba(100,130,180,0.25);font-family:monospace;letter-spacing:8px;" id="f-yr-big">2028</div>
     <div style="font-size:20px;font-weight:900;color:var(--ink);letter-spacing:4px;margin-top:8px;">你失业了。</div>
   </div>
   <div class="container">
-    <div class="section"><div style="font-size:12px;line-height:2.2;color:var(--ink-lt);white-space:pre-wrap;" id="f-text"></div></div>
+    <div class="section"><div style="font-size:13px;line-height:2.2;color:rgba(40,30,22,0.82);white-space:pre-wrap;" id="f-text"></div></div>
     <div class="btn-row">
       <button class="btn red" id="restart-btn">重新开始职业生涯</button>
     </div>
@@ -905,7 +1639,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
     <div class="header-center">
       <div class="header-tab current" id="ending-card-btn" style="cursor:pointer;">
         <div class="id-badge-card">
-          <div class="id-badge-hdr" style="background:var(--red)">我的职业</div>
+          <div class="id-badge-hdr" style="background:rgba(180,140,110,0.7)">我的职业</div>
           <div class="id-badge-art"><span class="id-badge-emoji" id="en-id-emoji">💼</span><span class="id-badge-name" id="en-id-name">—</span></div>
         </div>
       </div>
@@ -1000,13 +1734,10 @@ function generateOpeningStory(card){
     '办公室里空出来的工位越来越多。',
     '有些岗位消失了，连招聘页面都没留下。',
     '群里转发的，不再是机会，而是替代案例。',
-    '有个人一个人管了公司五个平台的号，粉丝都叫他"宝"。上周他也在裁员名单里。',
-    '同事被要求写一份skill文档——把怎么判断、怎么避坑全写下来。交完第二天，他的岗位就没了。'
   ];
   const signal=signals[Math.floor(Math.random()*signals.length)];
 
   const survivorMap={
-    '翻译':'又到了AI翻译发布新版本的季节。今年还没到我。',
     '客服代表':'隔壁部门换成AI客服了。这边的工单还在积。暂时还在。',
     '数据录入员':'系统每天处理扫描件。我录的那部分，还没有被替代。',
     '银行柜员':'APP分流了大多数业务。但还有几类，只能来柜台。',
@@ -1177,16 +1908,60 @@ function generateFarewell(card,swapN){
     '游戏策划':'游戏里最好的设计，是玩家感觉不到被设计了',
     '制片':'每个决定都在改变那个故事',
   };
+  // 离职动作（区分有无工牌职业）
+  const leaveActionMap={
+    '程序员':'工位卡放在桌角，没有交给任何人',
+    '医生':'把胸牌摘下来，放进了口袋',
+    '护士':'工牌留在了护士站',
+    '公务员':'工牌放回了证件盒，门禁卡还了',
+    '教师':'校牌放在讲台上，没有带走',
+    '记者':'记者证收进包里，采访本也是',
+    '律师':'徽章留在了那个抽屉里',
+    '金融分析师':'工牌和笔放在一起，都留着',
+    '会计师':'工位号牌摘了下来，放回前台',
+    '销售代表':'名片盒留在桌上，空的',
+    '银行柜员':'工作证放回了保险柜',
+    '产品经理':'工卡还了，笔记本清了权限',
+    '项目经理':'工牌交回了前台',
+    'HR':'工位上的那摞资料留给了接替的人',
+    '数据分析师':'权限撤销了，工牌还了',
+    '运营':'账号权限交接出去了，工牌放在桌上',
+    '广告创意':'创意稿留在云盘，桌面清空了',
+    '企业文化':'那个文化标语的贴纸没有撕，就这样走了',
+    '游戏策划':'设计文档做了交接，离开了那间格子间',
+    '数据录入员':'最后一批单据交出去了，就走了',
+    '平面设计师':'设计文件夹共享给了同事',
+    '剪辑师':'项目移交了，软件关上了',
+    '信息安全分析师':'权限密码交接完了，出了楼',
+    '市场研究分析师':'工位清空了，门禁卡还了',
+    '编剧':'剧本大纲做了备份，发给了制片',
+    '制片':'分镜表整理好了，移交出去了',
+    '心理咨询师':'那把椅子挪回原位，灯关了',
+    '作家':'文档保存了最终版，邮件发出去了',
+    // 没有工牌的职业
+    '洗碗工':'冲干净了手，换上了自己的衣服，没有回头',
+    '救生员':'哨子锁进了储物柜，换了衣服',
+    '厨师':'摘了围裙，洗了手，从后厨走出来了',
+    '修理工':'工具箱合上，扣上锁，往外走了',
+    '配送员':'运单交接完了，手机登出了系统',
+    '快递员':'运单结了清，手机签了退出',
+    '演员':'卸了妆，换回便服，走出了候场区',
+    '音乐家':'乐谱收好，琴盒带走，其余都留着',
+    '社工':'案卷整理好了，移交给了同事',
+    '摄影师':'相机收回了包里，镜头盖盖上了',
+    '护士':'工鞋放进柜子里，换了自己的鞋出去'
+  };
   const left=leftMap[card.name]||`工位上的东西，你什么都没有带`;
-  const ai=aiMap[card.name]||`现在有东西替代了你的位置`;
+  const leaveAction=leaveActionMap[card.name]||`自己把东西收好，放在桌上`;
   const belief=beliefMap[card.name]||`这份工作值得做下去`;
   const isOwn=G.ownCard&&card.name===G.ownCard.name;
   const prefix=isOwn?`你离开了「${card.name}」——\n那份你一开始填在表格里的职业。\n\n`:`你离开了「${card.name}」。\n\n`;
-  return `${prefix}${ord[swapN-2]||'这'}次转身。\n${left}。\n\n你没有等谁来通知。\n只是自己把工牌摘下来，放进抽屉。\n\n你想起刚做这行的时候，有人说：\n「${belief}。」\n\n${ai}。`;
+  const nthSwap=ord[swapN-1]||`第${swapN}`;
+  return `${prefix}${nthSwap}次转身。\n${left}。\n\n你没有等谁来通知。\n${leaveAction}。\n\n你想起刚做这行的时候，有人说：\n「${belief}。」`;
 }
 let _farewellCallback=null;
 function showFarewell(oldCard,swapN,cb){
-  $('farewell-title').textContent=`你离开了「${oldCard.name}」`;
+  $('farewell-title').textContent=`—— ${oldCard.name} ——`;
   $('farewell-text').textContent=generateFarewell(oldCard,swapN);
   _farewellCallback=cb;
   $('farewell-overlay').style.display='flex';
@@ -1396,7 +2171,7 @@ function doDrawCards(){
       const activeCard=$('deck-active').firstElementChild;
       if(activeCard)activeCard.classList.add('card-fly-in');
       bag.classList.remove('opening');
-    },980);
+    },1050);
   } else {
     $('draw-zone').style.display='none';
     $('hand-zone').style.display='block';
@@ -1405,8 +2180,238 @@ function doDrawCards(){
   }
 }
 
+
+
+// ── 专属守护者结局文案 ────────────────────────────────────────
+const GUARDIAN_LINES = {
+  '客服代表': 'AI接了大部分工单。那些转人工的，通常是最难的几类。你接了十年难题。AI只负责第一道门，后面的，还是你。',
+  '数据录入员': '扫描件越来越多，系统越来越快。但有一类文件，格式太旧，模型识别率只有68%。那部分，还是你在做。',
+  '银行柜员': 'APP分流了九成业务。但有几类，系统过不了，只能来柜台。你是最后那道窗口。',
+  '市场研究分析师': '数据模型比你跑得快。但那个在访谈里沉默三秒才说出口的，你记下来了，没被上传进数据库。',
+  '销售代表': '算法把推荐做完了，话术也生成好了。但那个老客户，只接你的电话。十年了，还是你。',
+  '金融分析师': 'AI看数字比你快。但那次没有数据的判断，你做对了，系统没有参与。',
+  '摄影师': '生成工具接了大部分棚拍。但有几个客户，每年还是来找你。他们说，照片里有些东西，工具拍不出来。',
+  '公务员': '编制削减了23%，你在剩下的77%里。不是运气——是那些谁都不想做但总要有人做的工作，你一直在做。',
+  '会计师': '系统对账比你快。但年审那周，税务局来了两个人，有几个问题要当面问。那个房间里，进去的是你。',
+  '律师': 'AI把服务协议读完了。但开庭那天，对面律师走到你面前，不是对着屏幕。庭上，还是人跟人。',
+  '记者': 'AI写稿比你快。但那个线人，只给你发信息。那条稿子，是你跑出来的。',
+  '平面设计师': '工具4分钟出一版。但那个客户说，他要见一下做这件事的人。那个会议室里，坐的是你。',
+  '翻译': 'AI支持143种语言。但那份合同，有几处对方坚持要人工确认。那个电话，是你接的。',
+  '广告创意': 'AB测试自动跑，数据说哪个好就用哪个。但那次大提案，客户想听个人说话。那个人是你。',
+  '产品经理': '需求文档AI可以生成。但用户访谈里那句话背后的意思，你听出来了，模型没听出来。',
+  'HR': '系统筛完简历，面试题也出好了。但最后那轮，还是你进去谈。有些人能不能用，你第一眼就知道了。',
+  '企业文化': '内部沟通工具接管了大部分公告。但那次大裁员后，有人在走廊上找你说话。你听了两个小时。',
+  '数据分析师': '实时报告比你快。但那次数据异常，所有指标都显示正常，你感觉不对，翻出来了问题。',
+  '项目经理': 'AI协作工具接管了大部分排期。但那次甲方突然改需求，电话是你打的，方案是你谈的。',
+  '快递员': '机器人能上楼，续航12小时。但那栋楼，电梯坏了三个月，没有机器人进得去。你每天爬上去。',
+  '运营': '算法实时调分发，数据比你好。但有几个作者，只跟你沟通。那几个内容，是你去聊来的。',
+  '游戏策划': 'AI能生成关卡，留存率还更高。但公司里那条没人敢提的产品逻辑，是你改掉的。那条线，设计文档里没有写。',
+  '制片': 'AI接管了分镜和排期。但现场那天，导演临时改了决定，那个协调电话是你打的，那场戏是你拿下来的。',
+
+  '厨师':
+    `你守住了「厨师」。<br><br>`+
+    `这十年，AI可以生成一千种食谱，打印一百万张菜单。<br>`+
+    `但锅气是什么，它不知道。<br>`+
+    `盐放多少，凭感觉——它学不会。<br><br>`+
+    `你的薪资不算高，没有暴富，没有上岸。<br>`+
+    `但每天有人专门绕过两条街来找你。<br>`+
+    `不是因为便宜，是因为是你做的。<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '修理工':
+    `你守住了「修理工」。<br><br>`+
+    `这十年，有人说实体手工业会消失。<br>`+
+    `结果是：东西还是会坏，管道还是会漏，电路还是会短路。<br><br>`+
+    `机器人能焊钢梁，但你家那台老洗衣机的问题<br>`+
+    `在图纸上找不到，得靠手感。<br><br>`+
+    `每次出门，工具箱比手机更重要。<br>`+
+    `你记得2026年有人预测「修理工会消失」。<br>`+
+    `你修好了那个人家的热水器。收了130块。<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '演员':
+    `你守住了「演员」。<br><br>`+
+    `这十年，影视行业被AI内容淹没。<br>`+
+    `观众最初喜欢免费的——什么都有，随时随地。<br><br>`+
+    `后来，有人开始说：<br>`+
+    `「我只想看一个真实的人在台上哭。」<br><br>`+
+    `剧场的票，卖得比任何时候都贵。<br>`+
+    `不是所有人买得起。买得起的，都来了。<br><br>`+
+    `你站在台上，做的事和2026年一样。<br>`+
+    `什么都没变，但观众眼里的东西不一样了。<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '洗碗工':
+    `你守住了「洗碗工」。<br><br>`+
+    `这十年，没有人担心洗碗工被AI替代。<br>`+
+    `也没有人关注洗碗工还在不在。<br><br>`+
+    `你一直在。<br><br>`+
+    `薪资是25。十年里几乎没动过。<br>`+
+    `你看着后厨的人来了又走，有人被裁，有人转行，有人「上岸」。<br>`+
+    `你洗完最后一批碗，脱下围裙，回家。<br><br>`+
+    `没有人采访你，没有人写你的故事。<br>`+
+    `但这十年，你每天都出现了。<br><br>`+
+    `<strong>这件事本身，就是一种答案。</strong>`,
+
+  '心理咨询师':
+    `你守住了「心理咨询师」。<br><br>`+
+    `这十年，世界越来越快，越来越孤独。<br>`+
+    `AI接管了工作，很多人同时失去了——钱，意义，和同事。<br><br>`+
+    `预约你的人，越来越多。<br><br>`+
+    `有人问：「AI也能陪我说话，为什么还要找你？」<br>`+
+    `你没有回答，只是听完了他后面说的那些话。<br><br>`+
+    `下周他还来了。<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '音乐家':
+    `你守住了「音乐家」。<br><br>`+
+    `AI可以生成任意风格的歌，无限量，免费，随时。<br>`+
+    `很多人觉得，这是音乐家的终点。<br><br>`+
+    `结果是：现场演出，票更难抢了。<br>`+
+    `人们在流媒体里听AI的，但愿意为真人的演奏付钱。<br><br>`+
+    `薪资是40。不算高，也不是最低。<br>`+
+    `这十年，你失去了录制版税，得到了一批真正因为你来的听众。<br><br>`+
+    `等价交换，你接受了。<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '社工':
+    `你守住了「社工」。<br><br>`+
+    `这十年，每一次产业裂变，都会制造一批新的失落者。<br>`+
+    `找不到工作的，不会用新工具的，掉出系统的。<br><br>`+
+    `你接的那个电话，是一个48岁的工厂工人，<br>`+
+    `他的岗位在2029年消失了。<br>`+
+    `他不知道怎么办。你们谈了两个小时。<br><br>`+
+    `这样的电话，这十年你接了很多。<br><br>`+
+    `没有人觉得社工是「有前途的职业」。<br>`+
+    `但这十年，需要社工的人，变多了。<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '教师':
+    `你守住了「教师」。<br><br>`+
+    `学校很多次讨论过「个性化AI教育」。<br>`+
+    `有几所学校真的推了，减掉了一半教师编制。<br><br>`+
+    `然后有些孩子开始出问题——<br>`+
+    `不是学习上的，是其他的。<br><br>`+
+    `你的班，留下来了。<br><br>`+
+    `你不确定自己教的东西有多少会被记住。<br>`+
+    `但那个在角落里、从来不举手的孩子——<br>`+
+    `你记住了她，她也记住了你。<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '护士':
+    `你守住了「护士」。<br><br>`+
+    `医疗行业引入了很多AI辅助系统。<br>`+
+    `诊断更准了，流程更快了，病历自动生成。<br><br>`+
+    `但有个环节，没有人打算自动化：<br>`+
+    `手术后，有人在旁边。<br><br>`+
+    `你见过太多事情。2026年看报告时，你没有那么慌——<br>`+
+    `你早就知道，有些工作不是「效率」能定义的。<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '配送员':
+    `你守住了「配送员」。<br><br>`+
+    `无人机、自动驾驶——每年都有新方案。<br>`+
+    `电梯里塞不进去，小区门口没有信号，<br>`+
+    `老人签不了数字签名。<br><br>`+
+    `「最后一公里」，还是你跑的。<br><br>`+
+    `薪资是42。平台抽成涨了，但底薪没动。<br>`+
+    `你换了更好的保温箱，买了一双新鞋。<br><br>`+
+    `没有感激，没有表扬。<br>`+
+    `只是包裹准时到了，门铃响了一声。<br><br>`+
+    `<strong>就这样，十年。</strong>`,
+
+  '剪辑师':
+    `你守住了「剪辑师」。<br><br>`+
+    `AI剪辑工具越来越强——一键成片，自动调色，自动配乐。<br>`+
+    `很多「会剪辑」的人，消失了。<br><br>`+
+    `留下来的，是那些知道<strong>为什么</strong>要这样剪的人。<br><br>`+
+    `节奏是什么感觉，这个镜头停多久，观众会在哪里走神——<br>`+
+    `这些，你不是用软件学的。<br><br>`+
+    `最后的委托方说：「AI给我剪的，总感觉哪里不对。」<br>`+
+    `你看了五秒，说：「转场早了三帧。」<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '作家':
+    `你守住了「作家」。<br><br>`+
+    `AI写作淹没了市场。<br>`+
+    `平台里有数不清的故事，流畅、完整、免费。<br><br>`+
+    `你的书，每年卖出的数量不多。<br>`+
+    `但每一个买的人，都是专门来找你的。<br><br>`+
+    `他们知道这些字是你写的，<br>`+
+    `知道里面那些弯绕绕的表达，是一个真实的人弯出来的。<br><br>`+
+    `薪资是35。你算过，如果按字数算，低于最低工资。<br>`+
+    `你没有换行。<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '程序员':
+    `你守住了「程序员」。<br><br>`+
+    `2026年，大家都在讨论哪些职业会被AI替代。<br>`+
+    `没多少人预测到：写代码的人，会第一批离场。<br><br>`+
+    `你撑过来了。这件事本身，已经不寻常。<br><br>`+
+    `这十年，你不再写大多数功能——AI写。<br>`+
+    `你做的事，是判断AI写的对不对，决定要不要，以及问清楚：<br>`+
+    `「我们到底要解决什么问题？」<br><br>`+
+    `这个问题，AI回答不了。<br><br>`+
+    `<strong>最后，你成了审判者，不是生产者。</strong>`,
+
+  '医生':
+    `你守住了「医生」。<br><br>`+
+    `AI诊断系统比你准，比你快，不疲惫，不误诊。<br>`+
+    `很多基础岗位，消失了。<br><br>`+
+    `留下来的医生，做两件事：<br>`+
+    `一是AI做不了的手术；二是坐在病人对面，告诉他诊断结果。<br><br>`+
+    `后者，没有人打算交给AI。<br><br>`+
+    `薪资高，但代价也高——<br>`+
+    `你接受了更长的在岗时间，更复杂的病例，更多的责任。<br><br>`+
+    `<strong>这不叫辉煌，叫幸存者的代价。</strong>`,
+
+  '信息安全分析师':
+    `你守住了「信息安全分析师」。<br><br>`+
+    `AI越强，漏洞越多；自动化越普及，攻击面越大。<br>`+
+    `你的工作，随着AI一起变难了。<br><br>`+
+    `这是一场没有终点的攻防。<br>`+
+    `对面的人也在用AI——而且越来越快。<br><br>`+
+    `薪资不差。但这十年，你基本上没有完整睡过一个周末。<br><br>`+
+    `你不后悔。这是你选的。<br><br>`+
+    `<strong>这件事，AI帮你打，但判断是你的。</strong>`,
+
+  '编剧':
+    `你守住了「编剧」。<br><br>`+
+    `「AI写剧本」的工具，第一批问世时就很好用。<br>`+
+    `制作公司喜欢——快，便宜，不会要求署名。<br><br>`+
+    `后来观众开始说：「最近的剧，好像都差不多。」<br><br>`+
+    `你拿到了一个项目。<br>`+
+    `制片人说：「我们要一个只有你才能写出来的故事。」<br>`+
+    `你花了三个月写了初稿。<br><br>`+
+    `薪资是85。这是你这十年最高的一次。<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+};
+
+// ── C: 年份背景色彩漂移 ────────────────────────────────────────
+const YEAR_PALETTES = {
+  2026: ['#c8dff0','#f0ddd0','#c0d4e8'],  // 清晨·希望
+  2027: ['#c2d8ea','#ead8c4','#b8cae0'],  // 微淡
+  2028: ['#bcd2e4','#e4d2ba','#b2c4d8'],  // 渐沉
+  2029: ['#b6ccde','#decbb0','#acbdd0'],  // 阴天感
+  2030: ['#b0c5d6','#d8c3a6','#a6b5c8'],  // 更沉
+  2031: ['#a8bece','#d2bb9c','#9faec0'],  // 暮色将至
+  2032: ['#a0b6c5','#ccb292','#98a6b8'],  // 暮色
+  2033: ['#98aebe','#c5a888','#909eb0'],  // 昏暗
+  2034: ['#90a5b5','#be9e7e','#8895a8'],  // 黄昏
+  2035: ['#889cac','#b79474','#808ca0'],  // 将夜
+};
+function updateBgPalette(year){
+  const p = YEAR_PALETTES[year] || YEAR_PALETTES[2026];
+  const r = document.documentElement;
+  r.style.setProperty('--mv-bg-a', p[0]);
+  r.style.setProperty('--mv-bg-b', p[1]);
+  r.style.setProperty('--mv-bg-c', p[2]);
+}
+
 function startYear(){
   drawTriggered=false;decisionInProgress=false;
+  updateBgPalette(YEARS[G.yearIndex].year);
   G.startOfYearCard={...G.currentCard};G.activeIdx=0;G.pendingSwap=null;
   updateHUD();updateBadge();
   $('draw-zone').style.display='block';$('draw-zone').style.opacity='1';
@@ -1480,7 +2485,9 @@ function openEncModal(){
     const elim=ELIM_YEAR[card.name]&&ELIM_YEAR[card.name]<=curYear;
     const div=document.createElement('div');
     div.className='enc-item mini-card '+card.rarity+(elim?' elim':'');
-    div.innerHTML=`<div class="mini-header"><span class="mini-rarity">${card.rarity}</span></div><div class="mini-art"><span class="mini-icon">${card.emoji}</span><span class="mini-name">${card.name}</span></div><div class="enc-info">${elim?ELIM_YEAR[card.name]+'年':'×'+timesDrawn}</div>`;
+    const fileNo=(card.fileNum||'').replace(/^[A-Z]+-/,'');
+    const elimYear=ELIM_YEAR[card.name]&&ELIM_YEAR[card.name]<=curYear?ELIM_YEAR[card.name]+'年':'—';
+    div.innerHTML=`<div class="mini-header"><span class="mini-rarity">${fileNo}</span></div><div class="mini-art"><span class="mini-icon">${card.emoji}</span><span class="mini-name">${card.name}</span></div><div class="enc-info">${elimYear}</div>`;
     div.addEventListener('click',()=>{closeEncModal();openCardDetail(card);});
     grid.appendChild(div);
   });
@@ -1622,7 +2629,9 @@ function showEnding(){
   if(neverSwapped){
     // 守护者：从未换过职业
     tier='guardian';tierColor='var(--gold,#B8860B)';tierLabel='守护者';
-    tierLine=`你守住了「${G.ownCard.name}」。<br><br>十年里，浪打过来，你没有跑。<br>不是因为你不怕，是因为你选择了留下。<br><br>最后一个找你的人说：「我试过AI，但我只想找个人。」<br>你记得2026年看到那份报告时，心里的那种沉。<br>现在你知道了答案。<br><br><strong>这件事，AI不懂。</strong>`;
+    // 专属结局优先；无专属则用通用文案
+    tierLine = GUARDIAN_LINES[G.ownCard.name] ||
+      `你守住了「${G.ownCard.name}」。<br><br>十年里，浪打过来，你没有跑。<br>不是因为你不怕，是因为你选择了留下。<br><br>最后一个找你的人说：「我试过AI，但我只想找个人。」<br>你记得2026年看到那份报告时，心里的那种沉。<br>现在你知道了答案。<br><br><strong>这件事，AI不懂。</strong>`;
   } else if(wanderer){
     // 流浪者：换了5次以上
     tier='wanderer';tierColor='var(--ink-lt)';tierLabel='漂流者';
@@ -1913,6 +2922,240 @@ onTap($('farewell-btn'),()=>{
 // 初始化职业选择器
 renderJobSelector();
 </script>
+
+<!-- ══ 音效 & 音乐系统 (Web Audio API) ══════════════════════════ -->
+<script>
+(function(){
+  'use strict';
+  const AC = window.AudioContext || window.webkitAudioContext;
+  let ctx = null, musicOn = true, musicTimer = null;
+
+  function C() {
+    if (!ctx) ctx = new AC();
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  // 淡入淡出辅助
+  function fade(gain, from, to, t, dur) {
+    gain.gain.setValueAtTime(from, t);
+    if (to < 0.001) gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    else gain.gain.linearRampToValueAtTime(to, t + dur);
+  }
+
+  // 单音（正弦/三角）
+  function tone(freq, dur, vol=0.18, type='sine', attack=0.02, delay=0) {
+    const c = C(), t = c.currentTime + delay;
+    const osc = c.createOscillator(), g = c.createGain();
+    osc.connect(g); g.connect(c.destination);
+    osc.type = type; osc.frequency.value = freq;
+    fade(g, 0.0001, vol, t, attack);
+    fade(g, vol, 0, t + attack, dur - attack);
+    osc.start(t); osc.stop(t + dur + 0.05);
+  }
+
+  // 白噪声脉冲（开包撕裂感）
+  function noise(dur, vol=0.18, filterFreq=3000, filterQ=0.8) {
+    const c = C();
+    const len = c.sampleRate * dur;
+    const buf = c.createBuffer(1, len, c.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, 1.8);
+    const src = c.createBufferSource(), flt = c.createBiquadFilter(), g = c.createGain();
+    flt.type = 'bandpass'; flt.frequency.value = filterFreq; flt.Q.value = filterQ;
+    src.buffer = buf;
+    src.connect(flt); flt.connect(g); g.connect(c.destination);
+    g.gain.value = vol;
+    src.start();
+  }
+
+  /* ── 各种音效 ──────────────────────────────────────────────── */
+
+  // 按钮轻点
+  window.sndClick = function() {
+    try { tone(1100, 0.08, 0.10, 'sine', 0.005); } catch(e){}
+  };
+
+  // 开包撕裂
+  window.sndOpen = function() {
+    try {
+      // 撕开声：低频更多（1400Hz），音量降低，用缓慢淡入淡出
+      const c = C();
+      const dur = 0.45;
+      const len = c.sampleRate * dur;
+      const buf = c.createBuffer(1, len, c.sampleRate);
+      const d = buf.getChannelData(0);
+      const attackLen = Math.floor(len * 0.12);  // 慢淡入
+      for (let i = 0; i < len; i++) {
+        const env = (i < attackLen ? i/attackLen : Math.pow(1 - (i-attackLen)/(len-attackLen), 2.5));
+        d[i] = (Math.random()*2-1) * env;
+      }
+      const src = c.createBufferSource();
+      src.buffer = buf;
+      const flt = c.createBiquadFilter();
+      flt.type = 'bandpass'; flt.frequency.value = 1400; flt.Q.value = 0.6;
+      const g = c.createGain();
+      g.gain.value = 0.09;
+      src.connect(flt); flt.connect(g); g.connect(c.destination);
+      src.start();
+    } catch(e){}
+  };
+
+  // 卡牌升起
+  window.sndCardRise = function() {
+    try {
+      const c = C(), t = c.currentTime;
+      const osc = c.createOscillator(), g = c.createGain();
+      osc.connect(g); g.connect(c.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(220, t);
+      osc.frequency.exponentialRampToValueAtTime(440, t + 0.35);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.linearRampToValueAtTime(0.14, t + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+      osc.start(t); osc.stop(t + 0.45);
+    } catch(e){}
+  };
+
+  // 年份事件弹出（单一钟声）
+  window.sndBell = function() {
+    try { tone(880, 1.2, 0.14, 'sine', 0.01); } catch(e){}
+  };
+
+  // 年份推进（上行琶音 F大调五声）
+  window.sndYearUp = function() {
+    try {
+      [349.23, 440, 523.25, 698.46].forEach((f, i) => tone(f, 0.55, 0.13, 'sine', 0.02, i*0.11));
+    } catch(e){}
+  };
+
+  // 游戏胜利（温暖大三和弦）
+  window.sndWin = function() {
+    try {
+      [261.63, 329.63, 392, 523.25].forEach((f, i) => tone(f, 2.8, 0.14, 'sine', 0.08, i*0.08));
+    } catch(e){}
+  };
+
+  // 游戏失败（下行小调）
+  window.sndFail = function() {
+    try {
+      const c = C(), t = c.currentTime;
+      const osc = c.createOscillator(), g = c.createGain();
+      osc.connect(g); g.connect(c.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(440, t);
+      osc.frequency.exponentialRampToValueAtTime(220, t + 1.2);
+      fade(g, 0.0001, 0.18, t, 0.05);
+      fade(g, 0.18, 0, t+0.1, 1.1);
+      osc.start(t); osc.stop(t + 1.3);
+      // 小三度 (261.63 = C4, 220 = A3)
+      tone(261.63, 1.5, 0.10, 'sine', 0.04, 0.3);
+    } catch(e){}
+  };
+
+  /* ── 环境音乐（五声音阶随机琶音）─────────────────────────── */
+  const PENTA = [261.63, 293.66, 329.63, 392, 440, 523.25, 587.33, 659.25];
+
+  function ambientTick() {
+    if (!musicOn) return;
+    try {
+      const freq = PENTA[Math.floor(Math.random()*PENTA.length)];
+      const oct  = Math.random() < 0.25 ? 2 : 1;
+      tone(freq * oct, 2.5 + Math.random()*2, 0.055 + Math.random()*0.035, 'sine', 0.15);
+    } catch(e){}
+    musicTimer = setTimeout(ambientTick, 900 + Math.random()*2200);
+  }
+
+  window.startAmbient = function() {
+    if (!musicOn || musicTimer) return;
+    ambientTick();
+  };
+
+  window.stopAmbient = function() {
+    if (musicTimer) { clearTimeout(musicTimer); musicTimer = null; }
+  };
+
+  window.toggleMusic = function() {
+    musicOn = !musicOn;
+    if (musicOn) { window.startAmbient(); }
+    else { window.stopAmbient(); }
+    const btn = document.getElementById('music-toggle');
+    if (btn) btn.textContent = musicOn ? '♪' : '♩';
+  };
+
+  /* ── 事件监听绑定 ──────────────────────────────────────────── */
+  function bindSounds() {
+    // 所有按钮点击音
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('button, .pkg-sign-btn');
+      if (btn) {
+        C(); // 激活 AudioContext（需要用户手势）
+        sndClick();
+      }
+    }, true);
+
+    // 开包：监听 .pkg-bag 加 opening class
+    const bag = document.getElementById('pkg-bag');
+    if (bag) {
+      new MutationObserver(ms => {
+        ms.forEach(m => {
+          if (m.attributeName==='class' && bag.classList.contains('opening')) {
+            setTimeout(sndOpen, 50);
+            setTimeout(sndCardRise, 850);
+          }
+        });
+      }).observe(bag, {attributes:true});
+    }
+
+    // 年份事件弹出
+    const evModal = document.getElementById('event-modal');
+    if (evModal) {
+      new MutationObserver(ms => {
+        ms.forEach(m => {
+          if (m.attributeName==='style' && evModal.style.display==='flex') sndBell();
+        });
+      }).observe(evModal, {attributes:true, attributeFilter:['style']});
+    }
+
+    // 结局/年份推进
+    const endScreen = document.getElementById('ending-screen');
+    const failScreen = document.getElementById('fail-screen');
+    const resultScreen = document.getElementById('result-screen');
+
+    if (endScreen) new MutationObserver(ms => {
+      ms.forEach(m => { if (endScreen.classList.contains('active')) setTimeout(sndWin, 300); });
+    }).observe(endScreen, {attributes:true, attributeFilter:['class']});
+
+    if (failScreen) new MutationObserver(ms => {
+      ms.forEach(m => { if (failScreen.classList.contains('active')) setTimeout(sndFail, 200); });
+    }).observe(failScreen, {attributes:true, attributeFilter:['class']});
+
+    if (resultScreen) new MutationObserver(ms => {
+      ms.forEach(m => { if (resultScreen.classList.contains('active')) setTimeout(sndYearUp, 100); });
+    }).observe(resultScreen, {attributes:true, attributeFilter:['class']});
+
+    // 游戏开始时启动音乐（首次进入故事页）
+    const storyScreen = document.getElementById('story-screen');
+    if (storyScreen) {
+      let started = false;
+      new MutationObserver(() => {
+        if (!started && storyScreen.classList.contains('active')) {
+          started = true;
+          window.startAmbient();
+        }
+      }).observe(storyScreen, {attributes:true, attributeFilter:['class']});
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindSounds);
+  } else {
+    bindSounds();
+  }
+})();
+</script>
+<!-- ════════════════════════════════════════════════════════════ -->
+
 </body>
 </html>
 <!-- deploy Sun Mar 29 06:55:41 PM CST 2026 -->
