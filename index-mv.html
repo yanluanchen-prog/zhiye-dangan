@@ -1216,7 +1216,7 @@ body:has(#story-screen.active) {
 
 /* 3. 条带：放慢整体节奏，撕开过程和飞走过程都看得清 */
 .pkg-bag.opening #pkg-top-strip {
-  animation: mv-strip-tear 1.4s ease-in-out forwards !important;
+  animation: mv-strip-tear 1.0s ease-in-out forwards !important;
 }
 @keyframes mv-strip-tear {
   0%   { transform: translate(0,0) rotate(0); opacity: 1; }
@@ -2048,7 +2048,7 @@ function doDrawCards(){
       const activeCard=$('deck-active').firstElementChild;
       if(activeCard)activeCard.classList.add('card-fly-in');
       bag.classList.remove('opening');
-    },1450);
+    },1050);
   } else {
     $('draw-zone').style.display='none';
     $('hand-zone').style.display='block';
