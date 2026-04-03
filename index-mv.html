@@ -488,7 +488,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 #ev-confirm{flex-shrink:0;margin-bottom:calc(16px + env(safe-area-inset-bottom));}
 
 /* ── CARD DETAIL MODAL ────────────────────── */
-#card-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(200,212,228,0.62);align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
+#card-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(200,212,228,0.62);align-items:center;justify-content:center;padding:24px;}
 #card-modal.open{display:flex;}
 .cm-sheet{position:relative;width:auto;max-width:300px;background:transparent;border:none;padding:0;max-height:none;overflow:visible;animation:slideUp 0.18s ease;box-shadow:none;}
 .cm-close,.cm-swap,.cm-cancel{display:none !important;}
@@ -511,7 +511,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .cm-card-wrap .card-footer{padding:7px 12px;font-size:7px;}
 
 /* ── ENC MODAL ────────────────────────────── */
-#enc-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(200,212,228,0.55);align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
+#enc-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(200,212,228,0.55);align-items:flex-end;justify-content:center;}
 #enc-modal.open{display:flex;}
 .enc-sheet{position:relative;width:100%;max-width:480px;background:var(--paper);border-top:4px solid rgba(100,174,208,0.6);padding:18px 14px calc(40px + env(safe-area-inset-bottom));max-height:85vh;overflow-y:auto;animation:slideUp 0.22s ease;}
 .enc-ttl{font-size:16px;font-weight:900;letter-spacing:4px;color:var(--ink);margin-bottom:3px;}
@@ -704,7 +704,7 @@ html::after {
   position: fixed !important;
   top: -30% !important; left: -30% !important;
   width: 160% !important; height: 160% !important;
-  z-index: 0 !important;
+  z-index: -1 !important;
   pointer-events: none !important;
   background: radial-gradient(
     ellipse 55% 55% at 50% 38%,
