@@ -475,16 +475,16 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 #event-modal.open{display:flex;}
 .ev-sheet{
   position:relative;width:100%;max-width:480px;
-  background:var(--paper);border-top:4px solid var(--red);
+  background:var(--paper);border-top:4px solid rgba(180,155,225,0.5);
   padding:18px 20px 0;
   height:72vh; /* 固定高度，不随文字伸缩 */
   display:flex;flex-direction:column;
   animation:slideUp 0.25s ease;
 }
 @keyframes slideUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
-.ev-year{font-size:9px;letter-spacing:4px;color:var(--red);font-family:monospace;margin-bottom:12px;flex-shrink:0;}
+.ev-year{font-size:9px;letter-spacing:4px;color:rgba(190,165,232,0.85);font-family:monospace;margin-bottom:12px;flex-shrink:0;}
 .ev-body{font-size:12px;line-height:2;color:var(--ink-lt);white-space:pre-wrap;flex:1;overflow-y:auto;margin-bottom:10px;}
-.ev-slogan{font-size:10px;color:var(--red);letter-spacing:3px;font-family:monospace;text-align:right;padding-top:10px;border-top:1px solid var(--border);margin-bottom:10px;flex-shrink:0;display:none;}
+.ev-slogan{font-size:10px;color:rgba(190,165,232,0.7);letter-spacing:3px;font-family:monospace;text-align:right;padding-top:10px;border-top:1px solid var(--border);margin-bottom:10px;flex-shrink:0;display:none;}
 #ev-confirm{flex-shrink:0;margin-bottom:calc(16px + env(safe-area-inset-bottom));}
 
 /* ── CARD DETAIL MODAL ────────────────────── */
@@ -597,8 +597,8 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 ═══════════════════════════════════════════════════════════════ -->
 <style id="mv-theme">
 
-/* ── 颜色系统重写（深石板蓝，非纯黑）───────────────────────── */
-html {
+/* ── 颜色系统重写（用 :root 覆盖原始 :root，相同优先级后者胜）── */
+:root {
   --paper:    #252840;
   --paper-dk: #1c1f35;
   --paper-lt: #2e3250;
@@ -920,9 +920,16 @@ body:has(#intro-screen.active) {
 }
 
 /* 年份事件弹窗 */
-#ev-year { color: rgba(190,165,232,0.9) !important; }
-#ev-slogan { color: rgba(210,188,240,0.75) !important; }
-#ev-body { color: rgba(237,232,224,0.82) !important; line-height: 2 !important; }
+.ev-sheet {
+  background: var(--paper) !important;
+  border-top-color: rgba(180,155,225,0.5) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+#ev-year,  .ev-year  { color: rgba(190,165,232,0.9) !important; }
+#ev-slogan,.ev-slogan{ color: rgba(210,188,240,0.7) !important; }
+#ev-body,  .ev-body  { color: rgba(237,232,224,0.82) !important; line-height: 2 !important; }
+#event-modal { background: rgba(10,12,25,0.88) !important; }
 
 /* 弹窗背景 */
 #event-modal, #enc-modal, #card-detail-modal {
@@ -1164,7 +1171,7 @@ body:has(#intro-screen.active) {
     <div class="ev-year" id="ev-year">2026 · 今年发生了</div>
     <div class="ev-body" id="ev-body"></div>
     <div class="ev-slogan" id="ev-slogan"></div>
-    <button class="btn red" id="ev-confirm">你的职业还安全吗？</button>
+    <button class="btn" id="ev-confirm" style="background:rgba(120,95,165,0.6);border-color:rgba(180,155,225,0.3);color:rgba(237,232,224,0.88);border-radius:10px;">你的职业还安全吗？</button>
   </div>
 </div>
 
