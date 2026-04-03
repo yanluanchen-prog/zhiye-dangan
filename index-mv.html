@@ -1266,7 +1266,14 @@ body:has(#story-screen.active) {
   100% { transform: translate(100px,-160px) rotate(44deg) scale(0.92); opacity: 0; }
 }
 
-/* 4. 袋体：和条带飞走同步，从顶部裁掉 22px（和条带高度匹配） */
+/* 4. 袋体：条带飞起后瞬间切断，不做渐变——看起来像两截 */
+@keyframes bagOpenBody {
+  0%,29% { clip-path: inset(0 0 0 0 round 8px); }       /* 等条带起飞 */
+  31%,100%{ clip-path: inset(46% 0 0 0 round 0 0 8px 8px); }  /* 瞬间切断 */
+}
+.pkg-bag.opening #pkg-bag-body {
+  animation: bagOpenBody 1.0s linear forwards !important;
+}
 
 /* ════════════════════════════════════════════════════════════════ */
 
