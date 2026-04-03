@@ -1217,6 +1217,12 @@ body:has(#story-screen.active) {
 /* 快递签收区域：垂直内边距居中，不用 flex（避免 iOS 触摸吞噬） */
 #draw-zone { padding: 20px 0; }
 
+/* 袋子容器背景去掉 */
+#pkg-bag-body {
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
 /* 年份进度条：完全透明，只保留点 */
 .ydots-bar {
   background: transparent !important;
