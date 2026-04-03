@@ -160,7 +160,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .ydot.cur{background:rgba(100,174,208,0.8);}
 
 /* ── SECTION ──────────────────────────────── */
-.container{padding:12px 14px;flex:1;overflow-y:auto;display:flex;flex-direction:column;}
+.container{padding:12px 14px;flex:1;overflow-y:auto;}
 .section{background:transparent;border:none;padding:13px;margin-bottom:0;position:relative;}
 .section::before{display:none;}
 .section.no-frame{background:transparent;border:none;padding:0;}
@@ -1113,10 +1113,8 @@ body:has(#story-screen.active) {
 .container { background: transparent !important; }
 
 /* ── 额外清除背景干扰 ──────────────────────────────────────── */
-/* 快递签收区域：居中撑满 */
-#draw-zone { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; }
-/* 抽卡区同样居中 */
-.deck-viewer-wrap, .deck-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+/* 快递签收区域：垂直内边距居中，不用 flex（避免 iOS 触摸吞噬） */
+#draw-zone { padding: 20px 0; }
 
 /* 年份进度条：完全透明，只保留点 */
 .ydots-bar {
