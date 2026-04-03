@@ -1224,16 +1224,9 @@ body:has(#story-screen.active) {
   100% { transform: translate(100px,-160px) rotate(44deg) scale(0.92); opacity: 0; }
 }
 
-/* 4. 袋体：弹跳 + 显露开口 */
+/* 4. 袋体：条带飞走后保持完整不动（不做 clip 裁剪） */
 .pkg-bag.opening #pkg-bag-body {
-  animation: mv-bag-pop 1.4s ease-out forwards !important;
-}
-@keyframes mv-bag-pop {
-  0%   { transform: scale(1) translateY(0);   clip-path: inset(0 0 0 0 round 8px); }
-  20%  { transform: scale(1.025) translateY(-4px); clip-path: inset(0 0 0 0 round 8px); }
-  36%  { transform: scale(1.008) translateY(-1px); clip-path: inset(4px 0 0 0 round 8px); }
-  55%  { transform: scale(1) translateY(0);   clip-path: inset(16px 0 0 0 round 8px); }
-  100% { transform: scale(1) translateY(0);   clip-path: inset(26px 0 0 0 round 8px); }
+  animation: none !important;
 }
 /* ════════════════════════════════════════════════════════════════ */
 
