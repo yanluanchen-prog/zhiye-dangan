@@ -97,7 +97,7 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   background:var(--ink);color:var(--paper);
   padding:12px 14px 10px;
   display:flex;justify-content:center;align-items:flex-start;
-  border-bottom:4px solid var(--red);
+  border-bottom:none;
   flex-shrink:0;
 }
 /* 左上角工牌 - 放大版 */
@@ -147,22 +147,22 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .id-badge-mini-count{margin-top:4px;font-size:8px;font-family:monospace;color:var(--red);font-weight:800;letter-spacing:.8px;line-height:1;}
 .header-right{text-align:right;}
 .header-classify{font-size:8px;letter-spacing:3px;color:var(--red);font-family:monospace;margin-bottom:2px;}
-.header-year{font-size:24px;font-weight:900;color:var(--red);font-family:monospace;letter-spacing:3px;line-height:1;}
+.header-year{font-size:24px;font-weight:900;color:rgba(58,50,40,0.82);font-family:monospace;letter-spacing:3px;line-height:1;}
 .header-year-sub{font-size:8px;color:var(--ink-faint);letter-spacing:2px;margin-top:2px;font-family:monospace;}
 .game-year-footer{margin-top:12px;text-align:center;display:flex;flex-direction:column;gap:2px;}
-.game-year-main{font-size:18px;font-weight:900;color:var(--red);font-family:monospace;letter-spacing:2px;line-height:1;}
+.game-year-main{font-size:18px;font-weight:900;color:rgba(58,50,40,0.82);font-family:monospace;letter-spacing:2px;line-height:1;}
 .game-year-sub{font-size:9px;color:var(--ink-faint);letter-spacing:2px;font-family:monospace;}
 
 /* ── YEAR DOTS ────────────────────────────── */
 .ydots-bar{display:flex;gap:3px;padding:5px 14px;background:var(--paper-dk);border-bottom:1px solid var(--border);flex-shrink:0;}
 .ydot{flex:1;height:4px;border-radius:2px;background:rgba(0,0,0,0.1);}
-.ydot.done{background:var(--red);opacity:0.5;}
-.ydot.cur{background:var(--red);}
+.ydot.done{background:rgba(100,120,160,0.22);}
+.ydot.cur{background:rgba(100,174,208,0.8);}
 
 /* ── SECTION ──────────────────────────────── */
 .container{padding:12px 14px;flex:1;overflow-y:auto;display:flex;flex-direction:column;}
-.section{background:var(--paper-lt);border:1px solid var(--border);padding:13px;margin-bottom:11px;position:relative;}
-.section::before{content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:1px solid var(--border);pointer-events:none;opacity:0.5;}
+.section{background:transparent;border:none;padding:13px;margin-bottom:0;position:relative;}
+.section::before{display:none;}
 .section.no-frame{background:transparent;border:none;padding:0;}
 .section.no-frame::before{display:none;}
 .section-title{font-size:10px;letter-spacing:4px;color:var(--ink-lt);border-bottom:1px solid var(--border);padding-bottom:7px;margin-bottom:11px;font-family:monospace;}
