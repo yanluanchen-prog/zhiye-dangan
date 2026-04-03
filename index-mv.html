@@ -689,7 +689,6 @@ body {
 .screen.active,
 #intro-screen, #intro-screen.screen, #intro-screen.screen.active,
 #story-screen,  #story-screen.screen,  #story-screen.screen.active,
-#farewell-overlay,
 #game-screen, #game-screen.active,
 #result-screen, #result-screen.active,
 #fail-screen, #fail-screen.active,
@@ -697,6 +696,11 @@ body {
 body:has(#intro-screen.active),
 body:has(#story-screen.active) {
   background: transparent !important;
+}
+
+/* farewell overlay 必须完全不透明，不能透出背后的游戏卡牌 */
+#farewell-overlay {
+  background: linear-gradient(165deg, #c8dff0 0%, #f0ddd0 45%, #c0d4e8 100%) !important;
 }
 
 /* ── Section：去硬框，白色漂浮玻璃 ──────────────────────── */
