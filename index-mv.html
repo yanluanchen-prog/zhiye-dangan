@@ -1224,9 +1224,14 @@ body:has(#story-screen.active) {
   100% { transform: translate(100px,-160px) rotate(44deg) scale(0.92); opacity: 0; }
 }
 
-/* 4. 袋体：条带飞走后保持完整不动（不做 clip 裁剪） */
+/* 4. 袋体：覆盖 bagOpenBody keyframe 为空操作，条带飞走袋体不动 */
+@keyframes bagOpenBody {
+  0%   { clip-path: none; }
+  100% { clip-path: none; }
+}
 .pkg-bag.opening #pkg-bag-body {
-  animation: none !important;
+  animation: bagOpenBody 0.01s linear forwards !important;
+  clip-path: none !important;
 }
 /* ════════════════════════════════════════════════════════════════ */
 
