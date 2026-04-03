@@ -591,77 +591,81 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 </style>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     MONUMENT VALLEY THEME — Step 1
+     MONUMENT VALLEY THEME — Step 1 v2
      莫兰迪配色 · 磨砂玻璃卡牌 · 标本图标 · 墨水文字动画
+     fix: 减轻黑度 / 修复按钮点击 / 全屏风格统一
 ═══════════════════════════════════════════════════════════════ -->
 <style id="mv-theme">
 
-/* ── 颜色系统重写 ─────────────────────────────────────────────── */
+/* ── 颜色系统重写（深石板蓝，非纯黑）───────────────────────── */
 html {
-  --paper:    #1e1e30;
-  --paper-dk: #171727;
-  --paper-lt: #252538;
-  --ink:      #e8e0d8;
-  --ink-lt:   rgba(232,224,216,0.7);
-  --ink-faint:rgba(232,224,216,0.38);
-  --red:      #c96a68;
-  --green:    #72b08a;
-  --border:   rgba(255,255,255,0.11);
+  --paper:    #252840;
+  --paper-dk: #1c1f35;
+  --paper-lt: #2e3250;
+  --ink:      #ede8e0;
+  --ink-lt:   rgba(237,232,224,0.78);
+  --ink-faint:rgba(237,232,224,0.45);
+  --red:      #d4827e;
+  --green:    #7bbf96;
+  --border:   rgba(255,255,255,0.13);
   /* 莫兰迪稀有度色 */
-  --N:   rgba(148,136,126,0.85);
-  --R:   rgba(100,132,168,0.85);
-  --SR:  rgba(172,140,106,0.85);
-  --SSR: rgba(168,120,130,0.85);
-  --UR:  rgba(100,158,128,0.85);
-  /* 深色舞台背景 */
-  --mv-bg: #0f0f1e;
-  --mv-card-bg: rgba(22,22,42,0.72);
-  --mv-glass: rgba(255,255,255,0.055);
-  --mv-rim: rgba(255,255,255,0.12);
+  --N:   rgba(155,143,132,0.9);
+  --R:   rgba(105,138,175,0.9);
+  --SR:  rgba(178,146,110,0.9);
+  --SSR: rgba(175,126,136,0.9);
+  --UR:  rgba(100,165,132,0.9);
+  /* 舞台色 */
+  --mv-bg:      #1c1f35;
+  --mv-bg2:     #1e2440;
+  --mv-card-bg: rgba(38,42,68,0.75);
+  --mv-rim:     rgba(255,255,255,0.14);
 }
 
-/* 全局背景 */
+/* 全局背景（深石板蓝渐变） */
 html, body {
   background: var(--mv-bg) !important;
   color: var(--ink) !important;
 }
-.screen.active:not(#intro-screen):not(#story-screen) {
+/* 所有 screen 统一背景 */
+.screen.active,
+#farewell-overlay,
+#story-screen,
+#intro-screen { background: var(--mv-bg) !important; }
+/* 深色覆盖层也走统一色 */
+[style*="background:#0a0a0a"],
+[style*="background: #0a0a0a"] {
   background: var(--mv-bg) !important;
 }
+/* 开场/故事/告别等叠加层文字 */
+#intro-screen *, #story-screen *, #farewell-overlay * {
+  font-family: 'Courier New', monospace;
+}
 
-/* ── 卡牌：磨砂玻璃长方体 ─────────────────────────────────────── */
+/* ── 卡牌：磨砂玻璃（平放+光影模拟立体，不用旋转以避免点击错位）── */
 .card {
   background: var(--mv-card-bg) !important;
-  backdrop-filter: blur(22px) saturate(1.4) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(1.4) !important;
+  backdrop-filter: blur(20px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.3) !important;
   border: 1px solid var(--mv-rim) !important;
-  border-radius: 22px !important;
+  border-radius: 20px !important;
   overflow: hidden !important;
-  /* 右下投影模拟厚度光影 */
+  /* 用多层 box-shadow 模拟立体厚度：右下深色=侧面；顶边高光=顶面光 */
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.13),
-    inset 0 -1px 0 rgba(0,0,0,0.25),
-    inset 1px 0 0 rgba(255,255,255,0.07),
-    10px 18px 48px rgba(0,0,0,0.55),
-    4px 6px 14px rgba(0,0,0,0.35) !important;
-  /* 轻微 3D 倾斜 */
-  transform: perspective(700px) rotateX(3deg) rotateY(-5deg) !important;
-  transition: transform 0.35s ease, box-shadow 0.35s ease !important;
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    inset 0 -1px 0 rgba(0,0,0,0.18),
+    inset 1px 0 0 rgba(255,255,255,0.08),
+    6px 12px 0 rgba(10,12,28,0.55),
+    8px 16px 32px rgba(0,0,0,0.45),
+    0 2px 8px rgba(0,0,0,0.25) !important;
+  transform: none !important;
+  transition: box-shadow 0.3s ease !important;
 }
-.card:hover, .card:active {
-  transform: perspective(700px) rotateX(1deg) rotateY(-2deg) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.16),
-    inset 0 -1px 0 rgba(0,0,0,0.2),
-    18px 28px 56px rgba(0,0,0,0.6),
-    6px 10px 20px rgba(0,0,0,0.3) !important;
-}
-/* 稀有度：边框光晕 */
-.card.N  { border-color: rgba(165,150,138,0.28) !important; }
-.card.R  { border-color: rgba(110,148,192,0.32) !important; }
-.card.SR { border-color: rgba(195,158,110,0.32) !important; }
-.card.SSR{ border-color: rgba(192,136,146,0.38) !important; }
-.card.UR { border-color: rgba(100,178,140,0.4)  !important; }
+/* 稀有度：边框彩色光晕 */
+.card.N  { border-color: rgba(165,150,138,0.3) !important; }
+.card.R  { border-color: rgba(110,148,192,0.35) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.18), 6px 12px 0 rgba(10,12,28,0.55), 8px 16px 32px rgba(0,0,0,0.45), 0 0 20px rgba(110,148,192,0.12) !important; }
+.card.SR { border-color: rgba(195,158,110,0.35) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.18), 6px 12px 0 rgba(10,12,28,0.55), 8px 16px 32px rgba(0,0,0,0.45), 0 0 20px rgba(195,158,110,0.12) !important; }
+.card.SSR{ border-color: rgba(192,136,146,0.4)  !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.18), 6px 12px 0 rgba(10,12,28,0.55), 8px 16px 32px rgba(0,0,0,0.45), 0 0 24px rgba(192,136,146,0.15) !important; }
+.card.UR { border-color: rgba(100,178,140,0.42) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),  inset 0 -1px 0 rgba(0,0,0,0.18), 6px 12px 0 rgba(10,12,28,0.55), 8px 16px 32px rgba(0,0,0,0.45), 0 0 28px rgba(100,178,140,0.18) !important; }
 
 /* ── 卡头：渐变色带 ──────────────────────────────────────────── */
 .card-header {
@@ -703,7 +707,8 @@ html, body {
   background: rgba(0,0,0,0.45) !important;
   border-radius: 50% !important;
   filter: blur(8px) !important;
-  pointer-events: none !important;
+  pointer-events: none !important;  /* 不阻挡点击 */
+  z-index: 0 !important;
 }
 
 /* 悬浮图标：按稀有度换发光色 */
@@ -856,29 +861,88 @@ html, body {
 .enc-entry-sub  { color: rgba(232,224,216,0.42) !important; }
 .enc-entry-badge{ color: #c96a68 !important; border-color: rgba(201,106,104,0.3) !important; background: rgba(201,106,104,0.07) !important; }
 
-/* ── 快递文件袋按钮 ──────────────────────────────────────────── */
-.pkg-sign-btn {
-  background: linear-gradient(180deg, rgba(140,90,120,0.7), rgba(110,65,95,0.8)) !important;
-  box-shadow: 0 4px 16px rgba(140,80,120,0.3), inset 0 1px 0 rgba(255,255,255,0.15) !important;
-}
 
-/* 卡牌飞入不受 perspective 影响 */
-.card-fly-in    { animation: cardFlyIn 0.5s ease-out forwards !important; transform: none !important; }
-.card-fly-in-left{ animation: cardFlyInLeft 0.5s ease-out forwards !important; transform: none !important; }
+/* 卡牌飞入动画（不用 perspective，保持 flat） */
+.card-fly-in     { animation: cardFlyIn 0.45s ease-out forwards !important; }
+.card-fly-in-left{ animation: cardFlyInLeft 0.45s ease-out forwards !important; }
 @keyframes cardFlyIn{
-  0%  { transform: perspective(700px) translateX(100px) rotateY(-15deg); opacity:0; }
-  60% { transform: perspective(700px) translateX(-8px)  rotateY(2deg);   opacity:1; }
-  100%{ transform: perspective(700px) rotateX(3deg) rotateY(-5deg);       opacity:1; }
+  0%  { transform: translateX(80px) scale(0.95); opacity:0; }
+  65% { transform: translateX(-6px) scale(1.01); opacity:1; }
+  100%{ transform: translateX(0)    scale(1);    opacity:1; }
 }
 @keyframes cardFlyInLeft{
-  0%  { transform: perspective(700px) translateX(-100px) rotateY(15deg); opacity:0; }
-  60% { transform: perspective(700px) translateX(8px)    rotateY(-2deg); opacity:1; }
-  100%{ transform: perspective(700px) rotateX(3deg) rotateY(-5deg);       opacity:1; }
+  0%  { transform: translateX(-80px) scale(0.95); opacity:0; }
+  65% { transform: translateX(6px)   scale(1.01); opacity:1; }
+  100%{ transform: translateX(0)     scale(1);    opacity:1; }
 }
 
-/* 防止 overflow:hidden 裁掉 3D 投影 */
-.deck-active { overflow: visible !important; }
-.deck-viewer { overflow: visible !important; }
+/* 全局按钮区域保证可点击 */
+.card-actions { position: relative !important; z-index: 20 !important; }
+.btn { position: relative !important; z-index: 10 !important; }
+
+/* ══ 全屏风格统一 ════════════════════════════════════════════ */
+
+/* 通用弹窗/遮罩背景 */
+#farewell-overlay,
+#story-screen {
+  background: var(--mv-bg) !important;
+}
+
+/* 开场文字亮化 */
+#intro-screen { background: var(--mv-bg) !important; }
+
+/* 职业下拉框 */
+#job-dropdown {
+  background: rgba(28,32,55,0.98) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+}
+.job-item:hover { background: rgba(140,120,190,0.12) !important; border-left-color: rgba(180,155,225,0.5) !important; }
+.job-item.selected { background: rgba(120,90,160,0.2) !important; border-left-color: rgba(180,150,220,0.6) !important; }
+.job-group { border-bottom-color: rgba(255,255,255,0.07) !important; }
+.job-group-title { color: rgba(180,155,225,0.8) !important; background: rgba(120,90,160,0.12) !important; }
+.job-name { color: rgba(237,232,224,0.82) !important; }
+
+/* 故事/告别按钮 */
+#story-enter-btn, #farewell-btn {
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.14) !important;
+  color: rgba(237,232,224,0.6) !important;
+  border-radius: 8px !important;
+}
+
+/* 年份事件弹窗 */
+#ev-year { color: rgba(190,165,232,0.9) !important; }
+#ev-slogan { color: rgba(210,188,240,0.75) !important; }
+#ev-body { color: rgba(237,232,224,0.82) !important; line-height: 2 !important; }
+
+/* 弹窗背景 */
+#event-modal, #enc-modal, #card-detail-modal {
+  background: rgba(22,25,42,0.97) !important;
+}
+
+/* 胜利/失败结果页 */
+.rv-letter {
+  background: rgba(38,42,68,0.65) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+.rv-letter-body  { color: rgba(237,232,224,0.8) !important; }
+.rv-letter-title { border-bottom-color: rgba(255,255,255,0.1) !important; }
+.rv-letter.surv .rv-letter-title { color: #7bbf96 !important; }
+.rv-letter.fail .rv-letter-title { color: #d4827e !important; }
+.rv-letter-sign  { color: rgba(237,232,224,0.38) !important; }
+
+/* container */
+.container { background: transparent !important; }
+
+/* 签收按钮 MV 化 */
+.pkg-sign-btn {
+  background: linear-gradient(180deg, rgba(120,95,160,0.75), rgba(90,68,130,0.85)) !important;
+  box-shadow: 0 4px 16px rgba(120,90,160,0.3), inset 0 1px 0 rgba(255,255,255,0.18) !important;
+  border-radius: 10px !important;
+}
 
 </style>
 </head>
