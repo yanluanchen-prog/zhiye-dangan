@@ -604,6 +604,19 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
    文字：深炭色（亮底深字）
 ══════════════════════════════════════════════════════════════ */
 
+/* ── 强制所有屏幕透明（覆盖原始CSS的 background:var(--paper)）── */
+.screen { background: transparent !important; }
+.screen.active { background: transparent !important; }
+#game-screen.active { background: transparent !important; }
+#result-screen.active { background: transparent !important; }
+#fail-screen.active { background: transparent !important; }
+#ending-screen.active { background: transparent !important; }
+#intro-screen { background: transparent !important; }
+#intro-screen.screen.active { background: transparent !important; }
+body:has(#intro-screen.active) { background: transparent !important; }
+/* 滚动容器内部也透明（防断层） */
+.game-scroll, .scroll-content, .container { background: transparent !important; }
+
 /* ── 亮色系变量 ───────────────────────────────────────────── */
 :root {
   /* 背景渐变锚点 */
@@ -634,30 +647,41 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   --UR:  #68b488;   /* 翡翠绿 */
 }
 
-/* ── 全局背景：晴空渐变 ──────────────────────────────────── */
-html, body {
-  background: linear-gradient(165deg,
-    #c8dff0 0%,
-    #f0ddd0 45%,
-    #c0d4e8 100%) !important;
-  background-attachment: fixed !important;
-  color: var(--ink) !important;
+/* ── 全屏背景：html::before 固定层（iOS Safari 兼容）──────── */
+/* 背景只有一个来源，所有屏幕改透明，不再各自设颜色 */
+html {
+  background: #c8dff0 !important; /* 渐变 fallback 纯色 */
   min-height: 100vh !important;
+  height: -webkit-fill-available !important;
 }
-
-/* 所有 screen 继承 */
+html::before {
+  content: '' !important;
+  position: fixed !important;
+  top: 0 !important; left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;          /* 含 safe-area */
+  background: linear-gradient(165deg,
+    #c8dff0 0%, #f0ddd0 45%, #c0d4e8 100%) !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+}
+body {
+  background: transparent !important;
+  color: var(--ink) !important;
+}
+/* 所有 screen 全部透明，共享 html::before 背景 */
 .screen,
 .screen.active,
 #intro-screen, #intro-screen.screen, #intro-screen.screen.active,
 #story-screen,  #story-screen.screen,  #story-screen.screen.active,
 #farewell-overlay,
+#game-screen, #game-screen.active,
+#result-screen, #result-screen.active,
+#fail-screen, #fail-screen.active,
+#ending-screen, #ending-screen.active,
 body:has(#intro-screen.active),
 body:has(#story-screen.active) {
-  background: linear-gradient(165deg,
-    #c8dff0 0%,
-    #f0ddd0 45%,
-    #c0d4e8 100%) !important;
-  background-attachment: fixed !important;
+  background: transparent !important;
 }
 
 /* ── Section：去硬框，白色漂浮玻璃 ──────────────────────── */
@@ -1012,7 +1036,7 @@ body:has(#story-screen.active) {
 <body>
 
 <!-- ═══════════════════════════════ INTRO ═══════════════════════════════ -->
-<div id="intro-screen" class="screen active" style="background:linear-gradient(165deg,#c8dff0,#f0ddd0,#c0d4e8);position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);z-index:1;">
+<div id="intro-screen" class="screen active" style="background:transparent;position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);z-index:1;">
   <div style="max-width:380px;width:100%;padding:32px 24px;box-sizing:border-box;">
     <div style="text-align:center;margin-bottom:36px;">
       <div style="font-size:11px;letter-spacing:5px;color:rgba(120,100,88,0.55);font-family:'Courier New',monospace;text-transform:uppercase;margin-bottom:16px;">〔职业生存图鉴〕</div>
@@ -1042,7 +1066,7 @@ body:has(#story-screen.active) {
 
 <!-- ═══════════════════════════════ GAME ════════════════════════════════ -->
 <!-- 离职告别信 overlay -->
-<div id="farewell-overlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(240,232,224,0.97);flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px env(safe-area-inset-bottom);">
+<div id="farewell-overlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(220,230,240,0.85);flex-direction:column;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 28px env(safe-area-inset-bottom);">
   <div style="max-width:340px;width:100%;">
     <div id="farewell-title" style="font-size:10px;color:rgba(160,100,90,0.75);letter-spacing:3px;font-family:monospace;margin-bottom:14px;">离开</div>
     <div id="farewell-text" style="font-size:13px;color:rgba(240,235,224,0.82);line-height:2.3;white-space:pre-line;"></div>
@@ -1051,7 +1075,7 @@ body:has(#story-screen.active) {
 </div>
 
 <!-- 开场故事页 -->
-<div id="story-screen" class="screen" style="background:linear-gradient(165deg,#c8dff0,#f0ddd0,#c0d4e8);position:fixed;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:25vh 28px calc(env(safe-area-inset-bottom) + 24px) 28px;">
+<div id="story-screen" class="screen" style="background:transparent;position:fixed;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:25vh 28px calc(env(safe-area-inset-bottom) + 24px) 28px;">
   <div style="max-width:360px;width:100%;">
     <div id="story-job-title" style="font-size:11px;color:rgba(160,100,90,0.75);letter-spacing:4px;font-family:monospace;margin-bottom:12px;">「职业」</div>
     <div id="story-text" style="font-size:13px;color:rgba(240,235,224,0.85);line-height:2;white-space:pre-line;"></div>
