@@ -662,15 +662,13 @@ body:has(#story-screen.active) {
 
 /* ── Section：去硬框，白色漂浮玻璃 ──────────────────────── */
 .section {
-  background: rgba(235,242,252,0.42) !important;
-  border: 1px solid rgba(255,255,255,0.8) !important;
-  border-radius: 18px !important;
-  box-shadow:
-    0 8px 32px rgba(100,120,160,0.14),
-    0 2px 8px rgba(0,0,0,0.06),
-    inset 0 1px 0 rgba(255,255,255,0.9) !important;
-  backdrop-filter: blur(28px) saturate(1.8) !important;
-  -webkit-backdrop-filter: blur(28px) saturate(1.8) !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
 }
 .section::before { display: none !important; }
 .section-title {
@@ -805,13 +803,13 @@ body:has(#story-screen.active) {
 
 /* ── 牌堆阴影卡 ─────────────────────────────────────────── */
 .deck-shadow, .deck-shadow-left {
-  background: rgba(235,242,252,0.38) !important;
-  border: 1px solid rgba(255,255,255,0.85) !important;
+  background: rgba(255,255,255,0.22) !important;
+  border: 1px solid rgba(255,255,255,0.55) !important;
   background-image: none !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(18px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.6) !important;
   border-radius: 20px !important;
-  box-shadow: 0 8px 24px rgba(160,140,120,0.14) !important;
+  box-shadow: none !important;
 }
 
 /* ── 导航按钮 ────────────────────────────────────────────── */
@@ -833,17 +831,17 @@ body:has(#story-screen.active) {
 
 /* ── Header ─────────────────────────────────────────────── */
 .header {
-  background: rgba(255,255,255,0.68) !important;
-  border-bottom: 1px solid rgba(255,255,255,0.85) !important;
-  backdrop-filter: blur(18px) !important;
-  -webkit-backdrop-filter: blur(18px) !important;
-  box-shadow: 0 2px 12px rgba(160,140,120,0.1) !important;
+  background: rgba(255,255,255,0.35) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.5) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: none !important;
 }
 .id-badge-card {
-  background: rgba(255,255,255,0.6) !important;
-  border: 1px solid rgba(255,255,255,0.85) !important;
+  background: rgba(255,255,255,0.32) !important;
+  border: 1px solid rgba(255,255,255,0.6) !important;
   border-radius: 8px !important;
-  box-shadow: 0 2px 8px rgba(160,140,120,0.1) !important;
+  box-shadow: none !important;
 }
 .id-badge-name { color: rgba(58,50,40,0.78) !important; }
 .id-badge-hdr { background: rgba(200,190,180,0.6) !important; }
@@ -857,13 +855,13 @@ body:has(#story-screen.active) {
 
 /* ── 按钮 ────────────────────────────────────────────────── */
 .btn {
-  background: rgba(255,255,255,0.65) !important;
-  border: 1px solid rgba(255,255,255,0.85) !important;
+  background: rgba(255,255,255,0.45) !important;
+  border: 1px solid rgba(255,255,255,0.7) !important;
   color: rgba(58,50,40,0.82) !important;
   border-radius: 12px !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  box-shadow: 0 2px 10px rgba(160,140,120,0.12) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 16px rgba(100,120,160,0.12) !important;
 }
 .btn.red {
   background: rgba(224,120,112,0.18) !important;
@@ -969,8 +967,43 @@ body:has(#story-screen.active) {
   100% { transform: translateX(0)     scale(1);    opacity: 1; }
 }
 
-/* container 透明 */
+/* container 完全透明 */
 .container { background: transparent !important; }
+
+/* ── 额外清除背景干扰 ──────────────────────────────────────── */
+
+/* 年份进度条：完全透明，只保留点 */
+.ydots-bar {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: none !important;
+}
+
+/* game-screen 容器透明 */
+#game-screen, #game-screen .container {
+  background: transparent !important;
+}
+
+/* 底部操作区：无背景 */
+.card-actions-wrap, .actions-wrap {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 快递文件袋外壳：只保留内容，去掉外框 */
+.pkg-bag { background: transparent !important; border: none !important; }
+.pkg-waybill {
+  background: rgba(255,255,255,0.55) !important;
+  border: 1px solid rgba(255,255,255,0.8) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(16px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.6) !important;
+  box-shadow: 0 8px 32px rgba(100,120,160,0.15) !important;
+}
+
+/* deck-viewer 外壳也透明 */
+.deck-viewer { background: transparent !important; border: none !important; }
 
 </style>
 
