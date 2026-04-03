@@ -2940,8 +2940,25 @@ renderJobSelector();
   // 开包撕裂
   window.sndOpen = function() {
     try {
-      noise(0.28, 0.22, 2800, 0.7);
-      tone(600, 0.18, 0.08, 'sine', 0.01, 0.05);
+      // 撕开声：低频更多（1400Hz），音量降低，用缓慢淡入淡出
+      const c = C();
+      const dur = 0.45;
+      const len = c.sampleRate * dur;
+      const buf = c.createBuffer(1, len, c.sampleRate);
+      const d = buf.getChannelData(0);
+      const attackLen = Math.floor(len * 0.12);  // 慢淡入
+      for (let i = 0; i < len; i++) {
+        const env = (i < attackLen ? i/attackLen : Math.pow(1 - (i-attackLen)/(len-attackLen), 2.5));
+        d[i] = (Math.random()*2-1) * env;
+      }
+      const src = c.createBufferSource();
+      src.buffer = buf;
+      const flt = c.createBiquadFilter();
+      flt.type = 'bandpass'; flt.frequency.value = 1400; flt.Q.value = 0.6;
+      const g = c.createGain();
+      g.gain.value = 0.09;
+      src.connect(flt); flt.connect(g); g.connect(c.destination);
+      src.start();
     } catch(e){}
   };
 
