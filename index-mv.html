@@ -898,22 +898,21 @@ body:has(#story-screen.active) {
 
 /* ── 按钮：胶囊形 + 彩色渐变 + 弹性交互 ───────────────────── */
 .btn {
-  /* 基础胶囊形磨砂玻璃 */
-  background: rgba(255,255,255,0.55) !important;
-  border: 1px solid rgba(255,255,255,0.82) !important;
+  /* 基础胶囊形（无 backdrop-filter，iOS 触摸兼容）*/
+  background: rgba(255,255,255,0.62) !important;
+  border: 1px solid rgba(255,255,255,0.85) !important;
   color: rgba(48,38,28,0.85) !important;
-  border-radius: 999px !important;  /* 完整圆角胶囊 */
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
+  border-radius: 999px !important;
   box-shadow:
     0 4px 14px rgba(100,120,160,0.14),
     0 1px 3px rgba(0,0,0,0.07),
-    inset 0 1px 0 rgba(255,255,255,0.85) !important;
+    inset 0 1px 0 rgba(255,255,255,0.9) !important;
   transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1),
-              box-shadow 0.12s ease,
-              background 0.12s ease !important;
+              box-shadow 0.12s ease !important;
   cursor: pointer !important;
   -webkit-tap-highlight-color: transparent !important;
+  position: relative !important;
+  z-index: 10 !important;
 }
 /* 按下弹性反馈 */
 .btn:active {
@@ -989,9 +988,9 @@ body:has(#story-screen.active) {
 /* ── 「进入 xxxx 年 →」story 按钮也用渐变 ───────────────────── */
 #story-enter-btn {
   background: linear-gradient(145deg,
-    rgba(255,255,255,0.65),
-    rgba(230,240,250,0.55)) !important;
-  border: 1px solid rgba(255,255,255,0.82) !important;
+    rgba(255,255,255,0.68),
+    rgba(230,240,250,0.60)) !important;
+  border: 1px solid rgba(255,255,255,0.85) !important;
   border-radius: 999px !important;
   color: rgba(48,38,28,0.75) !important;
   box-shadow:
@@ -999,6 +998,8 @@ body:has(#story-screen.active) {
     inset 0 1px 0 rgba(255,255,255,0.9) !important;
   transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1),
               box-shadow 0.12s ease !important;
+  position: relative !important;
+  z-index: 10 !important;
 }
 #story-enter-btn:active { transform: scale(0.95) !important; }
 
@@ -1016,15 +1017,15 @@ body:has(#story-screen.active) {
 /* ── 年份事件弹窗 ────────────────────────────────────────── */
 #event-modal { background: rgba(180,170,158,0.45) !important; }
 .ev-sheet {
-  background: rgba(250,246,240,0.94) !important;
-  border-top: 4px solid var(--SSR) !important;
-  backdrop-filter: blur(28px) !important;
-  -webkit-backdrop-filter: blur(28px) !important;
+  background: rgba(250,246,240,0.98) !important;
+  border-top: 4px solid rgba(100,174,208,0.6) !important;
+  /* 去掉 backdrop-filter，避免 iOS 子元素触摸失效 */
   border-radius: 20px 20px 0 0 !important;
   box-shadow: 0 -8px 40px rgba(160,140,120,0.2) !important;
+  isolation: isolate !important;
 }
-.ev-year,  #ev-year   { color: var(--SSR) !important; letter-spacing: 4px !important; }
-.ev-slogan,#ev-slogan { color: rgba(200,100,95,0.65) !important; }
+.ev-year,  #ev-year   { color: rgba(80,120,160,0.85) !important; letter-spacing: 4px !important; }
+.ev-slogan,#ev-slogan { color: rgba(100,130,160,0.60) !important; }
 .ev-body,  #ev-body   { color: rgba(58,50,40,0.85) !important; line-height: 2.1 !important; font-size: 13px !important; }
 #ev-confirm {
   background: rgba(224,120,112,0.18) !important;
@@ -1362,7 +1363,7 @@ body:has(#story-screen.active) {
     <div class="ev-year" id="ev-year">2026 · 今年发生了</div>
     <div class="ev-body" id="ev-body"></div>
     <div class="ev-slogan" id="ev-slogan"></div>
-    <button class="btn" id="ev-confirm" style="background:rgba(120,95,165,0.6);border-color:rgba(180,155,225,0.3);color:rgba(237,232,224,0.88);border-radius:10px;">你的职业还安全吗？</button>
+    <button class="btn" id="ev-confirm" style="background:rgba(200,120,112,0.22);border:1px solid rgba(200,120,112,0.4);color:rgba(140,50,45,0.9);border-radius:999px;position:relative;z-index:10;">你的职业还安全吗？</button>
   </div>
 </div>
 
@@ -1420,7 +1421,7 @@ body:has(#story-screen.active) {
     </div>
   </div>
   <div style="padding:0 20px 20px;">
-    <button class="btn red" id="result-next">继续 →</button>
+    <button class="btn red" id="result-next" style="position:relative;z-index:10;">继续 →</button>
     <div style="margin-top:8px;gap:8px;display:none;" id="result-fail-btns">
       <button class="btn red" id="result-restart" style="flex:1;">重新开始职业生涯</button>
       <button class="btn outline" id="result-quit" style="flex:1;">退出游戏</button>
