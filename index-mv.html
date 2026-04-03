@@ -1197,21 +1197,7 @@ body:has(#story-screen.active) {
 }
 
 
-/* ─── 开箱：上半截始终可见，撕走后露出下半截 ─────────────────── */
-/* 把 pkg-top-strip 变成真正的上半截（约48%高度，始终可见） */
-#pkg-top-strip {
-  height: 48% !important;
-  min-height: 90px !important;
-  background: linear-gradient(180deg, #f0ebe0 0%, #e6ddd0 100%) !important;
-  background-image: none !important;
-  border-bottom: 2px dashed rgba(160,140,110,0.45) !important;
-  border-radius: 8px 8px 0 0 !important;
-  opacity: 1 !important;      /* 始终显示，不只是 opening 时 */
-  z-index: 6 !important;
-  transform-origin: center top !important;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08) !important;
-}
-/* ──────────────────────────────────────────────────────────────── */
+
 /* ═══ 开箱动效 v2（加强版）══════════════════════════════════════ */
 
 /* 1. 卡牌从箱底升起 + 弹性过冲 */
@@ -1230,7 +1216,6 @@ body:has(#story-screen.active) {
 
 /* 3. 条带：放慢整体节奏，撕开过程和飞走过程都看得清 */
 .pkg-bag.opening #pkg-top-strip {
-  transform-origin: left top !important;
   animation: mv-strip-tear 1.4s ease-in-out forwards !important;
 }
 @keyframes mv-strip-tear {
@@ -1251,11 +1236,6 @@ body:has(#story-screen.active) {
   clip-path: none !important;
 }
 
-/* 袋体顶部虚线：和上半截 border-bottom 对称，上半截飞走后显现 */
-#pkg-bag-body {
-  border-top: 2px dashed rgba(160,140,110,0.45) !important;
-  border-radius: 0 0 8px 8px !important;
-}
 /* ════════════════════════════════════════════════════════════════ */
 
 
