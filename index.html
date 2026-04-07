@@ -1716,7 +1716,18 @@ const POOL=[
   {name:"医生",rarity:"R",aiResist:40,salary:95,demand:95,category:"医疗",emoji:"👨‍⚕️",tagline:"生命守护",desc:"偶尔治愈，常常帮助，总是安慰。医学院第一年就学这句话。前两条靠技术，最后那条，技术做不到。",fileNum:"R-027"},
   {name:"律师",rarity:"SR",aiResist:50,salary:85,demand:60,category:"专业",emoji:"⚖️",tagline:"法理精研",desc:"为客户争取那10%的胜算。AI能穷举所有判例，但还不能在庭上感知法官今天心情是否好。",fileNum:"SR-028"},
   {name:"社工",rarity:"SR",aiResist:75,salary:38,demand:60,category:"服务",emoji:"🤲",tagline:"守望相助",desc:"去那些没人想去的地方，陪那些没人陪的人。AI可以分析他们的处境，但没办法陪他们。",fileNum:"SR-029"},
-  {name:"心理咨询师",rarity:"SSR",aiResist:78,salary:65,demand:55,category:"服务",emoji:"🧘",tagline:"倾听灵魂",desc:"不评判，不建议，只是在那里。68%的人更愿意找AI倾诉——因为AI不会在你说到一半时说「我也有类似的经历……」",fileNum:"SSR-030"}
+  {name:"心理咨询师",rarity:"SSR",aiResist:78,salary:65,demand:55,category:"服务",emoji:"🧘",tagline:"倾听灵魂",desc:"不评判，不建议，只是在那里。68%的人更愿意找AI倾诉——因为AI不会在你说到一半时说「我也有类似的经历……」",fileNum:"SSR-030"},
+  {name:"编剧",rarity:"SR",aiResist:52,salary:85,demand:55,category:"创意",emoji:"✍️",tagline:"故事的骨架",desc:"写剧本，是在设计一个世界里的人会怎么做选择。这些选择不一定合理，但要真实。这两件事有时候是矛盾的。",fileNum:"SR-031"},
+  {name:"广告创意",rarity:"SR",aiResist:45,salary:80,demand:60,category:"创意",emoji:"💡",tagline:"让人记住那一秒",desc:"好的广告，是找到一个大家都感受过、但没有人说出来的东西，说出来，说得刚好。这是这份工作全部的难度。",fileNum:"SR-032"},
+  {name:"产品经理",rarity:"SR",aiResist:50,salary:90,demand:70,category:"技术",emoji:"📱",tagline:"需求与实现之间",desc:"需求文档写完，开发说「这个做不了」。不是技术问题，是需求本来就没说清楚。想清楚一件事，比把它写下来难多了。",fileNum:"SR-033"},
+  {name:"HR",rarity:"R",aiResist:38,salary:65,demand:65,category:"行政",emoji:"👥",tagline:"人与组织之间",desc:"面试的时候，有人说的和简历上写的完全不一样。这种差距，有时候是加分项，有时候是警示。一眼能看出来，但说不清是什么信号。",fileNum:"R-034"},
+  {name:"企业文化",rarity:"N",aiResist:28,salary:55,demand:50,category:"行政",emoji:"🎯",tagline:"让组织有温度",desc:"组织一次团建，有人全程玩手机，有人在走廊和同事聊了三个小时。那三个小时，是这份工作真正想让它发生的事。",fileNum:"N-035"},
+  {name:"数据分析师",rarity:"R",aiResist:35,salary:75,demand:70,category:"技术",emoji:"📊",tagline:"数字背后的故事",desc:"数字会说谎。同一组数据，怎么切、怎么对比，结论可以完全相反。知道这件事，是这份工作真正开始的地方。",fileNum:"R-036"},
+  {name:"项目经理",rarity:"R",aiResist:42,salary:85,demand:65,category:"行政",emoji:"📋",tagline:"把事情推下去",desc:"项目延期了，开会，每个人都有理由。最后那个「理由」背后真正的原因，要在会后单独问。开会永远问不出来。",fileNum:"R-037"},
+  {name:"快递员",rarity:"N",aiResist:38,salary:50,demand:80,category:"服务",emoji:"📦",tagline:"最后一公里",desc:"每天送几百个包裹，大多数时候门一开递进去就走了。偶尔有人开门，顺手接一下，说声谢谢。那一下，不是规定动作。",fileNum:"N-038"},
+  {name:"运营",rarity:"R",aiResist:40,salary:72,demand:75,category:"创意",emoji:"📈",tagline:"让内容活起来",desc:"发出去一条内容，数据很差。发出去另一条，爆了。两条的差别，有时候只是一个词、一张图的位置。这个感觉，做了很久才有。",fileNum:"R-039"},
+  {name:"游戏策划",rarity:"SR",aiResist:48,salary:85,demand:60,category:"创意",emoji:"🎮",tagline:"设计那个刚好的惊喜",desc:"设计一个关卡，让玩家在那里多停三分钟。不是靠难度，靠的是在那个时机给一个刚好的惊喜。这个「刚好」，是反复测试出来的。",fileNum:"SR-040"},
+  {name:"制片",rarity:"SR",aiResist:50,salary:95,demand:55,category:"创意",emoji:"🎬",tagline:"把故事变成画面",desc:"剧本写的是「天色渐暗」，实际拍要决定是黄昏还是阴天，演员站哪里，镜头从哪里推进来。每个决定都是另一个故事。",fileNum:"SR-041"}
 ];
 const ELIM_YEAR={};
 YEARS.forEach(y=>y.eliminated.forEach(n=>{if(!ELIM_YEAR[n])ELIM_YEAR[n]=y.year;}));
@@ -1812,7 +1823,18 @@ function generateFarewell(card,swapN){
     '医生':'那件白大褂挂在椅背上，你没有回头',
     '律师':'那摞没翻完的卷宗，放回了原处',
     '社工':'那个下周约好的家访，你发了消息让同事顶上',
-    '心理咨询师':'那把对面的椅子，今天没有人坐'
+    '心理咨询师':'那把对面的椅子，今天没有人坐',
+    '编剧':'那个写了一半的剧本大纲，存在云盘里，不知道还会不会打开',
+    '广告创意':'那个提案PPT，改到第十二稿，最后没有中标',
+    '产品经理':'那份PRD文档，已抄送所有相关人，没有人回复',
+    'HR':'那摞还没看完的简历，压在桌子上，不用看了',
+    '企业文化':'那个年会策划方案，做完了，公司说今年不办了',
+    '数据分析师':'那张仪表板，数字还在跑，没有人再来看了',
+    '项目经理':'那个项目甘特图，最后一个节点标了「已关闭」',
+    '快递员':'那辆电动车，停在充电桩边上，钥匙还插着',
+    '运营':'那条排好期的内容，没有发出去',
+    '游戏策划':'那个关卡设计文档，评审通过了，没等到开发排期',
+    '制片':'那个分镜表，从第一个镜头画到最后一个，没有开机'
   };
   // AI替代理由（覆盖所有 29 个职业）
   const aiMap={
@@ -1844,7 +1866,18 @@ function generateFarewell(card,swapN){
     '医生':'现在有东西读片子比你快0.3秒，误差更小',
     '律师':'现在有东西把服务协议读完了，第17条也不会漏',
     '社工':'预算被裁了。你的案例移交给了系统的自动跟进模块',
-    '心理咨询师':'现在有东西不会在你说到一半时看手机，而且效果斯坦福说更好'
+    '心理咨询师':'现在有东西不会在你说到一半时看手机，而且效果斯坦福说更好',
+    '编剧':'现在有东西能生成剧本大纲，风格模板200种，交稿时间3分钟',
+    '广告创意':'现在有东西4分钟出一套创意方案，AB测试自动跑，数据说哪个好就用哪个',
+    '产品经理':'现在有东西能把用户访谈直接转成需求文档，逻辑自洽，没有歧义',
+    'HR':'现在有东西把简历筛完了，行为面试题也出好了。剩下的，系统说够了',
+    '企业文化':'现在有东西负责内部沟通了，消息送达率98.7%，反馈率也很好',
+    '数据分析师':'现在有东西连接了所有数据源，实时出报告，不需要等周五',
+    '项目经理':'财政紧缩，项目延期。管理层说AI协作工具能接管大部分协调了',
+    '快递员':'现在有东西能上楼，续航12小时，不需要喝水。那辆电动车的位置被划成了充电桩',
+    '运营':'现在有东西在跑AB测试，算法实时调整分发，数据比你好。人工运营这个岗位不再续签了',
+    '游戏策划':'现在有东西能生成关卡，玩家留存比人工设计高12%。公司说，剩下的策划先做AI训练师',
+    '制片':'现在有东西可以自动剪辑、生成分镜、管理排期。导演说，制片这个角色先放一放'
   };
   // 入行时的信念（覆盖所有 29 个职业）
   const beliefMap={
@@ -1876,7 +1909,18 @@ function generateFarewell(card,swapN){
     '医生':'医者仁心',
     '律师':'法律是最后的公正',
     '社工':'有人需要，就要有人在',
-    '心理咨询师':'倾听本身就是治愈'
+    '心理咨询师':'倾听本身就是治愈',
+    '编剧':'好故事里藏着说不清楚的那件事',
+    '广告创意':'最好的广告，是找到大家都感受过但没说出来的那个东西',
+    '产品经理':'想清楚一件事，比把它写下来难多了',
+    'HR':'一个人值不值得加入，面试第五分钟就知道了',
+    '企业文化':'文化不是写在墙上的，是在走廊里发生的',
+    '数据分析师':'数字不会说谎，但切数字的方式会',
+    '项目经理':'把一件事推到底，是这份工作唯一的标准',
+    '快递员':'准时到，是对人最基本的尊重',
+    '运营':'好的运营，是让内容找到真正需要它的人',
+    '游戏策划':'游戏里最好的设计，是玩家感觉不到被设计了',
+    '制片':'每个决定都在改变那个故事'
   };
   // 离职动作（覆盖所有 29 个职业）
   const leaveActionMap={
@@ -1908,7 +1952,18 @@ function generateFarewell(card,swapN){
     '医生':'把胸牌摘下来，放进了口袋',
     '律师':'徽章留在了那个抽屉里',
     '社工':'案卷整理好了，移交给了同事',
-    '心理咨询师':'那把椅子挪回原位，灯关了'
+    '心理咨询师':'那把椅子挪回原位，灯关了',
+    '编剧':'剧本大纲做了备份，发给了制片',
+    '广告创意':'创意稿留在云盘，桌面清空了',
+    '产品经理':'工卡还了，笔记本清了权限',
+    'HR':'工位上的那摞资料留给了接替的人',
+    '企业文化':'那个文化标语的贴纸没有撕，就这样走了',
+    '数据分析师':'权限撤销了，工牌还了',
+    '项目经理':'工牌交回了前台',
+    '快递员':'运单结了清，手机签了退出',
+    '运营':'账号权限交接出去了，工牌放在桌上',
+    '游戏策划':'设计文档做了交接，离开了那间格子间',
+    '制片':'分镜表整理好了，移交出去了'
   };
   const left=leftMap[card.name]||`工位上的东西，你什么都没有带`;
   const leaveAction=leaveActionMap[card.name]||`自己把东西收好，放在桌上`;
@@ -2038,13 +2093,22 @@ let twTimer=null;
 function showScreen(id){if(twTimer){clearInterval(twTimer);twTimer=null;}document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);}
 
 function randomCards(n,excl=[]){
-  const pool=POOL.filter(c=>!excl.includes(c.name));
-  const w=[];pool.forEach(c=>{const wt=G.encyclopedia[c.name]?2.5:1;for(let i=0;i<Math.round(wt*10);i++)w.push(c);});
-  w.sort(()=>Math.random()-0.5);
-  const seen=new Set(),r=[];
-  for(const c of w){if(!seen.has(c.name)){seen.add(c.name);r.push(c);if(r.length>=n)break;}}
-  pool.filter(c=>!seen.has(c.name)).forEach(c=>{if(r.length<n)r.push(c);});
-  return r;
+  // 方案 D：玩家通过失败探索哪年哪个职业被淘汰
+  // 过滤规则：已经死掉（death year < 当前年）的职业不再出现
+  // 死亡当年仍然可见，让玩家有机会"亲身踩雷"——这是发现机制的核心
+  const curYear=YEARS[G.yearIndex].year;
+  const pool=POOL.filter(c=>
+    !excl.includes(c.name) &&
+    (!ELIM_YEAR[c.name] || ELIM_YEAR[c.name] >= curYear)
+  );
+  // Fisher-Yates 均匀洗牌
+  const a=[...pool];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  // 末日年份池子可能小于 n，自适应抽卡数量
+  return a.slice(0,Math.min(n,a.length));
 }
 function addToEnc(c){
   if(G.encyclopedia[c.name])G.encyclopedia[c.name].timesDrawn++;
@@ -2103,6 +2167,7 @@ function buildActiveCard(card){
 function renderDeck(idx,direction='right'){
   const card=G.drawnCards[idx];
   if(!card) return;
+  const total=G.drawnCards.length;
   $('deck-active').innerHTML='';
   const cardEl=buildActiveCard(card);
   // 根据方向添加不同的动画类
@@ -2112,16 +2177,16 @@ function renderDeck(idx,direction='right'){
     cardEl.classList.add('card-fly-in');
   }
   $('deck-active').appendChild(cardEl);
-  $('deck-counter').textContent=`${idx+1} / 5`;
+  $('deck-counter').textContent=`${idx+1} / ${total}`;
   $('nav-prev').disabled=idx===0;
-  $('nav-next').disabled=idx===4;
+  $('nav-next').disabled=idx===total-1;
   // 更新阴影卡牌数量（右侧剩余未查看的牌）
-  const remaining=4-idx; // idx=0→4张,idx=1→3张,...,idx=4→0张
+  const remaining=total-1-idx;
   document.querySelectorAll('.deck-shadow').forEach((s,i)=>{
     s.style.display=(i<remaining)?'':'none';
   });
   // 左侧已翻过的牌堆叠
-  const passed=idx; // idx=0→0张,idx=1→1张,...,idx=4→4张
+  const passed=idx;
   document.querySelectorAll('.deck-shadow-left').forEach((s,i)=>{
     s.style.display=(i<passed)?'block':'none';
   });
@@ -2506,6 +2571,131 @@ const GUARDIAN_LINES = {
     `下周他还来了。<br><br>`+
     `<strong>这件事，AI不懂。</strong>`,
 
+  '编剧':
+    `你守住了「编剧」。<br><br>`+
+    `「AI 写剧本」的工具，第一批问世时就很好用。<br>`+
+    `制作公司喜欢——快，便宜，不会要求署名。<br><br>`+
+    `后来观众开始说：「最近的剧，好像都差不多。」<br><br>`+
+    `你拿到了一个项目。<br>`+
+    `制片人说：「我们要一个只有你才能写出来的故事。」<br>`+
+    `你花了三个月写了初稿。<br><br>`+
+    `薪资是 85。这是你这十年最高的一次。<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '广告创意':
+    `你守住了「广告创意」。<br><br>`+
+    `这十年，AB 测试自动跑，数据说哪个好就用哪个。<br>`+
+    `行业里大半的创意人转去做了「AI 训练师」。<br><br>`+
+    `留下来的你，做的是数据看不见的事——<br>`+
+    `那个所有人都感受过、但没有人说出来的东西，<br>`+
+    `你说出来了，说得刚好。<br><br>`+
+    `客户在大提案那天看完，沉默了五秒。<br>`+
+    `然后说：「就是这个。」<br><br>`+
+    `<strong>这件事，AI不懂。</strong>`,
+
+  '产品经理':
+    `你守住了「产品经理」。<br><br>`+
+    `这十年，AI 能根据用户访谈直接生成需求文档，<br>`+
+    `逻辑自洽，没有歧义。大部分初级 PM 离场了。<br><br>`+
+    `留下来的你，做的事是 AI 做不到的——<br>`+
+    `听用户那句话<strong>背后</strong>的意思。<br><br>`+
+    `用户嘴上说"想要一个搜索框"，<br>`+
+    `你听出来他真正想要的是"我懒得做决定"。<br><br>`+
+    `这中间的距离，文档里写不出来。<br><br>`+
+    `<strong>这件事，模型听不见。</strong>`,
+
+  'HR':
+    `你守住了「HR」。<br><br>`+
+    `这十年，简历筛选、行为面试题、背调核验——全部交给了系统。<br>`+
+    `HR 部门只剩下三分之一的人。<br><br>`+
+    `留下来的你，做的是最后那一轮——<br>`+
+    `把人请进会议室，关上门，谈半个小时。<br><br>`+
+    `有些人简历写得无可挑剔，谈完你说"不行"。<br>`+
+    `老板问为什么，你说不出来——<br>`+
+    `就是面试第五分钟那个眼神，告诉你这个人不会留下。<br><br>`+
+    `三个月后，那个被你拒掉的，跳槽走了。<br><br>`+
+    `<strong>这件事，AI看不见。</strong>`,
+
+  '企业文化':
+    `你守住了「企业文化」。<br><br>`+
+    `这十年，内部沟通工具接管了大部分公告，<br>`+
+    `消息送达率 98.7%，反馈率也很好。<br><br>`+
+    `但 2029 年那次大裁员后，<br>`+
+    `走廊上有人找你说话。<br>`+
+    `你听了两个小时。<br><br>`+
+    `没有 KPI 记录这两个小时。<br>`+
+    `也没有任何系统记录那个人后来留下来了，<br>`+
+    `因为有人愿意听他说完。<br><br>`+
+    `<strong>文化不是写在墙上的，是在走廊里发生的。</strong>`,
+
+  '数据分析师':
+    `你守住了「数据分析师」。<br><br>`+
+    `这十年，实时报表、自动化看板、AI 洞察——<br>`+
+    `所有人都觉得"切数字"这件事不再需要人。<br><br>`+
+    `直到那一次，所有指标都显示正常，<br>`+
+    `你看着那张图说：「不对，这里有问题。」<br><br>`+
+    `没有人相信你。三周后，问题爆出来了。<br>`+
+    `公司挽回的损失，是你一年薪水的二十倍。<br><br>`+
+    `数字不会说谎，但切数字的方式会。<br><br>`+
+    `<strong>这件事，模型不知道自己错。</strong>`,
+
+  '项目经理':
+    `你守住了「项目经理」。<br><br>`+
+    `2030 年财政紧缩之后，AI 协作工具接管了大部分排期。<br>`+
+    `项目经理这个岗位，被裁掉了一大半。<br><br>`+
+    `留下来的你，做的是 AI 做不了的事——<br>`+
+    `那次甲方半夜打电话来要改需求，<br>`+
+    `电话是你打的，方案是你谈的，<br>`+
+    `凌晨四点把团队从崩溃边缘拉回来的，是你。<br><br>`+
+    `项目按期上线了。庆功宴上没人提你。<br>`+
+    `你也不需要。<br><br>`+
+    `<strong>把事情推到底，是这份工作唯一的标准。</strong>`,
+
+  '快递员':
+    `你守住了「快递员」。<br><br>`+
+    `机器人能上楼，续航 12 小时。<br>`+
+    `但那栋楼，电梯坏了三个月，没有机器人进得去。<br>`+
+    `你每天爬上去。<br><br>`+
+    `还有那个独居的老太太，签收要喊三声她才听见，<br>`+
+    `每次都要扶她一下。<br>`+
+    `这一下，不在标准流程里。<br><br>`+
+    `薪资是 50。没有涨过。<br>`+
+    `但她记得你的脸，每次都说"小伙子辛苦了"。<br><br>`+
+    `<strong>准时到，是对人最基本的尊重。</strong>`,
+
+  '运营':
+    `你守住了「运营」。<br><br>`+
+    `这十年，算法实时调分发，AB 测试自动跑，<br>`+
+    `数据比你好——大部分运营岗位被裁掉了。<br><br>`+
+    `留下来的你，做的是算法做不到的事——<br>`+
+    `有几个作者，只跟你沟通。<br>`+
+    `不是因为你给的曝光多，<br>`+
+    `是因为你记得他三年前发过的那篇文章里的一句话。<br><br>`+
+    `他说："只有你还把我当人，不是当流量。"<br><br>`+
+    `<strong>好的运营，是让内容找到真正需要它的人。</strong>`,
+
+  '游戏策划':
+    `你守住了「游戏策划」。<br><br>`+
+    `这十年，AI 能生成关卡，玩家留存比人工设计高 12%。<br>`+
+    `公司里大多数策划都转去做了 AI 训练师。<br><br>`+
+    `但有一个产品逻辑，全公司没人敢提——<br>`+
+    `你改掉了。<br>`+
+    `你说不出为什么，只是觉得"这样玩家会更喜欢"。<br><br>`+
+    `半年后留存数据出来，CEO 在大会上把功劳算给了 AI 优化模块。<br>`+
+    `你没说话。但你知道那个判断是你做的。<br><br>`+
+    `<strong>玩家感觉不到被设计了，那才是最好的设计。</strong>`,
+
+  '制片':
+    `你守住了「制片」。<br><br>`+
+    `这十年，AI 接管了分镜、自动剪辑、排期管理。<br>`+
+    `导演说："制片这个角色，先放一放了。"<br><br>`+
+    `直到那场戏现场出了状况——<br>`+
+    `演员临时不能来，场地下午被收回，赞助商要看剪辑版。<br>`+
+    `三件事同时炸了。<br><br>`+
+    `那个协调电话是你打的，那场戏是你拿下来的。<br>`+
+    `导演事后说："还是要有个人在现场，能拍板。"<br><br>`+
+    `<strong>每个决定都在改变那个故事。</strong>`,
+
 };
 
 // ── C: 年份背景色彩漂移 ────────────────────────────────────────
@@ -2779,8 +2969,8 @@ function renderJobSelector(){
   const dropdown=$('job-dropdown');
   // 按拼音首字母分组
   const groups={};
-  // 仅包含 POOL 内职业的拼音首字母映射
-  const pinyinMap={'程序员':'C','客服代表':'K','数据录入员':'S','银行柜员':'Y','市场研究分析师':'S','销售代表':'X','金融分析师':'J','摄影师':'S','信息安全分析师':'X','公务员':'G','厨师':'C','修理工':'X','救生员':'J','配送员':'P','网约车司机':'W','作家':'Z','平面设计师':'P','记者':'J','翻译':'F','剪辑师':'J','音乐家':'Y','演员':'Y','会计师':'K','教师':'J','护士':'H','医生':'Y','律师':'L','社工':'S','心理咨询师':'X'};
+  // 仅包含 POOL 内职业的拼音首字母映射（40个职业）
+  const pinyinMap={'程序员':'C','客服代表':'K','数据录入员':'S','银行柜员':'Y','市场研究分析师':'S','销售代表':'X','金融分析师':'J','摄影师':'S','信息安全分析师':'X','公务员':'G','厨师':'C','修理工':'X','救生员':'J','配送员':'P','网约车司机':'W','作家':'Z','平面设计师':'P','记者':'J','翻译':'F','剪辑师':'J','音乐家':'Y','演员':'Y','会计师':'K','教师':'J','护士':'H','医生':'Y','律师':'L','社工':'S','心理咨询师':'X','编剧':'B','广告创意':'G','产品经理':'C','HR':'H','企业文化':'Q','数据分析师':'S','项目经理':'X','快递员':'K','运营':'Y','游戏策划':'Y','制片':'Z'};
   POOL.forEach(job=>{
     const first=pinyinMap[job.name]||job.name.charAt(0).toUpperCase();
     if(!groups[first])groups[first]=[];
@@ -2901,7 +3091,7 @@ function navDeck(delta,direction){
   if(now-lastNavTapAt<250) return;
   lastNavTapAt=now;
   const nextIdx=G.activeIdx+delta;
-  if(nextIdx<0||nextIdx>4) return;
+  if(nextIdx<0||nextIdx>=G.drawnCards.length) return;
   G.activeIdx=nextIdx;
   renderDeck(G.activeIdx,direction);
 }
@@ -2930,7 +3120,7 @@ onTap($('nav-next'),()=>navDeck(1,'right'));
     if(Math.abs(dx)<THRESHOLD || Math.abs(dx)<=Math.abs(dy)*1.25) return;
     e.preventDefault();
     e.stopPropagation();
-    if(dx<0 && G.activeIdx<4){ navDeck(1,'right'); }
+    if(dx<0 && G.activeIdx<G.drawnCards.length-1){ navDeck(1,'right'); }
     if(dx>0 && G.activeIdx>0){ navDeck(-1,'left'); }
   },{passive:false});
 })();
