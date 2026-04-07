@@ -2075,7 +2075,8 @@ function showChoiceAnimation(fromCard,toCard,isSwap,onComplete){
   },1500);
 }
 
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);}
+let twTimer=null;
+function showScreen(id){if(twTimer){clearInterval(twTimer);twTimer=null;}document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);}
 
 function randomCards(n,excl=[]){
   const pool=POOL.filter(c=>!excl.includes(c.name));
@@ -2142,6 +2143,7 @@ function buildActiveCard(card){
 
 function renderDeck(idx,direction='right'){
   const card=G.drawnCards[idx];
+  if(!card) return;
   $('deck-active').innerHTML='';
   const cardEl=buildActiveCard(card);
   // 根据方向添加不同的动画类
@@ -2166,7 +2168,6 @@ function renderDeck(idx,direction='right'){
   });
 }
 
-let twTimer=null;
 function openEventModal(onConfirm){
   const y=YEARS[G.yearIndex];
   $('ev-year').textContent=`${y.year} · 今年发生了`;
@@ -2748,7 +2749,7 @@ function toggleDropdown(){
 }
 
 /* ── listeners ── */
-$('start-btn').addEventListener('click',()=>{
+onTap($('start-btn'),()=>{
   const errorEl=$('job-error');
   if(!selectedJob){
     errorEl.style.opacity='1';
@@ -2765,6 +2766,7 @@ $('start-btn').addEventListener('click',()=>{
   }
   G.ownCard={...validJob,isOwn:true,tagline:'我的职业',desc:'这是你现在的职业。',fileNum:'OWN'};
   G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};G.totalSalary=0;G.swapCount=0;
+  G.drawnCards=[];G.pendingSwap=null;G.startOfYearCard=null;G.activeIdx=0;
   addToEnc(validJob); // 本命职业直接入图鉴
   // 显示开场故事
   $('story-job-title').textContent=`「${validJob.name}」`;
@@ -2932,19 +2934,15 @@ function doQuit(){
 onTap($('restart-btn'),doRestart);
 onTap($('play-again-btn'),()=>{
   const ownJob=POOL.find(c=>c.name===G.ownCard.name);
-  G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};G.totalSalary=0;G.swapCount=0;G.drawnCards=[
-  {name:"编剧",rarity:"SR",aiResist:52,salary:85,demand:55,category:"创意",emoji:"✍️",tagline:"故事的骨架",desc:"写剧本，是在设计一个世界里的人会怎么做选择。这些选择不一定合理，但要真实。这两件事有时候是矛盾的。",fileNum:"SR-010"},
-  {name:"广告创意",rarity:"SR",aiResist:45,salary:80,demand:60,category:"创意",emoji:"💡",tagline:"让人记住那一秒",desc:"好的广告，是找到一个大家都感受过、但没有人说出来的东西，说出来，说得刚好。这是这份工作全部的难度。",fileNum:"SR-011"},
-  {name:"产品经理",rarity:"SR",aiResist:50,salary:90,demand:70,category:"技术",emoji:"📱",tagline:"需求与实现之间",desc:"需求文档写完，开发说「这个做不了」。不是技术问题，是需求本来就没说清楚。想清楚一件事，比把它写下来难多了。",fileNum:"SR-012"},
-  {name:"HR",rarity:"R",aiResist:38,salary:65,demand:65,category:"行政",emoji:"👥",tagline:"人与组织之间",desc:"面试的时候，有人说的和简历上写的完全不一样。这种差距，有时候是加分项，有时候是警示。一眼能看出来，但说不清是什么信号。",fileNum:"R-005"},
-  {name:"企业文化",rarity:"N",aiResist:28,salary:55,demand:50,category:"行政",emoji:"🎯",tagline:"让组织有温度",desc:"组织一次团建，有人全程玩手机，有人在走廊和同事聊了三个小时。那三个小时，是这份工作真正想让它发生的事。",fileNum:"N-005"},
-  {name:"数据分析师",rarity:"R",aiResist:35,salary:75,demand:70,category:"技术",emoji:"📊",tagline:"数字背后的故事",desc:"数字会说谎。同一组数据，怎么切、怎么对比，结论可以完全相反。知道这件事，是这份工作真正开始的地方。",fileNum:"R-006"},
-  {name:"项目经理",rarity:"R",aiResist:42,salary:85,demand:65,category:"行政",emoji:"📋",tagline:"把事情推下去",desc:"项目延期了，开会，每个人都有理由。最后那个「理由」背后真正的原因，要在会后单独问。开会永远问不出来。",fileNum:"R-007"},
-  {name:"快递员",rarity:"N",aiResist:38,salary:50,demand:80,category:"服务",emoji:"📦",tagline:"最后一公里",desc:"每天送几百个包裹，大多数时候门一开递进去就走了。偶尔有人开门，顺手接一下，说声谢谢。那一下，不是规定动作。",fileNum:"N-006"},
-  {name:"运营",rarity:"R",aiResist:40,salary:72,demand:75,category:"创意",emoji:"📈",tagline:"让内容活起来",desc:"发出去一条内容，数据很差。发出去另一条，爆了。两条的差别，有时候只是一个词、一张图的位置。这个感觉，做了很久才有。",fileNum:"R-008"},
-  {name:"游戏策划",rarity:"SR",aiResist:48,salary:85,demand:60,category:"创意",emoji:"🎮",tagline:"设计那个刚好的惊喜",desc:"设计一个关卡，让玩家在那里多停三分钟。不是靠难度，靠的是在那个时机给一个刚好的惊喜。这个「刚好」，是反复测试出来的。",fileNum:"SR-013"},
-  {name:"制片",rarity:"SR",aiResist:50,salary:95,demand:55,category:"创意",emoji:"🎬",tagline:"把故事变成画面",desc:"剧本写的是「天色渐暗」，实际拍要决定是黄昏还是阴天，演员站哪里，镜头从哪里推进来。每个决定都是另一个故事。",fileNum:"SR-014"},
-];G.pendingSwap=null;G.startOfYearCard=null;G.activeIdx=0;
+  G.currentCard={...G.ownCard};
+  G.yearIndex=0;
+  G.encyclopedia={};
+  G.totalSalary=0;
+  G.swapCount=0;
+  G.drawnCards=[];
+  G.pendingSwap=null;
+  G.startOfYearCard=null;
+  G.activeIdx=0;
   if(ownJob)addToEnc(ownJob);
   startYear();
 });
