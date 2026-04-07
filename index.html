@@ -1352,6 +1352,9 @@ body:has(#story-screen.active) {
       <div id="job-error" style="color:#8b1a2b;font-size:11px;margin-top:8px;letter-spacing:1px;opacity:0;transition:opacity 0.3s;font-family:'Courier New',monospace;">请先选择职业</div>
     </div>
     <button id="start-btn" style="display:block;width:100%;background:rgba(255,255,255,0.65);color:rgba(58,50,44,0.85);border:1px solid rgba(0,0,0,0.12);padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;border-radius:999px;">看看我的职业发展之路</button>
+    <div style="margin-top:14px;text-align:center;">
+      <button id="show-tutorial-btn" style="background:transparent;border:none;color:rgba(120,100,88,0.55);font-size:11px;font-family:'Courier New',monospace;letter-spacing:2px;cursor:pointer;padding:6px 12px;text-decoration:underline;text-underline-offset:3px;">? 怎么玩</button>
+    </div>
   </div>
 </div>
 
@@ -1664,6 +1667,69 @@ body:has(#story-screen.active) {
   </div>
 </div>
 
+<!-- ═══════════════════════════ 首次引导浮窗 ═══════════════════════════ -->
+<div id="tutorial-overlay" style="display:none;position:fixed;inset:0;z-index:9500;background:rgba(10,10,10,0.85);align-items:center;justify-content:center;padding:env(safe-area-inset-top) 20px env(safe-area-inset-bottom);">
+  <div id="tutorial-card" style="max-width:360px;width:100%;background:rgba(245,238,225,0.98);border-radius:12px;padding:28px 24px 20px;font-family:'Courier New',monospace;color:rgba(40,30,22,0.9);box-shadow:0 20px 60px rgba(0,0,0,0.4);position:relative;">
+    <div id="tutorial-steps" style="display:flex;justify-content:center;gap:6px;margin-bottom:20px;"></div>
+    <div id="tutorial-content" style="min-height:240px;">
+      <div class="tut-step" style="display:block;">
+        <div style="font-size:11px;letter-spacing:4px;color:rgba(139,26,43,0.7);text-align:center;margin-bottom:12px;">〔欢迎〕</div>
+        <div style="font-size:22px;font-weight:900;letter-spacing:3px;text-align:center;margin-bottom:18px;color:rgba(40,30,22,0.95);">这是什么游戏？</div>
+        <div style="font-size:13px;line-height:1.95;color:rgba(58,50,44,0.78);">
+          <p style="margin:0 0 12px;">2026 年，AI 时代正式开始。</p>
+          <p style="margin:0 0 12px;">未来 10 年，AI 会替代约 67% 的职业。<strong>有些岗位会消失得很快，有些会撑到最后一年。</strong></p>
+          <p style="margin:0;color:rgba(139,26,43,0.85);font-weight:700;">你能在这十年里活下来吗？</p>
+        </div>
+      </div>
+      <div class="tut-step" style="display:none;">
+        <div style="font-size:11px;letter-spacing:4px;color:rgba(139,26,43,0.7);text-align:center;margin-bottom:12px;">〔玩法〕</div>
+        <div style="font-size:22px;font-weight:900;letter-spacing:3px;text-align:center;margin-bottom:18px;color:rgba(40,30,22,0.95);">怎么玩？</div>
+        <div style="font-size:12.5px;line-height:1.9;color:rgba(58,50,44,0.78);">
+          <p style="margin:0 0 10px;"><strong style="color:rgba(40,30,22,0.95);">①</strong> 选一个本命职业开始。</p>
+          <p style="margin:0 0 10px;"><strong style="color:rgba(40,30,22,0.95);">②</strong> 每年抽 5 张其他职业的卡。</p>
+          <p style="margin:0 0 10px;"><strong style="color:rgba(40,30,22,0.95);">③</strong> 决定<strong>「继续苟着」</strong>原职业，还是<strong>「选择跳槽」</strong>到新的。</p>
+          <p style="margin:0 0 10px;"><strong style="color:rgba(40,30,22,0.95);">④</strong> 看年度评估——你今年活下来了吗？</p>
+          <p style="margin:0;color:rgba(139,26,43,0.75);font-size:11.5px;font-style:italic;">每年都有职业被淘汰。如果你的当前职业进了淘汰名单，就有可能失业。</p>
+        </div>
+      </div>
+      <div class="tut-step" style="display:none;">
+        <div style="font-size:11px;letter-spacing:4px;color:rgba(139,26,43,0.7);text-align:center;margin-bottom:12px;">〔界面〕</div>
+        <div style="font-size:22px;font-weight:900;letter-spacing:3px;text-align:center;margin-bottom:18px;color:rgba(40,30,22,0.95);">界面分区</div>
+        <div style="font-size:12.5px;line-height:1.85;color:rgba(58,50,44,0.78);">
+          <div style="margin-bottom:12px;display:flex;gap:10px;align-items:flex-start;">
+            <div style="flex-shrink:0;width:32px;height:42px;border:1.5px solid rgba(139,26,43,0.5);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(245,238,225,0.6);">💼</div>
+            <div><strong style="color:rgba(40,30,22,0.95);">左上工牌</strong>：你当前的职业。点击查看详情。</div>
+          </div>
+          <div style="margin-bottom:12px;display:flex;gap:10px;align-items:flex-start;">
+            <div style="flex-shrink:0;width:32px;height:42px;border:1.5px solid rgba(139,26,43,0.5);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(245,238,225,0.6);">🗂</div>
+            <div><strong style="color:rgba(40,30,22,0.95);">右上图鉴</strong>：所有你"认识"的职业，包括之前几局学到的。</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <div style="flex-shrink:0;width:32px;height:42px;border:1.5px solid rgba(139,26,43,0.5);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(245,238,225,0.6);">📬</div>
+            <div><strong style="color:rgba(40,30,22,0.95);">中间档案袋</strong>：今年的 5 个职业机会。点击签收开抽。</div>
+          </div>
+        </div>
+      </div>
+      <div class="tut-step" style="display:none;">
+        <div style="font-size:11px;letter-spacing:4px;color:rgba(139,26,43,0.7);text-align:center;margin-bottom:12px;">〔重要〕</div>
+        <div style="font-size:22px;font-weight:900;letter-spacing:3px;text-align:center;margin-bottom:18px;color:rgba(40,30,22,0.95);">失败也是收获</div>
+        <div style="font-size:12.5px;line-height:1.9;color:rgba(58,50,44,0.78);">
+          <p style="margin:0 0 12px;">你<strong>一局玩不通关</strong>。别期待第一次就能活到 2035。</p>
+          <p style="margin:0 0 12px;">每次失业，你会学到「<strong>X 职业死于 Y 年</strong>」——这条信息会<strong style="color:rgba(139,26,43,0.85);">永久保存到图鉴</strong>，下一局开始时就能看到 ⚠️ 标记。</p>
+          <p style="margin:0 0 12px;">多玩几局，你才能拼出完整的「AI 淘汰时间表」，找到那条活到最后的路。</p>
+          <p style="margin:0;font-size:11px;color:rgba(120,100,88,0.7);font-style:italic;">提示：图鉴里的 🏆 表示你成功守护到 2035 的本命职业。试着集齐它们。</p>
+        </div>
+      </div>
+    </div>
+    <div id="tutorial-footer" style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:10px;">
+      <button id="tutorial-skip" style="background:transparent;border:none;color:rgba(120,100,88,0.6);font-size:11px;font-family:'Courier New',monospace;letter-spacing:2px;cursor:pointer;padding:8px 4px;">跳过</button>
+      <div style="flex:1;"></div>
+      <button class="btn outline" id="tutorial-prev" style="display:none;width:auto;padding:9px 16px;border-radius:999px;font-size:11px;">← 上一步</button>
+      <button class="btn red" id="tutorial-next" style="width:auto;padding:10px 18px;border-radius:999px;font-size:11px;">下一步 →</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const YEARS=[
   // 2026年：标准化文字工作第一波
@@ -1734,6 +1800,7 @@ YEARS.forEach(y=>y.eliminated.forEach(n=>{if(!ELIM_YEAR[n])ELIM_YEAR[n]=y.year;}
 
 /* ── 跨局图鉴累积：localStorage 持久化玩家通过失败学到的知识 ── */
 const DISCOVERY_KEY='zhiye_discoveries_v1';
+const TUTORIAL_KEY='zhiye_tutorial_seen_v1';
 let DISCOVERIES={knownElim:{},playedAs:[],failedAs:[],guardianOf:[],totalGames:0};
 function loadDiscoveries(){
   try{
@@ -1777,6 +1844,13 @@ function incrementTotalGames(){
 function resetDiscoveries(){
   DISCOVERIES={knownElim:{},playedAs:[],failedAs:[],guardianOf:[],totalGames:0};
   try{localStorage.removeItem(DISCOVERY_KEY);}catch(e){}
+}
+function isTutorialSeen(){
+  try{return localStorage.getItem(TUTORIAL_KEY)==='1';}catch(e){return false;}
+}
+function markTutorialSeen(){
+  if(isTutorialSeen())return; // 已标记则跳过 localStorage 写入
+  try{localStorage.setItem(TUTORIAL_KEY,'1');}catch(e){}
 }
 loadDiscoveries();
 
@@ -3319,6 +3393,57 @@ onTap($('farewell-btn'),()=>{
 renderJobSelector();
 // 同步图鉴总数为 POOL.length
 document.querySelectorAll('.pool-total').forEach(el=>el.textContent=POOL.length);
+
+/* ── 首次引导浮窗 ── */
+const TUT_DOT_ACTIVE='rgba(139,26,43,0.8)';
+const TUT_DOT_IDLE='rgba(180,160,140,0.4)';
+const tutSteps=document.querySelectorAll('#tutorial-content .tut-step');
+const tutDotsHost=$('tutorial-steps');
+// 根据步骤数自动生成指示器圆点，避免 HTML/JS 步数失同步
+tutSteps.forEach(()=>{
+  const dot=document.createElement('div');
+  dot.className='tut-dot';
+  dot.style.cssText='width:8px;height:8px;border-radius:50%;background:'+TUT_DOT_IDLE+';transition:all 0.2s;';
+  tutDotsHost.appendChild(dot);
+});
+const tutDots=tutDotsHost.querySelectorAll('.tut-dot');
+let tutorialStep=1;
+function showTutorial(){
+  tutorialStep=1;
+  renderTutorialStep();
+  $('tutorial-overlay').style.display='flex';
+}
+function hideTutorial(){
+  $('tutorial-overlay').style.display='none';
+  markTutorialSeen();
+}
+function renderTutorialStep(){
+  tutSteps.forEach((el,i)=>{el.style.display=(i+1===tutorialStep)?'block':'none';});
+  tutDots.forEach((dot,i)=>{
+    const active=(i+1===tutorialStep);
+    dot.style.background=active?TUT_DOT_ACTIVE:TUT_DOT_IDLE;
+    dot.style.transform=active?'scale(1.2)':'scale(1)';
+  });
+  $('tutorial-prev').style.display=tutorialStep>1?'block':'none';
+  $('tutorial-next').textContent=tutorialStep<tutSteps.length?'下一步 →':'开始游戏 →';
+}
+onTap($('tutorial-next'),()=>{
+  if(tutorialStep<tutSteps.length){tutorialStep++;renderTutorialStep();}
+  else hideTutorial();
+});
+onTap($('tutorial-prev'),()=>{
+  if(tutorialStep>1){tutorialStep--;renderTutorialStep();}
+});
+onTap($('tutorial-skip'),hideTutorial);
+onTap($('show-tutorial-btn'),showTutorial);
+// 点击遮罩外区域关闭（保留卡片内点击不触发）
+$('tutorial-overlay').addEventListener('click',(e)=>{
+  if(e.target.id==='tutorial-overlay')hideTutorial();
+});
+
+if(!isTutorialSeen()){
+  requestAnimationFrame(showTutorial);
+}
 </script>
 
 <!-- ══ 音效 & 音乐系统 (Web Audio API) ══════════════════════════ -->
