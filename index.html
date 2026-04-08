@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>我的事业 · 职业生存图鉴</title>
-<!-- v20260408-0200 入场信件 + 第一年微提示 -->
+<!-- v20260408-0210 引导 key bump 至 v2 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -1854,7 +1854,7 @@ YEARS.forEach(y=>y.eliminated.forEach(n=>{if(!ELIM_YEAR[n])ELIM_YEAR[n]=y.year;}
 
 /* ── 跨局图鉴累积：localStorage 持久化玩家通过失败学到的知识 ── */
 const DISCOVERY_KEY='zhiye_discoveries_v1';
-const TUTORIAL_KEY='zhiye_tutorial_seen_v1';
+const TUTORIAL_KEY='zhiye_tutorial_seen_v2';
 let DISCOVERIES={knownElim:{},playedAs:[],failedAs:[],guardianOf:[],totalGames:0};
 function loadDiscoveries(){
   try{
