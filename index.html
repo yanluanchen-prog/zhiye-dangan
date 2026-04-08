@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>我的事业 · 职业生存图鉴</title>
-<!-- v20260408-0240 图鉴只收体验过的职业 -->
+<!-- v20260408-0250 老玩家恢复职业介绍页 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -611,9 +611,11 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .header { border-bottom: 1px solid rgba(255,255,255,0.4) !important; }
 .screen { background: transparent !important; }
 
-/* letter：showScreen() 加 active 后强制恢复 flex 居中 */
+/* letter / story：showScreen() 加 active 后强制恢复 flex 居中 */
 #letter-screen.active,
-#letter-screen.screen.active {
+#letter-screen.screen.active,
+#story-screen.active,
+#story-screen.screen.active {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
@@ -817,12 +819,14 @@ body {
 .screen.active,
 #intro-screen, #intro-screen.screen, #intro-screen.screen.active,
 #letter-screen, #letter-screen.screen, #letter-screen.screen.active,
+#story-screen, #story-screen.screen, #story-screen.screen.active,
 #game-screen, #game-screen.active,
 #result-screen, #result-screen.active,
 #fail-screen, #fail-screen.active,
 #ending-screen, #ending-screen.active,
 body:has(#intro-screen.active),
-body:has(#letter-screen.active) {
+body:has(#letter-screen.active),
+body:has(#story-screen.active) {
   background: transparent !important;
 }
 
@@ -1113,6 +1117,24 @@ body:has(#letter-screen.active) {
 }
 .pkg-sign-btn:active { transform: scale(0.95) !important; box-shadow: 0 2px 8px rgba(100,165,210,0.2) !important; }
 
+/* ── 「进入 xxxx 年 →」story 按钮也用渐变 ───────────────────── */
+#story-enter-btn {
+  background: linear-gradient(145deg,
+    rgba(255,255,255,0.68),
+    rgba(230,240,250,0.60)) !important;
+  border: 1px solid rgba(255,255,255,0.85) !important;
+  border-radius: 999px !important;
+  color: rgba(48,38,28,0.75) !important;
+  box-shadow:
+    0 4px 16px rgba(100,120,160,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.9) !important;
+  transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.12s ease !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+#story-enter-btn:active { transform: scale(0.95) !important; }
+
 /* ── 「继续 →」告别页按钮 ──────────────────────────────────── */
 #farewell-btn {
   background: rgba(255,255,255,0.45) !important;
@@ -1233,6 +1255,28 @@ body:has(#letter-screen.active) {
 .rv-letter.surv .rv-letter-title { color: var(--green) !important; }
 .rv-letter.fail .rv-letter-title { color: var(--red) !important; }
 .rv-letter-sign { color: rgba(58,50,40,0.3) !important; }
+
+/* ── 文字色随年份加深（暮色背景的可读性补偿） ── */
+/* 中期：2030-2032 暮色将至 */
+body.year-tone-mid .ev-body,
+body.year-tone-mid #ev-body,
+body.year-tone-mid .rv-letter-body,
+body.year-tone-mid #f-text,
+body.year-tone-mid #end-text,
+body.year-tone-mid .card-desc {
+  color: rgba(36,28,18,0.92) !important;
+}
+body.year-tone-mid .rv-letter-title { color: rgba(36,28,18,0.95) !important; }
+/* 晚期：2033-2035 黄昏将夜 */
+body.year-tone-dark .ev-body,
+body.year-tone-dark #ev-body,
+body.year-tone-dark .rv-letter-body,
+body.year-tone-dark #f-text,
+body.year-tone-dark #end-text,
+body.year-tone-dark .card-desc {
+  color: rgba(20,14,8,0.96) !important;
+}
+body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
 
 /* ── 故事/告别页 ─────────────────────────────────────────── */
 #farewell-overlay * { color: rgba(58,50,40,0.82) !important; }
@@ -1435,6 +1479,15 @@ body:has(#letter-screen.active) {
     <div id="farewell-title" style="font-size:10px;color:rgba(160,100,90,0.75);letter-spacing:3px;font-family:monospace;margin-bottom:14px;">离开</div>
     <div id="farewell-text" style="font-size:13px;color:rgba(240,235,224,0.82);line-height:2.3;white-space:pre-line;"></div>
     <button id="farewell-btn" style="margin-top:28px;display:block;width:100%;background:transparent;color:rgba(240,235,224,0.45);border:1px solid rgba(240,235,224,0.15);padding:13px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:3px;cursor:pointer;">继续 →</button>
+  </div>
+</div>
+
+<!-- 老玩家开场：本命职业介绍页（情感连接） -->
+<div id="story-screen" class="screen" style="background:transparent;">
+  <div style="max-width:360px;width:100%;">
+    <div id="story-job-title" style="font-size:11px;color:rgba(100,80,70,0.72);letter-spacing:4px;font-family:monospace;margin-bottom:12px;">「职业」</div>
+    <div id="story-text" style="font-size:15px;color:rgba(38,28,18,0.90);line-height:2.2;white-space:pre-line;"></div>
+    <button id="story-enter-btn" style="margin-top:32px;display:block;width:100%;background:rgba(255,255,255,0.45);color:rgba(58,50,40,0.65);border:1px solid rgba(255,255,255,0.75);padding:14px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;border-radius:14px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">进入 2026 年 →</button>
   </div>
 </div>
 
@@ -1880,6 +1933,60 @@ function markTutorialSeen(){
 loadDiscoveries();
 
 let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0};
+
+/* ── 本命职业开场介绍（情感连接） ── */
+function generateOpeningStory(card){
+  const signals=[
+    '这段时间，裁员消息越来越密。',
+    '办公室里空出来的工位越来越多。',
+    '有些岗位消失了，连招聘页面都没留下。',
+    '群里转发的，不再是机会，而是替代案例。',
+  ];
+  const signal=signals[Math.floor(Math.random()*signals.length)];
+  const survivorMap={
+    '客服代表':'隔壁部门换成自动应答了。这边的工单还在积。暂时还在。',
+    '数据录入员':'系统每天处理扫描件。我录的那部分，还没有被替代。',
+    '银行柜员':'APP分流了大多数业务。但还有几类，只能来柜台。',
+    '程序员':'这一年写了很多代码，也让工具帮我写了很多。不知道哪部分算是自己的了。',
+    '记者':'那个线人不会给系统发邮件。今年还在跑，还能见到那些人。',
+    '作家':'出版社还在签有名字的作者。至少现在还是。',
+    '演员':'数字替身已经在拍戏了。但这个角色，导演说要真人。',
+    '音乐家':'新专辑播放很高。但演出票还是卖给现场的人看。',
+    '编剧':'平台一夜之间生成了一百个大纲，有一个被买走了。剩下的，还是人在写。',
+    '平面设计师':'提案过了。客户说：这个有人的感觉。我不确定这算不算理由，但留了下来。',
+    '剪辑师':'自动剪辑版完播率更高，但导演说要这个版本。今年还在。',
+    '摄影师':'生成图已经铺满了平台。这个客户说：我还是要真实的现场感。',
+    '信息安全分析师':'今年没出事。不知道是防线够，还是对面还没来。',
+    '市场研究分析师':'报告交了，老板说：这个角度有意思，模型看不出来的。',
+    '广告创意':'提案中了。客户说：就是这个感觉，工具的方案没有这个。',
+    '产品经理':'这个需求最终确认了。中间那些说不清楚的部分，是来回拉扯出来的。',
+    'HR':'那个候选人进了。系统给的分不高，但感觉对。',
+    '企业文化':'今年团建有人留到了最后。不知道是活动好，还是他们本来就想聊。',
+    '数据分析师':'那个结论让老板意外。他问：这个点怎么找到的。是那个没被自动化注意到的角度。',
+    '会计师':'今年账都对上了。那个漏洞查了两天，查出来了。',
+    '金融分析师':'今年市场出乎所有人意料。我错了三次，模型也错了三次。',
+    '医生':'病人问：这是系统说的还是你说的？我说是我的判断。他点点头。',
+    '律师':'庭上那个时机，只有人才能感知到。今年还没输给系统。',
+    '销售代表':'这单成了。最后那一刻，客户放松了。我知道那是什么时候。',
+    '护士':'这一年，那些手没有停。编制还在。',
+    '教师':'有几个学生今年有了变化。说不清是什么，但看得出来。',
+    '社工':'案例还在跟进。有些地方，系统没办法去。',
+    '公务员':'今年的财政还稳着。编制还在，工牌还戴着。',
+    '项目经理':'项目延期了，但没有关闭。那个会后单独谈的结果起了作用。',
+    '心理咨询师':'今年还有人来坐那把椅子。平台上线了，但他们还是来了。',
+    '网约车司机':'今天跑了四十单。那个凌晨的长途，乘客在车上睡着了。',
+    '配送员':'那个阿姨今天等得少一点，她说：你今天来得早。',
+    '快递员':'今天送了三百件。那个顺手接了一下的老人，还是三楼的那位。',
+    '运营':'那条内容爆了。算法解释不了，我知道是因为那个词换了。',
+    '游戏策划':'测试数据出来了，留存比目标高了 8%。那个关卡改了四次。',
+    '制片':'项目还在推进。分镜表上的那些决定，已经变成画面了。',
+    '厨师':'客人说：今天和平时不一样。我知道是什么不一样——今天的葱换了。',
+    '修理工':'今天修了三台。每台不一样，每台修好了。这种感觉还在。',
+    '救生员':'今天什么都没发生。这是这份工作最好的一天。'
+  };
+  const defaultVoice=`${signal}\n以前大家以为，岗位消失是慢慢发生的。\n现在才发现，它可能是一夜之间不再被需要。\n\n不是今天。\n但也不会太远。`;
+  return survivorMap[card.name]?`${signal}\n${survivorMap[card.name]}`:defaultVoice;
+}
 
 
 /* ── 离职告别信 ── */
@@ -2811,8 +2918,8 @@ const YEAR_PALETTES = {
   2031: ['#a8bece','#d2bb9c','#9faec0'],  // 暮色将至
   2032: ['#a0b6c5','#ccb292','#98a6b8'],  // 暮色
   2033: ['#98aebe','#c5a888','#909eb0'],  // 昏暗
-  2034: ['#5e6480','#7060a0','#4a4a68'],  // 暮夜·偏紫
-  2035: ['#3a3548','#4a3a5c','#262032'],  // 深夜·暗紫
+  2034: ['#90a5b5','#be9e7e','#8895a8'],  // 黄昏
+  2035: ['#889cac','#b79474','#808ca0'],  // 将夜
 };
 function updateBgPalette(year){
   const p = YEAR_PALETTES[year] || YEAR_PALETTES[2026];
@@ -2820,6 +2927,12 @@ function updateBgPalette(year){
   r.style.setProperty('--mv-bg-a', p[0]);
   r.style.setProperty('--mv-bg-b', p[1]);
   r.style.setProperty('--mv-bg-c', p[2]);
+  // 文字色随年份分三档加深，保证暮色背景下的可读性
+  // 早期（2026-2029）默认；中期（2030-2032）加深；晚期（2033-2035）最深
+  const body=document.body;
+  body.classList.remove('year-tone-mid','year-tone-dark');
+  if(year>=2033)body.classList.add('year-tone-dark');
+  else if(year>=2030)body.classList.add('year-tone-mid');
 }
 
 function startYear(){
@@ -3189,9 +3302,16 @@ onTap($('start-btn'),()=>{
   G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};G.totalSalary=0;G.swapCount=0;
   G.drawnCards=[];G.pendingSwap=null;G.startOfYearCard=null;G.activeIdx=0;
   addToEnc(validJob);
-  // 第一次玩：先显示入场信件再进游戏；老玩家直接进游戏
-  if(isTutorialSeen())startYear();
-  else showLetterFor(validJob.name);
+  recordPlayedAs(validJob.name);
+  // 首次玩家：入场信件 → 游戏（信件创造世界观）
+  // 老玩家：本命职业介绍 → 游戏（情感连接当前职业）
+  if(isTutorialSeen()){
+    $('story-job-title').textContent=`「${validJob.name}」`;
+    $('story-text').textContent=generateOpeningStory(validJob);
+    showScreen('story-screen');
+  }else{
+    showLetterFor(validJob.name);
+  }
 });
 
 // 点击输入框展开/收起下拉列表
@@ -3390,6 +3510,7 @@ function showLetterFor(recipient){
   showScreen('letter-screen');
 }
 onTap($('letter-accept-btn'),()=>startYear());
+onTap($('story-enter-btn'),()=>startYear());
 onTap($('show-tutorial-btn'),()=>showLetterFor(selectedJob));
 
 function showHint(id){
