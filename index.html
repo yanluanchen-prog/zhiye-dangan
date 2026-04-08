@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>我的事业 · 职业生存图鉴</title>
-<!-- v20260408-0220 删除 story-screen 中间页 -->
+<!-- v20260408-0240 图鉴只收体验过的职业 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -1423,7 +1423,7 @@ body:has(#letter-screen.active) {
     </div>
     <button id="start-btn" style="display:block;width:100%;background:rgba(255,255,255,0.65);color:rgba(58,50,44,0.85);border:1px solid rgba(0,0,0,0.12);padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;border-radius:999px;">看看我的职业发展之路</button>
     <div style="margin-top:14px;text-align:center;">
-      <button id="show-tutorial-btn" style="background:transparent;border:none;color:rgba(120,100,88,0.55);font-size:11px;font-family:'Courier New',monospace;letter-spacing:2px;cursor:pointer;padding:6px 12px;text-decoration:underline;text-underline-offset:3px;">? 怎么玩</button>
+      <button id="show-tutorial-btn" style="background:transparent;border:none;color:rgba(120,100,88,0.55);font-size:11px;font-family:'Courier New',monospace;letter-spacing:2px;cursor:pointer;padding:6px 12px;text-decoration:underline;text-underline-offset:3px;">怎么玩 ？</button>
     </div>
   </div>
 </div>
@@ -2314,7 +2314,7 @@ function doDrawCards(){
     drawBtn.textContent='📬 正在签收…';
   }
   G.drawnCards=randomCards(5,[G.currentCard.name]);
-  G.drawnCards.forEach(c=>addToEnc(c));
+  // 抽到的卡只是"看到"，不算"体验过"——只有真正选择/跳槽到的职业才进图鉴
   G.activeIdx=0;G.pendingSwap=null;
   const bag=$('pkg-bag');
   if(bag){
@@ -2891,63 +2891,51 @@ function openCardDetail(card){
 
 /* ── enc modal ── */
 function openEncModal(){
-  // 本局已收录 + 跨局已发现的职业，按稀有度排序
-  const seenInThisGame=Object.keys(G.encyclopedia);
-  const everKnown=new Set([...seenInThisGame,...Object.keys(DISCOVERIES.knownElim),...DISCOVERIES.playedAs,...DISCOVERIES.guardianOf]);
-  const entries=POOL.filter(c=>everKnown.has(c.name)).sort((a,b)=>['N','R','SR','SSR','UR'].indexOf(b.rarity)-['N','R','SR','SSR','UR'].indexOf(a.rarity));
-  const curYear=YEARS[Math.min(G.yearIndex,9)].year;
-  // 子标题：本局收录数 + 跨局总发现 + 累计游戏次数
-  const knownCount=Object.keys(DISCOVERIES.knownElim).length;
-  const guardianCount=DISCOVERIES.guardianOf.length;
-  const games=DISCOVERIES.totalGames;
-  $('enc-sub-txt').innerHTML=`本局收录 ${seenInThisGame.length}／${POOL.length}　·　跨局已知淘汰 ${knownCount}　·　成功守护 ${guardianCount}　·　累计 ${games} 局`;
+  // 只显示玩家"体验过"的职业（本命选择 / 跳槽到的）—— 不包括"看到过"的卡片
+  // 卡片显示淘汰年份的唯一条件：玩家曾在该职业上失业过（knownElim）
+  // 否则不显示任何年份信息（避免透露永生职业）
+  const experienced=new Set([
+    ...Object.keys(G.encyclopedia),    // 本局体验过
+    ...DISCOVERIES.playedAs,           // 跨局体验过
+    ...Object.keys(DISCOVERIES.knownElim), // 跨局失败过（隐含体验）
+    ...DISCOVERIES.guardianOf          // 跨局守护成功
+  ]);
+  const entries=POOL.filter(c=>experienced.has(c.name))
+    .sort((a,b)=>['N','R','SR','SSR','UR'].indexOf(b.rarity)-['N','R','SR','SSR','UR'].indexOf(a.rarity));
+  $('enc-sub-txt').textContent=`已体验 ${entries.length}／${POOL.length} 种职业`;
   const grid=$('enc-grid');grid.innerHTML='';
   entries.forEach(card=>{
-    // 本局是否经历过
-    const inGame=G.encyclopedia[card.name];
-    // 跨局是否已知淘汰年份（玩家失败时学到的）
+    // 只有玩家亲身失败过的职业才显示淘汰年份
     const knownElimYear=DISCOVERIES.knownElim[card.name];
-    // 本局视角下是否已被淘汰
-    const elimThisGame=ELIM_YEAR[card.name]&&ELIM_YEAR[card.name]<=curYear;
-    // 是否成功守护过（本命职业撑到 2035）
-    const isGuardian=DISCOVERIES.guardianOf.includes(card.name);
-    // 是否玩过本命
-    const everPlayed=DISCOVERIES.playedAs.includes(card.name);
-
     const div=document.createElement('div');
-    div.className='enc-item mini-card '+card.rarity+((elimThisGame||knownElimYear)?' elim':'');
+    div.className='enc-item mini-card '+card.rarity+(knownElimYear?' elim':'');
     const fileNo=(card.fileNum||'').replace(/^[A-Z]+-/,'');
-
-    // 主信息：本局淘汰年份 OR 跨局已知淘汰年份
-    let infoText='—';
-    if(elimThisGame)infoText=ELIM_YEAR[card.name]+'年';
-    else if(knownElimYear)infoText='⚠ '+knownElimYear+'年';
-    else if(card.name==='救生员'||!ELIM_YEAR[card.name])infoText='—';
-
-    // 徽章：守护成功 / 玩过本命
-    let badges='';
-    if(isGuardian)badges+='<span style="position:absolute;top:2px;right:2px;font-size:10px;">🏆</span>';
-    else if(everPlayed)badges+='<span style="position:absolute;top:2px;right:2px;font-size:9px;opacity:0.7;">●</span>';
-
-    div.style.position='relative';
-    div.innerHTML=`<div class="mini-header"><span class="mini-rarity">${fileNo}</span></div>${badges}<div class="mini-art"><span class="mini-icon">${card.emoji}</span><span class="mini-name">${card.name}</span></div><div class="enc-info">${infoText}</div>`;
+    const infoText=knownElimYear?(knownElimYear+'年'):'';
+    div.innerHTML=`<div class="mini-header"><span class="mini-rarity">${fileNo}</span></div><div class="mini-art"><span class="mini-icon">${card.emoji}</span><span class="mini-name">${card.name}</span></div><div class="enc-info">${infoText}</div>`;
     div.addEventListener('click',()=>{closeEncModal();openCardDetail(card);});
     grid.appendChild(div);
   });
-  if(!entries.length)grid.innerHTML='<div style="grid-column:span 3;text-align:center;color:var(--ink-faint);padding:20px;font-size:11px;">还没有收录任何职业</div>';
-  // 添加跨局图鉴说明 + 重置按钮
-  const legend=document.createElement('div');
-  legend.style.cssText='grid-column:1/-1;font-size:9px;color:var(--ink-faint);text-align:center;padding:8px 4px 4px;line-height:1.6;border-top:1px dashed var(--border);margin-top:8px;';
-  legend.innerHTML='⚠ = 跨局已知淘汰年份（来自之前几局的失败）　·　● = 玩过本命　·　🏆 = 成功守护到2035<br><a href="javascript:void(0)" id="reset-discoveries" style="color:var(--red);text-decoration:underline;font-size:9px;margin-top:4px;display:inline-block;">清空所有发现</a>';
-  grid.appendChild(legend);
+  if(!entries.length){
+    grid.innerHTML='<div style="grid-column:span 3;text-align:center;color:var(--ink-faint);padding:20px;font-size:11px;">还没有体验过任何职业</div>';
+  }
+  // 清空发现按钮（保留此功能，但去掉图例文字）
+  const resetWrap=document.createElement('div');
+  resetWrap.style.cssText='grid-column:1/-1;text-align:center;padding:12px 4px 4px;margin-top:8px;border-top:1px dashed var(--border);';
+  resetWrap.innerHTML='<a href="javascript:void(0)" id="reset-discoveries" style="color:var(--red);text-decoration:underline;font-size:10px;font-family:monospace;letter-spacing:1px;">清空所有发现</a>';
+  grid.appendChild(resetWrap);
   const resetBtn=document.getElementById('reset-discoveries');
   if(resetBtn){
     resetBtn.addEventListener('click',(e)=>{
       e.preventDefault();
       if(confirm('确定要清空所有跨局发现吗？这会重置你之前所有局学到的淘汰年份。')){
         resetDiscoveries();
+        // 同时清空本局图鉴（除当前职业）
+        const curName=G.currentCard&&G.currentCard.name;
+        G.encyclopedia={};
+        if(curName&&G.currentCard)G.encyclopedia[curName]={card:{...G.currentCard},firstSeen:YEARS[G.yearIndex]?YEARS[G.yearIndex].year:2026,timesDrawn:1};
+        const el=$('enc-count');if(el)el.textContent=Object.keys(G.encyclopedia).length;
         closeEncModal();
-        setTimeout(()=>openEncModal(),100);
+        setTimeout(()=>openEncModal(),120);
       }
     });
   }
@@ -3317,6 +3305,8 @@ onTap($('swap-btn'),()=>{
   showChoiceAnimation(G.currentCard,newCard,true,()=>{
     G.pendingSwap=newCard;G.swapCount++;
     G.currentCard=newCard;
+    addToEnc(newCard); // 跳槽 = 体验过该职业，进入图鉴
+    recordPlayedAs(newCard.name); // 跨局累积
     updateBadge();
     showFarewell(oldCard,G.swapCount,()=>{
       openEventModal(()=>{decisionInProgress=false;proceedToElim();});
