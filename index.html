@@ -7,7 +7,8 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>我的事业 · 职业生存图鉴</title>
-<!-- v20260408-0250 老玩家恢复职业介绍页 -->
+<!-- v20260408-0300 分享卡片功能 -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -1745,6 +1746,7 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
     <div class="section"><div style="font-size:13px;line-height:2.2;color:rgba(40,30,22,0.82);white-space:pre-wrap;" id="f-text"></div></div>
     <div class="btn-row">
       <button class="btn red" id="restart-btn">重新开始职业生涯</button>
+      <button class="btn outline" id="fail-share-btn">分享给朋友</button>
     </div>
   </div>
 </div>
@@ -1779,8 +1781,55 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
     <div class="section" id="end-text" style="font-size:13px;line-height:2.4;color:var(--ink-lt);"></div>
     <div class="btn-row">
       <button class="btn outline" id="end-enc-btn">查看这十年见过的职业</button>
+      <button class="btn outline" id="end-share-btn">分享给朋友</button>
       <button class="btn red" id="play-again-btn">再玩一次</button>
     </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 分享卡片渲染模板（off-screen） ═══════════════════════════ -->
+<div id="share-card" style="position:fixed;top:0;left:0;width:540px;opacity:0;pointer-events:none;z-index:-1;background:linear-gradient(165deg,#e8d8c0 0%,#f0ddd0 45%,#dcc8b0 100%);padding:48px 40px 36px;font-family:'Courier New','PingFang SC',sans-serif;color:rgba(40,30,22,0.92);box-sizing:border-box;">
+  <div style="text-align:center;margin-bottom:28px;">
+    <div style="font-size:13px;letter-spacing:6px;color:rgba(139,26,43,0.75);font-family:'Courier New',monospace;">〔职业生存图鉴〕</div>
+    <div style="font-family:'Courier New',monospace;font-size:46px;color:rgba(40,30,22,0.92);letter-spacing:14px;line-height:1.1;margin:14px 0 8px;font-weight:700;">我的事业</div>
+    <div style="width:50px;height:2px;background:rgba(139,26,43,0.55);margin:12px auto 0;"></div>
+  </div>
+
+  <div id="share-card-body" style="background:rgba(255,255,255,0.45);border:1px solid rgba(139,26,43,0.15);padding:32px 28px;margin:20px 0 24px;text-align:center;border-radius:2px;">
+    <div id="share-card-emoji" style="font-size:64px;line-height:1;margin-bottom:16px;">💼</div>
+    <div id="share-card-name" style="font-size:32px;font-weight:900;letter-spacing:4px;color:rgba(40,30,22,0.95);margin-bottom:8px;">职业</div>
+    <div id="share-card-tagline" style="font-size:13px;color:rgba(120,100,88,0.7);letter-spacing:2px;font-family:'Courier New',monospace;margin-bottom:24px;">tagline</div>
+
+    <div id="share-card-divider" style="height:1px;background:rgba(139,26,43,0.2);margin:0 auto 22px;width:60%;"></div>
+
+    <div id="share-card-headline" style="font-size:26px;font-weight:900;color:rgba(139,26,43,0.85);letter-spacing:2px;line-height:1.4;margin-bottom:14px;">失业于 2029 年</div>
+    <div id="share-card-subline" style="font-size:13px;color:rgba(58,50,40,0.78);line-height:1.85;letter-spacing:0.5px;">在第 4 年，AI 把我的位置接走了</div>
+  </div>
+
+  <div style="text-align:center;margin-top:28px;">
+    <div style="font-size:13px;color:rgba(58,50,40,0.78);line-height:1.9;letter-spacing:1px;">
+      这十年，67% 的职业被 AI 替代<br>
+      <span style="color:rgba(139,26,43,0.85);font-weight:700;">你的职业能撑到哪一年？</span>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:32px;padding-top:20px;border-top:1px dashed rgba(139,26,43,0.25);">
+    <div style="text-align:left;font-family:'Courier New',monospace;">
+      <div style="font-size:10px;color:rgba(120,100,88,0.65);letter-spacing:2px;">扫码 / 访问</div>
+      <div style="font-size:18px;color:rgba(40,30,22,0.92);letter-spacing:1.5px;font-weight:700;margin-top:4px;">my-career.top</div>
+    </div>
+    <div style="font-size:9px;color:rgba(120,100,88,0.5);font-family:'Courier New',monospace;letter-spacing:1px;text-align:right;line-height:1.5;">
+      AI 时代生存图鉴<br>2026 — 2035
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 分享结果 modal ═══════════════════════════ -->
+<div id="share-modal" style="display:none;position:fixed;inset:0;z-index:9600;background:rgba(10,10,10,0.92);align-items:center;justify-content:center;padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom);overflow-y:auto;">
+  <div style="max-width:420px;width:100%;text-align:center;">
+    <div style="font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:3px;font-family:'Courier New',monospace;margin-bottom:14px;">长按图片保存 · 分享给朋友</div>
+    <img id="share-image" alt="分享卡片" style="max-width:100%;width:100%;border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,0.6);display:block;margin:0 auto;">
+    <button id="share-close-btn" style="margin-top:18px;background:transparent;border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.75);font-family:'Courier New',monospace;font-size:11px;letter-spacing:3px;padding:11px 28px;border-radius:999px;cursor:pointer;">关闭</button>
   </div>
 </div>
 
@@ -3494,6 +3543,54 @@ onTap($('play-again-btn'),()=>{
 onTap($('farewell-btn'),()=>{
   $('farewell-overlay').style.display='none';
   if(_farewellCallback)_farewellCallback();
+});
+
+/* ── 分享卡片 ─────────────────────────────────────────── */
+function populateShareCard(mode){
+  // mode: 'fail' | 'survival'
+  const c=G.currentCard;
+  const y=YEARS[G.yearIndex];
+  $('share-card-emoji').textContent=c.emoji||'💼';
+  $('share-card-name').textContent=c.name;
+  $('share-card-tagline').textContent=c.tagline||'';
+  if(mode==='fail'){
+    $('share-card-headline').style.color='rgba(139,26,43,0.85)';
+    $('share-card-headline').textContent=`失业于 ${y.year} 年`;
+    $('share-card-subline').textContent=`这是 10 年生存挑战的第 ${G.yearIndex+1} 年`;
+  }else{
+    $('share-card-headline').style.color='rgba(40,100,60,0.85)';
+    $('share-card-headline').textContent='活到了 2035 年';
+    const swap=G.swapCount;
+    $('share-card-subline').textContent=swap===0?`从 2026 一直守到 2035，没有跳过一次槽`:`十年里换了 ${swap} 次职业，最后落在这里`;
+  }
+}
+async function showSharePreview(mode){
+  if(typeof html2canvas==='undefined'){
+    alert('分享组件加载失败，请刷新后重试');
+    return;
+  }
+  populateShareCard(mode);
+  const card=$('share-card');
+  try{
+    const canvas=await html2canvas(card,{
+      backgroundColor:null,
+      scale:2,
+      logging:false,
+      useCORS:true,
+      width:540
+    });
+    $('share-image').src=canvas.toDataURL('image/png');
+    $('share-modal').style.display='flex';
+  }catch(e){
+    console.error('Share render failed:',e);
+    alert('分享卡片生成失败，请截屏分享');
+  }
+}
+onTap($('fail-share-btn'),()=>showSharePreview('fail'));
+onTap($('end-share-btn'),()=>showSharePreview('survival'));
+onTap($('share-close-btn'),()=>{$('share-modal').style.display='none';});
+$('share-modal').addEventListener('click',(e)=>{
+  if(e.target.id==='share-modal')$('share-modal').style.display='none';
 });
 
 // 初始化职业选择器
