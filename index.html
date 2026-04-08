@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>我的事业 · 职业生存图鉴</title>
-<!-- v20260408-0100 卡片描述统一为哲学性表述 -->
+<!-- v20260408-0200 入场信件 + 第一年微提示 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -613,7 +613,9 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 
 /* story/farewell：showScreen() 加 active 后强制恢复 flex 居中 */
 #story-screen.active,
-#story-screen.screen.active {
+#story-screen.screen.active,
+#letter-screen.active,
+#letter-screen.screen.active {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
@@ -621,6 +623,93 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
   padding: calc(env(safe-area-inset-top) + 40px) 28px
            calc(env(safe-area-inset-bottom) + 40px) 28px !important;
   box-sizing: border-box !important;
+}
+/* 入场信件 */
+.letter-paper{
+  max-width:360px;width:100%;
+  background:rgba(248,242,228,0.97);
+  border:1px solid rgba(120,100,88,0.25);
+  border-radius:4px;
+  padding:32px 28px 24px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
+  font-family:'Courier New','Courier',monospace;
+  color:rgba(40,30,22,0.88);
+  position:relative;
+  animation:letterFadeIn 0.8s ease-out;
+}
+@keyframes letterFadeIn{
+  from{opacity:0;transform:translateY(12px) rotate(-0.3deg);}
+  to{opacity:1;transform:translateY(0) rotate(0);}
+}
+.letter-header{
+  font-size:11px;letter-spacing:5px;
+  color:rgba(139,26,43,0.7);
+  text-align:center;margin-bottom:24px;
+  border-bottom:1px solid rgba(120,100,88,0.18);
+  padding-bottom:14px;
+}
+.letter-recipient{
+  font-size:13px;letter-spacing:1px;
+  margin-bottom:22px;
+  color:rgba(58,50,44,0.85);
+}
+#letter-recipient-job{
+  font-weight:700;
+  border-bottom:1px solid rgba(120,100,88,0.4);
+  padding:0 6px 1px;
+  margin-left:4px;
+}
+.letter-body{
+  font-size:13px;
+  line-height:2.0;
+  color:rgba(58,50,44,0.82);
+}
+.letter-body p{margin:0;}
+.letter-body .letter-stanza+.letter-stanza{margin-top:14px;}
+.letter-signature{
+  text-align:right;
+  font-size:11px;
+  color:rgba(120,100,88,0.7);
+  margin-top:24px;
+  padding-top:14px;
+  border-top:1px solid rgba(120,100,88,0.18);
+  font-style:italic;
+}
+#letter-accept-btn{
+  display:block;
+  width:100%;
+  margin-top:22px;
+  background:transparent;
+  border:1px solid rgba(120,100,88,0.4);
+  color:rgba(80,68,58,0.85);
+  padding:14px;
+  font-size:12px;
+  font-family:'Courier New',monospace;
+  letter-spacing:3px;
+  cursor:pointer;
+  border-radius:2px;
+  transition:all 0.2s;
+}
+#letter-accept-btn:active{
+  background:rgba(120,100,88,0.08);
+  transform:scale(0.99);
+}
+/* 第一年微提示 */
+.onboarding-hint{
+  text-align:center;
+  font-size:11px;
+  color:rgba(120,100,88,0.7);
+  font-family:'Courier New',monospace;
+  letter-spacing:1.5px;
+  margin:0 auto 8px;
+  font-style:italic;
+  animation:hintFadeIn 0.8s ease;
+  display:none;
+}
+.onboarding-hint.visible{display:block;}
+@keyframes hintFadeIn{
+  from{opacity:0;transform:translateY(4px);}
+  to{opacity:0.9;transform:translateY(0);}
 }
 .screen.active { background: transparent !important; }
 #game-screen.active { background: transparent !important; }
@@ -1469,6 +1558,7 @@ body:has(#story-screen.active) {
             </div>
             <div class="pkg-bag-seal"></div>
           </div>
+          <div class="onboarding-hint" id="hint-draw">〔签收今年的职业邀约〕</div>
           <!-- 签收按钮 -->
           <button class="pkg-sign-btn" id="draw-btn">📬 是否签收？</button>
         </div>
@@ -1476,6 +1566,7 @@ body:has(#story-screen.active) {
 
       <!-- Post-draw: deck stack + 2 action buttons -->
       <div id="hand-zone" style="display:none;">
+        <div class="onboarding-hint" id="hint-nav">〔左右翻看 5 张邀约〕</div>
         <div class="deck-row">
           <button class="deck-nav-btn" id="nav-prev">‹</button>
           <div class="deck-viewer">
@@ -1501,6 +1592,7 @@ body:has(#story-screen.active) {
 
   <!-- 决策按钮区 - 放在container外面，避免iOS scrollable容器吞触摸 -->
   <div id="game-bottom" style="display:none;flex-shrink:0;padding:0 14px calc(8px + env(safe-area-inset-bottom));">
+    <div class="onboarding-hint" id="hint-decide">〔留下还是离开？想好再点〕</div>
     <div class="card-actions" id="card-actions">
       <button class="btn outline" id="keep-btn">继续苟着</button>
       <button class="btn red" id="swap-btn">选择跳槽</button>
@@ -1668,66 +1760,27 @@ body:has(#story-screen.active) {
   </div>
 </div>
 
-<!-- ═══════════════════════════ 首次引导浮窗 ═══════════════════════════ -->
-<div id="tutorial-overlay" style="display:none;position:fixed;inset:0;z-index:9500;background:rgba(10,10,10,0.85);align-items:center;justify-content:center;padding:env(safe-area-inset-top) 20px env(safe-area-inset-bottom);">
-  <div id="tutorial-card" style="max-width:360px;width:100%;background:rgba(245,238,225,0.98);border-radius:12px;padding:28px 24px 20px;font-family:'Courier New',monospace;color:rgba(40,30,22,0.9);box-shadow:0 20px 60px rgba(0,0,0,0.4);position:relative;">
-    <div id="tutorial-steps" style="display:flex;justify-content:center;gap:6px;margin-bottom:20px;"></div>
-    <div id="tutorial-content" style="min-height:240px;">
-      <div class="tut-step" style="display:block;">
-        <div style="font-size:11px;letter-spacing:4px;color:rgba(139,26,43,0.7);text-align:center;margin-bottom:12px;">〔欢迎〕</div>
-        <div style="font-size:22px;font-weight:900;letter-spacing:3px;text-align:center;margin-bottom:18px;color:rgba(40,30,22,0.95);">这是什么游戏？</div>
-        <div style="font-size:13px;line-height:1.95;color:rgba(58,50,44,0.78);">
-          <p style="margin:0 0 12px;">2026 年，AI 时代正式开始。</p>
-          <p style="margin:0 0 12px;">未来 10 年，AI 会替代约 67% 的职业。<strong>有些岗位会消失得很快，有些会撑到最后一年。</strong></p>
-          <p style="margin:0;color:rgba(139,26,43,0.85);font-weight:700;">你能在这十年里活下来吗？</p>
-        </div>
+<!-- ═══════════════════════════ 入场信件 ═══════════════════════════ -->
+<div id="letter-screen" class="screen" style="background:transparent;">
+  <div class="letter-paper">
+    <div class="letter-header">〔职业评估通知〕</div>
+    <div class="letter-recipient">致：<span id="letter-recipient-job">__________</span></div>
+    <div class="letter-body">
+      <div class="letter-stanza">
+        <p>2026 年，全球 67% 的职业面临 AI 替代风险。</p>
+        <p>从这一年起，每年都会有职业悄悄消失。</p>
       </div>
-      <div class="tut-step" style="display:none;">
-        <div style="font-size:11px;letter-spacing:4px;color:rgba(139,26,43,0.7);text-align:center;margin-bottom:12px;">〔玩法〕</div>
-        <div style="font-size:22px;font-weight:900;letter-spacing:3px;text-align:center;margin-bottom:18px;color:rgba(40,30,22,0.95);">怎么玩？</div>
-        <div style="font-size:12.5px;line-height:1.9;color:rgba(58,50,44,0.78);">
-          <p style="margin:0 0 10px;"><strong style="color:rgba(40,30,22,0.95);">①</strong> 选一个本命职业开始。</p>
-          <p style="margin:0 0 10px;"><strong style="color:rgba(40,30,22,0.95);">②</strong> 每年抽 5 张其他职业的卡。</p>
-          <p style="margin:0 0 10px;"><strong style="color:rgba(40,30,22,0.95);">③</strong> 决定<strong>「继续苟着」</strong>原职业，还是<strong>「选择跳槽」</strong>到新的。</p>
-          <p style="margin:0 0 10px;"><strong style="color:rgba(40,30,22,0.95);">④</strong> 看年度评估——你今年活下来了吗？</p>
-          <p style="margin:0;color:rgba(139,26,43,0.75);font-size:11.5px;font-style:italic;">每年都有职业被淘汰。如果你的当前职业进了淘汰名单，就有可能失业。</p>
-        </div>
+      <div class="letter-stanza">
+        <p>我们将每年向你发送一份职业市场报告，</p>
+        <p>里面有 5 个还活着的职业机会。</p>
       </div>
-      <div class="tut-step" style="display:none;">
-        <div style="font-size:11px;letter-spacing:4px;color:rgba(139,26,43,0.7);text-align:center;margin-bottom:12px;">〔界面〕</div>
-        <div style="font-size:22px;font-weight:900;letter-spacing:3px;text-align:center;margin-bottom:18px;color:rgba(40,30,22,0.95);">界面分区</div>
-        <div style="font-size:12.5px;line-height:1.85;color:rgba(58,50,44,0.78);">
-          <div style="margin-bottom:12px;display:flex;gap:10px;align-items:flex-start;">
-            <div style="flex-shrink:0;width:32px;height:42px;border:1.5px solid rgba(139,26,43,0.5);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(245,238,225,0.6);">💼</div>
-            <div><strong style="color:rgba(40,30,22,0.95);">左上工牌</strong>：你当前的职业。点击查看详情。</div>
-          </div>
-          <div style="margin-bottom:12px;display:flex;gap:10px;align-items:flex-start;">
-            <div style="flex-shrink:0;width:32px;height:42px;border:1.5px solid rgba(139,26,43,0.5);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(245,238,225,0.6);">🗂</div>
-            <div><strong style="color:rgba(40,30,22,0.95);">右上图鉴</strong>：所有你体验过的职业，包括之前几局学到的。</div>
-          </div>
-          <div style="display:flex;gap:10px;align-items:flex-start;">
-            <div style="flex-shrink:0;width:32px;height:42px;border:1.5px solid rgba(139,26,43,0.5);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(245,238,225,0.6);">📬</div>
-            <div><strong style="color:rgba(40,30,22,0.95);">中间档案袋</strong>：今年的 5 个职业机会。点击签收开抽。</div>
-          </div>
-        </div>
-      </div>
-      <div class="tut-step" style="display:none;">
-        <div style="font-size:11px;letter-spacing:4px;color:rgba(139,26,43,0.7);text-align:center;margin-bottom:12px;">〔重要〕</div>
-        <div style="font-size:22px;font-weight:900;letter-spacing:3px;text-align:center;margin-bottom:18px;color:rgba(40,30,22,0.95);">失败也是收获</div>
-        <div style="font-size:12.5px;line-height:1.9;color:rgba(58,50,44,0.78);">
-          <p style="margin:0 0 12px;">你<strong>一局玩不通关</strong>。别期待第一次就能活到 2035。</p>
-          <p style="margin:0 0 12px;">每次失业，你会学到「<strong>X 职业死于 Y 年</strong>」——这条信息会<strong style="color:rgba(139,26,43,0.85);">永久保存到图鉴</strong>，下一局开始时就能看到 ⚠️ 标记。</p>
-          <p style="margin:0 0 12px;">多玩几局，你才能拼出完整的「AI 淘汰时间表」，找到那条活到最后的路。</p>
-          <p style="margin:0;font-size:11px;color:rgba(120,100,88,0.7);font-style:italic;">提示：图鉴里的 🏆 表示你成功守护到 2035 的本命职业。试着集齐它们。</p>
-        </div>
+      <div class="letter-stanza">
+        <p>留下，还是离开，是你的事。</p>
+        <p>我们只负责寄信。</p>
       </div>
     </div>
-    <div id="tutorial-footer" style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:10px;">
-      <button id="tutorial-skip" style="background:transparent;border:none;color:rgba(120,100,88,0.6);font-size:11px;font-family:'Courier New',monospace;letter-spacing:2px;cursor:pointer;padding:8px 4px;">跳过</button>
-      <div style="flex:1;"></div>
-      <button class="btn outline" id="tutorial-prev" style="display:none;width:auto;padding:9px 16px;border-radius:999px;font-size:11px;">← 上一步</button>
-      <button class="btn red" id="tutorial-next" style="width:auto;padding:10px 18px;border-radius:999px;font-size:11px;">下一步 →</button>
-    </div>
+    <div class="letter-signature">—— 职业评估系统 · 2026 年 1 月</div>
+    <button id="letter-accept-btn">收下这封信 →</button>
   </div>
 </div>
 
@@ -2337,6 +2390,7 @@ let drawTriggered=false;
 function doDrawCards(){
   if(drawTriggered) return;
   drawTriggered=true;
+  hideHint('hint-draw');
   const drawBtn=$('draw-btn');
   if(drawBtn){
     drawBtn.classList.add('is-loading');
@@ -2357,12 +2411,14 @@ function doDrawCards(){
       const activeCard=$('deck-active').firstElementChild;
       if(activeCard)activeCard.classList.add('card-fly-in');
       bag.classList.remove('opening');
+      showHint('hint-nav');showHint('hint-decide');
     },1050);
   } else {
     $('draw-zone').style.display='none';
     $('hand-zone').style.display='block';
     $('game-bottom').style.display='block';
     renderDeck(0);
+    showHint('hint-nav');showHint('hint-decide');
   }
 }
 
@@ -2858,6 +2914,7 @@ function startYear(){
   $('hand-zone').style.display='none';
   $('game-bottom').style.display='none';
   $('deck-active').innerHTML='';
+  if(G.yearIndex===0)showHint('hint-draw');
   // 更新快递面单
   const y=YEARS[G.yearIndex];
   const recEl=$('pkg-recipient');if(recEl)recEl.textContent=G.currentCard.name;
@@ -3002,6 +3059,9 @@ function calculateElimination(card,yearIndex){
 /* ── result ── */
 function proceedToElim(){revealResult();}
 function revealResult(){
+  // 第一年走完后才标记 onboarding 完成——这样信件 + 三条 hint 在
+  // 同一次会话内都能正确显示，否则 hint 会因 flag 提前被设而不展示
+  if(G.yearIndex===0)markTutorialSeen();
   const y=YEARS[G.yearIndex];
   const c=G.currentCard;
   const elimResult=calculateElimination(c,G.yearIndex);
@@ -3223,11 +3283,12 @@ onTap($('start-btn'),()=>{
   G.ownCard={...validJob,isOwn:true,tagline:'我的职业',desc:'这是你现在的职业。',fileNum:'OWN'};
   G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};G.totalSalary=0;G.swapCount=0;
   G.drawnCards=[];G.pendingSwap=null;G.startOfYearCard=null;G.activeIdx=0;
-  addToEnc(validJob); // 本命职业直接入图鉴
-  // 显示开场故事
+  addToEnc(validJob);
   $('story-job-title').textContent=`「${validJob.name}」`;
   $('story-text').textContent=generateOpeningStory(validJob);
-  showScreen('story-screen');
+  // 第一次玩：先显示入场信件再进故事页；老玩家直接进故事页
+  if(isTutorialSeen())showScreen('story-screen');
+  else showLetterFor(validJob.name);
 });
 
 // 点击输入框展开/收起下拉列表
@@ -3298,6 +3359,7 @@ function navDeck(delta,direction){
   if(nextIdx<0||nextIdx>=G.drawnCards.length) return;
   G.activeIdx=nextIdx;
   renderDeck(G.activeIdx,direction);
+  hideHint('hint-nav');
 }
 
 onTap($('nav-prev'),()=>navDeck(-1,'left'));
@@ -3334,6 +3396,7 @@ let decisionInProgress=false;
 onTap($('swap-btn'),()=>{
   if(decisionInProgress) return;
   decisionInProgress=true;
+  hideAllHints();
   const newCard={...G.drawnCards[G.activeIdx],isOwn:false};
   const oldCard={...G.currentCard};
   showChoiceAnimation(G.currentCard,newCard,true,()=>{
@@ -3349,6 +3412,7 @@ onTap($('swap-btn'),()=>{
 onTap($('keep-btn'),()=>{
   if(decisionInProgress) return;
   decisionInProgress=true;
+  hideAllHints();
   showChoiceAnimation(G.currentCard,G.currentCard,false,()=>{
     G.pendingSwap=null;
     openEventModal(()=>{
@@ -3413,55 +3477,26 @@ renderJobSelector();
 // 同步图鉴总数为 POOL.length
 document.querySelectorAll('.pool-total').forEach(el=>el.textContent=POOL.length);
 
-/* ── 首次引导浮窗 ── */
-const TUT_DOT_ACTIVE='rgba(139,26,43,0.8)';
-const TUT_DOT_IDLE='rgba(180,160,140,0.4)';
-const tutSteps=document.querySelectorAll('#tutorial-content .tut-step');
-const tutDotsHost=$('tutorial-steps');
-// 根据步骤数自动生成指示器圆点，避免 HTML/JS 步数失同步
-tutSteps.forEach(()=>{
-  const dot=document.createElement('div');
-  dot.className='tut-dot';
-  dot.style.cssText='width:8px;height:8px;border-radius:50%;background:'+TUT_DOT_IDLE+';transition:all 0.2s;';
-  tutDotsHost.appendChild(dot);
-});
-const tutDots=tutDotsHost.querySelectorAll('.tut-dot');
-let tutorialStep=1;
-function showTutorial(){
-  tutorialStep=1;
-  renderTutorialStep();
-  $('tutorial-overlay').style.display='flex';
+/* ── 入场信件 + 第一年微提示 ── */
+// onboarding 标志在第一年完整跑完后才设置（见 revealResult），
+// 这样信件 + 第一年的三条 hint 在同一次会话内都能正确显示。
+function showLetterFor(recipient){
+  const el=$('letter-recipient-job');
+  if(el)el.textContent=recipient||'你';
+  showScreen('letter-screen');
 }
-function hideTutorial(){
-  $('tutorial-overlay').style.display='none';
-  markTutorialSeen();
-}
-function renderTutorialStep(){
-  tutSteps.forEach((el,i)=>{el.style.display=(i+1===tutorialStep)?'block':'none';});
-  tutDots.forEach((dot,i)=>{
-    const active=(i+1===tutorialStep);
-    dot.style.background=active?TUT_DOT_ACTIVE:TUT_DOT_IDLE;
-    dot.style.transform=active?'scale(1.2)':'scale(1)';
-  });
-  $('tutorial-prev').style.display=tutorialStep>1?'block':'none';
-  $('tutorial-next').textContent=tutorialStep<tutSteps.length?'下一步 →':'开始游戏 →';
-}
-onTap($('tutorial-next'),()=>{
-  if(tutorialStep<tutSteps.length){tutorialStep++;renderTutorialStep();}
-  else hideTutorial();
-});
-onTap($('tutorial-prev'),()=>{
-  if(tutorialStep>1){tutorialStep--;renderTutorialStep();}
-});
-onTap($('tutorial-skip'),hideTutorial);
-onTap($('show-tutorial-btn'),showTutorial);
-// 点击遮罩外区域关闭（保留卡片内点击不触发）
-$('tutorial-overlay').addEventListener('click',(e)=>{
-  if(e.target.id==='tutorial-overlay')hideTutorial();
-});
+onTap($('letter-accept-btn'),()=>showScreen('story-screen'));
+onTap($('show-tutorial-btn'),()=>showLetterFor(selectedJob));
 
-if(!isTutorialSeen()){
-  requestAnimationFrame(showTutorial);
+function showHint(id){
+  if(G.yearIndex!==0||isTutorialSeen())return;
+  const el=$(id);if(el)el.classList.add('visible');
+}
+function hideHint(id){
+  const el=$(id);if(el)el.classList.remove('visible');
+}
+function hideAllHints(){
+  ['hint-draw','hint-nav','hint-decide'].forEach(hideHint);
 }
 </script>
 
