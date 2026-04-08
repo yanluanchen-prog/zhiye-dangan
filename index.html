@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>我的事业 · 职业生存图鉴</title>
-<!-- v20260408-0310 重写40职业开场独白 -->
+<!-- v20260408-0320 分享卡片bug + 17个职业薪资修正 -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
 :root{
@@ -1788,7 +1788,7 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
 </div>
 
 <!-- ═══════════════════════════ 分享卡片渲染模板（off-screen） ═══════════════════════════ -->
-<div id="share-card" style="position:fixed;top:0;left:0;width:540px;opacity:0;pointer-events:none;z-index:-1;background:linear-gradient(165deg,#e8d8c0 0%,#f0ddd0 45%,#dcc8b0 100%);padding:48px 40px 36px;font-family:'Courier New','PingFang SC',sans-serif;color:rgba(40,30,22,0.92);box-sizing:border-box;">
+<div id="share-card" style="position:absolute;top:0;left:-99999px;width:540px;background:linear-gradient(165deg,#e8d8c0 0%,#f0ddd0 45%,#dcc8b0 100%);padding:48px 40px 36px;font-family:'Courier New','PingFang SC',sans-serif;color:rgba(40,30,22,0.92);box-sizing:border-box;">
   <div style="text-align:center;margin-bottom:28px;">
     <div style="font-size:13px;letter-spacing:6px;color:rgba(139,26,43,0.75);font-family:'Courier New',monospace;">〔职业生存图鉴〕</div>
     <div style="font-family:'Courier New',monospace;font-size:46px;color:rgba(40,30,22,0.92);letter-spacing:14px;line-height:1.1;margin:14px 0 8px;font-weight:700;">我的事业</div>
@@ -1881,16 +1881,16 @@ const YEARS=[
   {year:2035,event:"2035年。十年过去了。\n\n那些被替代的工作没有回来。被淘汰的人去做了别的事，或者什么都没做。\n\n剩下的几种职业里，有些是因为AI做不到——救命那一刻不能加载，水管漏了机器进不去那个角落。\n有些是因为责任不能交给系统——签字的医生、值班的护士，最后那一笔，必须有一个人来负。\n有些是因为人们坚持要一个真人——倾诉的对面，那个被陪伴了十年还没放弃的人。\n\n这些工作没有被赞美，也没有被加薪。\n它们只是还在。每天有人去做。每天有人需要它。\n\n你也是其中之一。",eliminated:[],slogan:"活到 2035 年的，都不是数据。"}
 ];
 const POOL=[
-  {name:"程序员",rarity:"R",aiResist:26,salary:65,demand:60,category:"技术",emoji:"💻",tagline:"代码世界",desc:"一行代码写完，就脱离了你。它去你不会去的地方，做你不会做的事。最后你不再是它的作者。",fileNum:"R-001"},
+  {name:"程序员",rarity:"R",aiResist:26,salary:70,demand:60,category:"技术",emoji:"💻",tagline:"代码世界",desc:"一行代码写完，就脱离了你。它去你不会去的地方，做你不会做的事。最后你不再是它的作者。",fileNum:"R-001"},
   {name:"客服代表",rarity:"N",aiResist:30,salary:32,demand:85,category:"服务",emoji:"🎧",tagline:"耐心解答",desc:"你接的每一通电话，开头都是问题，结尾常常不是。中间那段没人说出口的事，才是你真正要做的工作。",fileNum:"N-002"},
   {name:"数据录入员",rarity:"N",aiResist:33,salary:25,demand:60,category:"文职",emoji:"⌨️",tagline:"精准录入",desc:"把一行字搬到另一处，然后再搬一行。重复的尽头不是熟练，是停顿。你每天都在等那个不再需要重复的时刻。",fileNum:"N-003"},
-  {name:"银行柜员",rarity:"R",aiResist:28,salary:65,demand:55,category:"服务",emoji:"🏦",tagline:"窗口后的那个人",desc:"玻璃这边和那边，永远只够伸进一只手。文件递进来，递出去。有时候那只手会停一秒——你也只能停一秒。",fileNum:"R-004"},
+  {name:"银行柜员",rarity:"R",aiResist:28,salary:35,demand:55,category:"服务",emoji:"🏦",tagline:"窗口后的那个人",desc:"玻璃这边和那边，永远只够伸进一只手。文件递进来，递出去。有时候那只手会停一秒——你也只能停一秒。",fileNum:"R-004"},
   {name:"市场研究分析师",rarity:"SR",aiResist:35,salary:70,demand:65,category:"专业",emoji:"📊",tagline:"市场洞察",desc:"在数字里找规律，是这份工作的开始。承认有些东西不在数字里，是它的终点。这两件事，往往隔了很多年。",fileNum:"SR-005"},
-  {name:"销售代表",rarity:"R",aiResist:37,salary:50,demand:75,category:"销售",emoji:"🤝",tagline:"成交艺术",desc:"最终签字的那一刻，从来不是因为合同，是因为某句话被说在了某个时候。这种时机，没有人能教你。",fileNum:"R-006"},
+  {name:"销售代表",rarity:"R",aiResist:37,salary:55,demand:75,category:"销售",emoji:"🤝",tagline:"成交艺术",desc:"最终签字的那一刻，从来不是因为合同，是因为某句话被说在了某个时候。这种时机，没有人能教你。",fileNum:"R-006"},
   {name:"金融分析师",rarity:"SR",aiResist:43,salary:80,demand:55,category:"专业",emoji:"📈",tagline:"洞察先机",desc:"所有的预测都建立在「过去会重演」之上。但每一次例外发生时，所有人都看着你——说什么或不说什么，都得有人来承担。",fileNum:"SR-007"},
-  {name:"摄影师",rarity:"SR",aiResist:42,salary:70,demand:65,category:"创意",emoji:"📷",tagline:"决定性瞬间",desc:"按下快门之前的那一秒，眼睛比相机重要。但你说不清那一秒到底发生了什么——只能在事后看见它确实发生过。",fileNum:"SR-008"},
-  {name:"信息安全分析师",rarity:"SSR",aiResist:51,salary:85,demand:70,category:"技术",emoji:"🔒",tagline:"守护数据",desc:"你守的是一道看不见的门。开着的时候没人感谢，关上的瞬间所有人都在问为什么。你在的意义，是一种缺席的证明。",fileNum:"SSR-009"},
-  {name:"公务员",rarity:"SR",aiResist:35,salary:80,demand:70,category:"行政",emoji:"🏛️",tagline:"铁饭碗",desc:"印章落下的那一刻，事情就成立了。规则很多，灰色地带也很多。你存在的意义，是替那些规则承担它们承担不了的部分。",fileNum:"SR-009"},
+  {name:"摄影师",rarity:"SR",aiResist:42,salary:55,demand:65,category:"创意",emoji:"📷",tagline:"决定性瞬间",desc:"按下快门之前的那一秒，眼睛比相机重要。但你说不清那一秒到底发生了什么——只能在事后看见它确实发生过。",fileNum:"SR-008"},
+  {name:"信息安全分析师",rarity:"SSR",aiResist:51,salary:75,demand:70,category:"技术",emoji:"🔒",tagline:"守护数据",desc:"你守的是一道看不见的门。开着的时候没人感谢，关上的瞬间所有人都在问为什么。你在的意义，是一种缺席的证明。",fileNum:"SSR-009"},
+  {name:"公务员",rarity:"SR",aiResist:35,salary:50,demand:70,category:"行政",emoji:"🏛️",tagline:"铁饭碗",desc:"印章落下的那一刻，事情就成立了。规则很多，灰色地带也很多。你存在的意义，是替那些规则承担它们承担不了的部分。",fileNum:"SR-009"},
   {name:"厨师",rarity:"UR",aiResist:95,salary:40,demand:90,category:"体力",emoji:"👨‍🍳",tagline:"火候艺术",desc:"盐到底放多少，没有答案。你只是知道那一刻应该停。这种「知道」，没有名字，也没有教科书，只有一个动作。",fileNum:"UR-011"},
   {name:"修理工",rarity:"UR",aiResist:92,salary:45,demand:85,category:"体力",emoji:"🔧",tagline:"化腐朽为神奇",desc:"把坏掉的东西重新拧紧，是这份工作的表面。下面那一层，是替别人不舍得扔掉的那点东西，多留几年。",fileNum:"UR-012"},
   {name:"救生员",rarity:"SSR",aiResist:99,salary:35,demand:60,category:"体力",emoji:"🏊",tagline:"守护生命",desc:"大多数时候什么都不会发生。你的意义就在于此——你在那里，让那个不发生的下午，安全地结束。",fileNum:"SSR-013"},
@@ -1910,17 +1910,17 @@ const POOL=[
   {name:"律师",rarity:"SR",aiResist:85,salary:85,demand:60,category:"专业",emoji:"⚖️",tagline:"法理精研",desc:"替人争取最后那一点空间。法条是死的，能不能用得上，要看那一刻是谁站在场上。这种判断，没有公式。",fileNum:"SR-028"},
   {name:"社工",rarity:"SR",aiResist:75,salary:38,demand:60,category:"服务",emoji:"🤲",tagline:"守望相助",desc:"去那些没人想去的地方，陪那些没人陪的人。你做的事很少有人记得名字，但少了你的那一天，会被人想起来。",fileNum:"SR-029"},
   {name:"心理咨询师",rarity:"SSR",aiResist:78,salary:65,demand:55,category:"服务",emoji:"🧘",tagline:"倾听灵魂",desc:"不评判，不建议，只是在那里。沉默有时候比回答更重要——但没人能教你，哪一种沉默是合适的。",fileNum:"SSR-030"},
-  {name:"编剧",rarity:"SR",aiResist:52,salary:85,demand:55,category:"创意",emoji:"✍️",tagline:"故事的骨架",desc:"写一个故事，是替一个不存在的人做出选择。这些选择不一定合理，但要真——这两件事经常打架。",fileNum:"SR-031"},
-  {name:"广告创意",rarity:"SR",aiResist:45,salary:80,demand:60,category:"创意",emoji:"💡",tagline:"让人记住那一秒",desc:"找到一个所有人都感受过、但没有人说过的东西，把它说出来，说得刚好。这是这份工作全部的难度。",fileNum:"SR-032"},
-  {name:"产品经理",rarity:"SR",aiResist:50,salary:90,demand:70,category:"技术",emoji:"📱",tagline:"需求与实现之间",desc:"想清楚一件事，比把它写下来难多了。会议室里每个人都觉得自己想清楚了——你的工作是知道他们没有。",fileNum:"SR-033"},
-  {name:"HR",rarity:"R",aiResist:38,salary:65,demand:65,category:"行政",emoji:"👥",tagline:"人与组织之间",desc:"面试的时候，简历和那个人之间总有一点缝。你看的就是那点缝。说不清是什么，但闭上眼也能感觉到。",fileNum:"R-034"},
-  {name:"企业文化",rarity:"N",aiResist:28,salary:55,demand:50,category:"行政",emoji:"🎯",tagline:"让组织有温度",desc:"那些写在墙上的话没人记得。真正算数的事都发生在走廊里——你的工作是让走廊里的事，还能继续发生。",fileNum:"N-035"},
-  {name:"数据分析师",rarity:"R",aiResist:35,salary:75,demand:70,category:"技术",emoji:"📊",tagline:"数字背后的故事",desc:"数字不会说谎，但切数字的方式会。同一组数据可以推出完全相反的结论——你的工作是知道哪一种是真的。",fileNum:"R-036"},
-  {name:"项目经理",rarity:"R",aiResist:42,salary:85,demand:65,category:"行政",emoji:"📋",tagline:"把事情推下去",desc:"项目能不能成，往往不是因为方案有多好，是中间断了几次还能不能接回去。那个接的人，必须有名字。",fileNum:"R-037"},
-  {name:"快递员",rarity:"N",aiResist:38,salary:50,demand:80,category:"服务",emoji:"📦",tagline:"最后一公里",desc:"门铃响那一下，是你存在的全部证据。大多数时候没人开门，偶尔有人接一下——那一下不是规定动作。",fileNum:"N-038"},
-  {name:"运营",rarity:"R",aiResist:40,salary:72,demand:75,category:"创意",emoji:"📈",tagline:"让内容活起来",desc:"一条内容能不能起来，差别有时候只在一个词的位置。这种感觉做了很久才有，做了很久也说不清。",fileNum:"R-039"},
-  {name:"游戏策划",rarity:"SR",aiResist:48,salary:85,demand:60,category:"创意",emoji:"🎮",tagline:"设计那个刚好的惊喜",desc:"让玩家在某个地方多停三分钟，不是靠难度，靠的是那个时机给一个刚好的惊喜。这种「刚好」无法写在文档里。",fileNum:"SR-040"},
-  {name:"制片",rarity:"SR",aiResist:50,salary:95,demand:55,category:"创意",emoji:"🎬",tagline:"把故事变成画面",desc:"剧本写「天色渐暗」，你要决定那是黄昏还是阴天。每一个选择都在悄悄改写一个故事——而那个故事不再是原来的。",fileNum:"SR-041"}
+  {name:"编剧",rarity:"SR",aiResist:52,salary:65,demand:55,category:"创意",emoji:"✍️",tagline:"故事的骨架",desc:"写一个故事，是替一个不存在的人做出选择。这些选择不一定合理，但要真——这两件事经常打架。",fileNum:"SR-031"},
+  {name:"广告创意",rarity:"SR",aiResist:45,salary:65,demand:60,category:"创意",emoji:"💡",tagline:"让人记住那一秒",desc:"找到一个所有人都感受过、但没有人说过的东西，把它说出来，说得刚好。这是这份工作全部的难度。",fileNum:"SR-032"},
+  {name:"产品经理",rarity:"SR",aiResist:50,salary:78,demand:70,category:"技术",emoji:"📱",tagline:"需求与实现之间",desc:"想清楚一件事，比把它写下来难多了。会议室里每个人都觉得自己想清楚了——你的工作是知道他们没有。",fileNum:"SR-033"},
+  {name:"HR",rarity:"R",aiResist:38,salary:55,demand:65,category:"行政",emoji:"👥",tagline:"人与组织之间",desc:"面试的时候，简历和那个人之间总有一点缝。你看的就是那点缝。说不清是什么，但闭上眼也能感觉到。",fileNum:"R-034"},
+  {name:"企业文化",rarity:"N",aiResist:28,salary:48,demand:50,category:"行政",emoji:"🎯",tagline:"让组织有温度",desc:"那些写在墙上的话没人记得。真正算数的事都发生在走廊里——你的工作是让走廊里的事，还能继续发生。",fileNum:"N-035"},
+  {name:"数据分析师",rarity:"R",aiResist:35,salary:70,demand:70,category:"技术",emoji:"📊",tagline:"数字背后的故事",desc:"数字不会说谎，但切数字的方式会。同一组数据可以推出完全相反的结论——你的工作是知道哪一种是真的。",fileNum:"R-036"},
+  {name:"项目经理",rarity:"R",aiResist:42,salary:60,demand:65,category:"行政",emoji:"📋",tagline:"把事情推下去",desc:"项目能不能成，往往不是因为方案有多好，是中间断了几次还能不能接回去。那个接的人，必须有名字。",fileNum:"R-037"},
+  {name:"快递员",rarity:"N",aiResist:38,salary:42,demand:80,category:"服务",emoji:"📦",tagline:"最后一公里",desc:"门铃响那一下，是你存在的全部证据。大多数时候没人开门，偶尔有人接一下——那一下不是规定动作。",fileNum:"N-038"},
+  {name:"运营",rarity:"R",aiResist:40,salary:55,demand:75,category:"创意",emoji:"📈",tagline:"让内容活起来",desc:"一条内容能不能起来，差别有时候只在一个词的位置。这种感觉做了很久才有，做了很久也说不清。",fileNum:"R-039"},
+  {name:"游戏策划",rarity:"SR",aiResist:48,salary:65,demand:60,category:"创意",emoji:"🎮",tagline:"设计那个刚好的惊喜",desc:"让玩家在某个地方多停三分钟，不是靠难度，靠的是那个时机给一个刚好的惊喜。这种「刚好」无法写在文档里。",fileNum:"SR-040"},
+  {name:"制片",rarity:"SR",aiResist:50,salary:65,demand:55,category:"创意",emoji:"🎬",tagline:"把故事变成画面",desc:"剧本写「天色渐暗」，你要决定那是黄昏还是阴天。每一个选择都在悄悄改写一个故事——而那个故事不再是原来的。",fileNum:"SR-041"}
 ];
 const ELIM_YEAR={};
 YEARS.forEach(y=>y.eliminated.forEach(n=>{if(!ELIM_YEAR[n])ELIM_YEAR[n]=y.year;}));
