@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
 <meta name="twitter:description" content="你的职业，能撑到 2035 年吗？">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-0900 分享按钮多CDN兜底+loading反馈+描述换标语 -->
+<!-- v20260408-0930 修复淘汰存活率过高(2-12% cap) -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -3150,8 +3150,10 @@ function calculateElimination(card,yearIndex){
   if(!inList) return{survived:true,inList,resistance};
 
   // 在淘汰名单：按aiResist决定能否抵抗
-  // aiResist越高，越可能撑过去（但仍有较大概率被淘汰）
-  const survivalRate=Math.max(0.05, Math.min(0.45, (resistance-20)/100));
+  // 存活率范围 2%-12%：即使 aiResist 高的职业，也只有小概率能奇迹存活
+  // （否则 律师/演员/厨师 这类高 aiResist 被淘汰职业会有接近 50% 存活率，
+  // 导致"一半以上 translator/programmer/PM 都能苟到 2035"的 bug）
+  const survivalRate=Math.max(0.02, Math.min(0.12, (resistance-30)/250));
   return{survived:Math.random()<survivalRate,inList,resistance};
 }
 
