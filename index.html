@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
 <meta name="twitter:description" content="你的职业，能撑到 2035 年吗？">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-1000 淘汰改为确定性（移除随机存活率公式） -->
+<!-- v20260408-1100 史诗生成器：基于 journey 生成独一无二的结局叙事 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -1912,6 +1912,19 @@ const YEARS=[
   // 2035年：六个守门人
   {year:2035,event:"2035 年。十年过去了。\n\n被替代的工作没有回来。被淘汰的人去做了别的事，或者什么都没做。\n\n剩下的几种职业里，有些是因为 AI 做不到——救命那一刻不能加载。有些是因为责任不能交给系统——签字的人必须有名字。有些是因为人们坚持要一个真人。\n\n你也是其中之一。不是因为你聪明，是因为你站对了位置。",eliminated:[],slogan:"活到 2035 年的，都不是数据。"}
 ];
+// 每年一句精简新闻摘要——用于结局史诗生成，让玩家看到"那一年你见过什么"
+const YEAR_SUMMARIES={
+  2026:"甲骨文一封邮件裁了 3 万人",
+  2027:"9000 人 SaaS 公司一夜端掉整个 Technical Writer 部门",
+  2028:"某游戏公司 CEO 公开信：「与 AI 无关」",
+  2029:"一封大厂邮件流出：「以后必须用 AI 写代码，不允许手写」",
+  2030:"量化崩盘，机关编制冻结，学校班级合并",
+  2031:"某券商 0.3 秒生成研报，关闭整个研究所",
+  2032:"宇树 H3 爬楼配送，自动驾驶网约车在 12 城铺开",
+  2033:"某流媒体上线「你的人生·改编版」，大部分主角被改编完才知情",
+  2034:"数字复活歌手登场，「对话已故亲人」APP 三天破千万用户",
+  2035:"十年已过。剩下的职业没有被赞美，只是还在"
+};
 const POOL=[
   {name:"程序员",rarity:"R",aiResist:26,salary:70,demand:60,category:"技术",emoji:"💻",tagline:"代码世界",desc:"一行代码写完，就脱离了你。它去你不会去的地方，做你不会做的事。最后你不再是它的作者。",fileNum:"R-001"},
   {name:"客服代表",rarity:"N",aiResist:30,salary:32,demand:85,category:"服务",emoji:"🎧",tagline:"耐心解答",desc:"你接的每一通电话，开头都是问题，结尾常常不是。中间那段没人说出口的事，才是你真正要做的工作。",fileNum:"N-002"},
@@ -2013,7 +2026,7 @@ function markTutorialSeen(){
 }
 loadDiscoveries();
 
-let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0};
+let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0,journey:[]};
 
 /* ── 本命职业开场介绍（情感连接） ──
    每个职业一段第一人称独白：
@@ -3160,6 +3173,15 @@ function revealResult(){
   const elimResult=calculateElimination(c,G.yearIndex);
   const isElim=!elimResult.survived;
   const left=10-G.yearIndex-1;
+  // 记录这一年的 journey 条目（用于结局史诗生成）
+  const swappedFrom=(G.startOfYearCard && G.startOfYearCard.name!==c.name) ? G.startOfYearCard.name : null;
+  G.journey.push({
+    year: y.year,
+    profession: c.name,
+    swappedFrom: swappedFrom,
+    survived: !isElim,
+    eliminatedList: y.eliminated.slice()
+  });
   // 更新 badge
   $('r-id-emoji').textContent=c.emoji||'💼';
   $('r-id-name').textContent=c.name;
@@ -3185,6 +3207,107 @@ function revealResult(){
     $('result-next')._tapFn=()=>{if(G.yearIndex>=9)showEnding();else{G.yearIndex++;startYear();}};
   }
   showScreen('result-screen');
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * 结局史诗生成器 —— 基于玩家的完整 journey 生成独一无二的通关/失败叙事
+ * 每局的叙事都不同，因为 swap 节点、停留的年份、最终落点都不同
+ * ═══════════════════════════════════════════════════════════════════ */
+function generateEpic(journey, died){
+  if(!journey || journey.length===0) return '';
+  const startProf = journey[0].swappedFrom || journey[0].profession;
+  const finalEntry = journey[journey.length-1];
+  const finalProf = finalEntry.profession;
+  const finalYear = finalEntry.year;
+  // 收集所有 swap 节点
+  const swaps = journey.filter(j=>j.swappedFrom).map(j=>({
+    year: j.year,
+    from: j.swappedFrom,
+    to: j.profession
+  }));
+  // 收集所有"留下"的年份
+  const stayedYears = journey.filter(j=>!j.swappedFrom && j.survived).map(j=>j.year);
+
+  const lines = [];
+  // ── 开场句 ──────────────────────────────────────────
+  lines.push(`你以「${startProf}」的身份进入 2026 年。`);
+
+  // ── 中段：按时间线讲述 ──────────────────────────────
+  // 挑出最关键的几个节点：所有 swap 年 + 第一年（如果没跳）+ 最后一年
+  const keyEntries = [];
+  journey.forEach((entry, idx)=>{
+    if(entry.swappedFrom){
+      keyEntries.push({type:'swap', entry, idx});
+    } else if(idx===0 || idx===journey.length-1){
+      keyEntries.push({type:'anchor', entry, idx});
+    }
+  });
+  // 对 swap 密集的路径，我们叙述每个 swap；对长停留路径，我们概述
+  if(swaps.length===0){
+    // 从未跳槽
+    if(journey.length>=3){
+      // 引用 2-3 个关键年的事件
+      const midYear = Math.floor(journey.length/2);
+      const witnesses = [
+        journey[0] && `${journey[0].year} 年，${YEAR_SUMMARIES[journey[0].year]}。你留下。`,
+        journey[midYear] && `${journey[midYear].year} 年，${YEAR_SUMMARIES[journey[midYear].year]}。你还在原地。`,
+      ].filter(Boolean);
+      lines.push(witnesses.join('\n'));
+    }
+  } else if(swaps.length<=2){
+    // 精准转身：叙述每个 swap
+    swaps.forEach(s=>{
+      lines.push(`${s.year} 年，${YEAR_SUMMARIES[s.year]}。\n你这一次没有再留下——你跳到了「${s.to}」。`);
+    });
+  } else {
+    // 漂流者：概述转身次数 + 列出路径
+    const path = [startProf, ...swaps.map(s=>s.to)].join(' → ');
+    lines.push(`十年里你换了 ${swaps.length} 次方向：\n${path}`);
+    // 挑一个最具戏剧性的中间年引用
+    const pivotIdx = Math.floor(swaps.length/2);
+    const pivot = swaps[pivotIdx];
+    if(pivot){
+      lines.push(`${pivot.year} 年，${YEAR_SUMMARIES[pivot.year]}。你又一次决定换路。`);
+    }
+  }
+
+  // ── 结局段 + 判词 ───────────────────────────────────
+  if(died){
+    // 死亡结局：引用"那一年的新闻" + 死亡判词
+    const deathYearNews = YEAR_SUMMARIES[finalYear];
+    lines.push(`${finalYear} 年。${deathYearNews}。\n这一次名单里有「${finalProf}」。`);
+    // 根据路径类型给死亡判词
+    if(swaps.length===0){
+      // 殉道者
+      lines.push(`你从头到尾没动过。你不是没看见——你是不愿意转身。\n你的故事停在了 ${finalYear} 年。`);
+    } else if(swaps.length<=2){
+      // 转身不及
+      lines.push(`你跳过一次，也跳过两次——但这一次没跳开。\n你的故事停在了 ${finalYear} 年。`);
+    } else {
+      // 漂流失败
+      lines.push(`你一直在跑。这一次，你跑进了另一个正在塌的房间。\n你的故事停在了 ${finalYear} 年。`);
+    }
+  } else {
+    // 存活到 2035
+    lines.push(`2035 年，你还在。落点是「${finalProf}」。`);
+    // 根据路径类型给存活判词
+    if(swaps.length===0 && finalProf===startProf){
+      // 守门人：从未跳槽走到底
+      lines.push(`十年里你一次都没有换过方向。\n你做的事，机器做不到。不是因为你聪明——\n是因为没人能在凌晨三点替你那句「我在」。`);
+    } else if(swaps.length===1){
+      // 精准转身
+      const s = swaps[0];
+      lines.push(`你只跳了一次——${s.year} 年，从「${s.from}」到「${s.to}」。\n你是那种闻得到味的人。不是预言家，只是早一步闻到。`);
+    } else if(swaps.length===2){
+      // 两次转身
+      lines.push(`十年里你换过两次方向。每一次都在临界点之前。\n你没赢——你只是选对了在哪一年，该松开哪一只手。`);
+    } else {
+      // 漂流者侥幸
+      lines.push(`你过了 ${swaps.length+1} 种不同的人生。\n每一次发现错了，都不会比前一次更慌。\n最后落在的这个，不是终点，只是你还没试过的那个。`);
+    }
+  }
+
+  return lines.join('\n\n');
 }
 
 function showFail(y,elimResult){
@@ -3236,13 +3359,9 @@ function showFail(y,elimResult){
     '修理工':'永久免费换新，新品次日到。修理的经济逻辑消失了。工具还能用，没有用武之地了。',
     '救生员':''
   };
-  if(elimResult&&elimResult.inList){
-    const specificReason=elimReasonMap[c.name]||`这是大势所趋，早有征兆。`;
-    reason=`「${c.name}」在 ${y.year} 年进入了AI淘汰名单。\n\n${specificReason}`;
-  } else {
-    reason=`「${c.name}」不在今年的重点淘汰名单上。\n\n但时代的淘汰从来不只按名单来。有时候只是浪打过来，刚好打到你。`;
-  }
-  $('f-text').textContent=`${y.year}年。\n\n${reason}\n\n${suffix}`;
+  // ✨ 用新的史诗生成器替换通用 reason 文本 —— 每局都不一样
+  const epic = generateEpic(G.journey, true);
+  $('f-text').textContent = epic;
   // 跨局图鉴累积：记录玩家亲身经历的失败
   recordFailure(c.name,y.year);
   // 如果失败的是玩家本命职业，标记一次"挑战记录"
@@ -3260,45 +3379,27 @@ function showEnding(){
   const encN=Object.keys(G.encyclopedia).length;
   const avgSalary=Math.round(G.totalSalary/10);
 
-  // 特殊结局判断（优先级高于薪资级别）
-  const neverSwapped=G.swapCount===0;
-  const wanderer=G.swapCount>=5;
-  let tier,tierColor,tierLabel,tierLine;
-
   // 跨局图鉴累积：记录玩到结局
   if(G.ownCard)recordPlayedAs(G.ownCard.name);
-  if(neverSwapped&&G.ownCard)recordGuardian(G.ownCard.name);
+  if(G.swapCount===0 && G.ownCard)recordGuardian(G.ownCard.name);
   incrementTotalGames();
 
-  if(neverSwapped){
-    // 守护者：从未换过职业
-    tier='guardian';tierColor='var(--gold,#B8860B)';tierLabel='守护者';
-    // 专属结局优先；无专属则用通用文案
-    tierLine = GUARDIAN_LINES[G.ownCard.name] ||
-      `你守住了「${G.ownCard.name}」。<br><br>十年里，浪打过来，你没有跑。<br>不是因为你不怕，是因为你选择了留下。<br><br>最后一个找你的人说：「我试过AI，但我只想找个人。」<br>你记得2026年看到那份报告时，心里的那种沉。<br>现在你知道了答案。<br><br><strong>这件事，AI不懂。</strong>`;
-  } else if(wanderer){
-    // 流浪者：换了5次以上
-    tier='wanderer';tierColor='var(--ink-lt)';tierLabel='漂流者';
-    const jobs=encN;
-    tierLine=`十年，${G.swapCount}次转身。<br><br>你从「${G.ownCard.name}」出发，最后以「${c.name}」落脚。<br>你像水一样，哪里有缝隙就往哪里流。<br><br>最后这份工作，你送走了很多东西。<br>也送走了一些曾经的自己。<br><br>这不算失败。这叫适应。<br><strong>这件事，AI不懂。</strong>`;
-  } else if(avgSalary<38){
-    tier='survival';tierColor='var(--N)';tierLabel='勉强度日';
-    tierLine=`你活下来了。<br><br>「${c.name}」这条路，代价是什么，你自己清楚。<br>有一种存活，叫做悄无声息地消失在时代边缘。<br><br>AI没打败你——但你也不能说，你赢了。`;
-  } else if(avgSalary<60){
-    tier='decent';tierColor='var(--green)';tierLabel='活得体面';
-    tierLine=`你活下来了，也没丢掉体面。<br><br>在67%的职业被淘汰的这十年里，「${c.name}」给了你一席之地。不算辉煌，但已经足够。`;
-  } else {
-    tier='winner';tierColor='var(--SSR)';tierLabel='逆势而为';
-    tierLine=`你不只活下来——你还活得不错。<br><br>这件事比听起来难得多。高薪意味着高风险，你一路走钢丝，没有掉下去。<br><br><strong>这件事，AI不懂。</strong>`;
-  }
+  // ✨ 用新的史诗生成器生成专属通关叙事（每局不同）
+  const epic = generateEpic(G.journey, false);
+  // 根据 swap 数量选一个标签（用于视觉标签，不是主要叙事）
+  let tierColor, tierLabel;
+  if(G.swapCount===0){ tierColor='var(--gold,#B8860B)'; tierLabel='守门人'; }
+  else if(G.swapCount===1){ tierColor='var(--green)'; tierLabel='精准转身'; }
+  else if(G.swapCount===2){ tierColor='var(--green)'; tierLabel='两次转身'; }
+  else { tierColor='var(--ink-lt)'; tierLabel='漂流者'; }
 
-  let html=`<div style="text-align:center;margin-bottom:16px;">
+  let html=`<div style="text-align:center;margin-bottom:20px;">
     <div style="font-size:9px;color:${tierColor};letter-spacing:3px;font-family:monospace;margin-bottom:4px;">存活档案</div>
     <div style="font-size:20px;font-weight:900;color:${tierColor};letter-spacing:2px;">${tierLabel}</div>
     <div style="font-size:10px;color:var(--ink-faint);margin-top:4px;font-family:monospace;">十年均薪力 ${avgSalary} · 换职 ${G.swapCount} 次</div>
   </div>`;
-  html+=`<p style="font-size:13px;line-height:2.2;color:var(--ink-lt);">${tierLine}</p>`;
-  html+=`<p style="font-size:10px;color:var(--ink-faint);margin-top:10px;font-family:monospace;">这十年你见过 ${encN} 种职业。</p>`;
+  html+=`<div style="font-size:13px;line-height:2.2;color:var(--ink-lt);white-space:pre-line;">${epic}</div>`;
+  html+=`<p style="font-size:10px;color:var(--ink-faint);margin-top:14px;font-family:monospace;">这十年你见过 ${encN} 种职业。</p>`;
   $('end-text').innerHTML=html;
   showScreen('ending-screen');
 }
@@ -3375,7 +3476,7 @@ onTap($('start-btn'),()=>{
   }
   G.ownCard={...validJob,isOwn:true,tagline:'我的职业',desc:'这是你现在的职业。',fileNum:'OWN'};
   G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};G.totalSalary=0;G.swapCount=0;
-  G.drawnCards=[];G.pendingSwap=null;G.startOfYearCard=null;G.activeIdx=0;
+  G.drawnCards=[];G.pendingSwap=null;G.startOfYearCard=null;G.activeIdx=0;G.journey=[];
   addToEnc(validJob);
   recordPlayedAs(validJob.name);
   // 首次玩家：入场信件 → 游戏（信件创造世界观）
@@ -3554,7 +3655,7 @@ onTap($('ending-enc-btn'),openEncModal);
 onTap($('end-enc-btn'),openEncModal);
 function doRestart(){
   // 重新开始职业生涯：回到职业选择页
-  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0};
+  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0,journey:[]};
   selectedJob=null;
   $('enc-count').textContent='0';
   document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
@@ -3574,6 +3675,7 @@ onTap($('play-again-btn'),()=>{
   G.pendingSwap=null;
   G.startOfYearCard=null;
   G.activeIdx=0;
+  G.journey=[];
   if(ownJob)addToEnc(ownJob);
   startYear();
 });
