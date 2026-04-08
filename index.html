@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
 <meta name="twitter:description" content="你的职业，能撑到 2035 年吗？">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-0930 修复淘汰存活率过高(2-12% cap) -->
+<!-- v20260408-1000 淘汰改为确定性（移除随机存活率公式） -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -3139,22 +3139,14 @@ function closeEncModal(){$('enc-modal').classList.remove('open');}
 
 /* ── 消除判定 ── */
 function calculateElimination(card,yearIndex){
+  // 确定性规则：在当年 eliminated 列表 → 必死；不在 → 必活
+  // 不再使用任何随机存活率——这样年份叙事和 swap 机制才有意义
+  // 六个永生职业（救生员/社工/修理工/护士/心理咨询师/医生）
+  // 根本不在任何一年的 eliminated 列表中，自然会一直活到 2035
   const y=YEARS[yearIndex];
   const inList=y.eliminated.includes(card.name);
   const resistance=card.aiResist||50;
-
-  // 救生员永久存活
-  if(card.aiResist>=99) return{survived:true,inList:false,resistance};
-
-  // 不在淘汰名单：必然存活
-  if(!inList) return{survived:true,inList,resistance};
-
-  // 在淘汰名单：按aiResist决定能否抵抗
-  // 存活率范围 2%-12%：即使 aiResist 高的职业，也只有小概率能奇迹存活
-  // （否则 律师/演员/厨师 这类高 aiResist 被淘汰职业会有接近 50% 存活率，
-  // 导致"一半以上 translator/programmer/PM 都能苟到 2035"的 bug）
-  const survivalRate=Math.max(0.02, Math.min(0.12, (resistance-30)/250));
-  return{survived:Math.random()<survivalRate,inList,resistance};
+  return{survived:!inList,inList,resistance};
 }
 
 /* ── result ── */
