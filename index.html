@@ -7,14 +7,14 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>我的事业 · 职业生存图鉴</title>
-<meta name="description" content="你的职业，能撑到 2035 年吗？">
+<meta name="description" content="单局 5 分钟，写一版属于你的 AI 十年。">
 <meta name="keywords" content="职业生存,AI替代,失业,2035,职业图鉴,小游戏">
 <meta name="author" content="my-career.top">
 <!-- Open Graph: 微信/朋友圈/Facebook 分享卡片 -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="我的事业 · 职业生存图鉴">
 <meta property="og:title" content="我的事业 · 职业生存图鉴">
-<meta property="og:description" content="你的职业，能撑到 2035 年吗？">
+<meta property="og:description" content="单局 5 分钟，写一版属于你的 AI 十年。">
 <meta property="og:url" content="https://www.my-career.top/">
 <meta property="og:image" content="https://www.my-career.top/share-cover.png">
 <meta property="og:image:width" content="1200">
@@ -22,9 +22,9 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
-<meta name="twitter:description" content="你的职业，能撑到 2035 年吗？">
+<meta name="twitter:description" content="单局 5 分钟，写一版属于你的 AI 十年。">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-1100 史诗生成器：基于 journey 生成独一无二的结局叙事 -->
+<!-- v20260408-1200 分享卡片集成journey判词+2026/2029多版本事件+新口号 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -1485,9 +1485,9 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
       <div style="width:40px;height:2px;background:rgba(180,160,140,0.35);margin:0 auto 32px;border-radius:2px;"></div>
     </div>
     <div style="font-family:'Courier New',monospace;color:rgba(58,50,44,0.72);line-height:2;font-size:15px;margin-bottom:40px;">
-      <p style="margin:0 0 14px;">2026年，67% 的职业面临AI替代风险。</p>
-      <p style="margin:0 0 14px;">从这一年起，每年都有职业消失。</p>
-      <p style="margin:0;">你的职业，还能撑多久？</p>
+      <p style="margin:0 0 14px;">2026 — 2035。十年。</p>
+      <p style="margin:0 0 14px;">67% 的职业会消失。</p>
+      <p style="margin:0;">不是选哪个职业能活下来——是看你会变成谁。</p>
     </div>
     <div style="margin-bottom:24px;position:relative;">
       <div style="font-size:20px;color:rgba(80,68,58,0.78);letter-spacing:2px;margin-bottom:16px;">选择你的职业</div>
@@ -1833,15 +1833,11 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
 
     <div id="share-card-divider" style="height:1px;background:rgba(139,26,43,0.2);margin:0 auto 22px;width:60%;"></div>
 
-    <div id="share-card-headline" style="font-size:26px;font-weight:900;color:rgba(139,26,43,0.85);letter-spacing:2px;line-height:1.4;margin-bottom:14px;">失业于 2029 年</div>
-    <div id="share-card-subline" style="font-size:13px;color:rgba(58,50,40,0.78);line-height:1.85;letter-spacing:0.5px;">在第 4 年，AI 把我的位置接走了</div>
-  </div>
+    <div id="share-card-headline" style="font-size:26px;font-weight:900;color:rgba(139,26,43,0.85);letter-spacing:2px;line-height:1.4;margin-bottom:12px;">失业于 2029 年</div>
+    <div id="share-card-subline" style="font-size:12px;color:rgba(58,50,40,0.72);line-height:1.7;letter-spacing:0.5px;margin-bottom:16px;">在第 4 年，AI 把我的位置接走了</div>
 
-  <div style="text-align:center;margin-top:28px;">
-    <div style="font-size:13px;color:rgba(58,50,40,0.78);line-height:1.9;letter-spacing:1px;">
-      这十年，67% 的职业被 AI 替代<br>
-      <span style="color:rgba(139,26,43,0.85);font-weight:700;">你的职业能撑到哪一年？</span>
-    </div>
+    <div id="share-card-path" style="font-size:12px;color:rgba(80,60,50,0.75);line-height:1.7;letter-spacing:1px;margin:14px 0 12px;font-family:'Courier New',monospace;"></div>
+    <div id="share-card-verdict" style="font-size:13px;color:rgba(40,30,22,0.88);line-height:1.9;letter-spacing:1px;font-style:italic;padding:0 4px;"></div>
   </div>
 
   <div style="display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:20px;border-top:1px dashed rgba(139,26,43,0.25);gap:16px;">
@@ -1892,13 +1888,21 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
 <script>
 const YEARS=[
   // 2026年：标准化文字工作第一波
-  {year:2026,event:"Anthropic 报告：67% 的职业面临 AI 替代风险。OpenAI 翻译系统上线，143 种语言，延迟 0.1 秒。\n\n2026 年 3 月，美国科技行业 66 家公司裁员 39,482 人，每 5 个里就有 1 个被归因于 AI。甲骨文净利润大涨 95%，同日一封邮件裁 3 万人，不看绩效不看职级。国内某头部互联网公司 CEO 内部会议：「开除速度一定要快。」股价应声上涨 6%。\n\n某三甲医院上线 AI 智能分诊，护士工作量「评估减少 40%」。三个月后试点暂停：「夜班患者需要的不是流程优化。」",eliminated:["翻译","客服代表","数据录入员","银行柜员"],slogan:"开除速度一定要快。"},
+  {year:2026,event:"Anthropic 报告：67% 的职业面临 AI 替代风险。OpenAI 翻译系统上线，143 种语言，延迟 0.1 秒。\n\n2026 年 3 月，美国科技行业 66 家公司裁员 39,482 人，每 5 个里就有 1 个被归因于 AI。甲骨文净利润大涨 95%，同日一封邮件裁 3 万人，不看绩效不看职级。国内某头部互联网公司 CEO 内部会议：「开除速度一定要快。」股价应声上涨 6%。\n\n某三甲医院上线 AI 智能分诊，护士工作量「评估减少 40%」。三个月后试点暂停：「夜班患者需要的不是流程优化。」",eventVariants:[
+    "Anthropic 报告：67% 的职业面临 AI 替代风险。OpenAI 翻译系统上线，143 种语言，延迟 0.1 秒。\n\n2026 年 3 月，美国科技行业 66 家公司裁员 39,482 人，每 5 个里就有 1 个被归因于 AI。甲骨文净利润大涨 95%，同日一封邮件裁 3 万人，不看绩效不看职级。国内某头部互联网公司 CEO 内部会议：「开除速度一定要快。」股价应声上涨 6%。\n\n某三甲医院上线 AI 智能分诊，护士工作量「评估减少 40%」。三个月后试点暂停：「夜班患者需要的不是流程优化。」",
+    "Anthropic 报告：67% 的职业面临 AI 替代风险。OpenAI 翻译系统上线，143 种语言，延迟 0.1 秒。\n\nMeta 对 7.9 万员工裁员 20%——单次裁员 1.58 万人。Block（原 Square）一夜裁掉近员工总数的一半。万事达卡业绩强劲仍计划裁 4%——为 AI 基建投入「对冲成本」。\n\n某三甲医院上线 AI 智能分诊，护士工作量「评估减少 40%」。三个月后试点暂停：「夜班患者需要的不是流程优化。」",
+    "Anthropic 报告：67% 的职业面临 AI 替代风险。OpenAI 翻译系统上线，143 种语言，延迟 0.1 秒。\n\n化工巨头陶氏裁 4500 人——13% 的员工，为通过 AI 赋能运营节省 20 亿美元。UPS 宣布 2026 年裁员至多 3 万运营岗位。亚马逊 Q1 裁 1.6 万企业岗——非科技行业也卷进去了。\n\n某三甲医院上线 AI 智能分诊，护士工作量「评估减少 40%」。三个月后试点暂停：「夜班患者需要的不是流程优化。」"
+  ],eliminated:["翻译","客服代表","数据录入员","银行柜员"],slogan:"开除速度一定要快。"},
   // 2027年：内容创作崩盘
   {year:2027,event:"新华社、财新上线 AI 写稿，财经稿件日发布量 +800%。某省级电视台夜间新闻全面切换 AI 主播。\n\n某 9000 人 SaaS 公司一夜端掉整个 Technical Writer 部门 70 人——文档以后由 AI 从代码自动生成。\n\n2025 年好莱坞编剧+演员双重罢工，40 年最长。两年后，索尼影视宣布裁员数百人——影视业务是集团唯一下滑的板块。一位编剧：「他们不是要我写故事，是要我教模型怎么写。」",eliminated:["记者","作家","编剧","摄影师"],slogan:"内容已自动生成。感谢您提供的灵感。"},
   // 2028年：视觉/视频自动化
   {year:2028,event:"字节跳动内容 AI 全行业开放，标题点击率高出人工 26%。AI 图像生成商用，设计稿从 3 天缩到 4 分钟。\n\n某 60 亿美金游戏公司裁员 20%。一个人运营了所有平台的「E 宝」也在名单里。CEO 公开信：与 AI 无关。\n\nDeepMind 影像 AI 在 12 家三甲部署，放射诊断准确率超出人类 12%——但放射科医生反而更忙了。CT/MRI 新的应用场景解锁，医生开出更多检查单。会议室里没有人鼓掌。",eliminated:["平面设计师","剪辑师","广告创意","制片"],slogan:"与AI无关。"},
   // 2029年：知识工作者大屠杀
-  {year:2029,event:"国内首个 AI 通过注册会计师考试，超过 97% 人类。大厂内部邮件：「以后必须用 AI 写代码，不允许手写。」一位工程师一月提交 10 万行代码，90% 来自 AI。\n\nAI 合同审查上线，律所服务需求下跌 67%。某律所合伙人收到解约通知——引用的正是他亲手起草的服务协议第 17 条。\n\n医疗 AI 六项诊断超过人类——但医院没敢让 AI 签字。",eliminated:["程序员","会计师","金融分析师","律师","信息安全分析师"],slogan:"我们不是卷不过年轻人，是卷不过 AI。"},
+  {year:2029,event:"国内首个 AI 通过注册会计师考试，超过 97% 人类。大厂内部邮件：「以后必须用 AI 写代码，不允许手写。」一位工程师一月提交 10 万行代码，90% 来自 AI。\n\nAI 合同审查上线，律所服务需求下跌 67%。某律所合伙人收到解约通知——引用的正是他亲手起草的服务协议第 17 条。\n\n医疗 AI 六项诊断超过人类——但医院没敢让 AI 签字。",eventVariants:[
+    "国内首个 AI 通过注册会计师考试，超过 97% 人类。大厂内部邮件：「以后必须用 AI 写代码，不允许手写。」一位工程师一月提交 10 万行代码，90% 来自 AI。\n\nAI 合同审查上线，律所服务需求下跌 67%。某律所合伙人收到解约通知——引用的正是他亲手起草的服务协议第 17 条。\n\n医疗 AI 六项诊断超过人类——但医院没敢让 AI 签字。",
+    "国内首个 AI 通过注册会计师考试，超过 97% 人类。某头部券商关闭整个研究所——「AI 0.3 秒生成同等质量报告」。一位分析师说：「我做了八年市场判断，最后变成模型的一行权重。」\n\n字节、腾讯、阿里同月下发 skill 文档要求：每个员工必须在周五前上交「你怎么判断、怎么避坑」的完整拆解。一位员工交完后：「这东西交上去，我还有什么是自己的？」\n\n医疗 AI 六项诊断超过人类——但医院没敢让 AI 签字。",
+    "西雅图某 SaaS 公司把代码行数做成日刷新的排行榜，绩效直接挂钩。两个「卷王」三个月提交 500 个 PR。同月公司邮件：「只能用 AI 写代码，不允许手写。」\n\nAI 合同审查上线，律所服务需求下跌 67%。某律所合伙人收到解约通知——引用的正是他亲手起草的服务协议第 17 条。\n\n医疗 AI 六项诊断超过人类——但医院没敢让 AI 签字。"
+  ],eliminated:["程序员","会计师","金融分析师","律师","信息安全分析师"],slogan:"我们不是卷不过年轻人，是卷不过 AI。"},
   // 2030年：黑天鹅·AI量化崩盘引发财政紧缩，波及看似稳定的岗位
   {year:2030,event:"2030 年 2 月，全球量化基金 AI 交易系统在同一异常数据源触发下，72 小时联动抛售。市场单周跌幅 38%——1929 年以来最大。\n\n不是 AI 替代了人。是 AI 自己崩了。代价由人来付。\n\n机关编制冻结，岗位合并，老员工被劝退。学校班级合并，教师编制砍半。\n\n护士也上了第一轮裁员名单——三个月后撤销：日间病区无人值守的两周，事故率上涨 600%。",eliminated:["公务员","教师","HR","项目经理"],slogan:"这次不是 AI 替代了你。是 AI 把钱弄没了。"},
   // 2031年：商业判断与产品被算法接管
@@ -2492,9 +2496,13 @@ function openEventModal(onConfirm){
   const el=$('ev-body');el.textContent='';
   $('event-modal').classList.add('open');
   if(twTimer)clearInterval(twTimer);
+  // 多版本年份事件：如果有 eventVariants 数组就随机抽一个，否则回退到 event
+  const chosenEvent=(y.eventVariants && y.eventVariants.length)
+    ? y.eventVariants[Math.floor(Math.random()*y.eventVariants.length)]
+    : y.event;
   let i=0;
   twTimer=setInterval(()=>{
-    if(i<y.event.length){el.textContent+=y.event[i];i++;}
+    if(i<chosenEvent.length){el.textContent+=chosenEvent[i];i++;}
     else{clearInterval(twTimer);$('ev-slogan').textContent='— '+y.slogan;$('ev-slogan').style.display='block';}
   },12);
   $('ev-confirm')._tapFn=()=>{
@@ -3702,6 +3710,44 @@ function populateShareCard(mode){
     const swap=G.swapCount;
     $('share-card-subline').textContent=swap===0?`从 2026 一直守到 2035，没有跳过一次槽`:`十年里换了 ${swap} 次职业，最后落在这里`;
   }
+  // ✨ 动态 journey 路径 + 判词（基于玩家实际 swap 历史）
+  const journey=G.journey||[];
+  const swaps=journey.filter(j=>j.swappedFrom).map(j=>({year:j.year,from:j.swappedFrom,to:j.profession}));
+  const startProf=(journey[0] && (journey[0].swappedFrom||journey[0].profession))||c.name;
+  const finalProf=(journey.length && journey[journey.length-1].profession)||c.name;
+  // path 显示：无跳槽/有跳槽两种形态
+  let pathText;
+  if(swaps.length===0){
+    pathText=`「${startProf}」 · 从一而终`;
+  }else if(swaps.length===1){
+    pathText=`${startProf} → ${swaps[0].to}`;
+  }else{
+    const fullPath=[startProf,...swaps.map(s=>s.to)].join(' → ');
+    pathText=fullPath;
+  }
+  $('share-card-path').textContent=pathText;
+  // 判词：根据 mode + swap 模式选
+  let verdictText;
+  if(mode==='fail'){
+    if(swaps.length===0){
+      verdictText='「你从头到尾没动过。你不是没看见——是不愿意转身。」';
+    }else if(swaps.length<=2){
+      verdictText='「你跳过一次，也跳过两次——但这一次没跳开。」';
+    }else{
+      verdictText='「你一直在跑。这一次跑进了另一个塌掉的房间。」';
+    }
+  }else{
+    if(swaps.length===0){
+      verdictText='「你做的事，机器做不到。不是因为你聪明，是因为没人能在凌晨三点替你那句\u300C我在\u300D。」';
+    }else if(swaps.length===1){
+      verdictText='「你只跳了一次。你是那种闻得到味的人——不是预言家，只是早一步闻到。」';
+    }else if(swaps.length===2){
+      verdictText='「十年换过两次方向。每一次都在临界点之前。」';
+    }else{
+      verdictText=`「你过了 ${swaps.length+1} 种不同的人生，最后落在的这个，只是你还没试过的那个。」`;
+    }
+  }
+  $('share-card-verdict').textContent=verdictText;
 }
 /* 按需加载 html2canvas：多 CDN 兜底（国内访问 jsdelivr 有时会抽风） */
 let _h2cLoading=null;
