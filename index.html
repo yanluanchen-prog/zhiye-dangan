@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>我的事业 · 职业生存图鉴</title>
-<!-- v20260403-MV01 Monument Valley Theme Step 1 -->
+<!-- v20260408-0053 onTap硬化 + 2035暗紫 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -15,7 +15,8 @@
   --red:#C23B22; --green:#1A6B3A; --border:#B8A878;
   --N:#888070; --R:#1A3A6B; --SR:#B85A00; --SSR:#C23B22; --UR:#1E1C18;
 }
-button,a{touch-action:manipulation;}
+button,a,[role="button"]{touch-action:manipulation;cursor:pointer;}
+button:disabled{cursor:default;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;background:#0a0a0a;}
 body{
@@ -2837,8 +2838,8 @@ const YEAR_PALETTES = {
   2031: ['#a8bece','#d2bb9c','#9faec0'],  // 暮色将至
   2032: ['#a0b6c5','#ccb292','#98a6b8'],  // 暮色
   2033: ['#98aebe','#c5a888','#909eb0'],  // 昏暗
-  2034: ['#90a5b5','#be9e7e','#8895a8'],  // 黄昏
-  2035: ['#889cac','#b79474','#808ca0'],  // 将夜
+  2034: ['#5e6480','#7060a0','#4a4a68'],  // 暮夜·偏紫
+  2035: ['#3a3548','#4a3a5c','#262032'],  // 深夜·暗紫
 };
 function updateBgPalette(year){
   const p = YEAR_PALETTES[year] || YEAR_PALETTES[2026];
@@ -3247,25 +3248,42 @@ $('job-dropdown').addEventListener('click',(e)=>{
 
 let lastNavTapAt=0;
 
-/* 响应式点击：touchend立即触发（移动端），click兜底（桌面/键盘） */
+/* 响应式点击：touchend立即触发（移动端），click兜底（桌面/键盘）。
+   用时间戳去重，避免 handled 状态在 touch 序列异常时残留。 */
 function onTap(el,fn){
-  let sy=0,handled=false;
-  el.addEventListener('touchstart',(e)=>{sy=e.touches[0].clientY;},{passive:true});
+  let sy=0,touched=false,firedAt=0;
+  el.addEventListener('touchstart',(e)=>{touched=true;sy=e.touches[0].clientY;},{passive:true});
   el.addEventListener('touchend',(e)=>{
-    if(Math.abs(e.changedTouches[0].clientY-sy)>10) return;
-    e.preventDefault();handled=true;fn(e);
+    if(!touched)return;
+    touched=false;
+    if(Math.abs(e.changedTouches[0].clientY-sy)>10)return;
+    e.preventDefault();
+    firedAt=Date.now();
+    fn(e);
   },{passive:false});
-  el.addEventListener('click',(e)=>{if(handled){handled=false;return;}fn(e);});
+  el.addEventListener('touchcancel',()=>{touched=false;},{passive:true});
+  el.addEventListener('click',(e)=>{
+    if(Date.now()-firedAt<700)return; // touchend 刚fire过，跳过 click 兜底
+    fn(e);
+  });
 }
 /* 可动态更换handler的版本（用于ev-confirm, result-next等） */
 function bindDynTap(el){
-  let sy=0,handled=false;
-  el.addEventListener('touchstart',(e)=>{sy=e.touches[0].clientY;},{passive:true});
+  let sy=0,touched=false,firedAt=0;
+  el.addEventListener('touchstart',(e)=>{touched=true;sy=e.touches[0].clientY;},{passive:true});
   el.addEventListener('touchend',(e)=>{
-    if(Math.abs(e.changedTouches[0].clientY-sy)>10) return;
-    e.preventDefault();handled=true;if(el._tapFn)el._tapFn(e);
+    if(!touched)return;
+    touched=false;
+    if(Math.abs(e.changedTouches[0].clientY-sy)>10)return;
+    e.preventDefault();
+    firedAt=Date.now();
+    if(el._tapFn)el._tapFn(e);
   },{passive:false});
-  el.addEventListener('click',(e)=>{if(handled){handled=false;return;}if(el._tapFn)el._tapFn(e);});
+  el.addEventListener('touchcancel',()=>{touched=false;},{passive:true});
+  el.addEventListener('click',(e)=>{
+    if(Date.now()-firedAt<700)return;
+    if(el._tapFn)el._tapFn(e);
+  });
 }
 bindDynTap($('ev-confirm'));
 bindDynTap($('result-next'));
@@ -3682,4 +3700,4 @@ if(!isTutorialSeen()){
 
 </body>
 </html>
-<!-- deploy Sun Mar 29 06:55:41 PM CST 2026 -->
+<!-- deploy Wed Apr 08 12:52:59 AM UTC 2026 -->
