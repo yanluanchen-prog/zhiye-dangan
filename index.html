@@ -7,14 +7,14 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>我的事业 · 职业生存图鉴</title>
-<meta name="description" content="一款单局 5 分钟的小游戏。选一个职业，活到 2035 年。">
+<meta name="description" content="你的职业，能撑到 2035 年吗？">
 <meta name="keywords" content="职业生存,AI替代,失业,2035,职业图鉴,小游戏">
 <meta name="author" content="my-career.top">
 <!-- Open Graph: 微信/朋友圈/Facebook 分享卡片 -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="我的事业 · 职业生存图鉴">
 <meta property="og:title" content="我的事业 · 职业生存图鉴">
-<meta property="og:description" content="一款单局 5 分钟的小游戏。选一个职业，活到 2035 年。">
+<meta property="og:description" content="你的职业，能撑到 2035 年吗？">
 <meta property="og:url" content="https://www.my-career.top/">
 <meta property="og:image" content="https://www.my-career.top/share-cover.png">
 <meta property="og:image:width" content="1200">
@@ -22,9 +22,9 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
-<meta name="twitter:description" content="一款单局 5 分钟的小游戏。选一个职业，活到 2035 年。">
+<meta name="twitter:description" content="你的职业，能撑到 2035 年吗？">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-0800 4修复: 删怎么玩+分享URL+程序员台词+开除速度 -->
+<!-- v20260408-0900 分享按钮多CDN兜底+loading反馈+描述换标语 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -1119,8 +1119,8 @@ body:has(#story-screen.active) {
 .btn.outline:active { transform: scale(0.95) !important; }
 
 .card-actions { position: relative !important; z-index: 20 !important; }
-/* keep/swap 按钮：强制最高优先级触摸响应（覆盖任何祖先 pointer-events / touch-action 问题）*/
-#keep-btn, #swap-btn {
+/* keep/swap/share 按钮：强制最高优先级触摸响应（覆盖任何祖先 pointer-events / touch-action 问题）*/
+#keep-btn, #swap-btn, #fail-share-btn, #end-share-btn {
   pointer-events: auto !important;
   touch-action: manipulation !important;
   position: relative !important;
@@ -3607,37 +3607,59 @@ function populateShareCard(mode){
     $('share-card-subline').textContent=swap===0?`从 2026 一直守到 2035，没有跳过一次槽`:`十年里换了 ${swap} 次职业，最后落在这里`;
   }
 }
-/* 按需加载 html2canvas（避免在 head 同步加载阻塞页面） */
+/* 按需加载 html2canvas：多 CDN 兜底（国内访问 jsdelivr 有时会抽风） */
 let _h2cLoading=null;
 function loadHtml2Canvas(){
   if(typeof html2canvas!=='undefined')return Promise.resolve();
   if(_h2cLoading)return _h2cLoading;
+  const cdns=[
+    'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',
+    'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js',
+    'https://cdn.staticfile.net/html2canvas/1.4.1/html2canvas.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'
+  ];
   _h2cLoading=new Promise((resolve,reject)=>{
-    const s=document.createElement('script');
-    s.src='https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
-    s.onload=()=>resolve();
-    s.onerror=()=>reject(new Error('html2canvas 加载失败'));
-    document.head.appendChild(s);
+    let i=0;
+    const tryNext=()=>{
+      if(i>=cdns.length){reject(new Error('所有 CDN 都加载失败'));return;}
+      const s=document.createElement('script');
+      s.src=cdns[i++];
+      s.onload=()=>{if(typeof html2canvas!=='undefined')resolve();else tryNext();};
+      s.onerror=()=>{s.remove();tryNext();};
+      document.head.appendChild(s);
+    };
+    tryNext();
   });
   return _h2cLoading;
 }
+let _shareInProgress=false;
 async function showSharePreview(mode){
-  populateShareCard(mode);
-  const card=$('share-card');
+  if(_shareInProgress)return;
+  _shareInProgress=true;
+  // 按钮立即反馈：置灰+变文案
+  const btns=[$('fail-share-btn'),$('end-share-btn')].filter(Boolean);
+  const originalTexts=btns.map(b=>b.textContent);
+  btns.forEach(b=>{b.style.opacity='0.5';b.style.pointerEvents='none';b.textContent='生成中…';});
   try{
+    populateShareCard(mode);
+    const card=$('share-card');
     await loadHtml2Canvas();
     const canvas=await html2canvas(card,{
       backgroundColor:null,
       scale:2,
       logging:false,
       useCORS:true,
+      allowTaint:true,
       width:540
     });
     $('share-image').src=canvas.toDataURL('image/png');
     $('share-modal').style.display='flex';
   }catch(e){
     console.error('Share render failed:',e);
-    alert('分享卡片生成失败，请截屏分享');
+    alert('分享卡片生成失败（'+(e&&e.message||'未知错误')+'），请截屏分享');
+  }finally{
+    btns.forEach((b,i)=>{b.style.opacity='';b.style.pointerEvents='';b.textContent=originalTexts[i];});
+    _shareInProgress=false;
   }
 }
 onTap($('fail-share-btn'),()=>showSharePreview('fail'));
