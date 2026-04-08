@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
 <meta name="twitter:description" content="一款单局 5 分钟的小游戏。选一个职业，活到 2035 年。">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-0730 2033/2034 融入黑镜Joan+Be Right Back+医生护士hint重写 -->
+<!-- v20260408-0800 4修复: 删怎么玩+分享URL+程序员台词+开除速度 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -1501,9 +1501,6 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
       <div id="job-error" style="color:#8b1a2b;font-size:11px;margin-top:8px;letter-spacing:1px;opacity:0;transition:opacity 0.3s;font-family:'Courier New',monospace;">请先选择职业</div>
     </div>
     <button id="start-btn" style="display:block;width:100%;background:rgba(255,255,255,0.65);color:rgba(58,50,44,0.85);border:1px solid rgba(0,0,0,0.12);padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;border-radius:999px;">看看我的职业发展之路</button>
-    <div style="margin-top:14px;text-align:center;">
-      <button id="show-tutorial-btn" style="background:transparent;border:none;color:rgba(120,100,88,0.55);font-size:11px;font-family:'Courier New',monospace;letter-spacing:2px;cursor:pointer;padding:6px 12px;text-decoration:underline;text-underline-offset:3px;">怎么玩 ？</button>
-    </div>
   </div>
 </div>
 
@@ -1850,7 +1847,7 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
   <div style="display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:20px;border-top:1px dashed rgba(139,26,43,0.25);gap:16px;">
     <div style="text-align:left;font-family:'Courier New',monospace;flex:1;">
       <div style="font-size:10px;color:rgba(120,100,88,0.65);letter-spacing:2px;">访问</div>
-      <div style="font-size:18px;color:rgba(40,30,22,0.92);letter-spacing:1.5px;font-weight:700;margin-top:4px;">my-career.top</div>
+      <div style="font-size:18px;color:rgba(40,30,22,0.92);letter-spacing:1.5px;font-weight:700;margin-top:4px;">www.my-career.top</div>
       <div style="font-size:9px;color:rgba(120,100,88,0.55);letter-spacing:1px;margin-top:6px;">AI 时代生存图鉴 · 2026—2035</div>
     </div>
     <div id="share-card-qr" style="width:88px;height:88px;background:rgba(255,255,255,0.6);border:1px solid rgba(139,26,43,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:2px;overflow:hidden;">
@@ -1895,7 +1892,7 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
 <script>
 const YEARS=[
   // 2026年：标准化文字工作第一波
-  {year:2026,event:"Anthropic 报告：67% 的职业面临 AI 替代风险。OpenAI 翻译系统上线，143 种语言，延迟 0.1 秒。\n\n2026 年 3 月，美国科技行业 66 家公司裁员 39,482 人——每 5 个被裁的人里就有 1 个被直接归因于 AI。甲骨文净利润同比大涨 95%，同日一封邮件裁 3 万人——不看绩效，不看职级。凌晨 6 点权限同步锁死，股价应声上涨 6%。\n\n某三甲医院上线 AI 智能分诊，护士工作量「评估减少 40%」。三个月后试点暂停：「夜班患者需要的不是流程优化。」",eliminated:["翻译","客服代表","数据录入员","银行柜员"],slogan:"语言屏障，已消除。"},
+  {year:2026,event:"Anthropic 报告：67% 的职业面临 AI 替代风险。OpenAI 翻译系统上线，143 种语言，延迟 0.1 秒。\n\n2026 年 3 月，美国科技行业 66 家公司裁员 39,482 人，每 5 个里就有 1 个被归因于 AI。甲骨文净利润大涨 95%，同日一封邮件裁 3 万人，不看绩效不看职级。国内某头部互联网公司 CEO 内部会议：「开除速度一定要快。」股价应声上涨 6%。\n\n某三甲医院上线 AI 智能分诊，护士工作量「评估减少 40%」。三个月后试点暂停：「夜班患者需要的不是流程优化。」",eliminated:["翻译","客服代表","数据录入员","银行柜员"],slogan:"开除速度一定要快。"},
   // 2027年：内容创作崩盘
   {year:2027,event:"新华社、财新上线 AI 写稿，财经稿件日发布量 +800%。某省级电视台夜间新闻全面切换 AI 主播。\n\n某 9000 人 SaaS 公司一夜端掉整个 Technical Writer 部门 70 人——文档以后由 AI 从代码自动生成。\n\n2025 年好莱坞编剧+演员双重罢工，40 年最长。两年后，索尼影视宣布裁员数百人——影视业务是集团唯一下滑的板块。一位编剧：「他们不是要我写故事，是要我教模型怎么写。」",eliminated:["记者","作家","编剧","摄影师"],slogan:"内容已自动生成。感谢您提供的灵感。"},
   // 2028年：视觉/视频自动化
@@ -2295,7 +2292,7 @@ const CAREER_VOICES={
   "游戏策划":{intro:"给规则留缝、给玩家下钩子。别人看到的是关卡、数值、剧情，我看到的是他们会在哪一秒想继续，在哪一秒想退出。",survival:"今年文档、配置、活动框架都能先铺出来，我还在，是因为一个机制到底是“有意思”还是“像在上班”，只有玩过人才知道。",eliminated:"今天版本会照常开，配置表也已经补齐，我的需求池却被直接归档了。我看着测试服里那个没人点开的功能，知道它以后也不会再改。",milestone:{3:"第三年，我不再迷信复杂设计，我开始更认真地守住玩家愿意留下来的那点感觉。",5:"第五年，我确认自己做的不是规则堆叠，是替一种体验找准确的边界。",8:"第八年，内容长得越来越快，耐心却越来越少，我写的很多东西还没活到被真正玩明白。",10:"第十年，我做游戏最大的执念，还是想让一个人下班后愿意多留十分钟。"}},
   "演员":{intro:"借别人的名字活，镜头一开，我得让观众忘了我是谁，又得让他们相信这张脸后面真的有人。",survival:"今年试镜少了，替代方案多了，我还在现场，是因为一场情绪到了眼眶却没掉下来的戏，身体知道该怎么停住。",eliminated:"今天化妆间镜前灯还亮着，通告单上已经没有我的场次。我把名字从门口撕下来，胶痕留在那儿，比我留得更久。",milestone:{3:"第三年，我学会不再和完美脸孔较劲，我开始更珍惜自己身上那些解释不掉的小习惯。",5:"第五年，我越来越确定，演戏不是像谁，是把一个人的分寸活到别人信。",8:"第八年，镜头前的选择越来越多，真正需要肉身站在那里的机会越来越少。",10:"第十年，我留下来的东西，不是某张脸，而是我曾经真的替很多人活过几分钟。"}},
   "社工":{intro:"跑社区、敲家门、记住很多人难处。我的工作常常不体面，也不显眼，就是一趟趟去，把事情问清楚。",survival:"今年评估和转介都更系统了，我还在街巷里，是因为有人嘴上说“没事”，屋里却已经三天没开火，这种事得进门才知道。",eliminated:"社会救助预算腰斩，站点关闭。我的走访名单被归档了——那些名单上的人，不知道以后谁去敲门。那个楼道还在，只是没有我这双脚了。",milestone:{3:"第三年，我不再急着解决所有问题，我先学会让别人愿意开门。",5:"第五年，我越来越明白，社工不是填表，是在别人生活快塌下来的时候，先把一角扶住。",8:"第八年，纸面上的服务越来越完整，真实的困境却还是要靠脚走进去。",10:"第十年，我做这份工作的证据，不在档案里，在很多人门口那句“你又来了”。"}},
-  "程序员":{intro:"把问题拆小、再一段段接回去。大多数时候我在对着屏幕发呆，其实是在想哪一行改了会牵出更多行。",survival:"今年代码写得更快了，很多框架和补丁都能先搭好。我还在，是因为线上真炸的时候，谁都想知道到底是哪一步在凌晨两点偏了。",eliminated:"我参与训练过它用的代码库。以前一个下午能搞定的事，现在写每一行都要先想：它会怎么写。最后连一个表单我都不确定自己能写对。我造出来的东西，把我造没了。",milestone:{3:"第三年，我把体力从重复造轮子里省下来，花在理解那些更绕的旧坑上。",5:"第五年，我承认自己最有价值的不是快，是知道系统为什么会在某个奇怪边界上突然坏掉。",8:"第八年，新代码越来越容易长出来，真正难的是还有没有人愿意读老代码。",10:"第十年，我写下那么多行，最后记住的是：程序总会变，出问题时还得有人追根到底。"}},
+  "程序员":{intro:"把问题拆小、再一段段接回去。大多数时候我在对着屏幕发呆，其实是在想哪一行改了会牵出更多行。",survival:"今年代码写得更快了，很多框架和补丁都能先搭好。我还在，是因为线上真炸的时候，谁都想知道到底是哪一步在凌晨两点偏了。",eliminated:"我写了十五年代码，最后一年一行都没亲手敲过——在家对着麦克风派活，炒个菜回来 AI 已经把活干完。\n\n离职那天我打开 git log，发现 AI 生成的某个关键函数注释里写着「参考三年前 @xxxxx 的解法」。那是我。\n\n它学会了我所有的习惯，然后把我从 commit 列表里划掉。",milestone:{3:"第三年，我把体力从重复造轮子里省下来，花在理解那些更绕的旧坑上。",5:"第五年，我承认自己最有价值的不是快，是知道系统为什么会在某个奇怪边界上突然坏掉。",8:"第八年，新代码越来越容易长出来，真正难的是还有没有人愿意读老代码。",10:"第十年，我写下那么多行，最后记住的是：程序总会变，出问题时还得有人追根到底。"}},
   "编剧":{intro:"替人物找动机、替情节找转弯。观众看到的是故事，我先要解决的是这句话为什么偏偏由他在这里说。",survival:"今年大纲、梗概、人物小传来得都快，我还在写，是因为一个人物真想离开，和编出来他该离开，不是一回事。",eliminated:"今天制片说先用现成版本试拍，我把分场文档停在一场夜戏前。那句台词我改了三次，最后也没有人再等它。",milestone:{3:"第三年，我不再跟产量较劲，我开始更死磕人物为什么在这一页沉默。",5:"第五年，我越来越清楚，编剧不是编事件，是替人物把因果活出来。",8:"第八年，故事越来越多，能慢慢长出来的人物越来越少，我也快跟着被压扁。",10:"第十年，我写过很多结局，最舍不得删掉的，还是人物自己突然���出的那句话。"}},
   "翻译":{intro:"把一种语言里的分寸搬到另一种语言里。字面意思不难，难的是把对方说话时那点轻重也一起带过去。",survival:"今年大部分文本都能先转出来，我还在，是因为一句客气到底是疏离、亲近还是讽刺，不能只看词。",eliminated:"今天最后一份稿子回来了，对方说以后直接用自动方案。我盯着那句被翻得很通顺却完全不对味的话，没再改。",milestone:{3:"第三年，我学会不再为速度焦虑，我开始更认真地守语气。",5:"第五年，我确认翻译不是替换词语，是在两种生活方式中间搭一块能站稳的板。",8:"第八年，句子越来越像句子，可真正难译的东西，还是那些没写出来的弦外之意。",10:"第十年，我留下来的本事，是让一句外来的话，落地以后不至于失真。"}},
   "记者":{intro:"为线索而焦虑，为真实而求索。别人刷到一条消息，我得去确认它到底是谁说的、在哪发生、有没有被说轻了。",survival:"今年快讯满天飞，我还在现场，是因为一件事有没有人真的到过、见过、问过，写出来的温度不一样。",eliminated:"今天编辑部更安静了，我交回录音笔和采访证。新闻还在滚动更新，只是少了一个曾经赶到现场的人。",milestone:{3:"第三年，我不再试图比所有消息更快，我开始更在意谁愿意对我说真话。",5:"第五年，我明白记者不是转述，是去把那些模糊的、互相矛盾的说法一条条对出来。",8:"第八年，世界越来越喧哗，真正的现场却更难抵达，我仍然想亲眼看一眼。",10:"第十年，我做这行最大的固执，就是很多事，不能只靠转发来相信。"}},
@@ -3665,7 +3662,6 @@ function showLetterFor(recipient){
 }
 onTap($('letter-accept-btn'),()=>startYear());
 onTap($('story-enter-btn'),()=>startYear());
-onTap($('show-tutorial-btn'),()=>showLetterFor(selectedJob));
 
 function showHint(id){
   if(G.yearIndex!==0||isTutorialSeen())return;
