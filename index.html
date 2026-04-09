@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
 <meta name="twitter:description" content="每一次选择都会被写进你的结局。">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-1400 职业池50个+薪资重平衡+HUD储蓄+救生员→发型师 -->
+<!-- v20260408-1500 6 fix: 开篇文案+信件+HUD样式+判词年数+各页储蓄+按钮防御 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -158,15 +158,14 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .header-tab-label{font-size:8px;color:rgba(240,235,224,.82);letter-spacing:2px;font-family:monospace;text-align:center;line-height:1.2;}
 .header-tab-count{font-size:7px;color:rgba(240,235,224,.5);font-family:monospace;letter-spacing:1px;}
 .header-tab .id-badge-card{width:50px;height:84px;}
-.header-tab.folder .id-badge-hdr{background:rgba(180,150,110,0.75);}
-.header-tab.folder .id-badge-art{background:linear-gradient(180deg,var(--paper),#ebe2d3);}
-.header-tab.folder .id-badge-emoji{font-size:20px;}
-.header-tab.folder .id-badge-name{font-size:7px;letter-spacing:.5px;}
-.header-tab.savings .id-badge-hdr{background:rgba(180,140,50,0.82);}
-.header-tab.savings .id-badge-art{background:linear-gradient(180deg,#fbf3df,#f1e4bb);}
-.header-tab.savings .id-badge-emoji{font-size:20px;}
-.header-tab.savings .id-badge-savings{font-size:10px;font-weight:800;color:rgba(120,80,20,0.9);font-family:monospace;letter-spacing:.3px;line-height:1.1;text-align:center;}
-.header-tab.savings .id-badge-mini-count{color:rgba(120,80,20,0.65);font-size:7px;font-weight:600;}
+.header-tab .id-badge-emoji{font-size:18px !important;}
+.header-tab.savings{cursor:default !important;pointer-events:none !important;}
+.header-tab.folder .id-badge-hdr{background:rgba(180,150,110,0.75) !important;color:rgba(255,250,235,0.95) !important;}
+.header-tab.folder .id-badge-art{background:linear-gradient(180deg,var(--paper),#ebe2d3) !important;}
+.header-tab.folder .id-badge-name{font-size:8px;letter-spacing:.5px;}
+.header-tab.savings .id-badge-hdr{background:rgba(200,150,40,0.92) !important;color:rgba(255,250,230,0.95) !important;}
+.header-tab.savings .id-badge-art{background:linear-gradient(180deg,#fbf3df,#f1e4bb) !important;}
+.header-tab.savings .id-badge-name{font-size:16px !important;font-weight:900 !important;color:rgba(140,90,20,0.95) !important;line-height:1 !important;margin-top:4px !important;letter-spacing:0 !important;}
 .id-badge-mini-count{margin-top:4px;font-size:8px;font-family:monospace;color:rgba(80,60,45,0.75);font-weight:800;letter-spacing:.8px;line-height:1;}
 .header-right{text-align:right;}
 .header-classify{font-size:8px;letter-spacing:3px;color:rgba(100,80,65,0.55);font-family:monospace;margin-bottom:2px;}
@@ -1490,8 +1489,8 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
       <div style="width:40px;height:2px;background:rgba(180,160,140,0.35);margin:0 auto 32px;border-radius:2px;"></div>
     </div>
     <div style="font-family:'Courier New',monospace;color:rgba(58,50,44,0.72);line-height:2;font-size:15px;margin-bottom:40px;">
-      <p style="margin:0 0 14px;">2026 — 2035。十年。</p>
-      <p style="margin:0 0 14px;">67% 的职业会消失。</p>
+      <p style="margin:0 0 14px;">2026 年起，每年都有职业被 AI 替代。</p>
+      <p style="margin:0 0 14px;">未来十年，67% 的工种会消失。</p>
       <p style="margin:0;">每一次选择都会被写进你的结局。</p>
     </div>
     <div style="margin-bottom:24px;position:relative;">
@@ -1554,11 +1553,10 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
       </div>
       <div class="header-tab savings" id="savings-tab">
         <div class="id-badge-card">
-          <div class="id-badge-hdr">十年储蓄</div>
+          <div class="id-badge-hdr">累计薪资</div>
           <div class="id-badge-art">
             <span class="id-badge-emoji">💰</span>
-            <span class="id-badge-savings" id="hud-savings">¥ 0 万</span>
-            <div class="id-badge-mini-count" id="hud-savings-sub">年薪 0 万</div>
+            <span class="id-badge-name" id="hud-savings">0</span>
           </div>
         </div>
       </div>
@@ -1746,6 +1744,15 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
           </div>
         </div>
       </div>
+      <div class="header-tab savings">
+        <div class="id-badge-card">
+          <div class="id-badge-hdr">累计薪资</div>
+          <div class="id-badge-art">
+            <span class="id-badge-emoji">💰</span>
+            <span class="id-badge-name" id="r-hud-savings">0</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="rv-wrap">
@@ -1782,6 +1789,15 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
           </div>
         </div>
       </div>
+      <div class="header-tab savings">
+        <div class="id-badge-card">
+          <div class="id-badge-hdr">累计薪资</div>
+          <div class="id-badge-art">
+            <span class="id-badge-emoji">💰</span>
+            <span class="id-badge-name" id="f-hud-savings">0</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div style="text-align:center;padding:12px 0 8px;">
@@ -1814,6 +1830,15 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
             <span class="id-badge-emoji">🗂</span>
             <span class="id-badge-name">我的图鉴</span>
             <div class="id-badge-mini-count"><span id="en-enc-count">1</span>/<span class="pool-total">40</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="header-tab savings">
+        <div class="id-badge-card">
+          <div class="id-badge-hdr">累计薪资</div>
+          <div class="id-badge-art">
+            <span class="id-badge-emoji">💰</span>
+            <span class="id-badge-name" id="en-hud-savings">0</span>
           </div>
         </div>
       </div>
@@ -1892,12 +1917,12 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
       </div>
       <div class="letter-stanza">
         <p>我们将每年向你发送一份职业市场报告，</p>
-        <p>里面有 5 个还活着的职业机会。</p>
+        <p>里面有 5 个还活跃的职业机会。</p>
       </div>
       <div class="letter-stanza">
-        <p>每多工作一年，你就多积累一年的年薪。</p>
-        <p>十年之后，谁活到最后，谁赚得最多——</p>
-        <p>不一定是同一个人。</p>
+        <p>你的目标只有两件事：</p>
+        <p>撑过这十年，</p>
+        <p>同时尽可能多攒一些钱。</p>
       </div>
       <div class="letter-stanza">
         <p>留下，还是离开，是你的事。</p>
@@ -2477,13 +2502,12 @@ function updateHUD(){
   $('gh-year-sub').textContent=`第${G.yearIndex+1}年 / 共10年`;
   const dots=$('year-dots');dots.innerHTML='';
   for(let i=0;i<10;i++){const d=document.createElement('div');d.className='ydot'+(i<G.yearIndex?' done':i===G.yearIndex?' cur':'');dots.appendChild(d);}
-  // 更新 HUD 储蓄计数
-  const hs=$('hud-savings');if(hs)hs.textContent='¥ '+G.totalSalary+' 万';
-  const hss=$('hud-savings-sub');
-  if(hss){
-    const curSalary=G.currentCard?(G.currentCard.salary||0):0;
-    hss.textContent='年薪 '+curSalary+' 万';
-  }
+  // 更新 HUD 储蓄计数（纯数字，无符号无单位）
+  const hs=$('hud-savings');if(hs)hs.textContent=G.totalSalary;
+  // 同步更新 fail/ending 页的储蓄显示
+  ['f-hud-savings','en-hud-savings'].forEach(id=>{
+    const el=$(id);if(el)el.textContent=G.totalSalary;
+  });
 }
 
 function buildActiveCard(card){
@@ -3243,12 +3267,17 @@ function revealResult(){
     survived: !isElim,
     eliminatedList: y.eliminated.slice()
   });
+  // 先增加薪资再渲染，让玩家在 result 页就看到这一年的进账
+  if(!isElim){
+    G.totalSalary+=(c.salary||0); // 每年存活时累计薪资
+  }
   // 更新 badge
   $('r-id-emoji').textContent=c.emoji||'💼';
   $('r-id-name').textContent=c.name;
   $('r-id-hdr').textContent=c.isOwn?'我的职业':c.rarity||'N';
   $('r-id-hdr').style.background=c.isOwn?'var(--red)':(c.rarity?`var(--${c.rarity})`:'var(--ink-lt)');
   const rEncEl=$('r-enc-count');if(rEncEl)rEncEl.textContent=Object.keys(G.encyclopedia).length;
+  const rHs=$('r-hud-savings');if(rHs)rHs.textContent=G.totalSalary;
   $('rv-year').textContent=`${y.year} · 年度评估`;
   if(isElim){
     showFail(y,elimResult);
@@ -3263,7 +3292,6 @@ function revealResult(){
       `<strong style="color:var(--green)">又过了一年。</strong><br><br>「${c.name}」还在。<br>你还在。<br><br><em style="color:var(--ink-faint);font-size:12px;line-height:1.9;">${voice}</em><br><br><span style="font-size:11px;color:var(--ink-faint)">还有 ${left} 年。</span>`:
       `<strong style="color:var(--green)">十年。</strong><br><br>「${c.name}」陪你走完了 2026—2035。<br><br>67%的职业在这十年里消失了。<br>你不在那67%里。<br><br><em style="color:var(--ink-faint);font-size:12px;">${voice}</em>`;
     $('result-next').style.display='block';
-    G.totalSalary+=(c.salary||0); // 每年存活时累计薪资
     $('result-next').textContent=G.yearIndex>=9?'查看结局 →':`进入 ${y.year+1} 年 →`;
     $('result-next')._tapFn=()=>{if(G.yearIndex>=9)showEnding();else{G.yearIndex++;startYear();}};
   }
@@ -3278,7 +3306,7 @@ function revealResult(){
 const VERDICTS = {
   fail_martyr: [
     '你从头到尾没动过。你不是没看见——你是不愿意转身。',
-    '你守着同一个身份十年，直到它再也守不住。没有人能说这不是一种勇气。',
+    '你守着同一个身份 {Y} 年，直到它再也守不住。没有人能说这不是一种勇气。',
     '你选了它，就一直认它。这不叫固执，这叫你知道自己是谁。'
   ],
   fail_swap12: [
@@ -3408,7 +3436,8 @@ function generateEpic(journey, died){
   // 如果未缓存，生成并缓存；已缓存则复用
   if(!G.cachedVerdict){
     const key = resolveVerdictKey(swaps, died, isGuardianPath);
-    G.cachedVerdict = pickVerdict(key, {N: swaps.length+1});
+    const yearsLived = died ? (finalYear-2025) : 10;
+    G.cachedVerdict = pickVerdict(key, {N: swaps.length+1, Y: yearsLived});
   }
   if(died){
     lines.push(G.cachedVerdict + `\n你的故事停在了 ${finalYear} 年。`);
@@ -3431,6 +3460,7 @@ function showFail(y,elimResult){
   const c=G.currentCard;
   $('f-id-emoji').textContent=c.emoji||'💼';$('f-id-name').textContent=c.name;
   const fEncEl=$('f-enc-count');if(fEncEl)fEncEl.textContent=Object.keys(G.encyclopedia).length;
+  const fHs=$('f-hud-savings');if(fHs)fHs.textContent=G.totalSalary;
   $('f-yr-big').textContent=y.year;
   let reason;
   let suffix='不是你的错。只是时代的滚轮，刚好从你这里压过去了。';
@@ -3493,6 +3523,7 @@ function showEnding(){
   const c=G.currentCard;
   $('en-id-emoji').textContent=c.emoji||'💼';$('en-id-name').textContent=c.name;
   const enEncEl=$('en-enc-count');if(enEncEl)enEncEl.textContent=Object.keys(G.encyclopedia).length;
+  const enHs=$('en-hud-savings');if(enHs)enHs.textContent=G.totalSalary;
   const encN=Object.keys(G.encyclopedia).length;
   const avgSalary=Math.round(G.totalSalary/10);
 
@@ -3633,7 +3664,9 @@ function onTap(el,fn){
   el.addEventListener('touchend',(e)=>{
     if(!touched)return;
     touched=false;
-    if(Math.abs(e.changedTouches[0].clientY-sy)>10)return;
+    // 把滑动阈值从 10 提升到 25——减少"误判为滑动"的概率，常规手指
+    // 在按按钮时往往会有 10-20px 的微小漂移，原来太严格
+    if(Math.abs(e.changedTouches[0].clientY-sy)>25)return;
     e.preventDefault();
     firedAt=Date.now();
     fn(e);
@@ -3840,7 +3873,9 @@ function populateShareCard(mode){
   if(!G.cachedVerdict){
     const isGuardianPath=(swaps.length===0 && finalProf===startProf);
     const key=resolveVerdictKey(swaps, mode==='fail', isGuardianPath);
-    G.cachedVerdict=pickVerdict(key, {N: swaps.length+1});
+    const finalYear2=journey[journey.length-1].year;
+    const yearsLived2 = mode==='fail' ? (finalYear2-2025) : 10;
+    G.cachedVerdict=pickVerdict(key, {N: swaps.length+1, Y: yearsLived2});
   }
   // 分享卡片空间有限，判词用引号包住作为引文风格，但替换换行符为空格避免卡片布局破坏
   $('share-card-verdict').textContent='「'+G.cachedVerdict.replace(/\n/g,' ')+'」';
