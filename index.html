@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
 <meta name="twitter:description" content="每一次选择都会被写进你的结局。">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-2000 分享关闭后自动恢复音乐 -->
+<!-- v20260408-2100 关于页 + 首页底部链接 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -1505,6 +1505,79 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
       <div id="job-error" style="color:#8b1a2b;font-size:11px;margin-top:8px;letter-spacing:1px;opacity:0;transition:opacity 0.3s;font-family:'Courier New',monospace;">请先选择职业</div>
     </div>
     <button id="start-btn" style="display:block;width:100%;background:rgba(255,255,255,0.65);color:rgba(58,50,44,0.85);border:1px solid rgba(0,0,0,0.12);padding:16px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:4px;cursor:pointer;text-align:center;border-radius:999px;">看看我的职业发展之路</button>
+    <div style="text-align:center;margin-top:24px;">
+      <button id="about-btn" style="background:transparent;border:none;color:rgba(120,100,88,0.55);font-size:11px;font-family:'Courier New',monospace;letter-spacing:3px;cursor:pointer;padding:6px 12px;text-decoration:underline;text-underline-offset:3px;">关于</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ ABOUT MODAL ══════════════════════════ -->
+<div id="about-modal" style="display:none;position:fixed;inset:0;z-index:9700;background:rgba(20,16,10,0.88);align-items:flex-start;justify-content:center;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overflow-y:auto;">
+  <div style="max-width:520px;width:100%;background:linear-gradient(165deg,#f4ede0 0%,#ece2cf 100%);margin:24px 16px;border:1px solid rgba(120,100,88,0.25);border-radius:6px;padding:36px 28px 28px;box-sizing:border-box;font-family:'Courier New','PingFang SC',sans-serif;color:rgba(40,30,22,0.92);line-height:1.9;">
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="font-size:11px;letter-spacing:5px;color:rgba(139,26,43,0.75);font-family:monospace;margin-bottom:14px;">〔关于〕</div>
+      <div style="font-family:'Courier New',monospace;font-size:26px;color:rgba(40,30,22,0.92);letter-spacing:6px;line-height:1.2;">我的事业</div>
+      <div style="width:40px;height:2px;background:rgba(139,26,43,0.55);margin:14px auto 0;"></div>
+    </div>
+
+    <div style="font-size:13px;line-height:2.1;color:rgba(58,50,40,0.88);">
+      <p style="margin:0 0 12px;">我是这个游戏的作者。一个普通人，和你一样担心自己的职业会不会被 AI 替代。</p>
+      <p style="margin:0 0 12px;">2026 年开始，几乎每天都能看到科技公司裁员的新闻。抽象的数字在飞——67%、39,482 人、两个月遣散金。我在办公室的工位上读这些新闻，感到一种很远又很近的恐惧。</p>
+      <p style="margin:0 0 6px;">远是因为这些事发生在别人身上。</p>
+      <p style="margin:0 0 12px;">近是因为下一个可能就是我。</p>
+      <p style="margin:0 0 0;">我想做一个具体的东西。不是"该怎么办"的焦虑，不是"你怎么做"的疑虑，是一个小小的、必须自己走过去才能感受到的模拟器。</p>
+    </div>
+
+    <div style="height:1px;background:rgba(139,26,43,0.2);margin:26px 0;"></div>
+
+    <div style="font-size:13px;line-height:2.1;color:rgba(58,50,40,0.88);">
+      <div style="font-size:11px;letter-spacing:3px;color:rgba(139,26,43,0.75);font-family:monospace;margin-bottom:10px;">关于那些年份里发生的事</div>
+      <p style="margin:0 0 10px;">游戏里的每一个年份事件都是真的：</p>
+      <ul style="margin:0 0 12px;padding-left:18px;font-size:12px;line-height:2;">
+        <li>甲骨文 2026 年一夜裁 3 万人</li>
+        <li>某 9000 人 SaaS 公司端掉 Technical Writer 部门</li>
+        <li>好莱坞 2025 年编剧+演员双重罢工（40 年来最长）</li>
+        <li>索尼影视 2026 年裁员数百人</li>
+        <li>某大厂内部邮件：「以后必须用 AI 写代码」</li>
+        <li>甚至「开除速度一定要快」那句话</li>
+      </ul>
+      <p style="margin:0;">有些是大新闻，有些是小细节。我把它们剪成 10 年的时间轴。</p>
+    </div>
+
+    <div style="height:1px;background:rgba(139,26,43,0.2);margin:26px 0;"></div>
+
+    <div style="font-size:13px;line-height:2.1;color:rgba(58,50,40,0.88);">
+      <div style="font-size:11px;letter-spacing:3px;color:rgba(139,26,43,0.75);font-family:monospace;margin-bottom:10px;">关于设计</div>
+      <p style="margin:0 0 6px;">这不是一个让你"赢"的游戏。</p>
+      <p style="margin:0 0 12px;">这是一个让你"看见"的游戏。</p>
+      <p style="margin:0 0 6px;">十年的走法千万种，每一条都是一个选择。</p>
+      <p style="margin:0 0 6px;">我希望你看到的那个十年，和别人的不一样——</p>
+      <p style="margin:0;">那就是你的。</p>
+    </div>
+
+    <div style="height:1px;background:rgba(139,26,43,0.2);margin:26px 0;"></div>
+
+    <div style="font-size:13px;line-height:2.1;color:rgba(58,50,40,0.88);">
+      <div style="font-size:11px;letter-spacing:3px;color:rgba(139,26,43,0.75);font-family:monospace;margin-bottom:10px;">反馈 / 联系</div>
+      <p style="margin:0 0 6px;">有想法想告诉我？</p>
+      <p style="margin:0 0 6px;">扫描分享卡片底部的二维码关注公众号，</p>
+      <p style="margin:0;">回复任何话，我都会读。</p>
+    </div>
+
+    <div style="height:1px;background:rgba(139,26,43,0.2);margin:26px 0;"></div>
+
+    <div style="font-size:13px;line-height:2.1;color:rgba(58,50,40,0.88);">
+      <div style="font-size:11px;letter-spacing:3px;color:rgba(139,26,43,0.75);font-family:monospace;margin-bottom:10px;">致谢</div>
+      <ul style="margin:0;padding-left:18px;font-size:12px;line-height:2;">
+        <li>《Anthropic 经济指数报告》——启发了游戏的灵感</li>
+        <li>最得力的 Claude Code 小助手——没有它就没有这个游戏</li>
+        <li>以及那些在新闻里留下名字的工程师、律师、编剧……</li>
+      </ul>
+    </div>
+
+    <div style="text-align:center;margin-top:32px;padding-top:20px;border-top:1px dashed rgba(139,26,43,0.25);">
+      <button id="about-close-btn" style="background:transparent;border:1px solid rgba(120,100,88,0.4);color:rgba(80,60,45,0.85);font-family:'Courier New',monospace;font-size:11px;letter-spacing:3px;padding:11px 32px;border-radius:999px;cursor:pointer;">关闭</button>
+    </div>
   </div>
 </div>
 
@@ -3993,6 +4066,22 @@ function showLetterFor(recipient){
 }
 onTap($('letter-accept-btn'),()=>startYear());
 onTap($('story-enter-btn'),()=>startYear());
+// 关于页
+onTap($('about-btn'),()=>{
+  // 挂起音频避免遮挡
+  _stopAllAudio();
+  $('about-modal').style.display='flex';
+});
+onTap($('about-close-btn'),()=>{
+  $('about-modal').style.display='none';
+  _resumeAudio();
+});
+$('about-modal').addEventListener('click',(e)=>{
+  if(e.target.id==='about-modal'){
+    $('about-modal').style.display='none';
+    _resumeAudio();
+  }
+});
 
 function showHint(id){
   if(G.yearIndex!==0||isTutorialSeen())return;
