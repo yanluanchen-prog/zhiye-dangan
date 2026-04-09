@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
 <meta name="twitter:description" content="每一次选择都会被写进你的结局。">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-1300 判词变体随机+缓存一致性+见证年份+回退方案B+新口号 -->
+<!-- v20260408-1400 职业池50个+薪资重平衡+HUD储蓄+救生员→发型师 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -162,6 +162,11 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .header-tab.folder .id-badge-art{background:linear-gradient(180deg,var(--paper),#ebe2d3);}
 .header-tab.folder .id-badge-emoji{font-size:20px;}
 .header-tab.folder .id-badge-name{font-size:7px;letter-spacing:.5px;}
+.header-tab.savings .id-badge-hdr{background:rgba(180,140,50,0.82);}
+.header-tab.savings .id-badge-art{background:linear-gradient(180deg,#fbf3df,#f1e4bb);}
+.header-tab.savings .id-badge-emoji{font-size:20px;}
+.header-tab.savings .id-badge-savings{font-size:10px;font-weight:800;color:rgba(120,80,20,0.9);font-family:monospace;letter-spacing:.3px;line-height:1.1;text-align:center;}
+.header-tab.savings .id-badge-mini-count{color:rgba(120,80,20,0.65);font-size:7px;font-weight:600;}
 .id-badge-mini-count{margin-top:4px;font-size:8px;font-family:monospace;color:rgba(80,60,45,0.75);font-weight:800;letter-spacing:.8px;line-height:1;}
 .header-right{text-align:right;}
 .header-classify{font-size:8px;letter-spacing:3px;color:rgba(100,80,65,0.55);font-family:monospace;margin-bottom:2px;}
@@ -1543,7 +1548,17 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
           <div class="id-badge-art">
             <span class="id-badge-emoji">🗂</span>
             <span class="id-badge-name">我的图鉴</span>
-            <div class="id-badge-mini-count"><span id="enc-count">1</span>/<span class="pool-total">40</span></div>
+            <div class="id-badge-mini-count"><span id="enc-count">1</span>/<span class="pool-total">50</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="header-tab savings" id="savings-tab">
+        <div class="id-badge-card">
+          <div class="id-badge-hdr">十年储蓄</div>
+          <div class="id-badge-art">
+            <span class="id-badge-emoji">💰</span>
+            <span class="id-badge-savings" id="hud-savings">¥ 0 万</span>
+            <div class="id-badge-mini-count" id="hud-savings-sub">年薪 0 万</div>
           </div>
         </div>
       </div>
@@ -1838,6 +1853,10 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
 
     <div id="share-card-path" style="font-size:12px;color:rgba(80,60,50,0.75);line-height:1.7;letter-spacing:1px;margin:14px 0 12px;font-family:'Courier New',monospace;"></div>
     <div id="share-card-verdict" style="font-size:13px;color:rgba(40,30,22,0.88);line-height:1.9;letter-spacing:1px;font-style:italic;padding:0 4px;"></div>
+    <div id="share-card-savings" style="margin-top:18px;padding-top:14px;border-top:1px dashed rgba(139,26,43,0.18);font-family:'Courier New',monospace;">
+      <div style="font-size:10px;color:rgba(120,80,20,0.7);letter-spacing:3px;margin-bottom:4px;">十年储蓄</div>
+      <div id="share-card-savings-num" style="font-size:26px;font-weight:900;color:rgba(140,90,20,0.92);letter-spacing:2px;">¥ 0 万</div>
+    </div>
   </div>
 
   <div style="display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:20px;border-top:1px dashed rgba(139,26,43,0.25);gap:16px;">
@@ -1876,6 +1895,11 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
         <p>里面有 5 个还活着的职业机会。</p>
       </div>
       <div class="letter-stanza">
+        <p>每多工作一年，你就多积累一年的年薪。</p>
+        <p>十年之后，谁活到最后，谁赚得最多——</p>
+        <p>不一定是同一个人。</p>
+      </div>
+      <div class="letter-stanza">
         <p>留下，还是离开，是你的事。</p>
         <p>我们只负责寄信。</p>
       </div>
@@ -1892,15 +1916,15 @@ const YEARS=[
   // 2027年：内容创作崩盘
   {year:2027,event:"新华社、财新上线 AI 写稿，财经稿件日发布量 +800%。某省级电视台夜间新闻全面切换 AI 主播。\n\n某 9000 人 SaaS 公司一夜端掉整个 Technical Writer 部门 70 人——文档以后由 AI 从代码自动生成。\n\n2025 年好莱坞编剧+演员双重罢工，40 年最长。两年后，索尼影视宣布裁员数百人——影视业务是集团唯一下滑的板块。一位编剧：「他们不是要我写故事，是要我教模型怎么写。」",eliminated:["记者","作家","编剧","摄影师"],slogan:"内容已自动生成。感谢您提供的灵感。"},
   // 2028年：视觉/视频自动化
-  {year:2028,event:"字节跳动内容 AI 全行业开放，标题点击率高出人工 26%。AI 图像生成商用，设计稿从 3 天缩到 4 分钟。\n\n某 60 亿美金游戏公司裁员 20%。一个人运营了所有平台的「E 宝」也在名单里。CEO 公开信：与 AI 无关。\n\nDeepMind 影像 AI 在 12 家三甲部署，放射诊断准确率超出人类 12%——但放射科医生反而更忙了。CT/MRI 新的应用场景解锁，医生开出更多检查单。会议室里没有人鼓掌。",eliminated:["平面设计师","剪辑师","广告创意","制片"],slogan:"与AI无关。"},
+  {year:2028,event:"字节跳动内容 AI 全行业开放，标题点击率高出人工 26%。AI 图像生成商用，设计稿从 3 天缩到 4 分钟。\n\n某 60 亿美金游戏公司裁员 20%。一个人运营了所有平台的「E 宝」也在名单里。CEO 公开信：与 AI 无关。\n\nDeepMind 影像 AI 在 12 家三甲部署，放射诊断准确率超出人类 12%——但放射科医生反而更忙了。CT/MRI 新的应用场景解锁，医生开出更多检查单。会议室里没有人鼓掌。",eliminated:["平面设计师","剪辑师","广告创意","制片","编导","主播","导游","健身教练"],slogan:"与AI无关。"},
   // 2029年：知识工作者大屠杀
-  {year:2029,event:"国内首个 AI 通过注册会计师考试，超过 97% 人类。大厂内部邮件：「以后必须用 AI 写代码，不允许手写。」一位工程师一月提交 10 万行代码，90% 来自 AI。\n\nAI 合同审查上线，律所服务需求下跌 67%。某律所合伙人收到解约通知——引用的正是他亲手起草的服务协议第 17 条。\n\n医疗 AI 六项诊断超过人类——但医院没敢让 AI 签字。",eliminated:["程序员","会计师","金融分析师","律师","信息安全分析师"],slogan:"我们不是卷不过年轻人，是卷不过 AI。"},
+  {year:2029,event:"国内首个 AI 通过注册会计师考试，超过 97% 人类。大厂内部邮件：「以后必须用 AI 写代码，不允许手写。」一位工程师一月提交 10 万行代码，90% 来自 AI。\n\nAI 合同审查上线，律所服务需求下跌 67%。某律所合伙人收到解约通知——引用的正是他亲手起草的服务协议第 17 条。\n\n医疗 AI 六项诊断超过人类——但医院没敢让 AI 签字。",eliminated:["程序员","会计师","金融分析师","律师","信息安全分析师","工程师"],slogan:"我们不是卷不过年轻人，是卷不过 AI。"},
   // 2030年：黑天鹅·AI量化崩盘引发财政紧缩，波及看似稳定的岗位
-  {year:2030,event:"2030 年 2 月，全球量化基金 AI 交易系统在同一异常数据源触发下，72 小时联动抛售。市场单周跌幅 38%——1929 年以来最大。\n\n不是 AI 替代了人。是 AI 自己崩了。代价由人来付。\n\n机关编制冻结，岗位合并，老员工被劝退。学校班级合并，教师编制砍半。\n\n护士也上了第一轮裁员名单——三个月后撤销：日间病区无人值守的两周，事故率上涨 600%。",eliminated:["公务员","教师","HR","项目经理"],slogan:"这次不是 AI 替代了你。是 AI 把钱弄没了。"},
+  {year:2030,event:"2030 年 2 月，全球量化基金 AI 交易系统在同一异常数据源触发下，72 小时联动抛售。市场单周跌幅 38%——1929 年以来最大。\n\n不是 AI 替代了人。是 AI 自己崩了。代价由人来付。\n\n机关编制冻结，岗位合并，老员工被劝退。学校班级合并，教师编制砍半。\n\n护士也上了第一轮裁员名单——三个月后撤销：日间病区无人值守的两周，事故率上涨 600%。",eliminated:["公务员","教师","HR","项目经理","警察"],slogan:"这次不是 AI 替代了你。是 AI 把钱弄没了。"},
   // 2031年：商业判断与产品被算法接管
-  {year:2031,event:"某券商关闭整个研究所，理由：「AI 0.3 秒生成同等质量研究报告。」一位分析师说：「我做了八年市场判断，最后变成模型的一行权重。」\n\nAI 销售助手转化率高出人工 12%。某公司销售部一夜从 200 人缩到 15 人。\n\nAI 心理咨询 APP 月活破 5 亿。但城市心理诊所人工预约从 1 周延到 8 周——「真正想说话的人，还是要等真人。」",eliminated:["销售代表","市场研究分析师","数据分析师","产品经理"],slogan:"小而扁平是新常态。与其慢慢裁，不如现在就诚实面对。"},
+  {year:2031,event:"某券商关闭整个研究所，理由：「AI 0.3 秒生成同等质量研究报告。」一位分析师说：「我做了八年市场判断，最后变成模型的一行权重。」\n\nAI 销售助手转化率高出人工 12%。某公司销售部一夜从 200 人缩到 15 人。\n\nAI 心理咨询 APP 月活破 5 亿。但城市心理诊所人工预约从 1 周延到 8 周——「真正想说话的人，还是要等真人。」",eliminated:["销售代表","市场研究分析师","数据分析师","产品经理","建筑师","房产中介","保险代理"],slogan:"小而扁平是新常态。与其慢慢裁，不如现在就诚实面对。"},
   // 2032年：物流自动化
-  {year:2032,event:"宇树 H3 机器人支持自主爬楼配送，续航 12 小时。美团、京东启动无人配送试运营。自动驾驶网约车在 12 个城市铺开。\n\n海滨城市启动「智能水域监控」试点——AI 摄像头识别溺水预警。试点首月发生两起溺水事故，AI 都识别到了。但救生员从瞭望台跑到水边时，已经迟了 4 分钟。\n\n某物流公司「老骑手数字孪生」项目：数据永久授权训练 AI。",eliminated:["网约车司机","配送员","快递员"],slogan:"最后一公里，已完成交接。"},
+  {year:2032,event:"宇树 H3 机器人爬楼配送，续航 12 小时。美团、京东启动无人配送试运营。自动驾驶网约车在 12 个城市铺开。\n\n航空集团试点 AI 全自动驾驶系统。试点首航遭遇鸟击，AI 决策迫降，294 人零伤亡。同一型号飞机三个月后飞行员配置由 2 人减至 1 人。\n\n某家电品牌推出全自动理发机，宣称「一键十种发型」。三个月销量不达预期 70%——老顾客说：「我还是要师傅亲自剪。」",eliminated:["网约车司机","配送员","快递员","飞行员"],slogan:"最后一公里，已完成交接。"},
   // 2033年：内容运营+创意管理+表演艺术
   {year:2033,event:"算法实时调度内容分发，人工运营三个月裁减 78%。某 MCN 创始人：「我们要懂训练 AI 运营的人。」\n\n某流媒体上线「你的人生·改编版」——AI 扫描你的社交记录 24 小时生成 10 集剧集。首月 200 万部上架，大部分主角被改编完才知情。某顶级影视公司启用「数字演员」——基于授权数据生成的全息形象，无需出席。\n\n三甲医院 AI 诊断覆盖率达 80%。医疗事故诉讼激增——判决书最后一行永远写着：「最终处方由主治医师签字。」",eliminated:["运营","游戏策划","企业文化","演员"],slogan:"内容已完成自我迭代。"},
   // 2034年：最后的体力陷落+流媒体音乐
@@ -1922,46 +1946,56 @@ const YEAR_SUMMARIES={
   2035:"十年已过。剩下的职业没有被赞美，只是还在"
 };
 const POOL=[
-  {name:"程序员",rarity:"R",aiResist:26,salary:70,demand:60,category:"技术",emoji:"💻",tagline:"代码世界",desc:"一行代码写完，就脱离了你。它去你不会去的地方，做你不会做的事。最后你不再是它的作者。",fileNum:"R-001"},
-  {name:"客服代表",rarity:"N",aiResist:30,salary:32,demand:85,category:"服务",emoji:"🎧",tagline:"耐心解答",desc:"你接的每一通电话，开头都是问题，结尾常常不是。中间那段没人说出口的事，才是你真正要做的工作。",fileNum:"N-002"},
-  {name:"数据录入员",rarity:"N",aiResist:33,salary:25,demand:60,category:"文职",emoji:"⌨️",tagline:"精准录入",desc:"把一行字搬到另一处，然后再搬一行。重复的尽头不是熟练，是停顿。你每天都在等那个不再需要重复的时刻。",fileNum:"N-003"},
-  {name:"银行柜员",rarity:"R",aiResist:28,salary:35,demand:55,category:"服务",emoji:"🏦",tagline:"窗口后的那个人",desc:"玻璃这边和那边，永远只够伸进一只手。文件递进来，递出去。有时候那只手会停一秒——你也只能停一秒。",fileNum:"R-004"},
-  {name:"市场研究分析师",rarity:"SR",aiResist:35,salary:70,demand:65,category:"专业",emoji:"📊",tagline:"市场洞察",desc:"在数字里找规律，是这份工作的开始。承认有些东西不在数字里，是它的终点。这两件事，往往隔了很多年。",fileNum:"SR-005"},
-  {name:"销售代表",rarity:"R",aiResist:37,salary:55,demand:75,category:"销售",emoji:"🤝",tagline:"成交艺术",desc:"最终签字的那一刻，从来不是因为合同，是因为某句话被说在了某个时候。这种时机，没有人能教你。",fileNum:"R-006"},
-  {name:"金融分析师",rarity:"SR",aiResist:43,salary:80,demand:55,category:"专业",emoji:"📈",tagline:"洞察先机",desc:"所有的预测都建立在「过去会重演」之上。但每一次例外发生时，所有人都看着你——说什么或不说什么，都得有人来承担。",fileNum:"SR-007"},
-  {name:"摄影师",rarity:"SR",aiResist:42,salary:55,demand:65,category:"创意",emoji:"📷",tagline:"决定性瞬间",desc:"按下快门之前的那一秒，眼睛比相机重要。但你说不清那一秒到底发生了什么——只能在事后看见它确实发生过。",fileNum:"SR-008"},
-  {name:"信息安全分析师",rarity:"SSR",aiResist:51,salary:75,demand:70,category:"技术",emoji:"🔒",tagline:"守护数据",desc:"你守的是一道看不见的门。开着的时候没人感谢，关上的瞬间所有人都在问为什么。你在的意义，是一种缺席的证明。",fileNum:"SSR-009"},
-  {name:"公务员",rarity:"SR",aiResist:35,salary:50,demand:70,category:"行政",emoji:"🏛️",tagline:"铁饭碗",desc:"印章落下的那一刻，事情就成立了。规则很多，灰色地带也很多。你存在的意义，是替那些规则承担它们承担不了的部分。",fileNum:"SR-009"},
-  {name:"厨师",rarity:"UR",aiResist:95,salary:40,demand:90,category:"体力",emoji:"👨‍🍳",tagline:"火候艺术",desc:"盐到底放多少，没有答案。你只是知道那一刻应该停。这种「知道」，没有名字，也没有教科书，只有一个动作。",fileNum:"UR-011"},
-  {name:"修理工",rarity:"UR",aiResist:92,salary:45,demand:85,category:"体力",emoji:"🔧",tagline:"化腐朽为神奇",desc:"把坏掉的东西重新拧紧，是这份工作的表面。下面那一层，是替别人不舍得扔掉的那点东西，多留几年。",fileNum:"UR-012"},
-  {name:"救生员",rarity:"SSR",aiResist:99,salary:35,demand:60,category:"体力",emoji:"🏊",tagline:"守护生命",desc:"大多数时候什么都不会发生。你的意义就在于此——你在那里，让那个不发生的下午，安全地结束。",fileNum:"SSR-013"},
-  {name:"配送员",rarity:"SR",aiResist:72,salary:42,demand:90,category:"体力",emoji:"🛵",tagline:"风雨无阻",desc:"城市的每一条小路你都跑过。地址是终点，但路上发生的事不是。门铃响那一下，意味着你又一次准时抵达。",fileNum:"SR-014"},
-  {name:"网约车司机",rarity:"SR",aiResist:55,salary:40,demand:75,category:"服务",emoji:"🚗",tagline:"城市摆渡人",desc:"陌生人坐进来，目的地不同，沉默也不同。这座城市的夜路你都熟，但每一次，乘客的故事都还是新的。",fileNum:"SR-015"},
-  {name:"作家",rarity:"SSR",aiResist:60,salary:35,demand:30,category:"创作",emoji:"✒️",tagline:"记录人性",desc:"你写的不是故事，是一个人在某个瞬间没说出口的话。这些话本来要消失的，是你让它们留了下来。",fileNum:"SSR-017"},
-  {name:"平面设计师",rarity:"SR",aiResist:55,salary:55,demand:60,category:"创作",emoji:"🎨",tagline:"视觉语言",desc:"把一个想法变成看得见的样子。中间隔着的那段距离，没有公式，只有一遍一遍来回，直到它对了。",fileNum:"SR-018"},
-  {name:"记者",rarity:"SR",aiResist:52,salary:50,demand:40,category:"创作",emoji:"📰",tagline:"追寻真相",desc:"去现场，问问题，把真相带回来。最难的不是问，是知道哪一句话不能写下来——以及为什么不能。",fileNum:"SR-019"},
-  {name:"翻译",rarity:"R",aiResist:42,salary:45,demand:55,category:"语言",emoji:"🌐",tagline:"跨越语言",desc:"字面是容易的。语气、停顿、那句话背后没说出来的另一句话——把这些一起带过去，是这门手艺真正的难处。",fileNum:"R-020"},
-  {name:"剪辑师",rarity:"SR",aiResist:70,salary:55,demand:55,category:"创作",emoji:"🎬",tagline:"叙事剪刀",desc:"决定哪一帧留下，哪一帧消失。删掉的部分通常比保留的更重要——它们让保留下来的，有了形状。",fileNum:"SR-021"},
+  {name:"程序员",rarity:"R",aiResist:26,salary:75,demand:60,category:"技术",emoji:"💻",tagline:"代码世界",desc:"一行代码写完，就脱离了你。它去你不会去的地方，做你不会做的事。最后你不再是它的作者。",fileNum:"R-001"},
+  {name:"客服代表",rarity:"N",aiResist:30,salary:10,demand:85,category:"服务",emoji:"🎧",tagline:"耐心解答",desc:"你接的每一通电话，开头都是问题，结尾常常不是。中间那段没人说出口的事，才是你真正要做的工作。",fileNum:"N-002"},
+  {name:"数据录入员",rarity:"N",aiResist:33,salary:8,demand:60,category:"文职",emoji:"⌨️",tagline:"精准录入",desc:"把一行字搬到另一处，然后再搬一行。重复的尽头不是熟练，是停顿。你每天都在等那个不再需要重复的时刻。",fileNum:"N-003"},
+  {name:"银行柜员",rarity:"R",aiResist:28,salary:15,demand:55,category:"服务",emoji:"🏦",tagline:"窗口后的那个人",desc:"玻璃这边和那边，永远只够伸进一只手。文件递进来，递出去。有时候那只手会停一秒——你也只能停一秒。",fileNum:"R-004"},
+  {name:"市场研究分析师",rarity:"SR",aiResist:35,salary:25,demand:65,category:"专业",emoji:"📊",tagline:"市场洞察",desc:"在数字里找规律，是这份工作的开始。承认有些东西不在数字里，是它的终点。这两件事，往往隔了很多年。",fileNum:"SR-005"},
+  {name:"销售代表",rarity:"R",aiResist:37,salary:28,demand:75,category:"销售",emoji:"🤝",tagline:"成交艺术",desc:"最终签字的那一刻，从来不是因为合同，是因为某句话被说在了某个时候。这种时机，没有人能教你。",fileNum:"R-006"},
+  {name:"金融分析师",rarity:"SR",aiResist:43,salary:75,demand:55,category:"专业",emoji:"📈",tagline:"洞察先机",desc:"所有的预测都建立在「过去会重演」之上。但每一次例外发生时，所有人都看着你——说什么或不说什么，都得有人来承担。",fileNum:"SR-007"},
+  {name:"摄影师",rarity:"SR",aiResist:42,salary:22,demand:65,category:"创意",emoji:"📷",tagline:"决定性瞬间",desc:"按下快门之前的那一秒，眼睛比相机重要。但你说不清那一秒到底发生了什么——只能在事后看见它确实发生过。",fileNum:"SR-008"},
+  {name:"信息安全分析师",rarity:"SSR",aiResist:51,salary:50,demand:70,category:"技术",emoji:"🔒",tagline:"守护数据",desc:"你守的是一道看不见的门。开着的时候没人感谢，关上的瞬间所有人都在问为什么。你在的意义，是一种缺席的证明。",fileNum:"SSR-009"},
+  {name:"公务员",rarity:"SR",aiResist:35,salary:25,demand:70,category:"行政",emoji:"🏛️",tagline:"铁饭碗",desc:"印章落下的那一刻，事情就成立了。规则很多，灰色地带也很多。你存在的意义，是替那些规则承担它们承担不了的部分。",fileNum:"SR-009"},
+  {name:"厨师",rarity:"UR",aiResist:95,salary:22,demand:90,category:"体力",emoji:"👨‍🍳",tagline:"火候艺术",desc:"盐到底放多少，没有答案。你只是知道那一刻应该停。这种「知道」，没有名字，也没有教科书，只有一个动作。",fileNum:"UR-011"},
+  {name:"修理工",rarity:"UR",aiResist:92,salary:15,demand:85,category:"体力",emoji:"🔧",tagline:"化腐朽为神奇",desc:"把坏掉的东西重新拧紧，是这份工作的表面。下面那一层，是替别人不舍得扔掉的那点东西，多留几年。",fileNum:"UR-012"},
+  {name:"配送员",rarity:"SR",aiResist:72,salary:15,demand:90,category:"体力",emoji:"🛵",tagline:"风雨无阻",desc:"城市的每一条小路你都跑过。地址是终点，但路上发生的事不是。门铃响那一下，意味着你又一次准时抵达。",fileNum:"SR-014"},
+  {name:"网约车司机",rarity:"SR",aiResist:55,salary:15,demand:75,category:"服务",emoji:"🚗",tagline:"城市摆渡人",desc:"陌生人坐进来，目的地不同，沉默也不同。这座城市的夜路你都熟，但每一次，乘客的故事都还是新的。",fileNum:"SR-015"},
+  {name:"作家",rarity:"SSR",aiResist:60,salary:20,demand:30,category:"创作",emoji:"✒️",tagline:"记录人性",desc:"你写的不是故事，是一个人在某个瞬间没说出口的话。这些话本来要消失的，是你让它们留了下来。",fileNum:"SSR-017"},
+  {name:"平面设计师",rarity:"SR",aiResist:55,salary:22,demand:60,category:"创作",emoji:"🎨",tagline:"视觉语言",desc:"把一个想法变成看得见的样子。中间隔着的那段距离，没有公式，只有一遍一遍来回，直到它对了。",fileNum:"SR-018"},
+  {name:"记者",rarity:"SR",aiResist:52,salary:22,demand:40,category:"创作",emoji:"📰",tagline:"追寻真相",desc:"去现场，问问题，把真相带回来。最难的不是问，是知道哪一句话不能写下来——以及为什么不能。",fileNum:"SR-019"},
+  {name:"翻译",rarity:"R",aiResist:42,salary:18,demand:55,category:"语言",emoji:"🌐",tagline:"跨越语言",desc:"字面是容易的。语气、停顿、那句话背后没说出来的另一句话——把这些一起带过去，是这门手艺真正的难处。",fileNum:"R-020"},
+  {name:"剪辑师",rarity:"SR",aiResist:70,salary:24,demand:55,category:"创作",emoji:"🎬",tagline:"叙事剪刀",desc:"决定哪一帧留下，哪一帧消失。删掉的部分通常比保留的更重要——它们让保留下来的，有了形状。",fileNum:"SR-021"},
   {name:"音乐家",rarity:"SSR",aiResist:80,salary:40,demand:35,category:"创作",emoji:"🎵",tagline:"声音灵魂",desc:"每一次演奏都不一样，连同样的曲子也是。最好的音符，往往是上一个音符没到位时，意外补上的那个。",fileNum:"SSR-022"},
-  {name:"演员",rarity:"SSR",aiResist:88,salary:45,demand:40,category:"表演",emoji:"🎭",tagline:"演绎人生",desc:"把自己换成另一个人。难的不是表演他，是真的相信你就是他——哪怕只有那一秒，也要真。",fileNum:"SSR-023"},
-  {name:"会计师",rarity:"R",aiResist:45,salary:60,demand:70,category:"专业",emoji:"🧮",tagline:"账目清晰",desc:"数字必须对得上。但对得上的数字背后，往往藏着最复杂的故事。你的工作是看穿，也是不说穿。",fileNum:"R-024"},
-  {name:"教师",rarity:"SR",aiResist:72,salary:45,demand:80,category:"教育",emoji:"👨‍🏫",tagline:"点燃好奇心",desc:"今天讲的内容，五年后没人记得。但你说过的某一句话，可能被一个孩子记一辈子。你不会知道是哪一句。",fileNum:"SR-025"},
-  {name:"护士",rarity:"SR",aiResist:68,salary:50,demand:90,category:"医疗",emoji:"👩‍⚕️",tagline:"白衣天使",desc:"病房里的事，大多数都是小事。但小事一旦堆在一起，没有谁比你更清楚它们的轻重。你的手，知道分寸。",fileNum:"SR-026"},
-  {name:"医生",rarity:"R",aiResist:88,salary:95,demand:95,category:"医疗",emoji:"👨‍⚕️",tagline:"生命守护",desc:"诊断是一回事，告诉病人是另一回事。前者靠学到的知识，后者只能靠你这个人本身。这两件事永远是分开的。",fileNum:"R-027"},
-  {name:"律师",rarity:"SR",aiResist:85,salary:85,demand:60,category:"专业",emoji:"⚖️",tagline:"法理精研",desc:"替人争取最后那一点空间。法条是死的，能不能用得上，要看那一刻是谁站在场上。这种判断，没有公式。",fileNum:"SR-028"},
-  {name:"社工",rarity:"SR",aiResist:75,salary:38,demand:60,category:"服务",emoji:"🤲",tagline:"守望相助",desc:"去那些没人想去的地方，陪那些没人陪的人。你做的事很少有人记得名字，但少了你的那一天，会被人想起来。",fileNum:"SR-029"},
-  {name:"心理咨询师",rarity:"SSR",aiResist:78,salary:65,demand:55,category:"服务",emoji:"🧘",tagline:"倾听灵魂",desc:"不评判，不建议，只是在那里。沉默有时候比回答更重要——但没人能教你，哪一种沉默是合适的。",fileNum:"SSR-030"},
-  {name:"编剧",rarity:"SR",aiResist:52,salary:65,demand:55,category:"创意",emoji:"✍️",tagline:"故事的骨架",desc:"写一个故事，是替一个不存在的人做出选择。这些选择不一定合理，但要真——这两件事经常打架。",fileNum:"SR-031"},
-  {name:"广告创意",rarity:"SR",aiResist:45,salary:65,demand:60,category:"创意",emoji:"💡",tagline:"让人记住那一秒",desc:"找到一个所有人都感受过、但没有人说过的东西，把它说出来，说得刚好。这是这份工作全部的难度。",fileNum:"SR-032"},
-  {name:"产品经理",rarity:"SR",aiResist:50,salary:78,demand:70,category:"技术",emoji:"📱",tagline:"需求与实现之间",desc:"想清楚一件事，比把它写下来难多了。会议室里每个人都觉得自己想清楚了——你的工作是知道他们没有。",fileNum:"SR-033"},
-  {name:"HR",rarity:"R",aiResist:38,salary:55,demand:65,category:"行政",emoji:"👥",tagline:"人与组织之间",desc:"面试的时候，简历和那个人之间总有一点缝。你看的就是那点缝。说不清是什么，但闭上眼也能感觉到。",fileNum:"R-034"},
-  {name:"企业文化",rarity:"N",aiResist:28,salary:48,demand:50,category:"行政",emoji:"🎯",tagline:"让组织有温度",desc:"那些写在墙上的话没人记得。真正算数的事都发生在走廊里——你的工作是让走廊里的事，还能继续发生。",fileNum:"N-035"},
-  {name:"数据分析师",rarity:"R",aiResist:35,salary:70,demand:70,category:"技术",emoji:"📊",tagline:"数字背后的故事",desc:"数字不会说谎，但切数字的方式会。同一组数据可以推出完全相反的结论——你的工作是知道哪一种是真的。",fileNum:"R-036"},
-  {name:"项目经理",rarity:"R",aiResist:42,salary:60,demand:65,category:"行政",emoji:"📋",tagline:"把事情推下去",desc:"项目能不能成，往往不是因为方案有多好，是中间断了几次还能不能接回去。那个接的人，必须有名字。",fileNum:"R-037"},
-  {name:"快递员",rarity:"N",aiResist:38,salary:42,demand:80,category:"服务",emoji:"📦",tagline:"最后一公里",desc:"门铃响那一下，是你存在的全部证据。大多数时候没人开门，偶尔有人接一下——那一下不是规定动作。",fileNum:"N-038"},
-  {name:"运营",rarity:"R",aiResist:40,salary:55,demand:75,category:"创意",emoji:"📈",tagline:"让内容活起来",desc:"一条内容能不能起来，差别有时候只在一个词的位置。这种感觉做了很久才有，做了很久也说不清。",fileNum:"R-039"},
-  {name:"游戏策划",rarity:"SR",aiResist:48,salary:65,demand:60,category:"创意",emoji:"🎮",tagline:"设计那个刚好的惊喜",desc:"让玩家在某个地方多停三分钟，不是靠难度，靠的是那个时机给一个刚好的惊喜。这种「刚好」无法写在文档里。",fileNum:"SR-040"},
-  {name:"制片",rarity:"SR",aiResist:50,salary:65,demand:55,category:"创意",emoji:"🎬",tagline:"把故事变成画面",desc:"剧本写「天色渐暗」，你要决定那是黄昏还是阴天。每一个选择都在悄悄改写一个故事——而那个故事不再是原来的。",fileNum:"SR-041"}
+  {name:"演员",rarity:"SSR",aiResist:88,salary:40,demand:40,category:"表演",emoji:"🎭",tagline:"演绎人生",desc:"把自己换成另一个人。难的不是表演他，是真的相信你就是他——哪怕只有那一秒，也要真。",fileNum:"SSR-023"},
+  {name:"会计师",rarity:"R",aiResist:45,salary:28,demand:70,category:"专业",emoji:"🧮",tagline:"账目清晰",desc:"数字必须对得上。但对得上的数字背后，往往藏着最复杂的故事。你的工作是看穿，也是不说穿。",fileNum:"R-024"},
+  {name:"教师",rarity:"SR",aiResist:72,salary:20,demand:80,category:"教育",emoji:"👨‍🏫",tagline:"点燃好奇心",desc:"今天讲的内容，五年后没人记得。但你说过的某一句话，可能被一个孩子记一辈子。你不会知道是哪一句。",fileNum:"SR-025"},
+  {name:"护士",rarity:"SR",aiResist:68,salary:15,demand:90,category:"医疗",emoji:"👩‍⚕️",tagline:"白衣天使",desc:"病房里的事，大多数都是小事。但小事一旦堆在一起，没有谁比你更清楚它们的轻重。你的手，知道分寸。",fileNum:"SR-026"},
+  {name:"医生",rarity:"R",aiResist:88,salary:60,demand:95,category:"医疗",emoji:"👨‍⚕️",tagline:"生命守护",desc:"诊断是一回事，告诉病人是另一回事。前者靠学到的知识，后者只能靠你这个人本身。这两件事永远是分开的。",fileNum:"R-027"},
+  {name:"律师",rarity:"SR",aiResist:85,salary:75,demand:60,category:"专业",emoji:"⚖️",tagline:"法理精研",desc:"替人争取最后那一点空间。法条是死的，能不能用得上，要看那一刻是谁站在场上。这种判断，没有公式。",fileNum:"SR-028"},
+  {name:"社工",rarity:"SR",aiResist:75,salary:10,demand:60,category:"服务",emoji:"🤲",tagline:"守望相助",desc:"去那些没人想去的地方，陪那些没人陪的人。你做的事很少有人记得名字，但少了你的那一天，会被人想起来。",fileNum:"SR-029"},
+  {name:"心理咨询师",rarity:"SSR",aiResist:78,salary:35,demand:55,category:"服务",emoji:"🧘",tagline:"倾听灵魂",desc:"不评判，不建议，只是在那里。沉默有时候比回答更重要——但没人能教你，哪一种沉默是合适的。",fileNum:"SSR-030"},
+  {name:"编剧",rarity:"SR",aiResist:52,salary:28,demand:55,category:"创意",emoji:"✍️",tagline:"故事的骨架",desc:"写一个故事，是替一个不存在的人做出选择。这些选择不一定合理，但要真——这两件事经常打架。",fileNum:"SR-031"},
+  {name:"广告创意",rarity:"SR",aiResist:45,salary:32,demand:60,category:"创意",emoji:"💡",tagline:"让人记住那一秒",desc:"找到一个所有人都感受过、但没有人说过的东西，把它说出来，说得刚好。这是这份工作全部的难度。",fileNum:"SR-032"},
+  {name:"产品经理",rarity:"SR",aiResist:50,salary:65,demand:70,category:"技术",emoji:"📱",tagline:"需求与实现之间",desc:"想清楚一件事，比把它写下来难多了。会议室里每个人都觉得自己想清楚了——你的工作是知道他们没有。",fileNum:"SR-033"},
+  {name:"HR",rarity:"R",aiResist:38,salary:30,demand:65,category:"行政",emoji:"👥",tagline:"人与组织之间",desc:"面试的时候，简历和那个人之间总有一点缝。你看的就是那点缝。说不清是什么，但闭上眼也能感觉到。",fileNum:"R-034"},
+  {name:"企业文化",rarity:"N",aiResist:28,salary:25,demand:50,category:"行政",emoji:"🎯",tagline:"让组织有温度",desc:"那些写在墙上的话没人记得。真正算数的事都发生在走廊里——你的工作是让走廊里的事，还能继续发生。",fileNum:"N-035"},
+  {name:"数据分析师",rarity:"R",aiResist:35,salary:35,demand:70,category:"技术",emoji:"📊",tagline:"数字背后的故事",desc:"数字不会说谎，但切数字的方式会。同一组数据可以推出完全相反的结论——你的工作是知道哪一种是真的。",fileNum:"R-036"},
+  {name:"项目经理",rarity:"R",aiResist:42,salary:40,demand:65,category:"行政",emoji:"📋",tagline:"把事情推下去",desc:"项目能不能成，往往不是因为方案有多好，是中间断了几次还能不能接回去。那个接的人，必须有名字。",fileNum:"R-037"},
+  {name:"快递员",rarity:"N",aiResist:38,salary:15,demand:80,category:"服务",emoji:"📦",tagline:"最后一公里",desc:"门铃响那一下，是你存在的全部证据。大多数时候没人开门，偶尔有人接一下——那一下不是规定动作。",fileNum:"N-038"},
+  {name:"运营",rarity:"R",aiResist:40,salary:22,demand:75,category:"创意",emoji:"📈",tagline:"让内容活起来",desc:"一条内容能不能起来，差别有时候只在一个词的位置。这种感觉做了很久才有，做了很久也说不清。",fileNum:"R-039"},
+  {name:"游戏策划",rarity:"SR",aiResist:48,salary:50,demand:60,category:"创意",emoji:"🎮",tagline:"设计那个刚好的惊喜",desc:"让玩家在某个地方多停三分钟，不是靠难度，靠的是那个时机给一个刚好的惊喜。这种「刚好」无法写在文档里。",fileNum:"SR-040"},
+  {name:"制片",rarity:"SR",aiResist:50,salary:30,demand:55,category:"创意",emoji:"🎬",tagline:"把故事变成画面",desc:"剧本写「天色渐暗」，你要决定那是黄昏还是阴天。每一个选择都在悄悄改写一个故事——而那个故事不再是原来的。",fileNum:"SR-041"},
+  {name:"编导",rarity:"R",aiResist:50,salary:30,demand:55,category:"创意",emoji:"🎥",tagline:"把一个想法拍出来",desc:"你知道每一格镜头应该装什么，也知道为什么观众会在那个瞬间落泪。剪完那一刻你自己先掉眼泪。",fileNum:"R-042"},
+  {name:"主播",rarity:"R",aiResist:45,salary:32,demand:80,category:"内容",emoji:"🎙️",tagline:"屏幕后的陪伴",desc:"你对着一个看不见的人群说话。偶尔有人在弹幕里写：今天心情不好，看你直播一会儿。你知道那句话比礼物重。",fileNum:"R-043"},
+  {name:"导游",rarity:"N",aiResist:40,salary:18,demand:60,category:"服务",emoji:"🗺️",tagline:"替你找回好奇心",desc:"同一条街，你带不同的人走，故事就不一样。真正的工作不是讲历史，是让那个下午，不像他自己查攻略走出来的。",fileNum:"N-044"},
+  {name:"健身教练",rarity:"R",aiResist:45,salary:20,demand:65,category:"服务",emoji:"💪",tagline:"和身体谈判",desc:"你知道什么时候该逼他一下，什么时候该放过他。动作是表层，真正在变化的是他回来的次数。",fileNum:"R-045"},
+  {name:"工程师",rarity:"SR",aiResist:55,salary:55,demand:70,category:"技术",emoji:"⚙️",tagline:"算得过来的浪漫",desc:"一座桥、一根轴，最终要承担的是真实世界里的力。你的签字下面，是一条人命的分母。",fileNum:"SR-046"},
+  {name:"警察",rarity:"R",aiResist:65,salary:25,demand:75,category:"公共服务",emoji:"👮",tagline:"把事情按下去",desc:"上门那通敲门，大多数都不是去抓谁。你的工作是把一个吵得凶的事情按下去，让它回到能处理的样子。",fileNum:"R-047"},
+  {name:"建筑师",rarity:"SR",aiResist:55,salary:50,demand:50,category:"创意",emoji:"📐",tagline:"替空间写一首诗",desc:"一面墙放在哪里、窗户开多大、光从几点开始落到地板上——你做的这些选择，会被一群人住很多年。",fileNum:"SR-048"},
+  {name:"房产中介",rarity:"N",aiResist:40,salary:25,demand:70,category:"销售",emoji:"🏠",tagline:"帮人找一个睡觉的地方",desc:"你带他们看了二十套房子，他们最后选的那一套，和你第一天推荐的是同一套。中间那十九套，他们必须自己走一遍。",fileNum:"N-049"},
+  {name:"保险代理",rarity:"R",aiResist:38,salary:22,demand:65,category:"销售",emoji:"📄",tagline:"贩卖「万一」",desc:"你卖的不是保险，是一个还没发生的坏消息。最难那一步是让对方相信它可能发生，同时相信你会在那一天在场。",fileNum:"R-050"},
+  {name:"飞行员",rarity:"SSR",aiResist:70,salary:65,demand:40,category:"技术",emoji:"✈️",tagline:"把人送到云端",desc:"大部分时间是自动驾驶。你的工作是那 1% 自动驾驶不处理的部分——而那 1% 决定机上几百个人能不能回家吃晚饭。",fileNum:"SSR-051"},
+  {name:"发型师",rarity:"SR",aiResist:80,salary:20,demand:80,category:"服务",emoji:"✂️",tagline:"替你做一个决定",desc:"你听他说完最近发生的事，才知道该剪多短。剪完他照镜子那一秒，多数人不是在看发型，是在看自己有没有重新开始的力气。",fileNum:"SR-052"}
 ];
 const ELIM_YEAR={};
 YEARS.forEach(y=>y.eliminated.forEach(n=>{if(!ELIM_YEAR[n])ELIM_YEAR[n]=y.year;}));
@@ -2044,7 +2078,6 @@ const OPENING_STORIES={
   '公务员':`印章落下的那一刻，事情就成立了。\n规则有很多，灰色地带也有很多。\n我用印章承担那些规则承担不了的部分。今年的工牌还戴着。`,
   '厨师':`盐放多少没有答案。我只是知道那一刻应该停。\n这种「知道」没有名字，也没有教科书——它住在我手里。\n今天有客人说：和平时不一样。我知道是哪里不一样。`,
   '修理工':`把坏掉的东西重新拧紧，是这份工作的表面。\n下面那一层，是替别人不舍得扔掉的那点东西，多留几年。\n今天修了三台，每台不一样，每台修好了。这种感觉还在。`,
-  '救生员':`大多数时候，我什么都不做。\n我坐在高处看水面，看所有人玩耍——一个下午又一个下午。\n但那一刻来了，我不能犹豫。今天什么都没发生——这是这份工作最好的一天。`,
   '配送员':`城市的每一条小路，我都跑过。\n地址是终点，但路上发生的事不是。\n门铃响那一下，意味着我又一次准时抵达——这种准时，本身就是承诺。`,
   '网约车司机':`陌生人坐进来，目的地不同，沉默也不同。\n这座城市的夜路我都熟，但每一次乘客的故事都还是新的。\n今天那个凌晨的长途，乘客在车上睡着了。`,
   '作家':`我写的不是故事，是一个人在某个瞬间没说出口的话。\n这些话本来要消失的——是我让它们留了下来。\n今年还在写。书桌前的那盏灯，每天都还亮着。`,
@@ -2071,7 +2104,18 @@ const OPENING_STORIES={
   '快递员':`门铃响那一下，是我存在的全部证据。\n大多数时候没人开门，偶尔有人接一下——那一下不是规定动作。\n今天送了三百件。那位三楼的老人，还是接了一下。`,
   '运营':`一条内容能不能起来，差别有时候只在一个词的位置。\n这种感觉做了很久才有，做了很久也说不清。\n今年那条爆了——我知道是因为那个词换了。`,
   '游戏策划':`让玩家在某个地方多停三分钟，不是靠难度，是靠那个时机给一个刚好的惊喜。\n这种「刚好」无法写在文档里。\n今年测试出来，留存比目标高了 8%。那个关卡改了四次。`,
-  '制片':`剧本写「天色渐暗」，我要决定那是黄昏还是阴天。\n每一个选择都在悄悄改写一个故事——而那个故事不再是原来的。\n今年项目还在推进。分镜表上的那些决定，已经变成画面了。`
+  '制片':`剧本写「天色渐暗」，我要决定那是黄昏还是阴天。\n每一个选择都在悄悄改写一个故事——而那个故事不再是原来的。\n今年项目还在推进。分镜表上的那些决定，已经变成画面了。`,
+  '编导':`我把一个想法拍出来，带一群人把它扛到镜头前。\n每一格镜头该装什么，哪一秒观众会落泪，我都能说清楚。\n今天看 AI 出的成片，比我的还顺——我却说不清那多出来的一点什么去了哪里。`,
+  '主播':`对着屏幕另一头那一两千个看不见的人说话。\n他们不关心我今天过得怎样，但我要让他们觉得有人一直在。\n今晚弹幕里有人说「看你直播一会儿，心情好一点」。我知道那句话不是给机器的。`,
+  '导游':`同一条街，我带不同的人走，讲出来的故事都不一样。\n真正的工作不是讲历史，是让那个下午不像查攻略走出来的。\n今天团里有个年轻人说：我第一次觉得旅行不是打卡。`,
+  '健身教练':`我和别人的身体谈判。\n知道什么时候该逼他一下，什么时候该放过他。\n今年那个老会员又来了——他最近压力大，动作变形了一点，我没让他加重量。`,
+  '工程师':`我画图、算力、校核承重。\n一座桥、一根轴，最终要承担的是真实世界里的力。我的签字下面，是一条人命的分母。\n今天这张图，反复算了三遍——因为那根梁，正好跨过一所学校的操场。`,
+  '警察':`我上门敲那些没有人想开的门。\n最常见的结局不是抓谁，是把一个吵得凶的事情按下去。\n今晚这通出警，两个人当场吵到要动手。我只是坐下来，等他们先喝口水。`,
+  '建筑师':`一面墙放在哪里、窗户开多大、光从几点开始落到地板上——\n我做的这些选择，会被一群人住很多年。\n今年这栋楼还没完工。我去工地看了一眼，知道那道采光窗我没算错。`,
+  '房产中介':`我带他们看房子。\n最后选的那一套，往往和我第一天推荐的是同一套。中间那十九套，他们必须自己走一遍。\n今年那对夫妻终于签了，在客厅站着不说话的那一秒，我知道他们准备好了。`,
+  '保险代理':`我卖的不是保险，是一个还没发生的坏消息。\n最难的一步是让对方相信它可能发生。\n今年那个老客户真的用上了——电话里他没有感谢我，只是哭。`,
+  '飞行员':`大部分时间是自动驾驶。\n我的工作是那 1% 自动驾驶不处理的部分——而那 1% 决定机上几百个人能不能回家吃晚饭。\n今天起飞前看了眼云层，我就知道那趟飞行会很安静。`,
+  '发型师':`我听他说完最近发生的事，才知道该剪多短。\n剪完他照镜子那一秒，多数人不是在看发型——是在看自己有没有重新开始的力气。\n今天这位老顾客来了第十二次，这一次他说想全剪掉。`
 };
 function generateOpeningStory(card){
   return OPENING_STORIES[card.name]||`我做这一行很多年了。\n每天的事看上去差不多，但每一天又都不一样。\n我还在做。今天又是新的一天。`;
@@ -2294,7 +2338,6 @@ const CAREER_VOICES={
   "快递员":{intro:"知道哪栋楼电梯最慢、哪家门口狗会先叫。我一天在城里穿很多次，手里拿的都是别人等着的东西。",survival:"今年线路更准、派送更细了，我还在跑，是因为写着“请放门口”的包裹，也常常需要我敲一下门，确认里面真的有人。",eliminated:"今天站点把工牌收回去，我最后一次扫码出库，车筐却是空的。我站在熟悉的小区门口，突然不知道自己该往哪栋走。",milestone:{3:"第三年，我学会和更紧的时间赛跑，也学会在楼道里喘口气再继续上楼。",5:"第五年，我发现自己送的不只是件，是很多人一天里最确定会到的一样东西。",8:"第八年，路越来越被规划好，我对这座城的熟悉却像一张快失效的旧地图。",10:"第十年，我留到最后的不是速度，是我真的走过这些门牌和楼层。"}},
   "护士":{intro:"在病房里一趟趟地走。量体征、换药、安抚家属、盯医嘱，我的时间总是被很多很具体的小事切开。",survival:"今年监测、记录、提醒都更顺了，我还在床边，是因为病人半夜抓住我袖子问“我会不会有事”的时候，不能只亮一块屏。",eliminated:"护理机器人v3部署到了我们科。三个月后撤回了——夜班的老人不会对一台机器讲她已故的丈夫。但科里还是裁了两位同事，剩下的人接走了她们的班。我签了离职协议，病房的灯还亮着，呼叫铃还响，只是以后不是我去接了。",milestone:{3:"第三年，我开始把更多精力留给床边那一分钟，因为很多稳定都是靠那一分钟撑住的。",5:"第五年，我承认自己做的不只是护理，是在疼、怕、乱之间维持一点秩序。",8:"第八年，记录越来越完整，病房却更需要人，我也更清楚自己快站到边上了。",10:"第十年，我这十年最常做的事，就是在别人最难受的时候，说一句“我在”。"}},
   "摄影师":{intro:"习惯性先看光落在哪里。别人举手机记录，我会先后退半步，等那个表情真正到位。",survival:"今年图像出得更多也更快，我还在按快门，是因为一个人真正走神的那一瞬、风把衣角吹偏的那一下，不能提前摆好。",eliminated:"今天客户说以后先用现成方案，我把镜头盖扣上，棚里的灯还亮着，却像再也不需要我决定曝光。",milestone:{3:"第三年，我不再执着设备差距，我开始更在意人什么时候终于忘了镜头。",5:"第五年，我越来越确定，摄影不是把东西拍清楚，是把某个瞬间留到以后还能成立。",8:"第八年，画面越来越完美，我反而更珍惜那些轻微失焦但很真的照片。",10:"第十年，我拍下来的不是世界有多好看，是人曾经这样站过、笑过、老过。"}},
-  "救生员":{intro:"坐在高椅上看着水面。别人来玩水，我来数头顶、看水纹、记住谁下水前已经有点不对劲。",survival:"今年监测更细了，我还在池边，是因为真正危险的那一秒，往往只像有人安静地沉下去。",eliminated:"今天泳池边多了一整套新设备，我的哨子被收进柜子里。水面还是那样亮，我却第一次不用再盯着它看一整天。",milestone:{3:"第三年，我学会相信设备提醒，但我的眼睛还是会先扫最远那条泳道。",5:"第五年，我知道自己工作的价值，常常体现在什么都没发生。",8:"第八年，大家更相信实时监测，我仍然记得慌乱真正开始时，人群会先安静一拍。",10:"第十年，我守过很多平静的下午，才明白平静本身就是我交出来的成绩。"}},
   "教师":{intro:"站在讲台上，一边讲课一边看谁在发呆。知识可以整理，学生那一瞬间听懂没听懂，得从眼神里找。",survival:"今年备课、练习、批改都轻了不少，我还在教室里，是因为一个孩子突然举手说“我还是不明白”，这句话不能被跳过。",eliminated:"班级合并政策下来，公立学校削减编制。AI 教得越来越好，财政却没钱了，就先从这里省。一个老师带两个班，剩下的人去做题库标注。最后一天，我还是来上了课，一直上完。",milestone:{3:"第三年，我开始把重点从讲更多，换成确认谁真正跟上了。",5:"第五年，我越来越明白，老师不是把内容送出去，是把一个孩子从“不敢问”带到“敢开口”。",8:"第八年，学习路径越来越精密，我却更常想起那些偏题、走神、课后追上来的提问。",10:"第十年，我做老师最大的成就，不是讲完多少页，是曾经陪一些人把脑子里的灯点亮过。"}},
   "数据分析师":{intro:"我是那个盯趋势，也盯口径的人。别人看见上涨，我先问这条线到底是怎么画出来的。",survival:"今年报表、归因、预测都出得更快，我还在，是因为一张图再完整，也可能只是把偏差画得很好看。",eliminated:"今天例会没再留我的位置，指标解释已经自动同步。我关掉看板前，还是本能地检查了一遍日期筛选。",milestone:{3:"第三年，我学会把时间从重复计算里腾出来，去问业务一句“你到底想知道什么”。",5:"第五年，我认清自己最值钱的不是做图，是知道哪些数字放在一起看会骗人。",8:"第八年，答案越来越即时，我反而更常为那些没人追问的异常停下来。",10:"第十年，我留下的习惯是：每次看见漂亮结论，先怀疑它有没有把人藏起来。"}},
   "数据录入员":{intro:"把别人手写的、口述的、零散的东西一点点敲进格子里。我的工作很少被看见，但很多流程都得从我这一步开始。",survival:"今年还剩下来的单子，多半是字太潦草、格式太乱、原件太旧。我还在键盘前，是因为有些信息只有人能认出来它本来想写什么。",eliminated:"今天我最后一次按下保存，表格已经能自己长完整了。我把手腕从键盘边抬起来，桌上突然安静得只剩风扇声。",milestone:{3:"第三年，我录得更少了，却更常处理那些别人嫌麻烦的烂摊子。",5:"第五年，我开始明白自己做的不是输入，是把混乱整理成能被继续使用的东西。",8:"第八年，纸越来越少，手写越来越少，我熟悉的世界像被一页页抽走。",10:"第十年，我这份工作最后留下来的价值，不过是认真地把别人的东西放对地方。"}},
@@ -2312,7 +2355,18 @@ const CAREER_VOICES={
   "银行柜员":{intro:"那块玻璃把世界分成两边。有人来存钱，有人来取，有人来问一件他自己也没说清楚的事。我把答案推过去，有时候他还没走，只是站着，像在确认什么东西还在。我知道他不是在等收据。",survival:"今年大部分业务都不来柜台了，我还在窗口，是因为有人忘了密码、看不懂提示、或者只是想当面问一句“这样安全吗”。",eliminated:"今天我把点钞机旁的小便签撕掉，窗口号还亮着，玻璃后的座位却已经要撤了。我起身时，椅子发出的声音比平时更空。",milestone:{3:"第三年，我接待的人变少了，但留下来的每一个，都更需要我慢慢讲。",5:"第五年，我意识到柜员不只是办业务，是在别人和一套看不见的流程之间，做那个能被看见的人。",8:"第八年，网点越来越像展示区，我熟悉的排队、叫号、盖章声一点点退下去。",10:"第十年，我守的不是现金，是很多人对“存进去还在”的那份安心。"}},
   "销售代表":{intro:"先递名片、再递方案。很多时候卖的不是东西，是让对方觉得这件事可以放心交给我。",survival:"今年报价、跟进、话术都更完整了，我还在跑客户，是因为酒局散场、电梯门快关上的那十秒，合作往往才真正有了眉目。",eliminated:"今天客户群里还在聊项目，我却已经被从通讯录里替换掉了。我看着那句“后续由新同事对接”，像看见自己被一句话交接完。",milestone:{3:"第三年，我学会少说产品，多听对方到底在担心什么。",5:"第五年，我越来越明白，销售不是劝人买，是让人觉得你说的话可以压在心里。",8:"第八年，标准方案越来越全，真正难得的关系却越来越薄，我也开始分不清自己卖的是信任还是耐心。",10:"第十年，我留下来的经验很简单：单子签在纸上之前，先签在人心里。"}},
   "音乐家":{intro:"把一段旋律反复弹到终于顺手。别人听见三分钟，我常常得在房间里陪它过完很多个夜里。",survival:"今年作品还是能发出去，只是每天淹过来的声音太多了。我看得到播放数，却不知道有没有人真的把我这一首听完。",eliminated:"今天平台照样更新新歌，我的页面也还在，只是新的曲子没必要再由我写。我把耳机摘下来，房间忽然安静得不像工作室。",milestone:{3:"第三年，我学会接受一首歌发出去以后会很快沉下去，但我还是认真做每一个小节。",5:"第五年，我越来越确定，音乐不是争抢耳朵，是给真正停下来的人留一点东西。",8:"第八年，声音越来越满，我的旋律越来越像掉进夜里的细雨，不知道落到了谁身上。",10:"第十年，我没法决定谁会听见，但至少这些年，我一直在把心里那段声响写出来。"}},
-  "项目经理":{intro:"盯排期、追进度、开会对齐。项目能不能按时落地，很多时候不是看方案多漂亮，是看中间断了几次还能不能接回去。",survival:"今年计划、分工、风险提示都更清楚了，我还在，是因为项目真正偏航时，没人比我更清楚该先打给谁、先砍哪一块。",eliminated:"2030年财政紧缩，公司全面冻结非核心项目。我的岗位不是被 AI 替代，是被停掉的项目一起停了。最后一个任务是把手头的项目清理收尾，做完，就没有下一个了。",milestone:{3:"第三年，我学会接受计划永远赶不上变化，我真正管理的是变化发生后的顺序。",5:"第五年，我不再把自己当推动流程的人，我是在各部门都觉得自己有理的时候，把事情继续往前挪的人。",8:"第八年，项目越来越轻快，缓冲越来越少，我像一直站在最后一道还没自动化的关口。",10:"第十年，我做项目经理这十年，总结成一句话：事情能成，从来不是因为没人出错，而是有人一直在收口。"}}
+  "项目经理":{intro:"盯排期、追进度、开会对齐。项目能不能按时落地，很多时候不是看方案多漂亮，是看中间断了几次还能不能接回去。",survival:"今年计划、分工、风险提示都更清楚了，我还在，是因为项目真正偏航时，没人比我更清楚该先打给谁、先砍哪一块。",eliminated:"2030年财政紧缩，公司全面冻结非核心项目。我的岗位不是被 AI 替代，是被停掉的项目一起停了。最后一个任务是把手头的项目清理收尾，做完，就没有下一个了。",milestone:{3:"第三年，我学会接受计划永远赶不上变化，我真正管理的是变化发生后的顺序。",5:"第五年，我不再把自己当推动流程的人，我是在各部门都觉得自己有理的时候，把事情继续往前挪的人。",8:"第八年，项目越来越轻快，缓冲越来越少，我像一直站在最后一道还没自动化的关口。",10:"第十年，我做项目经理这十年，总结成一句话：事情能成，从来不是因为没人出错，而是有人一直在收口。"}},
+  "编导":{intro:"把一个想法拍出来，需要一群人一起把它扛到镜头前。我知道每一格应该装什么，也知道哪一秒观众会忽然停一下。",survival:"今年分镜、剪辑预览都 AI 先出一版。我还在，是因为最后一秒该定在哪一帧、音乐应该收在哪个字上，得我来按键。",eliminated:"今天片子交付后没人再发工作群。AI 出的成片比我三个月赶出来的还要流畅。我把分镜本收进抽屉，不知道下一次开工是什么时候。",milestone:{3:"第三年，我学会少解释，多直接上镜头。时间永远不够。",5:"第五年，我才明白编导不是下指令，是让一群人同时相信同一个画面。",8:"第八年，我盯的镜头越来越干净，真正意外的瞬间越来越少。",10:"第十年，我做这行最后的念想是——有些表情还是得真人演给真人看。"}},
+  "主播":{intro:"对着屏幕另一头那一两千个看不见的人说话。他们不关心你今天过得怎样，但你要让他们觉得有人一直在。",survival:"今年虚拟主播越来越像人，我还在开播，是因为偶尔会有人在弹幕里打一句「今天心情不好」——那句话不是给机器的。",eliminated:"今天平台通知我，新一代虚拟形象可以用我的声音模型做直播。我把直播间关了，摘下耳机，房间里第一次没有人叫我的 ID。",milestone:{3:"第三年，我学会在镜头前保持一种不累的状态，哪怕我很累。",5:"第五年，我明白自己卖的不是脸，是一种「今晚有人陪你」的感觉。",8:"第八年，算法更懂观众，我反而更怀念最初那几十个认得出我发型变化的老粉。",10:"第十年，我这份工作最意外的礼物，是有陌生人在弹幕里说：谢谢你还在。"}},
+  "导游":{intro:"同一条街，你带不同的人走出的故事是不一样的。我的工作不是讲历史，是让那个下午不像查攻略走出来的。",survival:"今年 AR 导览和 AI 讲解无处不在，我还在带团，是因为真正的旅行从来不在景点牌子上。",eliminated:"今天公司把导游证收回去，改成 AI 耳机租赁。我站在那个熟悉的广场上，第一次没有人在身后等我讲下一个故事。",milestone:{3:"第三年，我不再背稿子，开始编自己的故事。",5:"第五年，我发现游客要的不是知识，是在陌生的地方有人替他们找方向。",8:"第八年，自由行越来越多，跟团的人越来越少，我带的线路在慢慢变短。",10:"第十年，我走过的那些街，到最后只剩我自己知道哪一家店的老板是真的、哪一家是假的。"}},
+  "健身教练":{intro:"和别人的身体谈判。我知道什么时候该逼他一下，什么时候该放过他。真正在变化的是他回来的次数。",survival:"今年智能器械和 AI 私教 APP 越来越准，我还在，是因为有人只是需要一个真人盯着他，才肯多做最后一组。",eliminated:"今天健身房换了一整套智能镜子。我拿起最后一瓶蛋白粉，和那个八年的老会员打了个招呼，他说：你走了我也不练了。",milestone:{3:"第三年，我学会不只盯动作，也听他最近心情怎么样。",5:"第五年，我明白健身不是改造身体，是让一个人和自己的身体重新熟悉。",8:"第八年，家庭器械越来越便宜，来健身房的人越来越少，我反倒开始在家接私教上门。",10:"第十年，我留下来的客人，都是那些真的把我当朋友的人。"}},
+  "工程师":{intro:"画图、算力、校核承重。一座桥、一根轴，最终要承担的是真实世界里的力。我的签字下面，是一条人命的分母。",survival:"今年 AI 辅助设计越来越强，我还在，是因为真正出事故的那一秒，追责的永远是签过字的那个人。",eliminated:"今天我把最后一份图纸归档。AI 生成的结构方案比我的更大胆，也更便宜。我合上计算本，不知道下一次还能不能听到工地上那种声音。",milestone:{3:"第三年，我学会相信自己算出来的数字，但更相信现场的老师傅一眼看出不对的那个瞬间。",5:"第五年，我越来越明白工程师的工作不是画图，是替一座建筑承担它自己不会说的重量。",8:"第八年，软件能画得更快更漂亮，但签字那一栏的空白，还得由我这个人填。",10:"第十年，我做这行的骄傲，是我建的那几座桥，还站在原地。"}},
+  "警察":{intro:"上门敲那些没有人想开的门。我的工作最常见的结局不是抓谁，是把一个吵得凶的事情按下去。",survival:"今年监控、识别、报警都 AI 先处理一轮，我还在跑一线，是因为扣扳机前那几秒判断，只有真人能担。",eliminated:"2030 年机关编制冻结，基层警员岗位被大量合并。我签了退休协议。但我知道有几个老街坊还会打我私人电话——那些事 AI 接不了。",milestone:{3:"第三年，我学会先看对方手里有没有东西，再决定说第一句话。",5:"第五年，我越来越明白这份工作不是抓人，是替一个社区维持一点基本的秩序。",8:"第八年，智能系统越来越精准，我跑的却是那些系统处理不了的「灰地带」。",10:"第十年，我守的那片辖区，很多事没有登记进档案，但我知道它们发生过。"}},
+  "建筑师":{intro:"一面墙放在哪里、窗户开多大、光从几点开始落到地板上——我做的这些选择，会被一群人住很多年。",survival:"今年 AI 参数化设计飞速铺开。我还在画图，是因为一个家需要的不只是效率最高的空间，是能住进去慢下来的那种地方。",eliminated:"今天事务所宣布全面转向 AI 生成设计。我翻出最早那套手绘稿，墨水已经褪得看不清尺寸。我把那张纸重新卷起来，放回抽屉最里面。",milestone:{3:"第三年，我学会在效率和比例之间做妥协，但不在光线上妥协。",5:"第五年，我发现自己做的不是房子，是一个人在很多年里反复走过的那条动线。",8:"第八年，生成式建筑越来越快，但能让人想在阳台上多坐一会儿的空间，依然是稀罕物。",10:"第十年，我留下来的几栋楼，我自己也会绕路去看它们早上几点采光最好。"}},
+  "房产中介":{intro:"带他们看房子。最后选的那一套，往往和我第一天推荐的是同一套。中间那十九套，他们必须自己走一遍。",survival:"今年虚拟看房和 AI 推荐系统满天飞，我还在跑盘，是因为一对夫妇吵着说要不要买那一刻，系统决定不了该怎么接话。",eliminated:"今天平台下掉了我的工号，说以后交易全走 AI 撮合。我最后一次走进那间空着的样板房，阳光和第一次来看的时候一样好。",milestone:{3:"第三年，我学会少夸户型，多看他们站在客厅时的表情。",5:"第五年，我明白自己卖的不是房子，是一个人可以把行李放下来的底气。",8:"第八年，虚拟看房越来越真，但真正下决定那一刻，还是要有人站在对面。",10:"第十年，我经手过的那些钥匙，大多数人都还住在里面。"}},
+  "保险代理":{intro:"贩卖「万一」。我卖的不是保险，是一个还没发生的坏消息。最难的一步，是让对方相信它可能发生。",survival:"今年 AI 精算和自动核保越来越强。我还在做这一行，是因为理赔那一天对方真正需要的不是短信提醒，是有人陪他把流程走完。",eliminated:"今天公司整建制切到 AI 核保系统，我那批老客户也被转给算法跟进。我把名片盒合上，想到下次电话响的时候，没有人会叫我的名字。",milestone:{3:"第三年，我学会接受大部分人听完就挂电话，但那几个愿意坐下来的人是真的需要。",5:"第五年，我明白保险这件事卖的是信任，信任卖的是陪跑十年那一点点可能。",8:"第八年，算法更懂风险定价，但理赔那一天要开的门，还是我亲自去敲。",10:"第十年，我手里的那几份老保单，最后都派上用场了。都是不好的理由。"}},
+  "飞行员":{intro:"大部分时间是自动驾驶。我的工作是那 1% 自动驾驶不处理的部分——而那 1% 决定机上几百个人能不能回家吃晚饭。",survival:"今年全自动驾驶系统通过验证。我还坐在驾驶舱，是因为任何一架飞机出事，调查报告的第一行问的都是：那时候机长做了什么。",eliminated:"今天公司通知我完成最后一次航班。我把机长帽摘下来放在副驾旁边。起飞前我还是习惯性地看了一眼云层——没有风。",milestone:{3:"第三年，我学会在仪表和窗外之间，永远先相信窗外。",5:"第五年，我越来越明白这份工作最后考验的不是操作，是在意外面前那几秒钟的镇定。",8:"第八年，自动化越来越完备，我做的决定越来越少，但每一个都更重。",10:"第十年，我飞过那么多次，最骄傲的还是有几次——我替换了自动系统的那一个判断。"}},
+  "发型师":{intro:"听他说完最近发生的事，才知道该剪多短。剪完他照镜子那一秒，多数人不是在看发型，是在看自己有没有重新开始的力气。",survival:"今年全自动理发机上市，店里来的人少了一批。我还在剪，是因为剪头发从来不只是剪头发——有些话只有在这把椅子上才说得出口。",eliminated:"今天我把那把用了八年的剪刀放进盒子。外面的机器剪得又快又均匀，但那些年跟我约好周日下午来的老客人，不会再来了。",milestone:{3:"第三年，我开始看一个人最近一次剪发和这次之间隔了多久——长的那几个月通常发生了事。",5:"第五年，我明白头发是幌子，真正在剪的是他愿不愿意面对镜子里的自己。",8:"第八年，机器越来越准，但人还是会在剪到一半时突然说起一件事。",10:"第十年，我手下长出来过很多种头发。更长的是那些每次来都还愿意坐下来聊两句的老顾客。"}}
 };
 function getSurvivorVoice(card, yearsSurvived){
   const v=CAREER_VOICES[card.name];
@@ -2423,6 +2477,13 @@ function updateHUD(){
   $('gh-year-sub').textContent=`第${G.yearIndex+1}年 / 共10年`;
   const dots=$('year-dots');dots.innerHTML='';
   for(let i=0;i<10;i++){const d=document.createElement('div');d.className='ydot'+(i<G.yearIndex?' done':i===G.yearIndex?' cur':'');dots.appendChild(d);}
+  // 更新 HUD 储蓄计数
+  const hs=$('hud-savings');if(hs)hs.textContent='¥ '+G.totalSalary+' 万';
+  const hss=$('hud-savings-sub');
+  if(hss){
+    const curSalary=G.currentCard?(G.currentCard.salary||0):0;
+    hss.textContent='年薪 '+curSalary+' 万';
+  }
 }
 
 function buildActiveCard(card){
@@ -3355,6 +3416,14 @@ function generateEpic(journey, died){
     lines.push(G.cachedVerdict);
   }
 
+  // 十年储蓄收尾
+  const totalSavings = G.totalSalary || 0;
+  if(died){
+    lines.push(`这 ${finalYear-2025} 年，你攒下了 ¥ ${totalSavings} 万。`);
+  } else {
+    lines.push(`这十年，你攒下了 ¥ ${totalSavings} 万。`);
+  }
+
   return lines.join('\n\n');
 }
 
@@ -3444,7 +3513,7 @@ function showEnding(){
   let html=`<div style="text-align:center;margin-bottom:20px;">
     <div style="font-size:9px;color:${tierColor};letter-spacing:3px;font-family:monospace;margin-bottom:4px;">存活档案</div>
     <div style="font-size:20px;font-weight:900;color:${tierColor};letter-spacing:2px;">${tierLabel}</div>
-    <div style="font-size:10px;color:var(--ink-faint);margin-top:4px;font-family:monospace;">十年均薪力 ${avgSalary} · 换职 ${G.swapCount} 次</div>
+    <div style="font-size:10px;color:var(--ink-faint);margin-top:4px;font-family:monospace;">十年储蓄 ¥ ${G.totalSalary} 万 · 换职 ${G.swapCount} 次</div>
   </div>`;
   html+=`<div style="font-size:13px;line-height:2.2;color:var(--ink-lt);white-space:pre-line;">${epic}</div>`;
   html+=`<p style="font-size:10px;color:var(--ink-faint);margin-top:14px;font-family:monospace;">这十年你见过 ${encN} 种职业。</p>`;
@@ -3459,7 +3528,7 @@ function renderJobSelector(){
   // 按拼音首字母分组
   const groups={};
   // 仅包含 POOL 内职业的拼音首字母映射（40个职业）
-  const pinyinMap={'程序员':'C','客服代表':'K','数据录入员':'S','银行柜员':'Y','市场研究分析师':'S','销售代表':'X','金融分析师':'J','摄影师':'S','信息安全分析师':'X','公务员':'G','厨师':'C','修理工':'X','救生员':'J','配送员':'P','网约车司机':'W','作家':'Z','平面设计师':'P','记者':'J','翻译':'F','剪辑师':'J','音乐家':'Y','演员':'Y','会计师':'K','教师':'J','护士':'H','医生':'Y','律师':'L','社工':'S','心理咨询师':'X','编剧':'B','广告创意':'G','产品经理':'C','HR':'H','企业文化':'Q','数据分析师':'S','项目经理':'X','快递员':'K','运营':'Y','游戏策划':'Y','制片':'Z'};
+  const pinyinMap={'程序员':'C','客服代表':'K','数据录入员':'S','银行柜员':'Y','市场研究分析师':'S','销售代表':'X','金融分析师':'J','摄影师':'S','信息安全分析师':'X','公务员':'G','厨师':'C','修理工':'X','配送员':'P','网约车司机':'W','作家':'Z','平面设计师':'P','记者':'J','翻译':'F','剪辑师':'J','音乐家':'Y','演员':'Y','会计师':'K','教师':'J','护士':'H','医生':'Y','律师':'L','社工':'S','心理咨询师':'X','编剧':'B','广告创意':'G','产品经理':'C','HR':'H','企业文化':'Q','数据分析师':'S','项目经理':'X','快递员':'K','运营':'Y','游戏策划':'Y','制片':'Z','编导':'B','主播':'Z','导游':'D','健身教练':'J','工程师':'G','警察':'J','建筑师':'J','房产中介':'F','保险代理':'B','飞行员':'F','发型师':'F'};
   POOL.forEach(job=>{
     const first=pinyinMap[job.name]||job.name.charAt(0).toUpperCase();
     if(!groups[first])groups[first]=[];
@@ -3775,6 +3844,9 @@ function populateShareCard(mode){
   }
   // 分享卡片空间有限，判词用引号包住作为引文风格，但替换换行符为空格避免卡片布局破坏
   $('share-card-verdict').textContent='「'+G.cachedVerdict.replace(/\n/g,' ')+'」';
+  // 十年储蓄：读 G.totalSalary
+  const savingsEl=$('share-card-savings-num');
+  if(savingsEl)savingsEl.textContent='¥ '+(G.totalSalary||0)+' 万';
 }
 /* 按需加载 html2canvas：多 CDN 兜底（国内访问 jsdelivr 有时会抽风） */
 let _h2cLoading=null;
