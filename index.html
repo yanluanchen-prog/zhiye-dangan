@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
 <meta name="twitter:description" content="每一次选择都会被写进你的结局。">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-1800 onTap 改用 pointerdown + 开篇语另起一行 -->
+<!-- v20260408-1900 分享按钮3修复: 停音频+防ghost click+关闭按钮 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -3907,9 +3907,20 @@ function loadHtml2Canvas(){
   return _h2cLoading;
 }
 let _shareInProgress=false;
+let _shareJustClosed=0;
+function _stopAllAudio(){
+  // 停掉环境音乐
+  try{if(typeof window.stopAmbient==='function')window.stopAmbient();}catch(e){}
+  // 挂起 AudioContext，停掉所有正在播放的 oscillator（避免 iOS 弹出媒体控制条）
+  try{if(typeof window._suspendCtx==='function')window._suspendCtx();}catch(e){}
+}
 async function showSharePreview(mode){
   if(_shareInProgress)return;
+  // 防 ghost click：刚关闭过分享的话，800ms 内不允许再打开
+  if(Date.now()-_shareJustClosed<800)return;
   _shareInProgress=true;
+  // 关掉所有声音和音乐——避免 iOS 弹出媒体控制条遮挡分享卡片
+  _stopAllAudio();
   // 按钮立即反馈：置灰+变文案
   const btns=[$('fail-share-btn'),$('end-share-btn')].filter(Boolean);
   const originalTexts=btns.map(b=>b.textContent);
@@ -3936,11 +3947,23 @@ async function showSharePreview(mode){
     _shareInProgress=false;
   }
 }
+function _closeShareModal(){
+  $('share-modal').style.display='none';
+  _shareJustClosed=Date.now();
+  // 临时禁用分享按钮 800ms，防止 ghost click 立刻重新打开
+  ['fail-share-btn','end-share-btn'].forEach(id=>{
+    const b=$(id);
+    if(b){
+      b.style.pointerEvents='none';
+      setTimeout(()=>{b.style.pointerEvents='';},800);
+    }
+  });
+}
 onTap($('fail-share-btn'),()=>showSharePreview('fail'));
 onTap($('end-share-btn'),()=>showSharePreview('survival'));
-onTap($('share-close-btn'),()=>{$('share-modal').style.display='none';});
+onTap($('share-close-btn'),_closeShareModal);
 $('share-modal').addEventListener('click',(e)=>{
-  if(e.target.id==='share-modal')$('share-modal').style.display='none';
+  if(e.target.id==='share-modal')_closeShareModal();
 });
 
 // 初始化职业选择器
@@ -4121,6 +4144,14 @@ function hideAllHints(){
 
   window.stopAmbient = function() {
     if (musicTimer) { clearTimeout(musicTimer); musicTimer = null; }
+  };
+
+  // 临时挂起 AudioContext，停掉所有正在播放的 oscillator
+  // 这样 iOS Safari 不会继续显示媒体控制条遮挡分享卡片
+  window._suspendCtx = function() {
+    if (ctx && ctx.state === 'running') {
+      try { ctx.suspend(); } catch(e) {}
+    }
   };
 
   window.toggleMusic = function() {
