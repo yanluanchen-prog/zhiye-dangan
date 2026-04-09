@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
 <meta name="twitter:description" content="每一次选择都会被写进你的结局。">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-1600 67%来源修正+HUD莫兰迪色+按钮Y阈值彻底移除 -->
+<!-- v20260408-1700 onTap 简化为纯 click + 开篇文案再调整 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -1490,8 +1490,7 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
     </div>
     <div style="font-family:'Courier New',monospace;color:rgba(58,50,44,0.72);line-height:2;font-size:15px;margin-bottom:40px;">
       <p style="margin:0 0 14px;">2026 年起，每年都有职业被 AI 替代。</p>
-      <p style="margin:0 0 14px;">高盛预测：未来三分之二的工作将被 AI 改写。</p>
-      <p style="margin:0;">每一次选择都会被写进你的结局。</p>
+      <p style="margin:0;">在不可逆的 AI 浪潮下，你的职业还安全吗？</p>
     </div>
     <div style="margin-bottom:24px;position:relative;">
       <div style="font-size:20px;color:rgba(80,68,58,0.78);letter-spacing:2px;margin-bottom:16px;">选择你的职业</div>
@@ -1927,6 +1926,7 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
       <div class="letter-stanza">
         <p>留下，还是离开，是你的事。</p>
         <p>我们只负责寄信。</p>
+        <p>每一次选择，都会被写进你的结局。</p>
       </div>
     </div>
     <div class="letter-signature">—— 职业评估系统 · 2026 年 1 月</div>
@@ -3659,37 +3659,14 @@ let lastNavTapAt=0;
 /* 响应式点击：touchend立即触发（移动端），click兜底（桌面/键盘）。
    用时间戳去重，避免 handled 状态在 touch 序列异常时残留。 */
 function onTap(el,fn){
-  let touched=false,firedAt=0;
-  el.addEventListener('touchstart',(e)=>{touched=true;},{passive:true});
-  el.addEventListener('touchend',(e)=>{
-    if(!touched)return;
-    touched=false;
-    // 移除 Y 阈值检查——按钮所在页面不滚动，Y 漂移检查只会误判
-    e.preventDefault();
-    firedAt=Date.now();
-    fn(e);
-  },{passive:false});
-  el.addEventListener('touchcancel',()=>{touched=false;},{passive:true});
-  el.addEventListener('click',(e)=>{
-    if(Date.now()-firedAt<700)return; // touchend 刚fire过，跳过 click 兜底
-    fn(e);
-  });
+  // 简化方案：仅用 click 事件。
+  // touch-action:manipulation + viewport meta 已经消除了 iOS 300ms 延迟。
+  // 之前用 touchstart/touchend 自定义处理反而会因为各种 edge case 失灵。
+  el.addEventListener('click',fn);
 }
 /* 可动态更换handler的版本（用于ev-confirm, result-next等） */
 function bindDynTap(el){
-  let touched=false,firedAt=0;
-  el.addEventListener('touchstart',(e)=>{touched=true;},{passive:true});
-  el.addEventListener('touchend',(e)=>{
-    if(!touched)return;
-    touched=false;
-    // 移除 Y 阈值检查——按钮所在页面不滚动
-    e.preventDefault();
-    firedAt=Date.now();
-    if(el._tapFn)el._tapFn(e);
-  },{passive:false});
-  el.addEventListener('touchcancel',()=>{touched=false;},{passive:true});
   el.addEventListener('click',(e)=>{
-    if(Date.now()-firedAt<700)return;
     if(el._tapFn)el._tapFn(e);
   });
 }
