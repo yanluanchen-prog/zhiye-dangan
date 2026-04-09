@@ -2535,22 +2535,30 @@ let twTimer=null;
 function showScreen(id){if(twTimer){clearInterval(twTimer);twTimer=null;}document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);}
 
 function randomCards(n,excl=[]){
-  // 方案 D：玩家通过失败探索哪年哪个职业被淘汰
-  // 过滤规则：已经死掉（death year < 当前年）的职业不再出现
-  // 死亡当年仍然可见，让玩家有机会"亲身踩雷"——这是发现机制的核心
+  // 过滤：已死掉（death year < 当前年）的职业不再出现
   const curYear=YEARS[G.yearIndex].year;
   const pool=POOL.filter(c=>
     !excl.includes(c.name) &&
     (!ELIM_YEAR[c.name] || ELIM_YEAR[c.name] >= curYear)
   );
-  // Fisher-Yates 均匀洗牌
-  const a=[...pool];
-  for(let i=a.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
+  // 保底机制：5 张里至少 1 张年薪 ≥ 50 万，让玩家每年都有"值得跳"的选项
+  const HIGH_SALARY_THRESHOLD=50;
+  const highPool=pool.filter(c=>c.salary>=HIGH_SALARY_THRESHOLD);
+  const lowPool=pool.filter(c=>c.salary<HIGH_SALARY_THRESHOLD);
+  // Fisher-Yates 洗牌
+  const shuffle=arr=>{const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  const actualN=Math.min(n,pool.length);
+  let result;
+  if(highPool.length>0 && lowPool.length>=actualN-1){
+    // 保底 1 张高薪 + 其余随机从低薪池抽
+    const guaranteedHigh=shuffle(highPool).slice(0,1);
+    const rest=shuffle(lowPool).slice(0,actualN-1);
+    result=shuffle([...guaranteedHigh,...rest]);
+  } else {
+    // 池子太小或没有高薪可选，回退纯随机
+    result=shuffle(pool).slice(0,actualN);
   }
-  // 末日年份池子可能小于 n，自适应抽卡数量
-  return a.slice(0,Math.min(n,a.length));
+  return result;
 }
 function addToEnc(c){
   if(G.encyclopedia[c.name])G.encyclopedia[c.name].timesDrawn++;
