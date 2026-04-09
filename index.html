@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
 <meta name="twitter:description" content="每一次选择都会被写进你的结局。">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-1500 6 fix: 开篇文案+信件+HUD样式+判词年数+各页储蓄+按钮防御 -->
+<!-- v20260408-1600 67%来源修正+HUD莫兰迪色+按钮Y阈值彻底移除 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -159,13 +159,13 @@ body:has(#intro-screen.active){background:#0a0a0a !important;}
 .header-tab-count{font-size:7px;color:rgba(240,235,224,.5);font-family:monospace;letter-spacing:1px;}
 .header-tab .id-badge-card{width:50px;height:84px;}
 .header-tab .id-badge-emoji{font-size:18px !important;}
-.header-tab.savings{cursor:default !important;pointer-events:none !important;}
+.header-tab.savings{cursor:default !important;}
 .header-tab.folder .id-badge-hdr{background:rgba(180,150,110,0.75) !important;color:rgba(255,250,235,0.95) !important;}
 .header-tab.folder .id-badge-art{background:linear-gradient(180deg,var(--paper),#ebe2d3) !important;}
 .header-tab.folder .id-badge-name{font-size:8px;letter-spacing:.5px;}
-.header-tab.savings .id-badge-hdr{background:rgba(200,150,40,0.92) !important;color:rgba(255,250,230,0.95) !important;}
-.header-tab.savings .id-badge-art{background:linear-gradient(180deg,#fbf3df,#f1e4bb) !important;}
-.header-tab.savings .id-badge-name{font-size:16px !important;font-weight:900 !important;color:rgba(140,90,20,0.95) !important;line-height:1 !important;margin-top:4px !important;letter-spacing:0 !important;}
+.header-tab.savings .id-badge-hdr{background:rgba(160,148,128,0.78) !important;color:rgba(255,250,235,0.95) !important;}
+.header-tab.savings .id-badge-art{background:linear-gradient(180deg,#f4ede0,#e6dccc) !important;}
+.header-tab.savings .id-badge-name{font-size:8px !important;font-family:monospace !important;font-weight:800 !important;color:rgba(80,60,45,0.85) !important;letter-spacing:.8px !important;line-height:1 !important;margin-top:4px !important;}
 .id-badge-mini-count{margin-top:4px;font-size:8px;font-family:monospace;color:rgba(80,60,45,0.75);font-weight:800;letter-spacing:.8px;line-height:1;}
 .header-right{text-align:right;}
 .header-classify{font-size:8px;letter-spacing:3px;color:rgba(100,80,65,0.55);font-family:monospace;margin-bottom:2px;}
@@ -1490,7 +1490,7 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
     </div>
     <div style="font-family:'Courier New',monospace;color:rgba(58,50,44,0.72);line-height:2;font-size:15px;margin-bottom:40px;">
       <p style="margin:0 0 14px;">2026 年起，每年都有职业被 AI 替代。</p>
-      <p style="margin:0 0 14px;">未来十年，67% 的工种会消失。</p>
+      <p style="margin:0 0 14px;">高盛预测：未来三分之二的工作将被 AI 改写。</p>
       <p style="margin:0;">每一次选择都会被写进你的结局。</p>
     </div>
     <div style="margin-bottom:24px;position:relative;">
@@ -1937,7 +1937,7 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
 <script>
 const YEARS=[
   // 2026年：标准化文字工作第一波
-  {year:2026,event:"Anthropic 报告：67% 的职业面临 AI 替代风险。OpenAI 翻译系统上线，143 种语言，延迟 0.1 秒。\n\n2026 年 3 月，美国科技行业 66 家公司裁员 39,482 人，每 5 个里就有 1 个被归因于 AI。甲骨文净利润大涨 95%，同日一封邮件裁 3 万人，不看绩效不看职级。国内某头部互联网公司 CEO 内部会议：「开除速度一定要快。」股价应声上涨 6%。\n\n某三甲医院上线 AI 智能分诊，护士工作量「评估减少 40%」。三个月后试点暂停：「夜班患者需要的不是流程优化。」",eliminated:["翻译","客服代表","数据录入员","银行柜员"],slogan:"开除速度一定要快。"},
+  {year:2026,event:"高盛报告：约三分之二的职业可被 AI 部分自动化。OpenAI 翻译系统上线，143 种语言，延迟 0.1 秒。\n\n2026 年 3 月，美国科技行业 66 家公司裁员 39,482 人，每 5 个里就有 1 个被归因于 AI。甲骨文净利润大涨 95%，同日一封邮件裁 3 万人，不看绩效不看职级。国内某头部互联网公司 CEO 内部会议：「开除速度一定要快。」股价应声上涨 6%。\n\n某三甲医院上线 AI 智能分诊，护士工作量「评估减少 40%」。三个月后试点暂停：「夜班患者需要的不是流程优化。」",eliminated:["翻译","客服代表","数据录入员","银行柜员"],slogan:"开除速度一定要快。"},
   // 2027年：内容创作崩盘
   {year:2027,event:"新华社、财新上线 AI 写稿，财经稿件日发布量 +800%。某省级电视台夜间新闻全面切换 AI 主播。\n\n某 9000 人 SaaS 公司一夜端掉整个 Technical Writer 部门 70 人——文档以后由 AI 从代码自动生成。\n\n2025 年好莱坞编剧+演员双重罢工，40 年最长。两年后，索尼影视宣布裁员数百人——影视业务是集团唯一下滑的板块。一位编剧：「他们不是要我写故事，是要我教模型怎么写。」",eliminated:["记者","作家","编剧","摄影师"],slogan:"内容已自动生成。感谢您提供的灵感。"},
   // 2028年：视觉/视频自动化
@@ -3659,14 +3659,12 @@ let lastNavTapAt=0;
 /* 响应式点击：touchend立即触发（移动端），click兜底（桌面/键盘）。
    用时间戳去重，避免 handled 状态在 touch 序列异常时残留。 */
 function onTap(el,fn){
-  let sy=0,touched=false,firedAt=0;
-  el.addEventListener('touchstart',(e)=>{touched=true;sy=e.touches[0].clientY;},{passive:true});
+  let touched=false,firedAt=0;
+  el.addEventListener('touchstart',(e)=>{touched=true;},{passive:true});
   el.addEventListener('touchend',(e)=>{
     if(!touched)return;
     touched=false;
-    // 把滑动阈值从 10 提升到 25——减少"误判为滑动"的概率，常规手指
-    // 在按按钮时往往会有 10-20px 的微小漂移，原来太严格
-    if(Math.abs(e.changedTouches[0].clientY-sy)>25)return;
+    // 移除 Y 阈值检查——按钮所在页面不滚动，Y 漂移检查只会误判
     e.preventDefault();
     firedAt=Date.now();
     fn(e);
@@ -3679,12 +3677,12 @@ function onTap(el,fn){
 }
 /* 可动态更换handler的版本（用于ev-confirm, result-next等） */
 function bindDynTap(el){
-  let sy=0,touched=false,firedAt=0;
-  el.addEventListener('touchstart',(e)=>{touched=true;sy=e.touches[0].clientY;},{passive:true});
+  let touched=false,firedAt=0;
+  el.addEventListener('touchstart',(e)=>{touched=true;},{passive:true});
   el.addEventListener('touchend',(e)=>{
     if(!touched)return;
     touched=false;
-    if(Math.abs(e.changedTouches[0].clientY-sy)>10)return;
+    // 移除 Y 阈值检查——按钮所在页面不滚动
     e.preventDefault();
     firedAt=Date.now();
     if(el._tapFn)el._tapFn(e);
