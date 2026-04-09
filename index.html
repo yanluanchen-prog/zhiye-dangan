@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="我的事业 · 职业生存图鉴">
 <meta name="twitter:description" content="每一次选择都会被写进你的结局。">
 <meta name="twitter:image" content="https://www.my-career.top/share-cover.png">
-<!-- v20260408-1900 分享按钮3修复: 停音频+防ghost click+关闭按钮 -->
+<!-- v20260408-2000 分享关闭后自动恢复音乐 -->
 <style>
 :root{
   --paper:#F5F0E8; --paper-dk:#E8E0D0; --paper-lt:#FAF6EE;
@@ -3908,11 +3908,21 @@ function loadHtml2Canvas(){
 }
 let _shareInProgress=false;
 let _shareJustClosed=0;
+let _shareWasMusicOn=false;
 function _stopAllAudio(){
+  // 记录音乐状态以便恢复
+  try{_shareWasMusicOn = (typeof window.musicOn!=='undefined')?window.musicOn:false;}catch(e){}
   // 停掉环境音乐
   try{if(typeof window.stopAmbient==='function')window.stopAmbient();}catch(e){}
   // 挂起 AudioContext，停掉所有正在播放的 oscillator（避免 iOS 弹出媒体控制条）
   try{if(typeof window._suspendCtx==='function')window._suspendCtx();}catch(e){}
+}
+function _resumeAudio(){
+  // 恢复音乐（如果分享前是开着的）
+  try{if(typeof window._resumeCtx==='function')window._resumeCtx();}catch(e){}
+  if(_shareWasMusicOn){
+    try{if(typeof window.startAmbient==='function')window.startAmbient();}catch(e){}
+  }
 }
 async function showSharePreview(mode){
   if(_shareInProgress)return;
@@ -3950,6 +3960,8 @@ async function showSharePreview(mode){
 function _closeShareModal(){
   $('share-modal').style.display='none';
   _shareJustClosed=Date.now();
+  // 恢复音频
+  _resumeAudio();
   // 临时禁用分享按钮 800ms，防止 ghost click 立刻重新打开
   ['fail-share-btn','end-share-btn'].forEach(id=>{
     const b=$(id);
@@ -4153,6 +4165,17 @@ function hideAllHints(){
       try { ctx.suspend(); } catch(e) {}
     }
   };
+  // 恢复 AudioContext，分享关闭后调用
+  window._resumeCtx = function() {
+    if (ctx && ctx.state === 'suspended') {
+      try { ctx.resume(); } catch(e) {}
+    }
+  };
+  // 暴露 musicOn 状态供分享流程读取/恢复
+  Object.defineProperty(window, 'musicOn', {
+    get: function() { return musicOn; },
+    set: function(v) { musicOn = v; }
+  });
 
   window.toggleMusic = function() {
     musicOn = !musicOn;
