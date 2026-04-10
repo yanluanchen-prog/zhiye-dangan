@@ -1456,6 +1456,59 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
 
 /* ════════════════════════════════════════════════════════════════ */
 
+/* ── 桌面端适配：居中手机模拟器 ─────────────────────────────── */
+@media (min-width: 768px) {
+  /* 外围深色背景 */
+  html {
+    background: #1a1815 !important;
+  }
+
+  /* 游戏区域限宽 + 居中 + 阴影 */
+  body {
+    max-width: 420px !important;
+    margin: 0 auto !important;
+    box-shadow: 0 0 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06) !important;
+    overflow-x: hidden !important;
+  }
+
+  /* 渐变背景层也限宽 */
+  html::before {
+    width: 420px !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  /* 所有 position:fixed 的全屏页面 → 限宽居中 */
+  #intro-screen,
+  #game-screen.active,
+  #result-screen.active, #fail-screen.active, #ending-screen.active,
+  #letter-screen.active, #letter-screen.screen.active,
+  #story-screen.active, #story-screen.screen.active {
+    width: 420px !important;
+    max-width: 420px !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  /* 所有 position:fixed 的 overlay / modal → 限宽居中 */
+  #event-modal, #card-modal, #enc-modal,
+  #share-modal, #about-modal, #farewell-overlay,
+  #choice-modal, #share-overlay {
+    width: 420px !important;
+    max-width: 420px !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  /* 音乐按钮也约束在手机区域内 */
+  #music-toggle {
+    right: calc(50% - 200px) !important;
+  }
+}
+
 
 </style>
 
