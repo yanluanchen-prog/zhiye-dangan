@@ -3516,9 +3516,17 @@ function getReadingKey(swapCount, survived){
     return 'dead_3plus';
   }
 }
-// 人生赢家叠加
+// 人格标签（概括玩家状态的一个词）
+function getArchetypeLabel(swapCount, survived, totalSalary){
+  if(survived && swapCount===0) return '人生赢家';
+  if(survived && swapCount===1) return '人间清醒';
+  if(survived && swapCount===2) return '老狐狸';
+  if(survived && swapCount>=3) return '节奏大师';
+  if(!survived && swapCount===0) return '痴情者';
+  if(!survived && swapCount<=2) return '赌徒';
+  return '梦想家';
+}
 const WINNER_THRESHOLD = 600;
-const WINNER_EXTRA = '但你不只是走对了路——你还走得比别人远。这是一个很多人一辈子都没见过的数字。';
 
 function generateEpic(journey, died){
   if(!journey || journey.length===0) return '';
@@ -3530,84 +3538,56 @@ function generateEpic(journey, died){
     year: j.year, from: j.swappedFrom, to: j.profession
   }));
   const lines = [];
-  // ── 开场 ──────────────────────────────────
-  lines.push(`你以「${startProf}」的身份进入 2026 年。`);
 
-  // ── 中段：按路径类型叙述 ────────────────
-  // 见证年份库（非 swap 年、存活年，不含死亡年）
-  const witnessPool = journey.filter(j=>!j.swappedFrom && j.survived && j.year!==finalYear);
-
-  if(swaps.length===0){
-    // 从未跳槽：最多引用 2 个见证年份（第一年 + 中间一年）
-    const witnessLines = [];
-    if(witnessPool[0]){
-      witnessLines.push(`${witnessPool[0].year} 年，${YEAR_SUMMARIES[witnessPool[0].year]}。你留下。`);
-    }
-    if(witnessPool.length>=3){
-      const mid = witnessPool[Math.floor(witnessPool.length/2)];
-      if(mid && mid.year!==witnessPool[0].year){
-        witnessLines.push(`${mid.year} 年，${YEAR_SUMMARIES[mid.year]}。你还在原地。`);
+  // ── 存活页：保留年份叙事；失业页：直接进读本 ──
+  if(!died){
+    // 开场
+    lines.push(`你以「${startProf}」的身份进入 2026 年。`);
+    // 见证年份
+    const witnessPool = journey.filter(j=>!j.swappedFrom && j.survived && j.year!==finalYear);
+    if(swaps.length===0){
+      const witnessLines = [];
+      if(witnessPool[0]) witnessLines.push(`${witnessPool[0].year} 年，${YEAR_SUMMARIES[witnessPool[0].year]}。你留下。`);
+      if(witnessPool.length>=3){
+        const mid = witnessPool[Math.floor(witnessPool.length/2)];
+        if(mid && mid.year!==witnessPool[0].year) witnessLines.push(`${mid.year} 年，${YEAR_SUMMARIES[mid.year]}。你还在原地。`);
       }
+      if(witnessLines.length) lines.push(witnessLines.join('\n'));
+    } else if(swaps.length<=2){
+      const firstSwapYear = swaps[0].year;
+      const earlyWitness = witnessPool.find(w=>w.year<firstSwapYear);
+      if(earlyWitness) lines.push(`${earlyWitness.year} 年，${YEAR_SUMMARIES[earlyWitness.year]}。你留下。`);
+      swaps.forEach(s=>{
+        lines.push(`${s.year} 年，${YEAR_SUMMARIES[s.year]}。\n你这一次没有再留下——你跳到了「${s.to}」。`);
+      });
+    } else {
+      const path = [startProf, ...swaps.map(s=>s.to)].join(' → ');
+      lines.push(`十年里你换了 ${swaps.length} 次方向：\n${path}`);
+      const pivot = swaps[Math.floor(swaps.length/2)];
+      if(pivot) lines.push(`${pivot.year} 年，${YEAR_SUMMARIES[pivot.year]}。你又一次决定换路。`);
     }
-    if(witnessLines.length) lines.push(witnessLines.join('\n'));
-  } else if(swaps.length<=2){
-    // 精准转身/两次转身：插入 swap 前的一个见证年份 + 所有 swap
-    const firstSwapYear = swaps[0].year;
-    const earlyWitness = witnessPool.find(w=>w.year<firstSwapYear);
-    if(earlyWitness){
-      lines.push(`${earlyWitness.year} 年，${YEAR_SUMMARIES[earlyWitness.year]}。你留下。`);
-    }
-    swaps.forEach(s=>{
-      lines.push(`${s.year} 年，${YEAR_SUMMARIES[s.year]}。\n你这一次没有再留下——你跳到了「${s.to}」。`);
-    });
-    // 死亡情况下，如果 swap 之后还活过几年才死，加一条"还在坚持"
-    if(died){
-      const lastSwapYear = swaps[swaps.length-1].year;
-      const laterWitness = witnessPool.find(w=>w.year>lastSwapYear);
-      if(laterWitness){
-        lines.push(`${laterWitness.year} 年，${YEAR_SUMMARIES[laterWitness.year]}。你还在坚持。`);
-      }
-    }
-  } else {
-    // 漂流者：概述 + 挑一个 pivot 年
-    const path = [startProf, ...swaps.map(s=>s.to)].join(' → ');
-    lines.push(`十年里你换了 ${swaps.length} 次方向：\n${path}`);
-    const pivot = swaps[Math.floor(swaps.length/2)];
-    if(pivot){
-      lines.push(`${pivot.year} 年，${YEAR_SUMMARIES[pivot.year]}。你又一次决定换路。`);
-    }
-  }
-
-  // ── 结局段 ───────────────────────────────
-  if(died){
-    lines.push(`${finalYear} 年。${YEAR_SUMMARIES[finalYear]}。\n这一次名单里有「${finalProf}」。`);
-  } else {
     lines.push(`2035 年，你还在。落点是「${finalProf}」。`);
   }
 
-  // ── 成语标签 + 人格读本 + AI 生存指数 ──
+  // ── 成语标签 + 人格标签 + 读本 ──
   const totalSavings = G.totalSalary || 0;
-  const yearsLived = died ? (finalYear-2025) : 10;
-  // 成语标签（缓存到 G 供分享卡片复用）
   if(!G.cachedIdiom){
     G.cachedIdiom = getIdiomLabel(swaps.length, !died);
     G.cachedIdiomSub = getIdiomSubtitle(swaps.length, !died, startProf, swaps[0]&&swaps[0].year);
-    G.cachedSurvivalIndex = calcSurvivalIndex(!died, yearsLived, totalSavings, swaps.length);
     const rk = getReadingKey(swaps.length, !died);
     G.cachedReading = ARCHETYPE_READINGS[rk];
+    G.cachedArchetype = getArchetypeLabel(swaps.length, !died, totalSavings);
     G.cachedIsWinner = !died && totalSavings >= WINNER_THRESHOLD;
   }
-  // 结局分隔线 + 成语
-  let idiomTitle = G.cachedIdiom;
-  if(G.cachedIsWinner) idiomTitle += ' · 人生赢家';
-  lines.push('━━━━━━━━━━━━━━━━\n【 ' + idiomTitle + ' 】\n' + G.cachedIdiomSub);
+  let titleLine = G.cachedIdiom + ' · ' + G.cachedArchetype;
+  lines.push('━━━━━━━━━━━━━━━━\n【 ' + titleLine + ' 】\n' + G.cachedIdiomSub);
   // 人格画像
   lines.push(G.cachedReading.persona);
-  // AI 生存指数 + 预言
-  lines.push('【AI 生存指数：' + G.cachedSurvivalIndex + '%】\n\n' + G.cachedReading.prediction);
+  // 预言
+  lines.push(G.cachedReading.prediction);
   // 人生赢家彩蛋
   if(G.cachedIsWinner){
-    lines.push(WINNER_EXTRA);
+    lines.push('但你不只是走对了路——你还走得比别人远。这是一个很多人一辈子都没见过的数字。');
   }
   // 储蓄收尾
   if(died){
@@ -4028,15 +4008,13 @@ function populateShareCard(mode){
     pathText=fullPath;
   }
   $('share-card-path').textContent=pathText;
-  // 成语标签 + AI 生存指数（从 generateEpic 缓存读取）
+  // 成语 + 人格标签
   let idiomText = G.cachedIdiom || getIdiomLabel(swaps.length, mode!=='fail');
-  if(G.cachedIsWinner) idiomText += ' · 人生赢家';
-  const idiomSub = G.cachedIdiomSub || getIdiomSubtitle(swaps.length, mode!=='fail', startProf);
-  const survIdx = G.cachedSurvivalIndex || 50;
-  $('share-card-verdict').textContent='【' + idiomText + '】' + idiomSub;
-  // 十年储蓄 + AI 生存指数
+  const archLabel = G.cachedArchetype || getArchetypeLabel(swaps.length, mode!=='fail', G.totalSalary);
+  $('share-card-verdict').textContent='【' + idiomText + ' · ' + archLabel + '】';
+  // 十年储蓄
   const savingsEl=$('share-card-savings-num');
-  if(savingsEl)savingsEl.textContent='¥ '+(G.totalSalary||0)+' 万 · AI生存指数 '+survIdx+'%';
+  if(savingsEl)savingsEl.textContent='¥ '+(G.totalSalary||0)+' 万';
 }
 /* 按需加载 html2canvas：多 CDN 兜底（国内访问 jsdelivr 有时会抽风） */
 let _h2cLoading=null;
