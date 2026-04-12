@@ -3539,38 +3539,19 @@ function generateEpic(journey, died){
   }));
   const lines = [];
 
-  // ── 存活页：保留年份叙事；失业页：直接进读本 ──
+  // ── 通关页：简洁路径总结（无年份事件）；失业页：直接进读本 ──
   if(!died){
-    // 开场
     lines.push(`你以「${startProf}」的身份进入 2026 年。`);
-    // 见证年份
-    const witnessPool = journey.filter(j=>!j.swappedFrom && j.survived && j.year!==finalYear);
-    if(swaps.length===0){
-      const witnessLines = [];
-      if(witnessPool[0]) witnessLines.push(`${witnessPool[0].year} 年，${YEAR_SUMMARIES[witnessPool[0].year]}。你留下。`);
-      if(witnessPool.length>=3){
-        const mid = witnessPool[Math.floor(witnessPool.length/2)];
-        if(mid && mid.year!==witnessPool[0].year) witnessLines.push(`${mid.year} 年，${YEAR_SUMMARIES[mid.year]}。你还在原地。`);
-      }
-      if(witnessLines.length) lines.push(witnessLines.join('\n'));
-    } else if(swaps.length<=2){
-      const firstSwapYear = swaps[0].year;
-      const earlyWitness = witnessPool.find(w=>w.year<firstSwapYear);
-      if(earlyWitness) lines.push(`${earlyWitness.year} 年，${YEAR_SUMMARIES[earlyWitness.year]}。你留下。`);
-      swaps.forEach(s=>{
-        lines.push(`${s.year} 年，${YEAR_SUMMARIES[s.year]}。\n你这一次没有再留下——你跳到了「${s.to}」。`);
-      });
-    } else {
+    if(swaps.length>0){
       const path = [startProf, ...swaps.map(s=>s.to)].join(' → ');
       lines.push(`十年里你换了 ${swaps.length} 次方向：\n${path}`);
-      const pivot = swaps[Math.floor(swaps.length/2)];
-      if(pivot) lines.push(`${pivot.year} 年，${YEAR_SUMMARIES[pivot.year]}。你又一次决定换路。`);
     }
     lines.push(`2035 年，你还在。落点是「${finalProf}」。`);
   }
 
   // ── 人格读本 ──
   const totalSavings = G.totalSalary || 0;
+  // 缓存人格数据（供分享卡片复用）
   if(!G.cachedIdiom){
     G.cachedIdiom = getIdiomLabel(swaps.length, !died);
     G.cachedIdiomSub = getIdiomSubtitle(swaps.length, !died, startProf, swaps[0]&&swaps[0].year);
@@ -3579,12 +3560,7 @@ function generateEpic(journey, died){
     G.cachedArchetype = getArchetypeLabel(swaps.length, !died, totalSavings);
     G.cachedIsWinner = !died && totalSavings >= WINNER_THRESHOLD;
   }
-  if(!died){
-    // 通关页：显示成语 + 人格标签
-    let titleLine = G.cachedIdiom + ' · ' + G.cachedArchetype;
-    lines.push('━━━━━━━━━━━━━━━━\n【 ' + titleLine + ' 】\n' + G.cachedIdiomSub);
-  }
-  // 人格画像（失败页和通关页都显示）
+  // 人格画像（通关页和失败页都直接显示，不加成语标题）
   lines.push(G.cachedReading.persona);
   // 预言
   lines.push(G.cachedReading.prediction);
