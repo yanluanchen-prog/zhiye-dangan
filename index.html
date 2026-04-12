@@ -3569,7 +3569,7 @@ function generateEpic(journey, died){
     lines.push(`2035 年，你还在。落点是「${finalProf}」。`);
   }
 
-  // ── 成语标签 + 人格标签 + 读本 ──
+  // ── 人格读本 ──
   const totalSavings = G.totalSalary || 0;
   if(!G.cachedIdiom){
     G.cachedIdiom = getIdiomLabel(swaps.length, !died);
@@ -3579,9 +3579,12 @@ function generateEpic(journey, died){
     G.cachedArchetype = getArchetypeLabel(swaps.length, !died, totalSavings);
     G.cachedIsWinner = !died && totalSavings >= WINNER_THRESHOLD;
   }
-  let titleLine = G.cachedIdiom + ' · ' + G.cachedArchetype;
-  lines.push('━━━━━━━━━━━━━━━━\n【 ' + titleLine + ' 】\n' + G.cachedIdiomSub);
-  // 人格画像
+  if(!died){
+    // 通关页：显示成语 + 人格标签
+    let titleLine = G.cachedIdiom + ' · ' + G.cachedArchetype;
+    lines.push('━━━━━━━━━━━━━━━━\n【 ' + titleLine + ' 】\n' + G.cachedIdiomSub);
+  }
+  // 人格画像（失败页和通关页都显示）
   lines.push(G.cachedReading.persona);
   // 预言
   lines.push(G.cachedReading.prediction);
@@ -4008,10 +4011,19 @@ function populateShareCard(mode){
     pathText=fullPath;
   }
   $('share-card-path').textContent=pathText;
-  // 成语 + 人格标签
-  let idiomText = G.cachedIdiom || getIdiomLabel(swaps.length, mode!=='fail');
+  // 人格标签对应的一句话描述（替代旧判词）
   const archLabel = G.cachedArchetype || getArchetypeLabel(swaps.length, mode!=='fail', G.totalSalary);
-  $('share-card-verdict').textContent='【' + idiomText + ' · ' + archLabel + '】';
+  const N = swaps.length;
+  const SHARE_LINES = {
+    '痴情者': '「对「'+c.name+'」至死不渝。」',
+    '赌徒': '「赌了 '+N+' 次，每次都以为这次稳了。」',
+    '梦想家': '「换了 '+N+' 份工作，每次都以为下次就好了。」',
+    '人生赢家': '「十年不动如山。这才叫赢。」',
+    '人间清醒': '「你只跳了一次——闻到了就走。」',
+    '老狐狸': '「跳两次都踩对了。这叫判断力。」',
+    '节奏大师': '「换了 '+N+' 份工作，居然每次都活下来了。」'
+  };
+  $('share-card-verdict').textContent=SHARE_LINES[archLabel]||'「'+archLabel+'」';
   // 十年储蓄
   const savingsEl=$('share-card-savings-num');
   if(savingsEl)savingsEl.textContent='¥ '+(G.totalSalary||0)+' 万';
