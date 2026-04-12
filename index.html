@@ -2208,7 +2208,7 @@ function markTutorialSeen(){
 }
 loadDiscoveries();
 
-let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0,journey:[],cachedVerdict:null};
+let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0,journey:[],cachedVerdict:null,cachedIdiom:null,cachedIdiomSub:null,cachedSurvivalIndex:null,cachedReading:null,cachedIsWinner:false};
 
 /* ── 本命职业开场介绍（情感连接） ──
    每个职业一段第一人称独白：
@@ -3437,69 +3437,88 @@ function revealResult(){
  * 结局史诗生成器 —— 基于玩家的完整 journey 生成独一无二的通关/失败叙事
  * 每局的叙事都不同，因为 swap 节点、停留的年份、最终落点都不同
  * ═══════════════════════════════════════════════════════════════════ */
-// 判词库：每种路径类型 3 个变体，随机抽一个。结果缓存在 G.cachedVerdict。
-const VERDICTS = {
-  fail_martyr: [
-    '你从头到尾没动过。你不是没看见——你是不愿意转身。',
-    '你守着同一个身份 {Y} 年，直到它再也守不住。没有人能说这不是一种勇气。',
-    '你选了它，就一直认它。这不叫固执，这叫你知道自己是谁。'
-  ],
-  fail_swap12: [
-    '你跳过一次，也跳过两次——但这一次没跳开。',
-    '你一直在看方向。只是方向变了又变，你永远慢半拍。',
-    '你以为自己在选安全的路，却每次都选到了下一个崩塌。'
-  ],
-  fail_drifter: [
-    '你一直在跑。这一次，你跑进了另一个正在塌的房间。',
-    '你试过很多种活法，每一次都差一点点。这十年你像一张风里的纸。',
-    '你逃过了三次、四次、五次——然后这一次，门关上了。'
-  ],
-  win_guardian: [
-    '十年里你一次都没有换过方向。\n你做的事，机器做不到。不是因为你聪明——\n是因为没人能在凌晨三点替你那句「我在」。',
-    '你从来没想过要转行。你知道你在的地方，\n比任何系统都不能少。\n最后找你的人还是推开了那扇门。',
-    '十年过去了，找你的人都还在。\n他们需要的不是一个答案——\n是一个真人的名字。'
-  ],
-  win_swap1: [
-    '你只跳了一次。\n你是那种闻得到味的人——不是预言家，\n只是早一步闻到。',
-    '你在对的那一年松开了手。\n后面每一天，都是你替自己赢的。',
-    '一次转身，一次重生。\n你没有看地图，你看的是风。'
-  ],
-  win_swap2: [
-    '十年里你换过两次方向。每一次都在临界点之前。\n你没赢——你只是选对了\n在哪一年，该松开哪一只手。',
-    '两次转身，都轻得像没跳。\n你在这时代学会了一件事：\n先走的人最安全。',
-    '你跳过两次，每一次都在新闻落下来之前。\n别人把这叫运气。你知道这是判断力。'
-  ],
-  win_drifter: [
-    '你过了 {N} 种不同的人生。\n每一次发现错了，都不会比前一次更慌。\n最后落在的这个，不是终点，只是你还没试过的那个。',
-    '{N} 次转身。你像水一样，\n哪里有缝隙就往哪里流。\n十年过去，你还在——就是唯一的证据。',
-    '你换过 {N} 种身份。十年过去，\n你不再确定哪一个真正是你——\n但你活下来了。'
-  ]
+
+// ═══ 成语标签系统：跳槽次数 × 生死 = 专属四字成语 ═══
+const IDIOM_LABELS = {
+  '0_alive':'一战到底','0_dead':'一动不动',
+  '1_alive':'一步登天','1_dead':'一念之差',
+  '2_alive':'两全其美','2_dead':'进退两难',
+  '3_alive':'三生有幸','3_dead':'三心二意',
+  '4_alive':'四两拨千斤','4_dead':'四面楚歌',
+  '5_alive':'五福临门','5_dead':'五味杂陈',
+  '6_alive':'六六大顺','6_dead':'六神无主',
+  '7_alive':'七十二变','7_dead':'七上八下',
+  '8_alive':'八面玲珑','8_dead':'八方受敌',
+  '9_alive':'九死一生','9_dead':'九九归零'
 };
-function pickVerdict(key, replacements){
-  const variants = VERDICTS[key] || [''];
-  const chosen = variants[Math.floor(Math.random()*variants.length)];
-  let out = chosen;
-  if(replacements){
-    Object.keys(replacements).forEach(k=>{
-      out = out.replace(new RegExp('\\{'+k+'\\}','g'), replacements[k]);
-    });
-  }
-  return out;
+function getIdiomLabel(swapCount, survived){
+  const key = Math.min(swapCount, 9) + '_' + (survived ? 'alive' : 'dead');
+  return IDIOM_LABELS[key] || (survived ? '绝处逢生' : '命运弄人');
 }
-// 生成并缓存：游戏结束时调用一次，结果写入 G.cachedVerdict
-// 这样 ending 页面和分享卡片读到的都是同一个随机变体
-function resolveVerdictKey(swaps, died, isGuardianPath){
-  if(died){
-    if(swaps.length===0) return 'fail_martyr';
-    if(swaps.length<=2) return 'fail_swap12';
-    return 'fail_drifter';
+function getIdiomSubtitle(swapCount, survived, startProf, finalYear){
+  if(swapCount===0 && survived) return '十年零跳';
+  if(swapCount===0 && !survived) return '对「'+startProf+'」至死不渝';
+  if(swapCount===1 && survived) return (finalYear||2029)+' 精准一跳';
+  if(swapCount===1 && !survived) return '赌了一次';
+  if(swapCount===2 && survived) return '跳两次都踩对';
+  if(swapCount===2 && !survived) return '赌了两次';
+  if(survived) return '十年'+swapCount+'跳';
+  return swapCount+'次重来';
+}
+// AI 生存指数计算
+function calcSurvivalIndex(survived, yearsLived, totalSalary, swapCount){
+  if(survived){
+    return Math.min(99, 65 + Math.min(Math.round(totalSalary/25), 25) + (swapCount<=2 ? 9 : 0));
   } else {
-    if(swaps.length===0 && isGuardianPath) return 'win_guardian';
-    if(swaps.length===1) return 'win_swap1';
-    if(swaps.length===2) return 'win_swap2';
-    return 'win_drifter';
+    return Math.min(75, 15 + yearsLived*5 + Math.min(Math.round(totalSalary/40), 15));
   }
 }
+// 人格读本：7 种模板 × persona + prediction
+const ARCHETYPE_READINGS = {
+  alive_0: {
+    persona: '你没换过工作，没跳过槽，没追过风口。\n\n朋友圈里「辞职开新赛道」「All in AI」的热搜刷过一波又一波，你从来没点过赞。\n\n你不焦虑——因为你做的这件事，AI 还真做不到。',
+    prediction: '你未来十年会被问无数次：「你怎么不去试试别的？」\n\n你会礼貌地笑一下，不回答。\n\n因为你知道那些问你的人里，有几个会在未来十年轮流站在你现在的位置上羡慕你。'
+  },
+  dead_0: {
+    persona: '你不是没看见别人都在跳——你是不愿意跟。\n\n你相信「是金子总会发光」，你相信「坚持就是胜利」，你相信职业是承诺，不是交易。\n\n这些相信让你活得比别人辛苦，也让你是你。',
+    prediction: '你未来十年会在某个加班到半夜的瞬间想：是不是当初该听他们的？\n\n然后你会继续打开手头的文件。\n\n你最后不一定赢——但你会成为那种「让人想起来有点感慨」的人。'
+  },
+  alive_1: {
+    persona: '别人还在「再等等看」「也许没那么糟」的时候，你已经递了辞职信。\n\n你不是悲观——你只是看得比别人清楚一点。\n\n「那一点」有时候，就是生和死的距离。',
+    prediction: '你这辈子会做 2-3 次让所有人说「你疯了吧」的决定。\n\n辞职、搬城市、放弃一个看起来很好的机会。\n\n事后所有人都会问你：「你怎么知道的？」\n\n你也说不清。就是闻到了。'
+  },
+  alive_2: {
+    persona: '你跳了两次，每一次都在风来之前。\n\n别人说你运气好，你知道不是——你只是早就看透了职场的底层规则：\n\n留下来的人不靠忠诚，靠的是知道什么时候该走。',
+    prediction: '你未来十年会看着身边几个朋友在「要不要跳」的问题上反复纠结。\n\n你会给他们建议，但你不会明说——因为说了他们也不会听。\n\n他们最后的选择会证明你是对的。但那时候你已经在下一个风口了。'
+  },
+  alive_3plus: {
+    persona: '这不是一条职业路径——这是一张抽象的地图。\n\n你不是不知道自己要什么，你是什么都想试试。\n\n而每次试完，你都能安全上岸。',
+    prediction: '你未来十年大概还会再跳几次。你的简历一页写不下。\n\n别人说你「没定力」，但每一次你都比他们更快进入状态。\n\nAI 时代可能反而偏爱你——当别人还在纠结要不要转型时，你已经转完了。'
+  },
+  dead_12: {
+    persona: '你跳了，每次都在赌。\n\n跳之前你告诉自己「这次稳了」，跳之后你也是真的信了——然后时代用最冷的方式证明你错了。\n\n你不是不会判断，你只是判断得太相信自己。',
+    prediction: '你未来十年会说至少 3 次「这次是最后一次跳槽」。\n\n每一次你都是认真的。每一次你也是错的。\n\n但你不会停下——因为赌徒最怕的不是输，是不动。'
+  },
+  dead_3plus: {
+    persona: '你换了很多份工作。\n\n每一次你都告诉自己：「这次应该就是对的了。」\n\n你的朋友说你有激情，你的父母说你没定性，你自己知道——你只是一直在追一个「对的地方」。\n\n但那个地方可能从来不存在。',
+    prediction: '你未来十年还会继续换。\n\n你会在某个陌生的工位上，突然想起当年最早那个职业。然后你会问自己：如果当初没动呢？\n\n然后你会打开下一份简历。\n\nAI 时代可能反而适合你——因为这个时代里，没人真的能找到「对的」。'
+  }
+};
+function getReadingKey(swapCount, survived){
+  if(survived){
+    if(swapCount===0) return 'alive_0';
+    if(swapCount===1) return 'alive_1';
+    if(swapCount===2) return 'alive_2';
+    return 'alive_3plus';
+  } else {
+    if(swapCount===0) return 'dead_0';
+    if(swapCount<=2) return 'dead_12';
+    return 'dead_3plus';
+  }
+}
+// 人生赢家叠加
+const WINNER_THRESHOLD = 600;
+const WINNER_EXTRA = '但你不只是走对了路——你还走得比别人远。这是一个很多人一辈子都没见过的数字。';
 
 function generateEpic(journey, died){
   if(!journey || journey.length===0) return '';
@@ -3566,26 +3585,35 @@ function generateEpic(journey, died){
     lines.push(`2035 年，你还在。落点是「${finalProf}」。`);
   }
 
-  // ── 判词（从缓存读，保证 ending 页和分享卡片一致）──
-  const isGuardianPath = (swaps.length===0 && finalProf===startProf);
-  // 如果未缓存，生成并缓存；已缓存则复用
-  if(!G.cachedVerdict){
-    const key = resolveVerdictKey(swaps, died, isGuardianPath);
-    const yearsLived = died ? (finalYear-2025) : 10;
-    G.cachedVerdict = pickVerdict(key, {N: swaps.length+1, Y: yearsLived});
-  }
-  if(died){
-    lines.push(G.cachedVerdict + `\n你的故事停在了 ${finalYear} 年。`);
-  } else {
-    lines.push(G.cachedVerdict);
-  }
-
-  // 十年储蓄收尾
+  // ── 成语标签 + 人格读本 + AI 生存指数 ──
   const totalSavings = G.totalSalary || 0;
+  const yearsLived = died ? (finalYear-2025) : 10;
+  // 成语标签（缓存到 G 供分享卡片复用）
+  if(!G.cachedIdiom){
+    G.cachedIdiom = getIdiomLabel(swaps.length, !died);
+    G.cachedIdiomSub = getIdiomSubtitle(swaps.length, !died, startProf, swaps[0]&&swaps[0].year);
+    G.cachedSurvivalIndex = calcSurvivalIndex(!died, yearsLived, totalSavings, swaps.length);
+    const rk = getReadingKey(swaps.length, !died);
+    G.cachedReading = ARCHETYPE_READINGS[rk];
+    G.cachedIsWinner = !died && totalSavings >= WINNER_THRESHOLD;
+  }
+  // 结局分隔线 + 成语
+  let idiomTitle = G.cachedIdiom;
+  if(G.cachedIsWinner) idiomTitle += ' · 人生赢家';
+  lines.push('━━━━━━━━━━━━━━━━\n【 ' + idiomTitle + ' 】\n' + G.cachedIdiomSub);
+  // 人格画像
+  lines.push(G.cachedReading.persona);
+  // AI 生存指数 + 预言
+  lines.push('【AI 生存指数：' + G.cachedSurvivalIndex + '%】\n\n' + G.cachedReading.prediction);
+  // 人生赢家彩蛋
+  if(G.cachedIsWinner){
+    lines.push(WINNER_EXTRA);
+  }
+  // 储蓄收尾
   if(died){
-    lines.push(`这 ${finalYear-2025} 年，你攒下了 ¥ ${totalSavings} 万。`);
+    lines.push('这 ' + (finalYear-2025) + ' 年，你攒下了 ¥ ' + totalSavings + ' 万。');
   } else {
-    lines.push(`这十年，你攒下了 ¥ ${totalSavings} 万。`);
+    lines.push('这十年，你攒下了 ¥ ' + totalSavings + ' 万。');
   }
 
   return lines.join('\n\n');
@@ -3937,7 +3965,7 @@ onTap($('ending-enc-btn'),openEncModal);
 onTap($('end-enc-btn'),openEncModal);
 function doRestart(){
   // 重新开始职业生涯：回到职业选择页
-  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0,journey:[],cachedVerdict:null};
+  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0,journey:[],cachedVerdict:null,cachedIdiom:null,cachedIdiomSub:null,cachedSurvivalIndex:null,cachedReading:null,cachedIsWinner:false};
   selectedJob=null;
   $('enc-count').textContent='0';
   document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
@@ -4000,20 +4028,15 @@ function populateShareCard(mode){
     pathText=fullPath;
   }
   $('share-card-path').textContent=pathText;
-  // 判词：读 G.cachedVerdict（generateEpic 已缓存），确保与 ending 页一致
-  // 若未缓存（理论上不会发生，因为分享按钮在 fail/ending 页显示），兜底生成
-  if(!G.cachedVerdict){
-    const isGuardianPath=(swaps.length===0 && finalProf===startProf);
-    const key=resolveVerdictKey(swaps, mode==='fail', isGuardianPath);
-    const finalYear2=journey[journey.length-1].year;
-    const yearsLived2 = mode==='fail' ? (finalYear2-2025) : 10;
-    G.cachedVerdict=pickVerdict(key, {N: swaps.length+1, Y: yearsLived2});
-  }
-  // 分享卡片空间有限，判词用引号包住作为引文风格，但替换换行符为空格避免卡片布局破坏
-  $('share-card-verdict').textContent='「'+G.cachedVerdict.replace(/\n/g,' ')+'」';
-  // 十年储蓄：读 G.totalSalary
+  // 成语标签 + AI 生存指数（从 generateEpic 缓存读取）
+  let idiomText = G.cachedIdiom || getIdiomLabel(swaps.length, mode!=='fail');
+  if(G.cachedIsWinner) idiomText += ' · 人生赢家';
+  const idiomSub = G.cachedIdiomSub || getIdiomSubtitle(swaps.length, mode!=='fail', startProf);
+  const survIdx = G.cachedSurvivalIndex || 50;
+  $('share-card-verdict').textContent='【' + idiomText + '】' + idiomSub;
+  // 十年储蓄 + AI 生存指数
   const savingsEl=$('share-card-savings-num');
-  if(savingsEl)savingsEl.textContent='¥ '+(G.totalSalary||0)+' 万';
+  if(savingsEl)savingsEl.textContent='¥ '+(G.totalSalary||0)+' 万 · AI生存指数 '+survIdx+'%';
 }
 /* 按需加载 html2canvas：多 CDN 兜底（国内访问 jsdelivr 有时会抽风） */
 let _h2cLoading=null;
