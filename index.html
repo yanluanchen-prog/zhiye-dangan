@@ -1931,7 +1931,7 @@ body.year-tone-dark .rv-letter-title { color: rgba(20,14,8,0.98) !important; }
     <div style="font-size:20px;font-weight:900;color:var(--ink);letter-spacing:4px;margin-top:8px;">你失业了。</div>
   </div>
   <div class="container">
-    <div class="section"><div style="font-size:13px;line-height:2.2;color:rgba(40,30,22,0.82);white-space:pre-wrap;" id="f-text"></div></div>
+    <div class="section"><div style="font-size:13px;line-height:1.8;color:rgba(40,30,22,0.82);white-space:pre-wrap;" id="f-text"></div></div>
     <div class="btn-row">
       <button class="btn red" id="restart-btn">重新开始职业生涯</button>
       <button class="btn outline" id="fail-share-btn">分享给朋友</button>
@@ -2208,7 +2208,7 @@ function markTutorialSeen(){
 }
 loadDiscoveries();
 
-let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0,journey:[],cachedVerdict:null,cachedIdiom:null,cachedIdiomSub:null,cachedSurvivalIndex:null,cachedReading:null,cachedIsWinner:false};
+let G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0,journey:[],cachedVerdict:null,cachedIdiom:null,cachedIdiomSub:null,cachedSurvivalIndex:null,cachedReading:null,cachedIsWinner:false,cachedArchetype:null};
 
 /* ── 本命职业开场介绍（情感连接） ──
    每个职业一段第一人称独白：
@@ -3770,7 +3770,7 @@ onTap($('start-btn'),()=>{
   }
   G.ownCard={...validJob,isOwn:true,tagline:'我的职业',desc:'这是你现在的职业。',fileNum:'OWN'};
   G.currentCard={...G.ownCard};G.yearIndex=0;G.encyclopedia={};G.totalSalary=0;G.swapCount=0;
-  G.drawnCards=[];G.pendingSwap=null;G.startOfYearCard=null;G.activeIdx=0;G.journey=[];G.cachedVerdict=null;
+  G.drawnCards=[];G.pendingSwap=null;G.startOfYearCard=null;G.activeIdx=0;G.journey=[];G.cachedVerdict=null;G.cachedIdiom=null;G.cachedArchetype=null;G.cachedReading=null;G.cachedIsWinner=false;
   addToEnc(validJob);
   recordPlayedAs(validJob.name);
   // 首次玩家：入场信件 → 游戏（信件创造世界观）
@@ -3948,7 +3948,7 @@ onTap($('ending-enc-btn'),openEncModal);
 onTap($('end-enc-btn'),openEncModal);
 function doRestart(){
   // 重新开始职业生涯：回到职业选择页
-  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0,journey:[],cachedVerdict:null,cachedIdiom:null,cachedIdiomSub:null,cachedSurvivalIndex:null,cachedReading:null,cachedIsWinner:false};
+  G={ownCard:null,currentCard:null,yearIndex:0,drawnCards:[],pendingSwap:null,startOfYearCard:null,encyclopedia:{},activeIdx:0,totalSalary:0,swapCount:0,journey:[],cachedVerdict:null,cachedIdiom:null,cachedIdiomSub:null,cachedSurvivalIndex:null,cachedReading:null,cachedIsWinner:false,cachedArchetype:null};
   selectedJob=null;
   $('enc-count').textContent='0';
   document.querySelectorAll('.job-item').forEach(item=>item.classList.remove('selected'));
@@ -3968,7 +3968,7 @@ onTap($('play-again-btn'),()=>{
   G.pendingSwap=null;
   G.startOfYearCard=null;
   G.activeIdx=0;
-  G.journey=[];G.cachedVerdict=null;
+  G.journey=[];G.cachedVerdict=null;G.cachedIdiom=null;G.cachedArchetype=null;G.cachedReading=null;G.cachedIsWinner=false;
   if(ownJob)addToEnc(ownJob);
   startYear();
 });
