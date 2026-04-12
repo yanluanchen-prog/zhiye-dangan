@@ -4011,19 +4011,19 @@ function populateShareCard(mode){
     pathText=fullPath;
   }
   $('share-card-path').textContent=pathText;
-  // 人格标签对应的一句话描述（替代旧判词）
+  // MBTI 风格人格描述（分享卡判词）
   const archLabel = G.cachedArchetype || getArchetypeLabel(swaps.length, mode!=='fail', G.totalSalary);
   const N = swaps.length;
   const SHARE_LINES = {
-    '痴情者': '「对「'+c.name+'」至死不渝。」',
-    '赌徒': '「赌了 '+N+' 次，每次都以为这次稳了。」',
-    '梦想家': '「换了 '+N+' 份工作，每次都以为下次就好了。」',
-    '人生赢家': '「十年不动如山。这才叫赢。」',
-    '人间清醒': '「你只跳了一次——闻到了就走。」',
-    '老狐狸': '「跳两次都踩对了。这叫判断力。」',
-    '节奏大师': '「换了 '+N+' 份工作，居然每次都活下来了。」'
+    '痴情者': '你是职场痴情种，选定了就不回头。哪怕全世界都在喊你快跳，你还是相信自己选的那条路。',
+    '赌徒': '你是职场赌徒，每次跳槽都像在下注。你不信命，只信自己的判断——哪怕判断总是慢了半拍。',
+    '梦想家': '你是职场梦想家，永远相信下一份工作才是对的那个。你追的不是薪资，是一个连自己都说不清的感觉。',
+    '人生赢家': '你是天生的守门人。别人焦虑要不要转行的时候，你在原地扎了根——而根，比谁都深。',
+    '人间清醒': '你是职场里最清醒的那个人。别人还在犹豫，你已经走了。不是冲动，是你比谁都先闻到空气里的味道。',
+    '老狐狸': '你是职场老狐狸，每次出手都刚好踩在节拍上。不是运气好，是你从来不在没把握的时候动。',
+    '节奏大师': '你是职场节奏大师，对什么时候该走、什么时候该留有近乎直觉的把控。简历虽长，但每一段都踩准了。'
   };
-  $('share-card-verdict').textContent=SHARE_LINES[archLabel]||'「'+archLabel+'」';
+  $('share-card-verdict').textContent=SHARE_LINES[archLabel]||archLabel;
   // 十年储蓄
   const savingsEl=$('share-card-savings-num');
   if(savingsEl)savingsEl.textContent='¥ '+(G.totalSalary||0)+' 万';
